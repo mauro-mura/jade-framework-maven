@@ -44,7 +44,7 @@
                     <version>6.10.0</version>
                     <configuration>
                         <activeRecipes>
-                            <recipe>org.openrewrite.java.migrate.UpgradeToJava7</recipe>
+                            <recipe>org.openrewrite.java.migrate.UpgradeToJava8</recipe>
                         </activeRecipes>
                     </configuration>
                     <dependencies>
