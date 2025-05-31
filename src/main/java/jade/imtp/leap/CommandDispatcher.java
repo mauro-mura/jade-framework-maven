@@ -708,10 +708,10 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	 */
 	public synchronized void registerSkeleton(Skeleton skeleton, Object remotizedObject) throws IMTPException {
 		Integer id = null;
-		if (remotizedObject instanceof PlatformManager) {
+		if (remotizedObject instanceof PlatformManager manager) {
 			id = Integer.valueOf(0);
 			name = "Service-Manager";
-			setPlatformManager((PlatformManager) remotizedObject);
+			setPlatformManager(manager);
 		} else {
 			id = Integer.valueOf((int) (System.currentTimeMillis() & 0xffffff));
 		}
@@ -911,7 +911,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 
 				// If this is a normal Command, let the proper Skeleton
 				// process it.
-				Integer id = new Integer(command.getObjectID());
+				Integer id = Integer.valueOf(command.getObjectID());
 				Skeleton s = (Skeleton) skeletons.get(id);
 				if (s != null) {
 					response = s.processCommand(command);
@@ -922,7 +922,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 
 			long elapsed = System.currentTimeMillis() - start;
 			if (elapsed > 100) {
-				response.addParam(new Integer((int) elapsed));
+				response.addParam(Integer.valueOf((int) elapsed));
 			}
 			return serializeCommand(response);
 		} catch (LEAPSerializationException lse) {

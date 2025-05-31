@@ -26,10 +26,12 @@ import jade.core.AID;
 import jade.util.Logger;
 import jade.util.leap.RoundList;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 class GlobalReplicationInfo implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 5967429587327862818L;
 	private AID virtualAid;
 	private AID masterAid;

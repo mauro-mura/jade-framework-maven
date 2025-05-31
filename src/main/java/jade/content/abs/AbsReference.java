@@ -1,5 +1,7 @@
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.schema.ReferenceSchema;
 
 /**
@@ -10,6 +12,7 @@ import jade.content.schema.ReferenceSchema;
  * @author Caire
  */
 public class AbsReference extends AbsObjectImpl implements AbsTerm {
+	@Serial
 	private static final long serialVersionUID = 6167359403561714663L;
 	
 	public static final String REFERENCE_PREFIX = "&";

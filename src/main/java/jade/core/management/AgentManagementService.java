@@ -573,7 +573,7 @@ public class AgentManagementService extends BaseService {
 				// Try to load the agent using an agent loader
 				agent = (Agent) ObjectManager.load(className, ObjectManager.AGENT_TYPE);
 				if (agent == null) {
-					agent = (Agent) Class.forName(className).newInstance();
+					agent = (Agent) Class.forName(className).getDeclaredConstructor().newInstance();
 				}
 				agent.setArguments(arguments);
 				myContainer.initAgent(agentID, agent, owner, initialCredentials);

@@ -133,8 +133,8 @@ public class IncomingEncodingFilter extends Filter {
 		
 		// If gmsg represents a MultipleGenericMessage recursively call restore() for
 		// each message
-		if (gmsg instanceof MultipleGenericMessage) {
-			for (GenericMessage g : ((MultipleGenericMessage) gmsg).getMessages()) {
+		if (gmsg instanceof MultipleGenericMessage message) {
+			for (GenericMessage g : message.getMessages()) {
 				restore(g);
 			}
 			return;

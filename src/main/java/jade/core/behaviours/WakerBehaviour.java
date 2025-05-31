@@ -25,6 +25,7 @@ package jade.core.behaviours;
 
 import jade.core.*;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -57,6 +58,7 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 
 	// private static final long MINIMUM_TIMEOUT = 10000; // 1 second
 
+	@Serial
 	private static final long serialVersionUID = -6701538369044108045L;
 
 	/**

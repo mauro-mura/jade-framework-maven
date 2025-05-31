@@ -65,40 +65,40 @@ class DFAppletManagementBehaviour extends RequestManagementBehaviour {
   	boolean asynchNotificationRequired = false;
   	
   	// GET_PARENTS
-  	if (action instanceof GetParents) {
-  		result = theDF.getParentsAction((GetParents) action, request.getSender());
+  	if (action instanceof GetParents parents) {
+  		result = theDF.getParentsAction(parents, request.getSender());
   	}
   	// GET_DESCRIPTION
-  	else if (action instanceof GetDescription) {
-  		result = theDF.getDescriptionAction((GetDescription) action, request.getSender());
+  	else if (action instanceof GetDescription description) {
+  		result = theDF.getDescriptionAction(description, request.getSender());
   	}
   	// GET_DESCRIPTION_USED
-  	else if (action instanceof GetDescriptionUsed) {
-  		result = theDF.getDescriptionUsedAction((GetDescriptionUsed) action, request.getSender());
+  	else if (action instanceof GetDescriptionUsed used) {
+  		result = theDF.getDescriptionUsedAction(used, request.getSender());
   	}
   	// FEDERATE
-  	else if (action instanceof Federate) {
-  		theDF.federateAction((Federate) action, request.getSender());
+  	else if (action instanceof Federate federate) {
+  		theDF.federateAction(federate, request.getSender());
 			asynchNotificationRequired = true;
   	}
   	// REGISTER_WITH
-  	else if (action instanceof RegisterWith) {
-  		theDF.registerWithAction((RegisterWith) action, request.getSender());
+  	else if (action instanceof RegisterWith with) {
+  		theDF.registerWithAction(with, request.getSender());
 			asynchNotificationRequired = true;
   	}
   	// DEREGISTER_FROM
-  	else if (action instanceof DeregisterFrom) {
-  		theDF.deregisterFromAction((DeregisterFrom) action, request.getSender());
+  	else if (action instanceof DeregisterFrom from) {
+  		theDF.deregisterFromAction(from, request.getSender());
 			asynchNotificationRequired = true;
   	}
   	// MODIFY_ON
-  	else if (action instanceof ModifyOn) {
-  		theDF.modifyOnAction((ModifyOn) action, request.getSender());
+  	else if (action instanceof ModifyOn on1) {
+  		theDF.modifyOnAction(on1, request.getSender());
 			asynchNotificationRequired = true;
   	}
   	// SEARCH_ON 
-  	else if (action instanceof SearchOn) {
-  		theDF.searchOnAction((SearchOn) action, request.getSender());
+  	else if (action instanceof SearchOn on) {
+  		theDF.searchOnAction(on, request.getSender());
 			asynchNotificationRequired = true;
   	}
   	else {

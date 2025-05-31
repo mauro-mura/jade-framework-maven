@@ -107,8 +107,8 @@ public class MicroStub {
 					timeout = (remainingTime > MINIMUM_TIMEOUT ? remainingTime : MINIMUM_TIMEOUT);
 				}
 				int dispatchSessionId = -1;
-				if (icpe instanceof ICPDispatchException) {
-					dispatchSessionId = ((ICPDispatchException) icpe).getSessionId();
+				if (icpe instanceof ICPDispatchException exception) {
+					dispatchSessionId = exception.getSessionId();
 				}
 				postpone(c, timeout, dispatchSessionId, icpe);
 				logger.log(Logger.WARNING, "Dispatch failed. Command postponed [SF-timeout="+timeout+", SID="+dispatchSessionId+"]. "+icpe.getMessage());
@@ -197,8 +197,8 @@ public class MicroStub {
 							logger.log(Logger.WARNING,"Exception in command asynchronous delivery. "+ex);
 							// We are disconnected again --> put the command back in the queue of postponed commands
 							// and stop flushing. If there was a Timer it is still there --> No need to do anything
-							if (ex instanceof ICPDispatchException) {
-								pc.sessionId = ((ICPDispatchException) ex).getSessionId();
+							if (ex instanceof ICPDispatchException exception) {
+								pc.sessionId = exception.getSessionId();
 							}
 							pendingCommands.add(0, pc);
 							break;

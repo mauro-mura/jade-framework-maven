@@ -61,8 +61,8 @@ class DFJadeAgentManagementBehaviour extends RequestManagementBehaviour {
   	Concept action = slAction.getAction();
   	
   	// SHOW_GUI
-  	if (action instanceof ShowGui) {
-  		theDF.showGuiAction((ShowGui) action, request.getSender());
+  	if (action instanceof ShowGui gui) {
+  		theDF.showGuiAction(gui, request.getSender());
   	}
   	else {
   		throw new UnsupportedFunction();

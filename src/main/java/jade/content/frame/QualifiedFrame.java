@@ -24,6 +24,7 @@
  */
 package jade.content.frame;
 
+import java.io.Serial;
 import java.util.Hashtable;
 
 /**
@@ -34,6 +35,7 @@ import java.util.Hashtable;
  */
 public class QualifiedFrame extends Hashtable implements Frame {
 
+	@Serial
 	private static final long serialVersionUID = -7191634803252271554L;
 	private String typeName;
 
@@ -74,7 +76,7 @@ public class QualifiedFrame extends Hashtable implements Frame {
 	   Frame. 
 	 */
 	public Object putInteger(Object key, int val) {
-		return put(key, new Long(val));
+		return put(key, Long.valueOf(val));
 	}
 	
 	/**

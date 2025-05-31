@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.util.Enumeration;
 import java.util.Iterator;
 
@@ -73,6 +74,7 @@ import javax.swing.ListSelectionModel;
 
 public class VisualStringList extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = 6076573773965760620L;
 
 	/**

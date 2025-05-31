@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.imtp.rmi;
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -36,6 +37,7 @@ import jade.core.exception.ServiceException;
  */
 class NodeRMIImpl extends UnicastRemoteObject implements NodeRMI {
 
+	@Serial
 	private static final long serialVersionUID = -8157294086108514071L;
 
 	public NodeRMIImpl(NodeAdapter impl, int port, RMIIMTPManager mgr) throws RemoteException {

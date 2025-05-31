@@ -23,6 +23,9 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.exception;
 
+import java.io.Serial;
+
+
 import jade.util.WrapperException;
 
 /**
@@ -30,6 +33,7 @@ import jade.util.WrapperException;
  */
 public class ServiceException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = -4028324278322804540L;
 
 	public ServiceException() {

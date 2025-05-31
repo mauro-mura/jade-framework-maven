@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.event;
 
+import java.io.Serial;
 import java.util.Date;
 
 import jade.core.ContainerID;
@@ -39,6 +40,7 @@ import jade.util.Event;
  */
 public class JADEEvent extends Event {
 
+	@Serial
 	private static final long serialVersionUID = -1013967458027421351L;
 	private Date time;
 

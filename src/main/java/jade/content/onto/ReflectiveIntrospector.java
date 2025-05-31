@@ -29,6 +29,7 @@ import jade.content.onto.exception.OntologyException;
 import jade.content.schema.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serial;
 import java.lang.reflect.*;
 import jade.core.CaseInsensitiveString;
 
@@ -42,6 +43,7 @@ import jade.core.CaseInsensitiveString;
  */
 public class ReflectiveIntrospector implements Introspector {
 
+	@Serial
 	private static final long serialVersionUID = 3070768391947620878L;
 
 	public Object getSlotValue(String slotName, Object obj, ObjectSchema schema) throws OntologyException {

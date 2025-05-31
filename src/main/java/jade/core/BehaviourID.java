@@ -23,6 +23,7 @@
 
 package jade.core;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,6 +48,7 @@ import jade.core.behaviours.CompositeBehaviour;
  */
 public class BehaviourID implements Concept {
 
+	@Serial
 	private static final long serialVersionUID = 1215279725585759085L;
 	private int code;
 	private String name;
@@ -76,8 +78,7 @@ public class BehaviourID implements Concept {
 
 		// If we have a composite behaviour, add the
 		// children to this behaviour id.
-		if (b instanceof CompositeBehaviour) {
-			CompositeBehaviour c = (CompositeBehaviour) b;
+		if (b instanceof CompositeBehaviour c) {
 			Iterator<Behaviour> iter = c.getChildren().iterator();
 			while (iter.hasNext()) {
 				addChildren(new BehaviourID(iter.next()));
@@ -221,8 +222,7 @@ public class BehaviourID implements Concept {
 	 *         Otherwise, <code>false</code> is returned.
 	 */
 	public boolean equals(Object o) {
-		if (o instanceof BehaviourID) {
-			BehaviourID b = (BehaviourID) o;
+		if (o instanceof BehaviourID b) {
 			return (checkEquals(name, b.name) && checkEquals(className, b.className) && checkEquals(kind, b.kind));
 		} else {
 			return false;

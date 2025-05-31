@@ -24,6 +24,7 @@
  */
 package jade.content;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +37,8 @@ import java.util.List;
  * @author Moreno LAGO
  */
 public class ContentElementList implements ContentElement {
-	
+
+	@Serial
 	private static final long serialVersionUID = 1908196475339998499L;
 	private List<ContentElement> elements = new ArrayList<>();
 

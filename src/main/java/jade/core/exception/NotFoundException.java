@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.exception;
 
+import java.io.Serial;
+
 /**
  * This exception is thrown when some component (agent, agent container, etc.)
  * cannot be found in the agent platform data structures.
@@ -33,6 +35,7 @@ package jade.core.exception;
  */
 public class NotFoundException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = 8115366209031325255L;
 
 	/**

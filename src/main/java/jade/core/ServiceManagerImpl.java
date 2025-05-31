@@ -247,7 +247,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 	}
 
 	private boolean isLocal(Service svc) {
-		return (svc instanceof BaseService && ((BaseService) svc).isLocal());
+		return (svc instanceof BaseService bs && bs.isLocal());
 	}
 
 	public void deactivateService(String name) throws IMTPException, ServiceException {
@@ -363,8 +363,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 		localServices.put(svc.getName(), svcDsc);
 
 		// If this service extends BaseService, attach it to the Command Processor
-		if (svc instanceof BaseService) {
-			BaseService bs = (BaseService) svc;
+		if (svc instanceof BaseService bs) {
 			bs.setCommandProcessor(myCommandProcessor);
 		}
 	}
@@ -416,9 +415,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 			GenericCommand gCmd = new GenericCommand(Service.DEAD_PLATFORM_MANAGER, null, null);
 			gCmd.addParam(myPlatformManager.getLocalAddress());
 			Object result = myCommandProcessor.processIncoming(gCmd);
-			if (result instanceof Throwable) {
+			if (result instanceof Throwable throwable) {
 				myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_PLATFORM_MANAGER command.");
-				((Throwable) result).printStackTrace();
+				throwable.printStackTrace();
 			}
 		}
 
@@ -459,9 +458,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 				// Issue a REATTACHED incoming V-Command
 				GenericCommand gCmd = new GenericCommand(Service.REATTACHED, null, null);
 				Object result = myCommandProcessor.processIncoming(gCmd);
-				if (result instanceof Throwable) {
+				if (result instanceof Throwable throwable) {
 					myLogger.log(Logger.WARNING, "Unexpected error processing REATTACHED command.");
-					((Throwable) result).printStackTrace();
+					throwable.printStackTrace();
 				}
 
 				myLogger.log(Logger.INFO, "Re-attachement OK");
@@ -504,9 +503,9 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 						// Issue a RECONNECTED incoming V-Command
 						GenericCommand gCmd = new GenericCommand(Service.RECONNECTED, null, null);
 						Object result = myCommandProcessor.processIncoming(gCmd);
-						if (result instanceof Throwable) {
+						if (result instanceof Throwable throwable) {
 							myLogger.log(Logger.WARNING, "Unexpected error processing RECONNECTED command.");
-							((Throwable) result).printStackTrace();
+							throwable.printStackTrace();
 						}
 
 						myLogger.log(Logger.INFO, "Reconnection OK");
@@ -527,8 +526,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 		for (int i = 0; i < services.length; ++i) {
 			ServiceDescriptor svcDsc = (ServiceDescriptor) services[i];
 			Service svc = svcDsc.getService();
-			if (svc instanceof BaseService) {
-				((BaseService) svc).clearCachedSlice(MAIN_SLICE);
+			if (svc instanceof BaseService service) {
+				service.clearCachedSlice(MAIN_SLICE);
 			}
 		}
 		myIMTPManager.reconnected(myPlatformManager);
@@ -558,8 +557,8 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 	private Service.Slice bindToLocalNode(Slice slice) throws ServiceException {
 		if (slice != null) {
 			// If the newly retrieved slice is a proxy, bind it to the local node
-			if (slice instanceof SliceProxy) {
-				((SliceProxy) slice).setLocalNodeDescriptor(localNodeDescriptor);
+			if (slice instanceof SliceProxy proxy) {
+				proxy.setLocalNodeDescriptor(localNodeDescriptor);
 			}
 			// Also if the slice is for the local node be sure it includes the real local
 			// node and not a proxy

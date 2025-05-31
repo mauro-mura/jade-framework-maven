@@ -50,8 +50,7 @@ import jade.gui.*;
 		ACLMessage msg2 = new ACLMessage(ACLMessage.NOT_UNDERSTOOD);
   	AID rec;
   	
-		if(nod instanceof AgentTree.RemoteAgentNode){
-	  	AgentTree.RemoteAgentNode agent = (AgentTree.RemoteAgentNode)nod;
+		if(nod instanceof AgentTree.RemoteAgentNode agent){
 	  	rec = agent.getAMSDescription().getName();	
 	  }
 	  else{

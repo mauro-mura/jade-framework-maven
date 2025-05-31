@@ -34,6 +34,8 @@
 
 package jade.imtp.leap.http;
 
+import java.io.Serial;
+
 import jade.mtp.TransportAddress;
 
 /**
@@ -44,6 +46,7 @@ import jade.mtp.TransportAddress;
  */
 public class HTTPAddress implements TransportAddress {
 
+	@Serial
 	private static final long serialVersionUID = -3763807130507228464L;
 	private String host;
 	private String port;

@@ -72,8 +72,8 @@ public class LogHelperAgent extends Agent {
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
 			// Get the Log Manager Agent AID as argument
-			if (args[0] instanceof AID) {
-				amsSubscribe((AID) args[0]);
+			if (args[0] instanceof AID iD) {
+				amsSubscribe(iD);
 			}
 		}
 		// Register languages and ontologies
@@ -119,14 +119,14 @@ public class LogHelperAgent extends Agent {
 		
 	    protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response) throws FailureException {
 	    	ACLMessage reply = request.createReply();
-			if (action instanceof GetAllLoggers){
-				handleGetAllLoggers((GetAllLoggers)action, actExpr, reply);
+			if (action instanceof GetAllLoggers loggers){
+				handleGetAllLoggers(loggers, actExpr, reply);
 			}
-			else if(action instanceof SetFile){
-				handleSetFile((SetFile)action, actExpr, reply);
+			else if(action instanceof SetFile file){
+				handleSetFile(file, actExpr, reply);
 			}
-			else if (action instanceof SetLevel){
-				handleSetLevel((SetLevel)action, actExpr, reply);
+			else if (action instanceof SetLevel level){
+				handleSetLevel(level, actExpr, reply);
 			}
 			else {
 				throw new FailureException("Action "+action.getClass().getName()+" not supported.");		
@@ -142,7 +142,7 @@ public class LogHelperAgent extends Agent {
 					logManagerClass = className;
 				
 				logger.log(Logger.CONFIG, "Log manager class defined: " + logManagerClass);
-				logManager = (LogManager) Class.forName(logManagerClass).newInstance();
+				logManager = (LogManager) Class.forName(logManagerClass).getDeclaredConstructor().newInstance();
 				
 				List logInfo = logManager.getAllLogInfo();
 				Result r = new Result(actExpr, logInfo);

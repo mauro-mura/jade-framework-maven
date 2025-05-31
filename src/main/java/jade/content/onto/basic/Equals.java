@@ -24,6 +24,8 @@
  */
 package jade.content.onto.basic;
 
+import java.io.Serial;
+
 import jade.content.*;
 import jade.content.onto.*;
 import jade.content.onto.exception.OntologyException;
@@ -36,6 +38,7 @@ import jade.content.onto.exception.OntologyException;
  */
 public class Equals implements Predicate {
 
+	@Serial
 	private static final long serialVersionUID = -9098386174239241547L;
 	private Object left;
 	private Object right;

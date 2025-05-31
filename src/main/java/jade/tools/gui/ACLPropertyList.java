@@ -339,8 +339,7 @@ public class ACLPropertyList extends JPanel {
      * @return               The ListCellRendererComponent value
      */
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-      if ((value != null) && (value instanceof String) && (msg != null)) {
-        String sValue = (String)value;
+      if ((value != null) && (value instanceof String sValue) && (msg != null)) {
         String key = msg.getUserDefinedParameter(sValue);
         setText(sValue + " = " + key);
       }

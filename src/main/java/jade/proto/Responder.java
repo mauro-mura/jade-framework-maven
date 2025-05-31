@@ -29,6 +29,8 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import jade.proto.states.*;
+
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -110,7 +112,8 @@ abstract class Responder extends FSMBehaviour {
     private static class CheckInSeq extends OneShotBehaviour {
 
 	private int ret;
-	private static final long     serialVersionUID = 4487495895818000L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818000L;
 
 	public CheckInSeq(Agent a) {
 	    super(a);
@@ -139,7 +142,8 @@ abstract class Responder extends FSMBehaviour {
 
     private static class HandleOutOfSeq extends OneShotBehaviour {
 
-	private static final long     serialVersionUID = 4487495895818005L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818005L;
 
 	public HandleOutOfSeq(Agent a) {
 	    super(a);

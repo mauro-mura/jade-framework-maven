@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.proto;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 import jade.core.AID;
@@ -61,6 +62,7 @@ import jade.lang.acl.MessageTemplate;
 
 public class SimpleAchieveREResponder extends SimpleBehaviour implements FIPANames.InteractionProtocol {
 
+	@Serial
 	private static final long serialVersionUID = 2894538391832870443L;
 	private final static int WAITING_MSG_STATE = 0;
 	private final static int PREPARE_RESPONSE_STATE = 1;

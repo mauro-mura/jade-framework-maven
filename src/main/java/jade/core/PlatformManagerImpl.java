@@ -380,8 +380,8 @@ public class PlatformManagerImpl implements PlatformManager {
 			GenericCommand gCmd = new GenericCommand(Service.DEAD_NODE, null, null);
 			gCmd.addParam(dsc);
 			Object result = myCommandProcessor.processIncoming(gCmd);
-			if (result instanceof Throwable) {
-				myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_NODE command. Node is " + dsc.getName(), (Throwable) result);
+			if (result instanceof Throwable throwable) {
+				myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_NODE command. Node is " + dsc.getName(), throwable);
 			}
 		}
 	}
@@ -482,8 +482,8 @@ public class PlatformManagerImpl implements PlatformManager {
 			}
 			// Clear the cache 
 			Service svc = e.getService();
-			if (svc instanceof BaseService) {
-				((BaseService) svc).clearCachedSlice(sliceKey);
+			if (svc instanceof BaseService service) {
+				service.clearCachedSlice(sliceKey);
 			}
 
 			NodeDescriptor dsc = getDescriptor(sliceKey);
@@ -500,8 +500,8 @@ public class PlatformManagerImpl implements PlatformManager {
 				GenericCommand gCmd = new GenericCommand(Service.DEAD_SLICE, serviceKey, null);
 				gCmd.addParam(sliceKey);
 				Object result = myCommandProcessor.processIncoming(gCmd);
-				if (result instanceof Throwable) {
-					myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_SLICE command. Service is " + serviceKey + " node is " + sliceKey, (Throwable) result);
+				if (result instanceof Throwable throwable) {
+					myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_SLICE command. Service is " + serviceKey + " node is " + sliceKey, throwable);
 				}
 			}
 		}
@@ -566,8 +566,8 @@ public class PlatformManagerImpl implements PlatformManager {
 		GenericCommand gCmd = new GenericCommand(Service.NEW_REPLICA, null, null);
 		gCmd.addParam(newReplica.getLocalAddress());
 		Object result = myCommandProcessor.processIncoming(gCmd);
-		if (result instanceof Throwable) {
-			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_REPLICA command. Replica address is " + newReplica.getLocalAddress(), (Throwable) result);
+		if (result instanceof Throwable throwable) {
+			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_REPLICA command. Replica address is " + newReplica.getLocalAddress(), throwable);
 		}
 	}
 
@@ -656,8 +656,8 @@ public class PlatformManagerImpl implements PlatformManager {
 		GenericCommand gCmd = new GenericCommand(Service.DEAD_REPLICA, null, null);
 		gCmd.addParam(address);
 		Object result = myCommandProcessor.processIncoming(gCmd);
-		if (result instanceof Throwable) {
-			myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_REPLICA command. Replica address is " + address, (Throwable) result);
+		if (result instanceof Throwable throwable) {
+			myLogger.log(Logger.WARNING, "Unexpected error processing DEAD_REPLICA command. Replica address is " + address, throwable);
 		}
 	}
 
@@ -684,8 +684,8 @@ public class PlatformManagerImpl implements PlatformManager {
 			GenericCommand gCmd = new GenericCommand(Service.ADOPTED_NODE, null, null);
 			gCmd.addParam(dsc);
 			Object result = myCommandProcessor.processIncoming(gCmd);
-			if (result instanceof Throwable) {
-				myLogger.log(Logger.WARNING, "Unexpected error processing ADOPTED_NODE command. Node is " + dsc.getName(), (Throwable) result);
+			if (result instanceof Throwable throwable) {
+				myLogger.log(Logger.WARNING, "Unexpected error processing ADOPTED_NODE command. Node is " + dsc.getName(), throwable);
 			}
 			myLogger.log(Logger.INFO, "Node <" + n.getName() + "> adopted");
 		} else {
@@ -758,10 +758,10 @@ public class PlatformManagerImpl implements PlatformManager {
 		GenericCommand gCmd = new GenericCommand(Service.NEW_NODE, null, null);
 		gCmd.addParam(dsc);
 		Object result = myCommandProcessor.processIncoming(gCmd);
-		if (result instanceof JADESecurityException) {
-			throw (JADESecurityException) result;
-		} else if (result instanceof Throwable) {
-			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_NODE command. Node is " + dsc.getName(), (Throwable) result);
+		if (result instanceof JADESecurityException exception) {
+			throw exception;
+		} else if (result instanceof Throwable throwable) {
+			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_NODE command. Node is " + dsc.getName(), throwable);
 		}
 	}
 	
@@ -769,8 +769,8 @@ public class PlatformManagerImpl implements PlatformManager {
 		GenericCommand gCmd = new GenericCommand(Service.NEW_SLICE, serviceName, null);
 		gCmd.addParam(sliceKey);
 		Object result = myCommandProcessor.processIncoming(gCmd);
-		if (result instanceof Throwable) {
-			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_SLICE command. Service is " + serviceName + " node is " + sliceKey, (Throwable) result);
+		if (result instanceof Throwable throwable) {
+			myLogger.log(Logger.WARNING, "Unexpected error processing NEW_SLICE command. Service is " + serviceName + " node is " + sliceKey, throwable);
 		}
 	}
 	

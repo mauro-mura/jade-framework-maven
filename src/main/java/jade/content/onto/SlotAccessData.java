@@ -29,6 +29,7 @@ import jade.content.Term;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -37,6 +38,7 @@ import java.util.Set;
 
 class SlotAccessData implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -2333256712004480848L;
 	Class<?> type;
 	transient Method getter;

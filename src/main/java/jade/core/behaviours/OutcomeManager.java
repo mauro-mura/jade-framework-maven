@@ -25,6 +25,7 @@ package jade.core.behaviours;
 
 
 
+import java.io.Serial;
 import java.io.Serializable;
 import jade.util.Logger;
 
@@ -35,6 +36,7 @@ import jade.util.Logger;
  * @author Moreno LAGO
  */
 public class OutcomeManager implements Serializable {
+	@Serial
 	private static final long serialVersionUID = -87842234567654L;
 
 	public static final int OK = 1;

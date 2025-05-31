@@ -41,9 +41,9 @@ class RegisterRemoteAgentAction extends AgentAction {
 
   public void doAction(AgentTree.AgentNode node ) {
 
-    	if(node instanceof AgentTree.RemoteAgentNode){
+    	if(node instanceof AgentTree.RemoteAgentNode agentNode){
 	  		//System.out.println("Register Remote Agent with local AMS");
-    	  myRMA.registerRemoteAgentWithAMS(((AgentTree.RemoteAgentNode)node).getAMSDescription());
+    	  myRMA.registerRemoteAgentWithAMS(agentNode.getAMSDescription());
     		
     	}
   }

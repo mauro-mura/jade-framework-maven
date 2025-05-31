@@ -38,6 +38,8 @@ package jade.imtp.leap.exception;
  * @author Giovanni Caire - TILAB
  * @version 0.1
  */
+import java.io.Serial;
+
 import jade.util.WrapperException;
 
 /**
@@ -45,6 +47,7 @@ import jade.util.WrapperException;
  */
 public class ICPException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = -4221227137314046325L;
 
 	/**

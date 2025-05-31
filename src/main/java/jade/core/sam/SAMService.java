@@ -212,7 +212,7 @@ public class SAMService extends BaseService {
 			for (int i = 0; i < handlerClasses.size(); ++i) {
 				String className = handlerClasses.get(i);
 				myLogger.log(Logger.CONFIG, "Loading SAMInfoHandler class = " + className + "...");
-				handlers[i] = (SAMInfoHandler) Class.forName(className).newInstance();
+				handlers[i] = (SAMInfoHandler) Class.forName(className).getDeclaredConstructor().newInstance();
 				handlers[i].initialize(myProfile);
 				myLogger.log(Logger.CONFIG, "SAMInfoHandler of class = " + className + " successfully initialized");
 			}
@@ -390,8 +390,8 @@ public class SAMService extends BaseService {
 		void addProvider(AverageMeasureProvider provider) {
 			providers.add(provider);
 
-			if (provider instanceof MediatedMeasureProvider) {
-				connect((MediatedMeasureProvider) provider);
+			if (provider instanceof MediatedMeasureProvider measureProvider) {
+				connect(measureProvider);
 			}
 		}
 

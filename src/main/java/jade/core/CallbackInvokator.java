@@ -25,6 +25,7 @@ package jade.core;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.lang.reflect.*;
 
 import jade.util.Logger;
@@ -39,6 +40,7 @@ import jade.util.Logger;
 public class CallbackInvokator implements java.io.Serializable {
 
 	private Logger myLogger = Logger.getMyLogger(this.getClass().getName());
+	@Serial
 	private static final long serialVersionUID = -5610398426819185225L;
 
 	// Package-scoped constructor to avoid creation outside the

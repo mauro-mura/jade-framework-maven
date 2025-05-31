@@ -24,7 +24,10 @@ Boston, MA  02111-1307, USA.
 package jade.domain.FIPAAgentManagement;
 
 import jade.content.Concept;
+
 import jade.core.AID;
+
+import java.io.Serial;
 
 /**
  * This class implements the concept of the fipa-agent-management ontology
@@ -38,6 +41,7 @@ import jade.core.AID;
  */
 public class AMSAgentDescription implements Concept {
 
+	@Serial
 	private static final long serialVersionUID = -357011247559314243L;
 
 	/**

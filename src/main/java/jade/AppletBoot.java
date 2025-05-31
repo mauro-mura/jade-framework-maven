@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade;
 
 import java.applet.Applet;
+import java.io.Serial;
 
 import jade.core.MicroRuntime;
 import jade.util.leap.Properties;
@@ -37,6 +38,7 @@ import jade.util.leap.Properties;
  */
 public class AppletBoot extends Applet implements Runnable {
 
+	@Serial
 	private static final long serialVersionUID = 8385723796333586077L;
 
 // Start-up the JADE runtime system

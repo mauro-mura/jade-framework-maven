@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.rma;
 
+import java.io.Serial;
+
 import jade.gui.StringDlg;
 
 /**
@@ -33,7 +35,8 @@ import jade.gui.StringDlg;
  *          4970 $
  */
 class AddRemotePlatformFromURLAction extends FixedAction {
-	
+
+	@Serial
 	private static final long serialVersionUID = 7934682763169541689L;
 	private rma myRMA;
 	private MainWindow main;

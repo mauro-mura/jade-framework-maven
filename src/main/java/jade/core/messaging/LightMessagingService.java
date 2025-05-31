@@ -542,8 +542,8 @@ public class LightMessagingService extends BaseService
                 cmd.setReturnValue(t);
             }
 
-            if (cmd instanceof VerticalCommand) {
-                return (VerticalCommand) cmd;
+            if (cmd instanceof VerticalCommand command) {
+                return command;
             } else {
                 return null;
             }

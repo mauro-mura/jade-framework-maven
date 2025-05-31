@@ -113,129 +113,129 @@ class DeliverableDataOutputStream extends DataOutputStream {
 
 				// Directly handle serialization of classes that must be
 				// serialized more frequently
-				if (o instanceof HorizontalCommand) {
+				if (o instanceof HorizontalCommand command) {
 					writeByte(Serializer.HORIZONTALCOMMAND_ID);
-					serializeHorizontalCommand((HorizontalCommand)o);
+					serializeHorizontalCommand(command);
 				}
-				else if (o instanceof ACLMessage) {                   // ACLMessage
+				else if (o instanceof ACLMessage message2) {                   // ACLMessage
 					writeByte(Serializer.ACL_ID);
-					serializeACL((ACLMessage) o);
+					serializeACL(message2);
 				} 
-				else if (o instanceof AID) {                     // AID
+				else if (o instanceof AID iD1) {                     // AID
 					writeByte(Serializer.AID_ID);
-					serializeAID((AID) o);
+					serializeAID(iD1);
 				} 
-				else if (o instanceof AID[]) {                   // AID array
+				else if (o instanceof AID[] iDs1) {                   // AID array
 					writeByte(Serializer.AIDARRAY_ID);
-					serializeAIDArray((AID[]) o);
+					serializeAIDArray(iDs1);
 				} 
 				
-				else if (o instanceof MultipleGenericMessage) {  // MultipleGenericMessage
+				else if (o instanceof MultipleGenericMessage message1) {  // MultipleGenericMessage
 					writeByte(Serializer.MULTIPLEGENERICMESSAGE_ID);
-					serializeMultipleGenericMessage((MultipleGenericMessage) o);
+					serializeMultipleGenericMessage(message1);
 				} 
 				
-				else if (o instanceof GenericMessage) {          // GenericMessage
+				else if (o instanceof GenericMessage message) {          // GenericMessage
 					writeByte(Serializer.GENERICMESSAGE_ID);
-					serializeGenericMessage((GenericMessage) o);
+					serializeGenericMessage(message);
 				} 
-				else if (o instanceof String) {                  // String
+				else if (o instanceof String string) {                  // String
 					writeByte(Serializer.STRING_ID);
-					writeUTF((String) o);
+					writeUTF(string);
 				} 
-				else if (o instanceof NodeDescriptor) {    // NodeDescriptor
+				else if (o instanceof NodeDescriptor descriptor2) {    // NodeDescriptor
 					writeByte(Serializer.NODEDESCRIPTOR_ID);
-					serializeNodeDescriptor((NodeDescriptor) o);
+					serializeNodeDescriptor(descriptor2);
 				} 
-				else if (o instanceof ContainerID) {             // ContainerID
+				else if (o instanceof ContainerID iD) {             // ContainerID
 					writeByte(Serializer.CONTAINERID_ID);
-					serializeContainerID((ContainerID) o);
+					serializeContainerID(iD);
 				} 
-				else if (o instanceof ContainerID[]) {             // ContainerID[]
+				else if (o instanceof ContainerID[] iDs) {             // ContainerID[]
 					writeByte(Serializer.CONTAINERIDARRAY_ID);
-					serializeContainerIDArray((ContainerID[]) o);
+					serializeContainerIDArray(iDs);
 				} 
-				else if (o instanceof Boolean) {                 // Boolean
+				else if (o instanceof Boolean boolean1) {                 // Boolean
 					writeByte(Serializer.BOOLEAN_ID);
-					writeBoolean(((Boolean) o).booleanValue());
+					writeBoolean(boolean1.booleanValue());
 				} 
-				else if (o instanceof Integer) {                 // Integer
+				else if (o instanceof Integer integer) {                 // Integer
 					writeByte(Serializer.INTEGER_ID);
-					writeInt(((Integer) o).intValue());
+					writeInt(integer.intValue());
 				} 
-				else if (o instanceof Date) {                    // Date
+				else if (o instanceof Date date) {                    // Date
 					writeByte(Serializer.DATE_ID);
-					serializeDate((Date) o);
+					serializeDate(date);
 				} 
-				else if (o instanceof String[]) {                // Array of Strings
+				else if (o instanceof String[] strings) {                // Array of Strings
 					writeByte(Serializer.STRINGARRAY_ID);
-					serializeStringArray((String[]) o);
+					serializeStringArray(strings);
 				} 
-				else if (o instanceof Vector) {                  // Vector
+				else if (o instanceof Vector vector) {                  // Vector
 					writeByte(Serializer.VECTOR_ID);
-					serializeVector((Vector) o);
+					serializeVector(vector);
 				} 
-				else if (o instanceof MTPDescriptor) {           // MTPDescriptor
+				else if (o instanceof MTPDescriptor descriptor1) {           // MTPDescriptor
 					writeByte(Serializer.MTPDESCRIPTOR_ID);
-					serializeMTPDescriptor((MTPDescriptor) o);
+					serializeMTPDescriptor(descriptor1);
 				}
-				else if (o instanceof Node) {                    // Node
+				else if (o instanceof Node node) {                    // Node
 					writeByte(Serializer.NODE_ID);
-					serializeNode((Node) o);
+					serializeNode(node);
 				}
-				else if (o instanceof PlatformManager) {         // PlatformManager
+				else if (o instanceof PlatformManager manager) {         // PlatformManager
 					writeByte(Serializer.PLATFORMMANAGER_ID);
-					serializePlatformManager((PlatformManager) o);
+					serializePlatformManager(manager);
 				}
-				else if (o instanceof Node[]) {                  // Array of Node
+				else if (o instanceof Node[] nodes) {                  // Array of Node
 					writeByte(Serializer.NODEARRAY_ID);
-					serializeNodeArray((Node[]) o);
+					serializeNodeArray(nodes);
 				}
-				else if (o instanceof ArrayList) {               // ArrayList
+				else if (o instanceof ArrayList list) {               // ArrayList
 					writeByte(Serializer.ARRAYLIST_ID);
-					serializeArrayList((ArrayList) o);
+					serializeArrayList(list);
 				}
-				else if (o instanceof byte[]) {                  // Byte Array
+				else if (o instanceof byte[] bytes1) {                  // Byte Array
 					writeByte(Serializer.BYTEARRAY_ID);
-					serializeByteArray((byte[]) o);
+					serializeByteArray(bytes1);
 				}
-				else if (o instanceof Envelope) {                // Envelope 
+				else if (o instanceof Envelope envelope) {                // Envelope 
 					writeByte(Serializer.ENVELOPE_ID);
-					serializeEnvelope((Envelope) o);
+					serializeEnvelope(envelope);
 				}
-				else if (o instanceof JICPAddress) {             // JICPAddress 
+				else if (o instanceof JICPAddress address1) {             // JICPAddress 
 					writeByte(Serializer.JICPADDRESS_ID);
-					serializeTransportAddress((JICPAddress) o);
+					serializeTransportAddress(address1);
 				}
-				else if (o instanceof HTTPAddress) {             // HTTPAddress 
+				else if (o instanceof HTTPAddress address) {             // HTTPAddress 
 					writeByte(Serializer.HTTPADDRESS_ID);
-					serializeTransportAddress((HTTPAddress) o);
+					serializeTransportAddress(address);
 				}
-				else if (o instanceof Properties) {              // Properties 
+				else if (o instanceof Properties properties) {              // Properties 
 					writeByte(Serializer.PROPERTIES_ID);
-					serializeProperties((Properties) o);
+					serializeProperties(properties);
 				}
-				else if (o instanceof ReceivedObject) {          // ReceivedObject
+				else if (o instanceof ReceivedObject object) {          // ReceivedObject
 					writeByte(Serializer.RECEIVEDOBJECT_ID);
-					serializeReceivedObject((ReceivedObject) o);
+					serializeReceivedObject(object);
 				}
-				else if (o instanceof ServiceDescriptor) {       // ServiceDescriptor
+				else if (o instanceof ServiceDescriptor descriptor) {       // ServiceDescriptor
 					writeByte(Serializer.SERVICEDESCRIPTOR_ID);
-					serializeServiceDescriptor((ServiceDescriptor) o);
+					serializeServiceDescriptor(descriptor);
 				}
-				else if (o instanceof SliceProxy) {      // SliceProxy
+				else if (o instanceof SliceProxy proxy1) {      // SliceProxy
 					writeByte(Serializer.SLICEPROXY_ID);
-					serializeSliceProxy((SliceProxy) o);
+					serializeSliceProxy(proxy1);
 				}
 				//#DOTNET_EXCLUDE_BEGIN
-				else if (o instanceof Service.SliceProxy) {      // Service.SliceProxy
+				else if (o instanceof Service.SliceProxy proxy) {      // Service.SliceProxy
 					writeByte(Serializer.SERVICESLICEPROXY_ID);
-					serializeServiceSliceProxy((Service.SliceProxy) o);
+					serializeServiceSliceProxy(proxy);
 				}
 				//#DOTNET_EXCLUDE_END
-				else if(o instanceof Property) {                   // Property
+				else if(o instanceof Property property) {                   // Property
 					writeByte(Serializer.PROPERTY_ID);
-					serializeProperty((Property) o);
+					serializeProperty(property);
 				}
 				/*#MIDP_INCLUDE_BEGIN
 		        // In J2SE and PJAVA we use Java serialization to transport 
@@ -654,9 +654,9 @@ class DeliverableDataOutputStream extends DataOutputStream {
 			writeBoolean(n.hasPlatformManager());
 
 			NodeStub stub = null;
-			if (n instanceof NodeStub) {
+			if (n instanceof NodeStub nodeStub) {
 				// This is already a stub --> serialize it directly
-				stub = (NodeStub) n;
+				stub = nodeStub;
 			}
 			else {
 				// This is a real node --> get a stub and serialize it
@@ -694,9 +694,9 @@ class DeliverableDataOutputStream extends DataOutputStream {
 			writeString(pm.getLocalAddress());
 
 			PlatformManagerStub stub = null;
-			if (pm instanceof PlatformManagerStub) {
+			if (pm instanceof PlatformManagerStub managerStub) {
 				// This is already a stub --> serialize it directly
-				stub = (PlatformManagerStub) pm;
+				stub = managerStub;
 			}
 			else {
 				// This is a real PlatformManager --> get a stub and serialize it
@@ -902,7 +902,7 @@ class DeliverableDataOutputStream extends DataOutputStream {
 		// DEBUG
 		// System.out.println(serName);
 		try {
-			Serializer s = (Serializer) Class.forName(serName).newInstance();
+			Serializer s = (Serializer) Class.forName(serName).getDeclaredConstructor().newInstance();
 
 			return s;
 		} 

@@ -966,8 +966,7 @@ public class NotificationService extends BaseService {
 			Iterator it = l.iterator();
 			while (it.hasNext()) {
 				Object obj = it.next();
-				if (obj instanceof ToolNotifier) {
-					ToolNotifier tni = (ToolNotifier) obj;
+				if (obj instanceof ToolNotifier tni) {
 					AID id = tni.getObserver();
 					if (id.equals(observerName)) {
 						tn = tni;

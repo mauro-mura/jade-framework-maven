@@ -23,6 +23,7 @@
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.util.Collection;
 
 //#CUSTOM_EXCLUDE_FILE
@@ -48,6 +49,7 @@ import jade.core.Agent;
  */
 public class ParallelBehaviour extends CompositeBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -7987923934318657008L;
 	/**
 	 * Predefined constant to be used in the constructor to create a

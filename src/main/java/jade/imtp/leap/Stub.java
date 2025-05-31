@@ -37,6 +37,7 @@ package jade.imtp.leap;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ import jade.util.Logger;
  */
 class Stub implements java.io.Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -8203342284932897964L;
 	protected static final String UNRCH_ERROR_MSG = "Remote object unreachable";
 	protected static final String DISP_ERROR_MSG = "Dispatcher error";

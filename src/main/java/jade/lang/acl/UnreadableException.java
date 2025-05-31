@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.lang.acl;
 
+import java.io.Serial;
+
 /**
  * Signals that an error occured during the decoding of the content of an
  * ACLMessage using Base64.
@@ -32,6 +34,7 @@ package jade.lang.acl;
  */
 
 public class UnreadableException extends Exception {
+	@Serial
 	private static final long serialVersionUID = -8379591033976448314L;
 
 	/**

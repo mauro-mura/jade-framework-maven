@@ -24,6 +24,8 @@
  */
 package jade.content.onto.basic;
 
+import java.io.Serial;
+
 import jade.content.*;
 
 /**
@@ -35,5 +37,6 @@ import jade.content.*;
  */
 public class TrueProposition implements Predicate {
 
+	@Serial
 	private static final long serialVersionUID = 8236439971379455463L;
 }

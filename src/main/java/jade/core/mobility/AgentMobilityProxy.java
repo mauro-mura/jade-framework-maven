@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.mobility;
 
+import java.io.Serial;
 import java.util.List;
 
 import jade.core.AID;
@@ -51,6 +52,7 @@ import jade.security.JADESecurityException;
  */
 public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice {
 
+	@Serial
 	private static final long serialVersionUID = 9178261487411863141L;
 
 	public void createAgent(AID agentID, byte[] serializedInstance, String classSiteName, boolean isCloned, boolean startIt) throws IMTPException, ServiceException, NotFoundException, NameClashException, JADESecurityException {
@@ -66,17 +68,17 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if(result instanceof Throwable) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception3) {
+					throw exception3;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NameClashException) {
-					throw (NameClashException)result;
+				else if(result instanceof NameClashException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof JADESecurityException) {
-					throw (JADESecurityException)result;
+				else if(result instanceof JADESecurityException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -98,11 +100,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ClassNotFoundException) {
-					throw (ClassNotFoundException)result;
+				else if(result instanceof ClassNotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -125,11 +127,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -152,11 +154,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -176,8 +178,8 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -202,11 +204,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -230,11 +232,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object res = n.accept(cmd);
 			if(res instanceof Throwable) {
-				if(res instanceof IMTPException) {
-					throw (IMTPException)res;
+				if(res instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(res instanceof NotFoundException) {
-					throw (NotFoundException)res;
+				else if(res instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)res);
@@ -257,17 +259,17 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception3) {
+					throw exception3;
 				}
-				else if(result instanceof JADESecurityException) {
-					throw (JADESecurityException)result;
+				else if(result instanceof JADESecurityException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NameClashException) {
-					throw (NameClashException)result;
+				else if(result instanceof NameClashException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -289,11 +291,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -314,11 +316,11 @@ public class AgentMobilityProxy extends SliceProxy implements AgentMobilitySlice
 			Object result = n.accept(cmd);
 
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

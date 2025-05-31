@@ -179,7 +179,7 @@ class PersistentDeliveryManager {
 			if (FILE_STORAGE_SHORTCUT.equalsIgnoreCase(storageClass)) {
 				storageClass = FILE_STORAGE;
 			}
-			storage = (MessageStorage)Class.forName(storageClass).newInstance();
+			storage = (MessageStorage)Class.forName(storageClass).getDeclaredConstructor().newInstance();
 			storage.init(p);
 
 			// Load all data persisted from previous sessions

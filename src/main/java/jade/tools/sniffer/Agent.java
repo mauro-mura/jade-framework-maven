@@ -91,8 +91,7 @@ public class Agent implements Serializable{
 
 	public boolean equals(Object o) {
 
-		if(o instanceof Agent) {
-			Agent ag = (Agent)o;
+		if(o instanceof Agent ag) {
 			return agentName.equalsIgnoreCase(ag.agentName);
 		}
 		else {

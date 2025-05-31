@@ -24,12 +24,15 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 /**
  * An extended abstract descriptor that can hold a generic primitive types 
  * (eg. java.math.BigDecimal) not supported by <code>AbsPrimitive</code>.
  */
 public class AbsExtendedPrimitive implements AbsTerm {
-	
+
+	@Serial
 	private static final long serialVersionUID = 5950692625166222158L;
 
 	public static final int ABS_EXTENDED_PRIMITIVE = 10;
@@ -134,8 +137,8 @@ public class AbsExtendedPrimitive implements AbsTerm {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof AbsExtendedPrimitive)
-			return get().equals(((AbsExtendedPrimitive) obj).get());
+		if (obj instanceof AbsExtendedPrimitive primitive)
+			return get().equals(primitive.get());
 		else
 			return false;
 	}

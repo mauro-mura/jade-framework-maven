@@ -158,8 +158,7 @@ public class BEAgentManagementService extends BaseService {
 			Agent previous = null;
 			// If an actual agent instance was passed as second argument, then this agent 
 			// is started within the Back-End container
-			if((params.length > 1) && (params[1] instanceof Agent))  {
-				Agent instance = (Agent)params[1];
+			if((params.length > 1) && (params[1] instanceof Agent instance))  {
 				// If the instance is an AgentImage, this is a re-addition of an agent
 				// living in the FE --> just do nothing
 				if (!(instance instanceof BackEndContainer.AgentImage)) { 

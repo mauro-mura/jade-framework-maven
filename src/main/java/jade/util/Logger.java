@@ -26,6 +26,7 @@ package jade.util;
 
 import java.io.ObjectStreamException;
 import java.io.PrintStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 //#ANDROID_EXCLUDE_END
@@ -186,6 +187,7 @@ public class Logger extends java.util.logging.Logger implements Serializable {
 
 	private static class DummyLogger implements Serializable {
 
+		@Serial
 		private static final long serialVersionUID = 3973559198940011601L;
 		private String name;
 

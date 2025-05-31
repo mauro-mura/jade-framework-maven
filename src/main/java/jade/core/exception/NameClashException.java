@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.exception;
 
+import java.io.Serial;
+
 //#APIDOC_EXCLUDE_FILE
 
 /**
@@ -35,6 +37,7 @@ package jade.core.exception;
  */
 public class NameClashException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = 6048730562334762984L;
 	/**
 	 * This constant string is used to distinguish a name clash from other reasons

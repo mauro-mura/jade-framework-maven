@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain.FIPAAgentManagement;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,6 +40,7 @@ import jade.content.Concept;
  */
 public class ServiceDescription implements Concept {
 
+	@Serial
 	private static final long serialVersionUID = 7890180253333545290L;
 	private String name;
 	private String type;

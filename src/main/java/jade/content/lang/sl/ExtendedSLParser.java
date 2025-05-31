@@ -897,7 +897,7 @@ class ExtendedSLParser implements ExtendedSLParserConstants {
                     double d1;
                    try {
                     // J2ME incompatible d1=Double.parseDouble(t.image); 
-                    d1=(new Double(t.image)).doubleValue();
+                    d1=(Double.valueOf(t.image)).doubleValue();
                     val=AbsPrimitive.wrap(d1);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
@@ -909,7 +909,7 @@ class ExtendedSLParser implements ExtendedSLParserConstants {
                     double d2;
                    try {
                     // J2ME incompatible d2=Double.parseDouble(t.image); 
-                    d2=(new Double(t.image)).doubleValue();
+                    d2=(Double.valueOf(t.image)).doubleValue();
                     val=AbsPrimitive.wrap(d2);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
@@ -921,7 +921,7 @@ class ExtendedSLParser implements ExtendedSLParserConstants {
                  String floatStr;
                   try {
                    floatStr = t.image.substring(0, t.image.length() - 1);
-                   val = AbsPrimitive.wrap((new Float(floatStr)).floatValue());
+                   val = AbsPrimitive.wrap((Float.valueOf(floatStr)).floatValue());
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
                     val=AbsPrimitive.wrap(t.image);

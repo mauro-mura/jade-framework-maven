@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.sniffer;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ Javadoc documentation for the file
 
 public class DoSnifferAction extends AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 4193973823625844982L;
 	private MainPanel mainPanel;
 	private Agent agent;

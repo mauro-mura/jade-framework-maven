@@ -1,7 +1,10 @@
 package jade.imtp.leap.exception;
 
+import java.io.Serial;
+
 public class ICPDispatchException extends ICPException {
 
+	@Serial
 	private static final long serialVersionUID = 8094024808070587354L;
 	
 	private int sessionId = -1;

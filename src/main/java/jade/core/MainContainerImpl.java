@@ -138,7 +138,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 			df = new df();
 		} else {
 			try {
-				df = (df) Class.forName(dfClass).newInstance();
+				df = (df) Class.forName(dfClass).getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
 				throw new ProfileException("Error loading DF agent", e);
 			}
@@ -258,7 +258,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 				String className = replicatedAgents.get(aid);
 				if (className != null) {
 					myLogger.log(Logger.INFO, "Restarting replicated agent " + aid.getName());
-					Agent agent = (Agent) Class.forName(className).newInstance();
+					Agent agent = (Agent) Class.forName(className).getDeclaredConstructor().newInstance();
 					agent.setRestarting(true);
 					localContainer.initAgent(aid, agent, cp, null);
 					localContainer.powerUpLocalAgent(aid);
@@ -528,8 +528,8 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -541,8 +541,8 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -578,20 +578,20 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof NameClashException) {
-				throw (NameClashException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof NotFoundException exception3) {
+				throw exception3;
+			} else if (ret instanceof NameClashException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -609,17 +609,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -635,17 +635,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -661,17 +661,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -687,15 +687,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -711,15 +711,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -742,17 +742,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 
@@ -776,19 +776,19 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof NameClashException) {
-				throw (NameClashException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception3) {
+				throw exception3;
+			} else if (ret instanceof NameClashException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 
@@ -807,12 +807,12 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof JADESecurityException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
 			} else if (ret instanceof Throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
@@ -850,8 +850,8 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 		cmd.setCredentials(requesterCredentials);
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof JADESecurityException) {
-				throw (JADESecurityException) ret;
+			if (ret instanceof JADESecurityException exception) {
+				throw exception;
 			} else if (ret instanceof Throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
@@ -1013,17 +1013,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof MTPException) {
-				throw (MTPException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof MTPException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 
@@ -1053,17 +1053,17 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof MTPException) {
-				throw (MTPException) ret;
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception2) {
+				throw exception2;
+			} else if (ret instanceof IMTPException exception1) {
+				throw new UnreachableException("", exception1);
+			} else if (ret instanceof MTPException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -1086,15 +1086,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 
@@ -1111,15 +1111,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -1135,15 +1135,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}
@@ -1159,15 +1159,15 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NotFoundException) {
-				throw (NotFoundException) ret;
-			} else if (ret instanceof IMTPException) {
-				throw new UnreachableException("", (IMTPException) ret);
-			} else if (ret instanceof Throwable) {
+			if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof IMTPException exception) {
+				throw new UnreachableException("", exception);
+			} else if (ret instanceof Throwable throwable) {
 				// In methods called by the AMS to serve agents requests we throw
 				// a RuntimeException that will result in a FAILURE message sent
 				// back to the requester
-				throw new RuntimeException(((Throwable) ret).getMessage());
+				throw new RuntimeException(throwable.getMessage());
 			}
 		}
 	}

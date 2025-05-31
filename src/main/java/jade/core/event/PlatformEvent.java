@@ -23,6 +23,8 @@
 
 package jade.core.event;
 
+import java.io.Serial;
+
 import jade.core.AID;
 import jade.core.ContainerID;
 
@@ -38,6 +40,7 @@ import jade.core.ContainerID;
  */
 public class PlatformEvent extends JADEEvent implements jade.wrapper.PlatformEvent {
 
+	@Serial
 	private static final long serialVersionUID = -542096199244056306L;
 	public static final int ADDED_CONTAINER = 1;
 	public static final int REMOVED_CONTAINER = 2;
@@ -281,8 +284,8 @@ public class PlatformEvent extends JADEEvent implements jade.wrapper.PlatformEve
 	 */
 	public void setSource(Object s) {
 		source = s;
-		if (source instanceof jade.wrapper.PlatformController) {
-			myPlatformName = ((jade.wrapper.PlatformController) source).getName();
+		if (source instanceof jade.wrapper.PlatformController controller) {
+			myPlatformName = controller.getName();
 		}
 	}
 

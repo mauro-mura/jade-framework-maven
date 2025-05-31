@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.content.onto.exception;
 
+import java.io.Serial;
+
 import jade.content.onto.BeanOntology;
 
 /**
@@ -33,6 +35,7 @@ import jade.content.onto.BeanOntology;
  */
 public class BeanOntologyException extends OntologyException {
 
+	@Serial
 	private static final long serialVersionUID = -5746366221129360201L;
 
 	public BeanOntologyException(String message) {

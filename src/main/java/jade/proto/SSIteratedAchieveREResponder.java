@@ -25,6 +25,10 @@ package jade.proto;
 
 //#CUSTOM_EXCLUDE_FILE
 
+import java.io.Serial;
+
+//#CUSTOM_EXCLUDE_FILE
+
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -229,6 +233,7 @@ public class SSIteratedAchieveREResponder extends SSResponder {
 	 Inner class RequestHandler
 	 */
 	private static class RequestHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 5463827646358001L;
 		
 		public RequestHandler(Agent a) {
@@ -253,6 +258,7 @@ public class SSIteratedAchieveREResponder extends SSResponder {
 	 Inner class CancelHandler
 	 */
 	private static class CancelHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 5463827646358002L;
 		
 		public CancelHandler(Agent a) {

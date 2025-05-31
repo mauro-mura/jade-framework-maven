@@ -27,16 +27,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Date;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.io.PrintStream;
-import java.io.IOException;
-import java.io.EOFException;
+import java.io.*;
 
 import jade.util.leap.Properties;
 
@@ -66,6 +57,7 @@ import jade.util.leap.Properties;
  */
 public class ExtendedProperties extends Properties {
 
+	@Serial
 	private static final long serialVersionUID = 1085258525585273342L;
 
 	public static final String IMPORT_KEY="import";
@@ -289,8 +281,7 @@ public class ExtendedProperties extends Properties {
 	 */
 	public Object get(Object aKey) {
 		Object value = null;
-		if (aKey instanceof String) {
-			String strKey = (String) aKey;
+		if (aKey instanceof String strKey) {
 			String testKey = (strKey.endsWith("!")) ? strKey.substring(0, strKey.length()) : strKey;
 			// Try WITHOUT the '!' for sure
 			value = super.get(testKey);
@@ -299,8 +290,7 @@ public class ExtendedProperties extends Properties {
 				value = super.get(testKey + "!" );
 			}
 			
-			if (value != null && value instanceof String) {
-				String strValue = (String) value;
+			if (value != null && value instanceof String strValue) {
 				// This synchronized block prevents a "Circular argument substitution key" error in case two threads
 				// search for the same key in parallel
 				synchronized (keyNames) {
@@ -330,9 +320,9 @@ public class ExtendedProperties extends Properties {
 	 * @return The previous value of the specified key, or null if it did not have one.
 	 */
 	public Object put(Object aKey, Object aValue) {
-		if (aKey instanceof String) {
+		if (aKey instanceof String string) {
 			// Substitutions on keys are done at insertion time
-			String actualKey = doSubstitutions((String) aKey);
+			String actualKey = doSubstitutions(string);
 	
 			// aKey may have the form kkk or kkk!. In both cases if a property with key = kkk! exists throws an exception
 			String testKey = (actualKey.endsWith("!")) ? actualKey.substring(0, actualKey.length()) : actualKey;

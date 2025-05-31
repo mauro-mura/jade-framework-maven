@@ -49,11 +49,11 @@ class NodeSkel extends Skeleton {
 			HorizontalCommand cmd = (HorizontalCommand) command.getParamAt(0);
 			Object result = myNode.accept(cmd);
 
-			if (result instanceof Throwable) {
+			if (result instanceof Throwable throwable) {
 				if (myLogger.isLoggable(Logger.FINE)) {
 					// If FINE logging, print the complete stack trace
 					myLogger.log(Logger.WARNING, "Error serving H-Command " + cmd.getService() + '/' + cmd.getName(),
-							(Throwable) result);
+							throwable);
 				} else {
 					myLogger.log(Logger.WARNING,
 							"Error serving H-Command " + cmd.getService() + '/' + cmd.getName() + ": " + result);

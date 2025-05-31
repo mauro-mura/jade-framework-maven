@@ -1,5 +1,6 @@
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -50,6 +51,7 @@ import jade.util.Logger;
  */
 public class OntologyServer extends CyclicBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -2997404961058073783L;
 
 	private static final String[] performativeNames = new String[22];
@@ -214,6 +216,7 @@ public class OntologyServer extends CyclicBehaviour {
 				template = MessageTemplate.and(MessageTemplate.MatchOntology(onto.getName()),
 						new MessageTemplate(new MatchExpression() {
 
+							@Serial
 							private static final long serialVersionUID = 1532444577597724745L;
 
 							public boolean match(ACLMessage msg) {
@@ -319,19 +322,19 @@ public class OntologyServer extends CyclicBehaviour {
 
 	protected Object extractKeyContentElement(ContentElement ce) {
 		// Properly handle the SL action, done and result operators
-		if (ce instanceof Action) {
-			return ((Action) ce).getAction();
-		} else if (ce instanceof Done) {
-			AgentAction act = (AgentAction) ((Done) ce).getAction();
-			if (act instanceof Action) {
-				return ((Action) act).getAction();
+		if (ce instanceof Action action1) {
+			return action1.getAction();
+		} else if (ce instanceof Done done) {
+			AgentAction act = (AgentAction) done.getAction();
+			if (act instanceof Action action) {
+				return action.getAction();
 			} else {
 				return act;
 			}
-		} else if (ce instanceof Result) {
-			AgentAction act = (AgentAction) ((Result) ce).getAction();
-			if (act instanceof Action) {
-				return ((Action) act).getAction();
+		} else if (ce instanceof Result result) {
+			AgentAction act = (AgentAction) result.getAction();
+			if (act instanceof Action action) {
+				return action.getAction();
 			} else {
 				return act;
 			}

@@ -24,11 +24,7 @@
 package jade.lang.acl;
 
 
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.lang.ClassNotFoundException;
 
 
@@ -43,6 +39,7 @@ import jade.util.leap.EmptyIterator;
 import jade.core.AID;
 //#CUSTOM_EXCLUDE_BEGIN
 import jade.domain.FIPAAgentManagement.Envelope;
+
 //#CUSTOM_EXCLUDE_END
 
 /**
@@ -77,6 +74,7 @@ import jade.domain.FIPAAgentManagement.Envelope;
 public class ACLMessage implements Cloneable, Serializable {
 
 	// Explicitly set for compatibility between standard and micro version
+	@Serial
 	private static final long serialVersionUID = 3945353187608998130L;
 
 	/** constant identifying the FIPA performative **/

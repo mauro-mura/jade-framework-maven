@@ -311,8 +311,7 @@ class BeanOntologyBuilder {
 							aggregateType = slotClazz.getComponentType();
 						}
 						Type slotType = getter.getGenericReturnType(); 
-						if (slotType instanceof ParameterizedType) {
-							ParameterizedType slotParameterizedType = (ParameterizedType)slotType;
+						if (slotType instanceof ParameterizedType slotParameterizedType) {
 							Type[] actuals = slotParameterizedType.getActualTypeArguments();
 							// slotType must be an array or a Collection => we expect only 1 item in actuals
 							// get first element
@@ -522,8 +521,8 @@ class BeanOntologyBuilder {
 					// Superclasses do not need to be Concept, Predicate or AgentAction
 					ObjectSchema superSchema = doAddHierarchicalSchema(superClazz);
 					
-					if (schema instanceof ConceptSchema) {
-						((ConceptSchema)schema).addSuperSchema((ConceptSchema)superSchema);
+					if (schema instanceof ConceptSchema conceptSchema) {
+						conceptSchema.addSuperSchema((ConceptSchema)superSchema);
 					} else {
 						((PredicateSchema)schema).addSuperSchema((PredicateSchema)superSchema);
 					}
@@ -540,13 +539,13 @@ class BeanOntologyBuilder {
 					// We add a new schema only for interfaces that extends Concept (if we are dealing with a Concept)
 					// or Predicate (if we are dealing with a Predicate). This is to avoid adding schemas for interfaces
 					// like Serializable, Cloanable....
-					if (schema instanceof ConceptSchema && Concept.class.isAssignableFrom(interfaceClass) && interfaceClass != Concept.class && interfaceClass != AgentAction.class) {
+					if (schema instanceof ConceptSchema conceptSchema && Concept.class.isAssignableFrom(interfaceClass) && interfaceClass != Concept.class && interfaceClass != AgentAction.class) {
 						ObjectSchema superSchema = doAddHierarchicalSchema(interfaceClass);
-						((ConceptSchema)schema).addSuperSchema((ConceptSchema)superSchema);
+						conceptSchema.addSuperSchema((ConceptSchema)superSchema);
 					}
-					else if (schema instanceof PredicateSchema && Predicate.class.isAssignableFrom(interfaceClass) && interfaceClass != Predicate.class) {
+					else if (schema instanceof PredicateSchema predicateSchema && Predicate.class.isAssignableFrom(interfaceClass) && interfaceClass != Predicate.class) {
 						ObjectSchema superSchema = doAddHierarchicalSchema(interfaceClass);
-						((PredicateSchema)schema).addSuperSchema((PredicateSchema)superSchema);
+						predicateSchema.addSuperSchema((PredicateSchema)superSchema);
 					}
 				}
 			}
@@ -599,8 +598,8 @@ class BeanOntologyBuilder {
 			String slotName = entry.getKey().slotName;
 			// Avoid overriding slots defined in super-schemas
 			if (!schema.containsSlot(slotName)) {
-				if (schema instanceof ConceptSchema) {
-					addSlot((ConceptSchema)schema, slotName, entry.getValue(), buildHierarchy);
+				if (schema instanceof ConceptSchema conceptSchema) {
+					addSlot(conceptSchema, slotName, entry.getValue(), buildHierarchy);
 				} else {
 					addSlot((PredicateSchema)schema, slotName, entry.getValue(), buildHierarchy);
 				}

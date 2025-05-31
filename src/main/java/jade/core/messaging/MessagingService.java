@@ -1076,9 +1076,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 			receiverID = resolveLocalAlias(receiverID);
 
 			
-			if (gMsg instanceof MultipleGenericMessage) {
+			if (gMsg instanceof MultipleGenericMessage message) {
 				// Multiple-message delivery case.
-				List<GenericMessage> gmm = ((MultipleGenericMessage) gMsg).getMessages();
+				List<GenericMessage> gmm = message.getMessages();
 				ACLMessage[] mm = new ACLMessage[gmm.size()];
 				int k = 0;
 				for (GenericMessage g : gmm) {
@@ -1374,11 +1374,11 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 						}
 					} catch (Throwable t) {
 						// Re-throw allowed exceptions
-						if (t instanceof IMTPException) {
-							throw (IMTPException) t;
+						if (t instanceof IMTPException exception) {
+							throw exception;
 						}
-						if (t instanceof ServiceException) {
-							throw (ServiceException) t;
+						if (t instanceof ServiceException exception) {
+							throw exception;
 						}
 						// System.err.println("### addRoute() threw " + t.getClass().getName() + "
 						// ###");
@@ -1408,11 +1408,11 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 						}
 					} catch (Throwable t) {
 						// Re-throw allowed exceptions
-						if (t instanceof IMTPException) {
-							throw (IMTPException) t;
+						if (t instanceof IMTPException exception) {
+							throw exception;
 						}
-						if (t instanceof ServiceException) {
-							throw (ServiceException) t;
+						if (t instanceof ServiceException exception) {
+							throw exception;
 						}
 
 						myLogger.log(Logger.WARNING, "### removeRoute() threw " + t + " ###");
@@ -1929,8 +1929,8 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 		
 		// If msg represents a MultipleGenericMessage, recursive call
 		// notifyFailureToSender() for each msg
-		if (msg instanceof MultipleGenericMessage) {
-			for (GenericMessage g : ((MultipleGenericMessage) msg).getMessages()) {
+		if (msg instanceof MultipleGenericMessage message) {
+			for (GenericMessage g : message.getMessages()) {
 				notifyFailureToSender(g, receiver, ie);
 			}
 			return;

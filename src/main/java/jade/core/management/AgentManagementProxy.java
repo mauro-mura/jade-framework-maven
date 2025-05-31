@@ -65,17 +65,17 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception3) {
+					throw exception3;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NameClashException) {
-					throw (NameClashException)result;
+				else if(result instanceof NameClashException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof JADESecurityException) {
-					throw (JADESecurityException)result;
+				else if(result instanceof JADESecurityException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -97,11 +97,11 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -117,16 +117,16 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 		try {
 			GenericCommand cmd = new GenericCommand(H_CHANGEAGENTSTATE, AgentManagementSlice.NAME, null);
 			cmd.addParam(agentID);
-			cmd.addParam(new Integer(newState));
+			cmd.addParam(Integer.valueOf(newState));
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -149,17 +149,17 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception3) {
+					throw exception3;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NameClashException) {
-					throw (NameClashException)result;
+				else if(result instanceof NameClashException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof JADESecurityException) {
-					throw (JADESecurityException)result;
+				else if(result instanceof JADESecurityException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -181,11 +181,11 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -205,11 +205,11 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -229,11 +229,11 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -252,11 +252,11 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

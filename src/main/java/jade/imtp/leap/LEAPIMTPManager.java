@@ -118,7 +118,7 @@ public class LEAPIMTPManager implements IMTPManager {
 			while (it.hasNext()) {
 				Specifier s = it.next();
 				try {
-					ICP peer = (ICP) Class.forName(s.getClassName()).newInstance();
+					ICP peer = (ICP) Class.forName(s.getClassName()).getDeclaredConstructor().newInstance();
 					String id = (s.getArgs() != null ? (String) (s.getArgs()[0]) : null);
 					theDispatcher.addICP(peer, id, theProfile);
 				} catch (Exception e) {
@@ -245,13 +245,13 @@ public class LEAPIMTPManager implements IMTPManager {
 	public Service.Slice createSliceProxy(String serviceName, Class<?> itf, Node where) throws IMTPException {
 		try {
 			Class<?> proxyClass = Class.forName(serviceName + "Proxy");
-			Service.Slice proxy = (Service.Slice) proxyClass.newInstance();
-			if (proxy instanceof SliceProxy) {
-				((SliceProxy) proxy).setNode(where);
+			Service.Slice proxy = (Service.Slice) proxyClass.getDeclaredConstructor().newInstance();
+			if (proxy instanceof SliceProxy sliceProxy1) {
+				sliceProxy1.setNode(where);
 			}
 			// #DOTNET_EXCLUDE_BEGIN
-			else if (proxy instanceof Service.SliceProxy) {
-				((Service.SliceProxy) proxy).setNode(where);
+			else if (proxy instanceof Service.SliceProxy sliceProxy) {
+				sliceProxy.setNode(where);
 			}
 			// #DOTNET_EXCLUDE_END
 			else {

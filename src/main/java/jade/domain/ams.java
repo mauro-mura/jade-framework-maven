@@ -28,6 +28,7 @@ package jade.domain;
 //#APIDOC_EXCLUDE_FILE
 
 import java.io.FileWriter;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,6 +127,7 @@ import jade.util.Logger;
  */
 public class ams extends Agent /*implements AgentManager.Listener*/ {
 
+	@Serial
 	private static final long serialVersionUID = 3475898315310151533L;
 	public static final String PERIODIC_LOG_DELAY = "jade_domain_ams_periodiclogdelay";
 	public static final String MAX_RESULTS = "jade_domain_ams_maxresult";
@@ -199,6 +201,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 				// Activate periodic log
 				addBehaviour(new TickerBehaviour(this, logDelay) {
 
+					@Serial
 					private static final long serialVersionUID = -744613347318291248L;
 
 					public void onTick() {
@@ -252,6 +255,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		SequentialBehaviour sb = new SequentialBehaviour();
 		sb.addSubBehaviour(new WakerBehaviour(this, 1000) {
 
+			@Serial
 			private static final long serialVersionUID = -3980833953970485663L;
 
 			@Override
@@ -785,6 +789,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	 */
 	private class RegisterToolBehaviour extends CyclicBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = 6511422478622393046L;
 		private MessageTemplate subscriptionTemplate;
 
@@ -937,6 +942,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	 */
 	private class DeregisterToolBehaviour extends CyclicBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = 371979452750112963L;
 		private MessageTemplate cancellationTemplate;
 
@@ -989,6 +995,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	 */
 	private class EventManager extends CyclicBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = -2704227384401901064L;
 		private Map<String, Handler> handlers = new HashMap<>();
 
@@ -1559,6 +1566,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	private void sendFailureNotification(final Concept action, final Object key, final FIPAException fe) {
 		addBehaviour(new OneShotBehaviour(this) {
 
+			@Serial
 			private static final long serialVersionUID = -874794201356490134L;
 
 			public void action() {

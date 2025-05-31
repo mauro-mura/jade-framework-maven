@@ -273,17 +273,17 @@ public class ACLTimeChooserDialog implements ActionListener {
     String command = e.getActionCommand();
     if (command.equals("Set")) {
       Integer I;
-      I = new Integer(year.getText());
+      I = Integer.valueOf(year.getText());
       int YY = I.intValue();
-      I = new Integer(month.getText());
+      I = Integer.valueOf(month.getText());
       int MM = I.intValue();
-      I = new Integer(day.getText());
+      I = Integer.valueOf(day.getText());
       int DD = I.intValue();
-      I = new Integer(hour.getText());
+      I = Integer.valueOf(hour.getText());
       int hh = I.intValue();
-      I = new Integer(min.getText());
+      I = Integer.valueOf(min.getText());
       int mm = I.intValue();
-      I = new Integer(sec.getText());
+      I = Integer.valueOf(sec.getText());
       int ss = I.intValue();
 
       Calendar cal = new GregorianCalendar(YY, MM - 1, DD, hh, mm, ss);
@@ -351,7 +351,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     B1.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          Integer i = new Integer(timeUnitEdit.getText());
+          Integer i = Integer.valueOf(timeUnitEdit.getText());
           int ii = i.intValue() + 1;
           if (ii <= limit) {
             timeUnitEdit.setText(String.valueOf(ii));
@@ -365,7 +365,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     B2.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          Integer i = new Integer(timeUnitEdit.getText());
+          Integer i = Integer.valueOf(timeUnitEdit.getText());
           int ii = i.intValue() - 1;
           int inf_limit = (timeUnitLabel.equalsIgnoreCase("Hour:") || timeUnitLabel.equalsIgnoreCase("Min:") || timeUnitLabel.equalsIgnoreCase("Sec:") ? 0 : 1);
           if (ii >= inf_limit) {

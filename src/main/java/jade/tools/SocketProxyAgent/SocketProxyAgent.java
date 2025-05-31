@@ -86,8 +86,7 @@ public class SocketProxyAgent extends Agent {
 				Object arguments[] = getArguments();
 				if ( ( null != arguments ) && 
 						( null != arguments[0] ) &&
-						( arguments[0] instanceof String ) ) {
-					String arg0 = (String)arguments[0]; 
+						( arguments[0] instanceof String arg0 ) ) { 
 					String arg1 = "*";
 					if ( arguments.length > 1 ) {
 						arg1 = (String)arguments[1]; 

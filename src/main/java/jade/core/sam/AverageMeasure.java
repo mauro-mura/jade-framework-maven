@@ -25,6 +25,7 @@ package jade.core.sam;
 
 //#DOTNET_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -35,6 +36,7 @@ import java.io.Serializable;
  * default way of aggregating them. However SUM can be used as an alternative aggregation. 
  */
 public class AverageMeasure implements Serializable, Provider {
+	@Serial
 	private static final long serialVersionUID = 423475294834L;
 	
 	private double value = Double.NaN;

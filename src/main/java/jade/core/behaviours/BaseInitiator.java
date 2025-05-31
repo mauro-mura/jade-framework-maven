@@ -35,6 +35,7 @@ import jade.lang.acl.ConversationList;
 import jade.proto.AchieveREInitiator;
 import jade.util.Logger;
 
+import java.io.Serial;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -45,7 +46,8 @@ import java.util.Vector;
  * @author Moreno LAGO
  */
 public abstract class BaseInitiator extends AchieveREInitiator {
-	
+
+	@Serial
 	private static final long serialVersionUID = -6505544004754497428L;
 
 	private AID target;

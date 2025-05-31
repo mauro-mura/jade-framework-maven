@@ -25,6 +25,7 @@ package jade.core.behaviours;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -69,6 +70,7 @@ import jade.lang.acl.MessageTemplate;
  */
 public class LoaderBehaviour extends Behaviour {
 
+	@Serial
 	private static final long serialVersionUID = 1174755891993735447L;
 	private Codec codec = new LEAPCodec();
 	private Ontology onto = BehaviourLoadingOntology.getInstance();
@@ -137,10 +139,10 @@ public class LoaderBehaviour extends Behaviour {
 							
 							// Try using the local loader if any. Otherwise load from the classpath
 							if (localLoader != null) {
-								b = (Behaviour) Class.forName(className, true, localLoader).newInstance();
+								b = (Behaviour) Class.forName(className, true, localLoader).getDeclaredConstructor().newInstance();
 							} else {
 								
-								b = (Behaviour) Class.forName(className).newInstance();
+								b = (Behaviour) Class.forName(className).getDeclaredConstructor().newInstance();
 								
 							}
 							

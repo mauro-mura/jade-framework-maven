@@ -22,6 +22,9 @@
  */
 package jade.core.exception;
 
+import java.io.Serial;
+
+
 import jade.util.WrapperException;
 
 /**
@@ -32,6 +35,7 @@ import jade.util.WrapperException;
  */
 public class ProfileException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = -7687309283301231873L;
 
 	/**

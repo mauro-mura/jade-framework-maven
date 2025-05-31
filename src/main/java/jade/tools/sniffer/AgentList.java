@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.sniffer;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import java.util.Iterator;
 
 public class AgentList implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -9024543038127657795L;
 	private List<Agent> agents;
 

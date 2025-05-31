@@ -392,7 +392,7 @@ public class MMCanvas
            // First we lookup convID, replywith and replyto to see if any of them
            // have a colorindex.  If any of them do, then that becomes the one that
            // we will use.
-           Integer colorIndex = new Integer(-1);
+           Integer colorIndex = Integer.valueOf(-1);
            //System.out.println("Starting color:" + mess.getPerformative() +
            //    " CID:" + mess.getConversationId() +
            //    " RW:" + mess.getReplyWith() +
@@ -616,7 +616,7 @@ public class MMCanvas
        Integer msgNumWrapped;
        for (int t=0; t <=AllReceiver; t++) {
           // Here we update the red numbers of the timeline
-          msgNumWrapped = new Integer(t);
+          msgNumWrapped = Integer.valueOf(t);
 	      //#DOTNET_EXCLUDE_BEGIN
           g.drawString(msgNumWrapped.toString(),10,timeUnitWidth*(t)+15);
 	      //#DOTNET_EXCLUDE_END
@@ -642,12 +642,12 @@ public class MMCanvas
 
   private Integer getNewColorIndex() {
 	  for (int i = 0; i < colorTable.length; ++i) {
-		  Integer index = new Integer(i);
+		  Integer index = Integer.valueOf(i);
 		  if (!mapToColor.containsValue(index)) {
 			  return index;
 		  }
 	  }
-	  Integer index = new Integer(colorCounter);
+	  Integer index = Integer.valueOf(colorCounter);
 	  colorCounter++;
 	  if (colorCounter >= colorTable.length) {
 		  colorCounter = 0;

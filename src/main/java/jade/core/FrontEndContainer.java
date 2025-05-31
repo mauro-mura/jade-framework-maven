@@ -132,7 +132,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 		for (Enumeration<String> en = svcClasses.elements(); en.hasMoreElements();) {
 			String serviceClassName = en.nextElement();
 			try {
-				FEService svc = (FEService) Class.forName(serviceClassName).newInstance();
+				FEService svc = (FEService) Class.forName(serviceClassName).getDeclaredConstructor().newInstance();
 				localServices.put(svc.getName(), svc);
 				beServices = (beServices != null ? beServices + ';' + svc.getBEServiceClassName()
 						: svc.getBEServiceClassName());
@@ -658,7 +658,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 		agent = (Agent) ObjectManager.load(className, ObjectManager.AGENT_TYPE);
 		
 		if (agent == null) {
-			agent = (Agent) Class.forName(className).newInstance();
+			agent = (Agent) Class.forName(className).getDeclaredConstructor().newInstance();
 		}
 		agent.setArguments(args);
 		agent.setToolkit(this);

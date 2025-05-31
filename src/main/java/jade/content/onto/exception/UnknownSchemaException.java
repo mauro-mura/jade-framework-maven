@@ -24,6 +24,8 @@
  */
 package jade.content.onto.exception;
 
+import java.io.Serial;
+
 /**
  * Thrown when the schema for the type of the entity to be translated into/from
  * an abstract descriptor is not defined in the ontology used to perform the
@@ -36,6 +38,7 @@ package jade.content.onto.exception;
  */
 public class UnknownSchemaException extends OntologyException {
 
+	@Serial
 	private static final long serialVersionUID = -4635807553943167067L;
 	private boolean fillStackTrace = true;
 

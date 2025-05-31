@@ -25,6 +25,7 @@ package jade.imtp.rmi;
 
 
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 
 import jade.core.BaseNode;
@@ -41,6 +42,7 @@ import jade.core.exception.IMTPException;
  */
 class NodeAdapter extends BaseNode {
 
+	@Serial
 	private static final long serialVersionUID = 1958018186559517966L;
 
 	public NodeAdapter(String name, boolean hasSM, int port, RMIIMTPManager mgr) throws RemoteException {

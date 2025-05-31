@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.exception;
 
+import java.io.Serial;
+
 //#APIDOC_EXCLUDE_FILE
 
 /**
@@ -38,6 +40,7 @@ package jade.core.exception;
  */
 public class PostponedException extends RuntimeException {
 
+	@Serial
 	private static final long serialVersionUID = 5501930024465692233L;
 
 	public PostponedException() {

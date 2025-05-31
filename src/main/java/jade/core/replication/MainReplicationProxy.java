@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.replication;
 
+import java.io.Serial;
 import java.util.List;
 
 import jade.core.AID;
@@ -45,6 +46,7 @@ import jade.core.exception.ServiceException;
  */
 public class MainReplicationProxy extends SliceProxy implements MainReplicationSlice {
 
+	@Serial
 	private static final long serialVersionUID = -9156010668481886740L;
 
 	public int getLabel() throws IMTPException {
@@ -54,8 +56,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -74,8 +76,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -100,8 +102,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -120,8 +122,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -140,8 +142,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -189,10 +191,10 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if (result instanceof Throwable) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
-				} else if (result instanceof NotFoundException) {
-					throw (NotFoundException) result;
+				if (result instanceof IMTPException exception1) {
+					throw exception1;
+				} else if (result instanceof NotFoundException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}
@@ -246,8 +248,8 @@ public class MainReplicationProxy extends SliceProxy implements MainReplicationS
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if ((result != null) && (result instanceof Throwable)) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
 				}

@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core;
 
+import java.io.Serial;
+
 import jade.mtp.TransportAddress;
 
 /**
@@ -35,6 +37,7 @@ import jade.mtp.TransportAddress;
  */
 public class ContainerID implements Location {
 
+	@Serial
 	private static final long serialVersionUID = 8085124883436918872L;
 
 	/**

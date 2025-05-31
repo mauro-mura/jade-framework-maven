@@ -29,6 +29,8 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import jade.proto.states.*;
+
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -215,6 +217,7 @@ abstract class SSResponder extends FSMBehaviour {
 	 Inner class NextMsgReceiver
 	 */
 	private static class NextMsgReceiver extends MsgReceiver {
+		@Serial
 		private static final long     serialVersionUID = 4487495895818001L;
 		
 		public NextMsgReceiver(Agent a, DataStore ds, String key) {
@@ -236,6 +239,7 @@ abstract class SSResponder extends FSMBehaviour {
 	 */
 	private static class SeqChecker extends OneShotBehaviour {
 		private int ret;
+		@Serial
 		private static final long     serialVersionUID = 4487495895818002L;
 		
 		public SeqChecker(Agent a) {
@@ -263,6 +267,7 @@ abstract class SSResponder extends FSMBehaviour {
 	 Inner class OutOfSeqHandler
 	 */
 	private static class OutOfSeqHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 4487495895818003L;
 		
 		public OutOfSeqHandler(Agent a) {
@@ -280,6 +285,7 @@ abstract class SSResponder extends FSMBehaviour {
 	 Inner class NextReplySender
 	 */
 	private static class NextReplySender extends ReplySender {
+		@Serial
 		private static final long     serialVersionUID = 4487495895818004L;
 		
 		public NextReplySender(Agent a, String replyKey, String msgKey) {
@@ -328,6 +334,7 @@ abstract class SSResponder extends FSMBehaviour {
 	 Inner class DummyFinal
 	 */
 	private static class DummyFinal extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 4487495895818005L;
 		
 		public DummyFinal(Agent a) {

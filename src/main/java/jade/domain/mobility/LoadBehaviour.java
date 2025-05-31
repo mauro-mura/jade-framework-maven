@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain.mobility;
 
+import java.io.Serial;
 import java.util.List;
 
 //#MIDP_EXCLUDE_FILE
@@ -40,6 +41,7 @@ import jade.content.AgentAction;
  */
 public class LoadBehaviour implements AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 6218659524394083287L;
 	private String className;
 	private byte[] code;

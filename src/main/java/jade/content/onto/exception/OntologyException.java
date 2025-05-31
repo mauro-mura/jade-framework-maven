@@ -24,6 +24,8 @@
  */
 package jade.content.onto.exception;
 
+import java.io.Serial;
+
 import jade.content.exception.ContentException;
 
 /**
@@ -34,6 +36,7 @@ import jade.content.exception.ContentException;
  */
 public class OntologyException extends ContentException {
 
+	@Serial
 	private static final long serialVersionUID = 6880943424050179359L;
 
 	/**

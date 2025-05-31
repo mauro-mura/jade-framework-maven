@@ -17,15 +17,15 @@ public class UDPNodeMonitoringProxy extends SliceProxy implements UDPNodeMonitor
 		GenericCommand cmd = new GenericCommand(H_ACTIVATEUDP, UDPNodeMonitoringService.NAME, null);
 		cmd.addParam(label);
 		cmd.addParam(host);
-		cmd.addParam(new Integer(port));
-		cmd.addParam(new Integer(pingDelay));
-		cmd.addParam(new Long(key));
+		cmd.addParam(Integer.valueOf(port));
+		cmd.addParam(Integer.valueOf(pingDelay));
+		cmd.addParam(Long.valueOf(key));
 
 		Node n = getNode();
 		Object result = n.accept(cmd);
 		if ((result != null) && (result instanceof Throwable)) {
-			if (result instanceof IMTPException) {
-				throw (IMTPException) result;
+			if (result instanceof IMTPException exception) {
+				throw exception;
 			} 
 			else {
 				throw new IMTPException("Unexpected exception in remote site.", (Throwable) result);
@@ -40,13 +40,13 @@ public class UDPNodeMonitoringProxy extends SliceProxy implements UDPNodeMonitor
 		try {
 			GenericCommand cmd = new GenericCommand(H_DEACTIVATEUDP, UDPNodeMonitoringService.NAME, null);
 			cmd.addParam(label);
-			cmd.addParam(new Long(key));
+			cmd.addParam(Long.valueOf(key));
 	
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if ((result != null) && (result instanceof Throwable)) {
-				if (result instanceof IMTPException) {
-					throw (IMTPException) result;
+				if (result instanceof IMTPException exception) {
+					throw exception;
 				} 
 				else {
 					throw new IMTPException("Unexpected exception in remote site.", (Throwable) result);

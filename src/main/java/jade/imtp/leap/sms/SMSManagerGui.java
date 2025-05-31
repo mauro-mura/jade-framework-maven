@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.Serial;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import jade.util.leap.Properties;
  */
 public class SMSManagerGui extends JFrame {
 
+	@Serial
 	private static final long serialVersionUID = -1851273744072456684L;
 	private JTextField msisdnTF, portTF;
 	private JTextArea textTA;

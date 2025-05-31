@@ -24,6 +24,7 @@
  */
 package jade.content.frame;
 
+import java.io.Serial;
 import java.util.Vector;
 
 /**
@@ -35,6 +36,7 @@ import java.util.Vector;
  */
 public class OrderedFrame extends Vector implements Frame {
 
+	@Serial
 	private static final long serialVersionUID = -5323790975629585524L;
 	private String typeName;
 

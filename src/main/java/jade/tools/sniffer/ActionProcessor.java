@@ -138,8 +138,8 @@ import System.Windows.Forms.*;
   AgentTree.AgentNode nod;
    try {
 
-    if(node instanceof AgentTree.AgentNode) {
-       nod=(AgentTree.AgentNode)node;
+    if(node instanceof AgentTree.AgentNode agentNode) {
+       nod=agentNode;
        ag.doAction(nod);
     }
 

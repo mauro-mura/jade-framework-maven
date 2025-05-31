@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain.JADEAgentManagement;
 
+import java.io.Serial;
+
 import jade.core.*;
 import jade.content.*;
 
@@ -37,6 +39,7 @@ import jade.content.*;
 */
 public class QueryAgentsOnLocation implements AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = -5078238598160211828L;
 	private Location location;
 

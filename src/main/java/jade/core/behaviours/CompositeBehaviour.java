@@ -22,6 +22,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -49,6 +50,7 @@ import jade.core.Agent;
  */
 public abstract class CompositeBehaviour extends Behaviour {
 
+	@Serial
 	private static final long serialVersionUID = -6546146596273616540L;
 	/**
 	 * This variable marks the state when no child-behaviour has been run yet.

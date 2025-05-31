@@ -556,7 +556,7 @@ public class BEManagementService extends BaseService {
 			String protoManagerClass = p.getParameter(id + '_' + "protocol", null);
 			ProtocolManager pm = null;
 			try {
-				pm = (ProtocolManager) Class.forName(protoManagerClass).newInstance();
+				pm = (ProtocolManager) Class.forName(protoManagerClass).getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
 				if (protoManagerClass != null) {
 					myLogger.log(Logger.WARNING, myLogPrefix + "Unable to load protocol-manager class "
@@ -592,7 +592,7 @@ public class BEManagementService extends BaseService {
 				try {
 					myLogger.log(Logger.INFO,
 							myLogPrefix + "Loading PDPContextManager of class " + pdpContextManagerClass);
-					myPDPContextManager = (PDPContextManager) Class.forName(pdpContextManagerClass).newInstance();
+					myPDPContextManager = (PDPContextManager) Class.forName(pdpContextManagerClass).getDeclaredConstructor().newInstance();
 					myPDPContextManager.init(leapProps);
 					myPDPContextManager.registerListener(this);
 				} catch (Throwable t) {
@@ -1241,21 +1241,21 @@ public class BEManagementService extends BaseService {
 				myLogger.log(Logger.CONFIG, myLogPrefix + "Issuing V-Command " + INCOMING_CONNECTION);
 				Object ret = submit(cmd);
 				if (ret != null) {
-					if (ret instanceof Properties) {
+					if (ret instanceof Properties properties) {
 						// PDP Context properties detected
 						myLogger.log(Logger.FINER, myLogPrefix + "PDPContextProperties for address " + addr + " owner "
 								+ owner + " = " + ret);
-						return (Properties) ret;
-					} else if (ret instanceof JADESecurityException) {
+						return properties;
+					} else if (ret instanceof JADESecurityException exception) {
 						// Incoming connection from non-authorized device
 						myLogger.log(Logger.WARNING,
 								myLogPrefix + "Address " + addr + " owner " + owner + " not authenticated.");
-						throw ((JADESecurityException) ret);
-					} else if (ret instanceof Throwable) {
+						throw exception;
+					} else if (ret instanceof Throwable throwable) {
 						// Unexpected exception
 						myLogger.log(Logger.WARNING, myLogPrefix + "Error retrieving PDPContextPropert for address "
-								+ addr + " owner " + owner, (Throwable) ret);
-						throw new JADESecurityException(((Throwable) ret).getMessage());
+								+ addr + " owner " + owner, throwable);
+						throw new JADESecurityException(throwable.getMessage());
 					}
 				}
 
@@ -1294,7 +1294,7 @@ public class BEManagementService extends BaseService {
 				// Default NIOMediator class
 				className = NIOBEDispatcher.class.getName();
 			}
-			NIOMediator m = (NIOMediator) Class.forName(className).newInstance();
+			NIOMediator m = (NIOMediator) Class.forName(className).getDeclaredConstructor().newInstance();
 			mergeProperties(p, leapProps);
 			myLogger.log(Logger.INFO, myLogPrefix + "Initializing mediator " + id + " with properties " + p);
 			m.init(this, id, p);

@@ -1,5 +1,6 @@
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.util.Collection;
 
 import jade.core.Agent;
@@ -35,6 +36,7 @@ import jade.core.Agent;
  */
 public class WrapperBehaviour extends Behaviour {
 
+	@Serial
 	private static final long serialVersionUID = -6220275573418091343L;
 	private Behaviour wrappedBehaviour;
 
@@ -46,6 +48,7 @@ public class WrapperBehaviour extends Behaviour {
 		// from the wrapped behaviour to this WrapperBehaviour
 		wrappedBehaviour.setParent(new CompositeBehaviour() {
 
+			@Serial
 			private static final long serialVersionUID = 9186141801276354722L;
 
 			// Redefine the handle() method to propagate events (note that these are always

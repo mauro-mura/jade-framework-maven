@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core;
 
+import java.io.Serial;
+
 import jade.core.exception.IMTPException;
 import jade.core.exception.ServiceException;
 
@@ -34,6 +36,7 @@ import jade.core.exception.ServiceException;
  */
 public class SliceProxy implements Service.Slice {
 
+	@Serial
 	private static final long serialVersionUID = 234467324611722754L;
 
 	public SliceProxy() {

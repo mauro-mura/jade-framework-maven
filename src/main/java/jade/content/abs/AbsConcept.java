@@ -24,6 +24,8 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.Concept;
 
 /**
@@ -34,6 +36,7 @@ import jade.content.Concept;
  */
 public class AbsConcept extends AbsPrimitiveSlotsHolder implements AbsTerm, Concept {
 
+	@Serial
 	private static final long serialVersionUID = -4542313137257817523L;
 
 	/**

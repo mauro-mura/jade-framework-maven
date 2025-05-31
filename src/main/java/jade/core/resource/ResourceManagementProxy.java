@@ -22,6 +22,8 @@
  *****************************************************************/
 package jade.core.resource;
 
+import java.io.Serial;
+
 import jade.core.GenericCommand;
 import jade.core.Node;
 import jade.core.SliceProxy;
@@ -36,6 +38,7 @@ import jade.core.exception.ServiceException;
  */
 public class ResourceManagementProxy extends SliceProxy implements ResourceManagementSlice {
 
+	@Serial
 	private static final long serialVersionUID = 4875855388746802968L;
 
 	public byte[] getResource(String name, int fetchMode) throws Exception {
@@ -47,8 +50,8 @@ public class ResourceManagementProxy extends SliceProxy implements ResourceManag
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof Exception) {
-					throw (Exception)result;
+				if(result instanceof Exception exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

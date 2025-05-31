@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
+
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 
@@ -44,6 +46,7 @@ import jade.lang.acl.ACLMessage;
  */
 public final class SenderBehaviour extends OneShotBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 5920679680757903633L;
 
 	// The ACL message to send

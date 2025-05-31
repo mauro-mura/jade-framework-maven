@@ -222,7 +222,7 @@ public class UDPNodeMonitoringService extends NodeMonitoringService {
 		String networkCheckerClass = p.getParameter(NETWORK_CHECKER, null);
 		if (networkCheckerClass != null) {
 			try {
-				checker = (NetworkChecker) Class.forName(networkCheckerClass).newInstance();
+				checker = (NetworkChecker) Class.forName(networkCheckerClass).getDeclaredConstructor().newInstance();
 				checker.initialize(p);
 			}
 			catch (Exception e) {

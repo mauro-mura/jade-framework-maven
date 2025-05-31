@@ -40,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serial;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +59,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class ClassSelectionDialog extends JDialog implements WindowListener, ActionListener, ListSelectionListener {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JPanel jPanel = null;
@@ -129,6 +131,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 	}
 
 	public static class ClassesTableModel extends AbstractTableModel {
+		@Serial
 		private static final long serialVersionUID = 1L;
 
 		private Vector dynamicRowData;

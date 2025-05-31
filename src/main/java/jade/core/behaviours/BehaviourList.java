@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -34,6 +35,7 @@ import java.util.LinkedList;
  */
 public class BehaviourList extends LinkedList<Behaviour> implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 8405444557861877061L;
 	private int current = 0;
 

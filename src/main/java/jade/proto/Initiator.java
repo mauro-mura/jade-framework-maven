@@ -23,6 +23,7 @@
 
 package jade.proto;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -112,6 +113,7 @@ abstract class Initiator extends FSMBehaviour {
 		Behaviour b = null;
 		// PREPARE_INITIATIONS
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818000L;
 			
 			public void action() {
@@ -128,6 +130,7 @@ abstract class Initiator extends FSMBehaviour {
 		
 		// SEND_INITIATIONS
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818001L;
 			
 			public void action() {
@@ -150,6 +153,7 @@ abstract class Initiator extends FSMBehaviour {
 		// CHECK_IN_SEQ
 		b = new OneShotBehaviour(myAgent) {
 			int ret;
+			@Serial
 			private static final long     serialVersionUID = 3487495895818002L;
 			
 			public void action() {
@@ -170,6 +174,7 @@ abstract class Initiator extends FSMBehaviour {
 		
 		// HANDLE_NOT_UNDERSTOOD
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818005L;
 			
 			public void action() {
@@ -181,6 +186,7 @@ abstract class Initiator extends FSMBehaviour {
 		
 		// HANDLE_FAILURE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818007L;
 			
 			public void action() {
@@ -192,6 +198,7 @@ abstract class Initiator extends FSMBehaviour {
 		
 		// HANDLE_OUT_OF_SEQ
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818008L;
 			
 			public void action() {
@@ -204,6 +211,7 @@ abstract class Initiator extends FSMBehaviour {
 		// CHECK_SESSIONS
 		b = new OneShotBehaviour(myAgent) {
 			int ret;
+			@Serial
 			private static final long     serialVersionUID = 3487495895818009L;
 			
 			public void action() {
@@ -219,6 +227,7 @@ abstract class Initiator extends FSMBehaviour {
 		
 		// DUMMY_FINAL
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818010L;
 			
 			public void action() {

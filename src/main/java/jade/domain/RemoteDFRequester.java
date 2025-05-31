@@ -84,8 +84,8 @@ class RemoteDFRequester extends SimpleAchieveREInitiator {
   protected void handleInform(ACLMessage inform) {
   	try {
   		Predicate p = (Predicate) myAgent.getContentManager().extractContent(inform);
-  		if (p instanceof Result) {
-  			result = ((Result) p).getValue();
+  		if (p instanceof Result result1) {
+  			result = result1.getValue();
   		}
   	}
   	catch (Exception e) {

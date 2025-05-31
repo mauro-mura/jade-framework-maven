@@ -403,7 +403,7 @@ public class PersistentDeliveryService extends BaseService {
 			String className = myProfile.getParameter(PERSISTENT_DELIVERY_FILTER, null);
 			if(className != null) {
 				Class c = Class.forName(className);
-				messageFilter = (PersistentDeliveryFilter)c.newInstance();
+				messageFilter = (PersistentDeliveryFilter)c.getDeclaredConstructor().newInstance();
 				myLogger.log(Logger.INFO, "Persistent-Delivery - Using message filter of type "+messageFilter.getClass().getName());
 			}
 		}

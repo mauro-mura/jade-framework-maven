@@ -25,6 +25,7 @@ package jade.core.sam;
 
 //#DOTNET_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ import java.util.Map;
  * polling time.
  */
 public class SAMInfo implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 84762938792387L;
 	
 	public static final String DEFAULT_AGGREGATION_SEPARATOR = "#";

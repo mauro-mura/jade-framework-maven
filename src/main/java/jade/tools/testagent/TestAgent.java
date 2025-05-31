@@ -32,6 +32,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
+import java.io.Serial;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -71,6 +72,7 @@ import jade.util.Logger;
 
 public class TestAgent extends Agent {
 
+	@Serial
 	private static final long serialVersionUID = -2827413741648882725L;
 
 	private static Logger logger = Logger.getMyLogger(TestAgent.class.getName());
@@ -367,6 +369,7 @@ public class TestAgent extends Agent {
 	 */
 	private class SplashScreen extends JWindow {
 
+		@Serial
 		private static final long serialVersionUID = -4618521257721024065L;
 		/**
 		 * Constructor for the SplashScreen object

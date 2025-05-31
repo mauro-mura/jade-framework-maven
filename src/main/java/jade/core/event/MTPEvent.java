@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.event;
 
+import java.io.Serial;
+
 import jade.core.Channel;
 import jade.core.ContainerID;
 import jade.domain.FIPAAgentManagement.Envelope;
@@ -36,6 +38,7 @@ import jade.domain.FIPAAgentManagement.Envelope;
  */
 public class MTPEvent extends JADEEvent {
 
+	@Serial
 	private static final long serialVersionUID = -2486030267122713098L;
 	public static final int ADDED_MTP = 1;
 	public static final int REMOVED_MTP = 2;

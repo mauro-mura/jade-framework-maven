@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
+
 import jade.core.Agent;
 
 /**
@@ -39,6 +41,7 @@ import jade.core.Agent;
  */
 public abstract class OneShotBehaviour extends SimpleBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 3238474983766834100L;
 
 	/**

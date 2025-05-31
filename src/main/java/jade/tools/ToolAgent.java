@@ -36,7 +36,11 @@ import jade.domain.JADEAgentManagement.*;
 import jade.domain.introspection.*;
 
 import jade.lang.acl.ACLMessage;
+
+
 import jade.util.Logger;
+
+import java.io.Serial;
 
 import jade.content.lang.sl.SLCodec;
 
@@ -51,6 +55,7 @@ import jade.content.lang.sl.SLCodec;
  */
 public abstract class ToolAgent extends Agent {
 
+	@Serial
 	private static final long serialVersionUID = 1828903558285969767L;
 	private ACLMessage amsSubscription = new ACLMessage(ACLMessage.SUBSCRIBE);
 	private ACLMessage amsCancellation = new ACLMessage(ACLMessage.CANCEL);
@@ -67,6 +72,7 @@ public abstract class ToolAgent extends Agent {
 	 */
 	protected abstract class AMSListenerBehaviour extends AMSSubscriber {
 
+		@Serial
 		private static final long serialVersionUID = -6099064809990574237L;
 
 		// Redefine the onStart() method not to automatically subscribe.

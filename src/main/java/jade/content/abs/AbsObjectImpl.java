@@ -25,6 +25,8 @@
 package jade.content.abs;
 
 import jade.core.CaseInsensitiveString;
+
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,6 +41,7 @@ import java.util.Iterator;
  */
 public class AbsObjectImpl implements AbsObject {
 
+	@Serial
 	private static final long serialVersionUID = -5723008914669583458L;
 	private HashMap<CaseInsensitiveString, AbsObject> elements = new HashMap<>();
 	/** This list keeps the keys in the same order as they were added **/
@@ -190,8 +193,7 @@ public class AbsObjectImpl implements AbsObject {
 	 * the contents of both descriptors.
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof AbsObjectImpl) {
-			AbsObjectImpl abs = (AbsObjectImpl) obj;
+		if (obj instanceof AbsObjectImpl abs) {
 			if (abs.getClass().equals(getClass()) && abs.getTypeName().equals(typeName)) {
 				return f(abs) == f(this);
 			}

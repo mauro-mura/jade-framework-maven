@@ -841,7 +841,7 @@ class SLParser implements SLParserConstants {
                     double d1;
                    try {
                     // J2ME incompatible d1=Double.parseDouble(t.image); 
-                    d1=(new Double(t.image)).doubleValue();
+                    d1=(Double.valueOf(t.image)).doubleValue();
                     val=AbsPrimitive.wrap(d1);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
@@ -853,7 +853,7 @@ class SLParser implements SLParserConstants {
                     double d2;
                    try {
                     // J2ME incompatible d2=Double.parseDouble(t.image); 
-                    d2=(new Double(t.image)).doubleValue();
+                    d2=(Double.valueOf(t.image)).doubleValue();
                     val=AbsPrimitive.wrap(d2);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();

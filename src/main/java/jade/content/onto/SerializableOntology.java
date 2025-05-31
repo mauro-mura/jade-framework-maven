@@ -120,8 +120,8 @@ public class SerializableOntology extends Ontology {
 
 	protected AbsObject fromObject(Object obj, Ontology globalOnto) throws UnknownSchemaException, OntologyException {
 		// If obj is already an abstract descriptor --> just return it
-		if (obj instanceof AbsObject) {
-			return (AbsObject) obj;
+		if (obj instanceof AbsObject object) {
+			return object;
 		}
 
 		if (obj instanceof Serializable) {
@@ -148,6 +148,7 @@ public class SerializableOntology extends Ontology {
 
 	private static class DummySerializableOntology implements Serializable {
 
+		@Serial
 		private static final long serialVersionUID = -3476411116910977811L;
 
 		private Object readResolve() throws ObjectStreamException {

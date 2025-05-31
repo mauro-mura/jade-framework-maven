@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -162,6 +163,7 @@ public class SubscriptionInitiator extends Initiator {
 		Behaviour b = null;
 		// HANDLE_AGREE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895820003L;
 			
 			public void action() {
@@ -173,6 +175,7 @@ public class SubscriptionInitiator extends Initiator {
 		
 		// HANDLE_REFUSE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895820004L;
 			
 			public void action() {
@@ -184,6 +187,7 @@ public class SubscriptionInitiator extends Initiator {
 		
 		// HANDLE_INFORM
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895820006L;
 			
 			public void action() {

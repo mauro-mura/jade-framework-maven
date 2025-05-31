@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -44,6 +45,7 @@ import jade.core.Agent;
  */
 public class SequentialBehaviour extends SerialBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 3993687548347742580L;
 	private List<Behaviour> subBehaviours = new ArrayList<>();
 	int current = 0;

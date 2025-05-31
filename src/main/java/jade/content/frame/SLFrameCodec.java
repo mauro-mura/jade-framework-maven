@@ -24,6 +24,7 @@
  */
 package jade.content.frame;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -40,7 +41,8 @@ import jade.lang.acl.ISO8601;
    @version $Date: 2010-04-08 15:54:18 +0200 (gio, 08 apr 2010) $ $Revision: 6298 $
  */
 public class SLFrameCodec implements java.io.Serializable {
-	
+
+	@Serial
 	private static final long serialVersionUID = 7311217311427547740L;
 	public static final String NAME = "FIPA-SL";
 
@@ -91,18 +93,18 @@ public class SLFrameCodec implements java.io.Serializable {
 	/**
 	 */
 	private void write(StringBuilder sb, Object obj) throws Throwable {
-		if (obj instanceof AID) {
-			obj = aidToFrame((AID) obj);
+		if (obj instanceof AID iD) {
+			obj = aidToFrame(iD);
 		}
 
-		if (obj instanceof QualifiedFrame) {
-			writeQualified(sb, (QualifiedFrame) obj);
+		if (obj instanceof QualifiedFrame frame1) {
+			writeQualified(sb, frame1);
 		}
-		else if (obj instanceof OrderedFrame) {
-			writeOrdered(sb, (OrderedFrame) obj);
+		else if (obj instanceof OrderedFrame frame) {
+			writeOrdered(sb, frame);
 		}
-		else if (obj instanceof Date) {
-			sb.append(ISO8601.toString((Date) obj));
+		else if (obj instanceof Date date) {
+			sb.append(ISO8601.toString(date));
 		}
 		else if (obj instanceof Integer || obj instanceof Long || obj instanceof Boolean) {
 			sb.append(obj);
@@ -112,8 +114,7 @@ public class SLFrameCodec implements java.io.Serializable {
 			sb.append(obj);
 		}
 		
-		else if (obj instanceof byte[]) {
-			byte[] b = (byte[]) obj;
+		else if (obj instanceof byte[] b) {
 			sb.append('#');
 			sb.append(b.length);
 			sb.append('"');
@@ -121,8 +122,7 @@ public class SLFrameCodec implements java.io.Serializable {
 			sb.append(new String(b));
 			sb.append('"');
 		}
-		else if (obj instanceof String) {
-			String s = (String)obj;
+		else if (obj instanceof String s) {
 			if (CaseInsensitiveString.equalsIgnoreCase("true",s) || CaseInsensitiveString.equalsIgnoreCase("false",s)) {
 				s = '"'+s+'"'; // quote it to avoid confusion with the boolean primitives
 			} else if (!SimpleSLTokenizer.isAWord(s)) {
@@ -188,7 +188,7 @@ public class SLFrameCodec implements java.io.Serializable {
 			String val = st.getElement();
 			// Long
 			try {
-				return new Long(Long.parseLong(val));
+				return Long.valueOf(Long.parseLong(val));
 			}
 			catch (Exception e) {
 			}

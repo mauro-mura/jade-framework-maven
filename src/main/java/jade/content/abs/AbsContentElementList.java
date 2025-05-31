@@ -24,6 +24,7 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +41,7 @@ import jade.content.schema.ContentElementListSchema;
  */
 public class AbsContentElementList implements AbsContentElement {
 
+	@Serial
 	private static final long serialVersionUID = -242568857041690927L;
 	private List<AbsContentElement> elements = new ArrayList<>();
 	private String typeName = null;

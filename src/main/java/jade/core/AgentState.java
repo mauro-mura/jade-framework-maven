@@ -127,8 +127,8 @@ public class AgentState {
 	 */
 	public boolean equals(Object o) {
 
-		if (o instanceof String) {
-			return CaseInsensitiveString.equalsIgnoreCase(name, (String) o);
+		if (o instanceof String string) {
+			return CaseInsensitiveString.equalsIgnoreCase(name, string);
 		}
 		try {
 			AgentState as = (AgentState) o;

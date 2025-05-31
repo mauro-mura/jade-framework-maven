@@ -6,12 +6,15 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
 import jade.proto.SubscriptionInitiator;
 import jade.util.Logger;
+
+import java.io.Serial;
 import java.util.Iterator;
 
 //#PJAVA_EXCLUDE_FILE
 //#MIDP_EXCLUDE_FILE
 
 public abstract class DFSubscriber extends SubscriptionInitiator {
+	@Serial
 	private static final long serialVersionUID = -5741304962740821073L;
 
 	private static final Logger logger = Logger.getJADELogger(DFSubscriber.class.getName());

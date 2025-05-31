@@ -69,11 +69,11 @@ public class IntrospectionServer extends CyclicBehaviour {
 				ContentManager cm = myAgent.getContentManager();
 				Action actionExpr = (Action) cm.extractContent(request);
 				Object act = actionExpr.getAction();
-				if (act instanceof GetKeys) {
-					serveGetKeys(request, actionExpr, (GetKeys) act);
+				if (act instanceof GetKeys keys) {
+					serveGetKeys(request, actionExpr, keys);
 				}
-				else if (act instanceof GetValue) {
-					serveGetValue(request, actionExpr, (GetValue) act);
+				else if (act instanceof GetValue value) {
+					serveGetValue(request, actionExpr, value);
 				}
 				else {
 					serveUnknownAction(request, actionExpr, act);

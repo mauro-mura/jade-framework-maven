@@ -286,8 +286,8 @@ public class ContainerController {
 			if (main == null) {
 				throw new ControllerException("Not a Main Container.");
 			}
-			if (main instanceof AgentManager) {
-				myPlatformController = new PlatformControllerImpl(this, (AgentManager) main);
+			if (main instanceof AgentManager manager) {
+				myPlatformController = new PlatformControllerImpl(this, manager);
 			}
 			else {
 				throw new ControllerException("Platform not accessible.");

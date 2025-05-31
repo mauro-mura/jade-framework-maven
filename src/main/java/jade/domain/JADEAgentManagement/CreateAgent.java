@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade.domain.JADEAgentManagement;
 
 import java.util.List;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -43,6 +44,7 @@ import jade.security.Credentials;
  */
 public class CreateAgent implements AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 9203311899220462675L;
 	private String agentName;
 	private String className;

@@ -181,8 +181,8 @@ public class SLCodec extends StringCodec {
 		try {
 			domainOnto = ontology;
 			buffer = new StringBuilder("(");
-			if (content instanceof AbsContentElementList) {
-				for (Iterator i = ((AbsContentElementList) content).iterator(); i.hasNext();) {
+			if (content instanceof AbsContentElementList list) {
+				for (Iterator i = list.iterator(); i.hasNext();) {
 					AbsObject o = (AbsObject) i.next();
 					encodeAndAppend(o);
 					buffer.append(' ');
@@ -384,8 +384,8 @@ public class SLCodec extends StringCodec {
 
 	private void encodeAndAppend(AbsPrimitive val) throws CodecException {
 		Object v = val.getObject();
-		if (v instanceof Date)
-			buffer.append(ISO8601.toString((Date) v));
+		if (v instanceof Date date)
+			buffer.append(ISO8601.toString(date));
 		else if (v instanceof Number) {
 			buffer.append(v.toString());
 			if (preserveJavaTypes) {
@@ -395,9 +395,7 @@ public class SLCodec extends StringCodec {
 					buffer.append('F');
 				}
 			}
-		} else if (v instanceof byte[]) {
-			// Note: Use US-ASCII charSet and Base64 encoding
-			byte[] b = (byte[]) v;
+		} else if (v instanceof byte[] b) {
 			b = Base64.getEncoder().encode(b);
 
 			buffer.append('#');
@@ -424,21 +422,21 @@ public class SLCodec extends StringCodec {
 	}
 
 	private void encodeAndAppend(AbsObject val) throws CodecException {
-		if (val instanceof AbsPrimitive)
-			encodeAndAppend((AbsPrimitive) val);
-		else if (val instanceof AbsPredicate)
-			encodeAndAppend((AbsPredicate) val);
-		else if (val instanceof AbsIRE)
-			encodeAndAppend((AbsIRE) val);
-		else if (val instanceof AbsVariable)
-			encodeAndAppend((AbsVariable) val);
+		if (val instanceof AbsPrimitive primitive)
+			encodeAndAppend(primitive);
+		else if (val instanceof AbsPredicate predicate)
+			encodeAndAppend(predicate);
+		else if (val instanceof AbsIRE rE)
+			encodeAndAppend(rE);
+		else if (val instanceof AbsVariable variable)
+			encodeAndAppend(variable);
 		// if (val instanceof AbsAgentAction) return toString( (AbsAgentAction)val);
-		else if (val instanceof AbsAggregate)
-			encodeAndAppend((AbsAggregate) val);
-		else if (val instanceof AbsConcept)
-			encodeAndAppend((AbsConcept) val);
-		else if (val instanceof AbsReference)
-			encodeAndAppend((AbsReference) val);
+		else if (val instanceof AbsAggregate aggregate)
+			encodeAndAppend(aggregate);
+		else if (val instanceof AbsConcept concept)
+			encodeAndAppend(concept);
+		else if (val instanceof AbsReference reference)
+			encodeAndAppend(reference);
 		else
 			throw new CodecException("SLCodec cannot encode this object " + val);
 	}

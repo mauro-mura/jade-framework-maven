@@ -24,6 +24,8 @@
  */
 package jade.content.onto.basic;
 
+import java.io.Serial;
+
 import jade.content.Concept;
 import jade.content.Predicate;
 
@@ -33,7 +35,8 @@ import jade.content.Predicate;
    @author Giovanni Caire - TILAB
  */
 public class Done implements Predicate {
-	
+
+	@Serial
 	private static final long serialVersionUID = -1478318364244636955L;
 	private Concept action;
 	private Predicate condition;

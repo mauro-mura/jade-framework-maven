@@ -25,6 +25,10 @@ package jade.core.sam;
 
 //#DOTNET_EXCLUDE_FILE
 
+import java.io.Serial;
+
+//#DOTNET_EXCLUDE_FILE
+
 import jade.core.GenericCommand;
 import jade.core.Node;
 import jade.core.SliceProxy;
@@ -33,6 +37,7 @@ import jade.core.exception.ServiceException;
 
 
 public class SAMProxy extends SliceProxy implements SAMSlice {
+	@Serial
 	private static final long serialVersionUID = 87469234984L;
 
 	public SAMInfo getSAMInfo() throws IMTPException {
@@ -41,11 +46,11 @@ public class SAMProxy extends SliceProxy implements SAMSlice {
 			
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if (result instanceof IMTPException) {
-				throw (IMTPException)result;
+			if (result instanceof IMTPException exception) {
+				throw exception;
 			}
-			else if (result instanceof Throwable) {
-				throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+			else if (result instanceof Throwable throwable) {
+				throw new IMTPException("An undeclared exception was thrown", throwable);
 			}
 			
 			return (SAMInfo) result;

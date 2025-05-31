@@ -28,6 +28,7 @@ import jade.content.*;
 import jade.content.abs.*;
 import jade.content.onto.*;
 import java.util.List;
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +38,7 @@ import java.util.ArrayList;
  */
 public class Result implements Predicate {
 
+	@Serial
 	private static final long serialVersionUID = -2631264683217210449L;
 	private Concept action;
 	private Object value;
@@ -68,8 +70,8 @@ public class Result implements Predicate {
 	}	
 	
 	public List getItems() {
-		if (value instanceof List) {
-			return (List) value;
+		if (value instanceof List list) {
+			return list;
 		}
 		else {
 			List<Object> l = new ArrayList<>(1);

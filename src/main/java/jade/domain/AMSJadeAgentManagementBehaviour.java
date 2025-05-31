@@ -94,77 +94,77 @@ class AMSJadeAgentManagementBehaviour extends RequestManagementBehaviour{
 		}
 
 		// CREATE AGENT
-		if (action instanceof CreateAgent) {
-			theAMS.createAgentAction((CreateAgent) action, request.getSender(), requesterPrincipal, requesterCredentials);
-			String agentName = JADEManagementOntology.adjustAgentName(((CreateAgent) action).getAgentName(), new String[] {((CreateAgent) action).getContainer().getName()});
+		if (action instanceof CreateAgent agent1) {
+			theAMS.createAgentAction(agent1, request.getSender(), requesterPrincipal, requesterCredentials);
+			String agentName = JADEManagementOntology.adjustAgentName(agent1.getAgentName(), new String[] {agent1.getContainer().getName()});
 			asynchNotificationKey = new AID(agentName, AID.ISLOCALNAME);
 		}
 		// KILL AGENT (asynchronous notification to requester)
-		else if (action instanceof KillAgent) {
-			theAMS.killAgentAction((KillAgent) action, request.getSender(), requesterPrincipal, requesterCredentials);
-			asynchNotificationKey = ((KillAgent) action).getAgent();
+		else if (action instanceof KillAgent agent) {
+			theAMS.killAgentAction(agent, request.getSender(), requesterPrincipal, requesterCredentials);
+			asynchNotificationKey = agent.getAgent();
 		}
 		// CLONE AGENT (asynchronous notification to requester)
 		// Note that CloneAction extends MoveAction --> must be considered first!!!
-		else if (action instanceof CloneAction) {
-			theAMS.cloneAgentAction((CloneAction) action, request.getSender());
-			asynchNotificationKey = new AID(((CloneAction) action).getNewName(), AID.ISLOCALNAME); 
+		else if (action instanceof CloneAction cloneAction) {
+			theAMS.cloneAgentAction(cloneAction, request.getSender());
+			asynchNotificationKey = new AID(cloneAction.getNewName(), AID.ISLOCALNAME); 
 		}
 		// MOVE AGENT (asynchronous notification to requester)
-		else if (action instanceof MoveAction) {
-			theAMS.moveAgentAction((MoveAction) action, request.getSender());
-			asynchNotificationKey = ((MoveAction) action).getMobileAgentDescription().getName();
+		else if (action instanceof MoveAction moveAction) {
+			theAMS.moveAgentAction(moveAction, request.getSender());
+			asynchNotificationKey = moveAction.getMobileAgentDescription().getName();
 		}
 		// KILL CONTAINER (asynchronous notification to requester)
-		else if (action instanceof KillContainer) {
-			theAMS.killContainerAction((KillContainer) action, request.getSender(), requesterPrincipal, requesterCredentials);
-			asynchNotificationKey = ((KillContainer) action).getContainer();
+		else if (action instanceof KillContainer container) {
+			theAMS.killContainerAction(container, request.getSender(), requesterPrincipal, requesterCredentials);
+			asynchNotificationKey = container.getContainer();
 		}
 		// SHUT DOWN PLATFORM
-		else if (action instanceof ShutdownPlatform) {
+		else if (action instanceof ShutdownPlatform platform) {
 			// Synchronous notification since we will not be here to send the notification 
 			// when the platform will have shut down.
-			theAMS.shutdownPlatformAction((ShutdownPlatform)action, request.getSender(), requesterPrincipal, requesterCredentials);
+			theAMS.shutdownPlatformAction(platform, request.getSender(), requesterPrincipal, requesterCredentials);
 		}
 		// INSTALL MTP
-		else if (action instanceof InstallMTP) {
-			MTPDescriptor dsc = theAMS.installMTPAction((InstallMTP) action, request.getSender());
+		else if (action instanceof InstallMTP tP1) {
+			MTPDescriptor dsc = theAMS.installMTPAction(tP1, request.getSender());
 			result = dsc.getAddresses()[0];
 			resultNeeded = true;
 		}
 		// UNINSTALL MTP
-		else if (action instanceof UninstallMTP) {
-			theAMS.uninstallMTPAction((UninstallMTP) action, request.getSender());
+		else if (action instanceof UninstallMTP tP) {
+			theAMS.uninstallMTPAction(tP, request.getSender());
 		}
 		// SNIFF ON
-		else if (action instanceof SniffOn) {
-			theAMS.sniffOnAction((SniffOn) action, request.getSender());
+		else if (action instanceof SniffOn on1) {
+			theAMS.sniffOnAction(on1, request.getSender());
 		}
 		// SNIFF OFF
-		else if (action instanceof SniffOff) {
-			theAMS.sniffOffAction((SniffOff) action, request.getSender());
+		else if (action instanceof SniffOff off1) {
+			theAMS.sniffOffAction(off1, request.getSender());
 		}
 		// DEBUG ON
-		else if (action instanceof DebugOn) {
-			theAMS.debugOnAction((DebugOn) action, request.getSender());
+		else if (action instanceof DebugOn on) {
+			theAMS.debugOnAction(on, request.getSender());
 		}
 		// DEBUG OFF
-		else if (action instanceof DebugOff) {
-			theAMS.debugOffAction((DebugOff) action, request.getSender());
+		else if (action instanceof DebugOff off) {
+			theAMS.debugOffAction(off, request.getSender());
 		}
 		// WHERE IS AGENT
-		else if (action instanceof WhereIsAgentAction) {
-			result = theAMS.whereIsAgentAction((WhereIsAgentAction) action, request.getSender());
+		else if (action instanceof WhereIsAgentAction agentAction) {
+			result = theAMS.whereIsAgentAction(agentAction, request.getSender());
 			resultNeeded = true;
 		}
 		// QUERY PLATFORM LOCATIONS
-		else if (action instanceof QueryPlatformLocationsAction) {
-			result = theAMS.queryPlatformLocationsAction((QueryPlatformLocationsAction) action, request.getSender());
+		else if (action instanceof QueryPlatformLocationsAction locationsAction) {
+			result = theAMS.queryPlatformLocationsAction(locationsAction, request.getSender());
 			resultNeeded = true;
 		}
 		// QUERY AGENTS ON LOCATION
-		else if (action instanceof QueryAgentsOnLocation) {
-			result = theAMS.queryAgentsOnLocationAction((QueryAgentsOnLocation) action, request.getSender());
+		else if (action instanceof QueryAgentsOnLocation location) {
+			result = theAMS.queryAgentsOnLocationAction(location, request.getSender());
 			resultNeeded = true;
 		}
 		else {

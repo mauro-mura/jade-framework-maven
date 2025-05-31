@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade.core;
 
 //#APIDOC_EXCLUDE_FILE
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -43,6 +44,7 @@ import java.io.Serializable;
  */
 public class ServiceDescriptor implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -3230906773777475199L;
 	
 	/**
@@ -132,7 +134,7 @@ public class ServiceDescriptor implements Serializable {
 		in.defaultReadObject();
 		if (serviceClass != null) {
 			try {
-				myService = (Service) Class.forName(serviceClass).newInstance();
+				myService = (Service) Class.forName(serviceClass).getDeclaredConstructor().newInstance();
 			}
 			catch (ClassNotFoundException cnfe) {
 				throw cnfe;

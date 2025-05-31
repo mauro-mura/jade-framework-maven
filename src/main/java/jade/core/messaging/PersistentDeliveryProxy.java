@@ -67,11 +67,11 @@ public class PersistentDeliveryProxy extends SliceProxy implements PersistentDel
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -92,8 +92,8 @@ public class PersistentDeliveryProxy extends SliceProxy implements PersistentDel
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

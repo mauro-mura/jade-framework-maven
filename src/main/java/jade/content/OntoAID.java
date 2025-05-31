@@ -24,6 +24,7 @@
  */
 package jade.content;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 import jade.core.AID;
@@ -37,6 +38,7 @@ import jade.core.AID;
  */
 public class OntoAID extends AID implements Concept {
 
+	@Serial
 	private static final long serialVersionUID = -4881324961854945728L;
 
 	/**
@@ -77,8 +79,8 @@ public class OntoAID extends AID implements Concept {
 	public static OntoAID wrap(AID id) {
 		OntoAID wrapper = null;
 		if (id != null) {
-			if (id instanceof OntoAID) {
-				wrapper = (OntoAID) id;
+			if (id instanceof OntoAID iD) {
+				wrapper = iD;
 			} else {
 				wrapper = new OntoAID(id.getName(), ISGUID);
 				Iterator<String> it = id.getAllAddresses();

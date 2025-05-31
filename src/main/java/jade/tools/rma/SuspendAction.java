@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.rma;
 
+import java.io.Serial;
+
 import jade.core.AID;
 import jade.gui.AgentTree;
 
@@ -33,6 +35,7 @@ import jade.gui.AgentTree;
  */
 class SuspendAction extends AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = -311708535687194240L;
 	private rma myRMA;
 

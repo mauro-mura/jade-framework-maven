@@ -293,17 +293,17 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NameClashException) {
-				throw ((NameClashException) ret);
-			} else if (ret instanceof IMTPException) {
-				throw ((IMTPException) ret);
-			} else if (ret instanceof NotFoundException) {
-				throw ((NotFoundException) ret);
-			} else if (ret instanceof JADESecurityException) {
-				throw ((JADESecurityException) ret);
-			} else if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
-				throw new IMTPException("Unexpected error initializing agent " + agentID.getName(), (Throwable) ret);
+			if (ret instanceof NameClashException exception3) {
+				throw exception3;
+			} else if (ret instanceof IMTPException exception2) {
+				throw exception2;
+			} else if (ret instanceof NotFoundException exception1) {
+				throw exception1;
+			} else if (ret instanceof JADESecurityException exception) {
+				throw exception;
+			} else if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
+				throw new IMTPException("Unexpected error initializing agent " + agentID.getName(), throwable);
 			}
 		}
 	}
@@ -758,8 +758,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 					cmd.addParam(new InternalError("Message blocked: " + ret));
 					ret = myCommandProcessor.processOutgoing(cmd);
 					if (ret != null) {
-						if (ret instanceof Throwable) {
-							((Throwable) ret).printStackTrace();
+						if (ret instanceof Throwable throwable) {
+							throwable.printStackTrace();
 						}
 					}
 				}
@@ -777,8 +777,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -796,8 +796,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 
@@ -813,8 +813,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -831,8 +831,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -851,8 +851,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -889,8 +889,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -904,8 +904,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -919,8 +919,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable) {
-				((Throwable) ret).printStackTrace();
+			if (ret instanceof Throwable throwable) {
+				throwable.printStackTrace();
 			}
 		}
 	}
@@ -1129,7 +1129,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		try {
 			Class<?> svcClass = Class.forName(name);
-			Service svc = (Service) svcClass.newInstance();
+			Service svc = (Service) svcClass.getDeclaredConstructor().newInstance();
 			svc.init(this, myProfile);
 			ServiceDescriptor dsc = new ServiceDescriptor(svc.getName(), svc);
 

@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade.gui;
 
 // Import required java classes
+import java.io.Serial;
 import java.util.Vector;
 
 import jade.core.Agent;
@@ -63,6 +64,7 @@ import jade.core.behaviours.SimpleBehaviour;
  *          5669 $
  */
 public abstract class GuiAgent extends Agent {
+	@Serial
 	private static final long serialVersionUID = 3487495895819010L;
 
 	/**
@@ -77,6 +79,7 @@ public abstract class GuiAgent extends Agent {
 	////////////////////////
 	// GUI HANDLER BEHAVIOUR
 	private class GuiHandlerBehaviour extends SimpleBehaviour {
+		@Serial
 		private static final long serialVersionUID = 3487495895819011L;
 
 		protected GuiHandlerBehaviour() {

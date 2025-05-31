@@ -29,6 +29,8 @@ package jade.gui;
 import javax.swing.*;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
+import java.io.Serial;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -46,6 +48,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class TreeIconRenderer extends JLabel implements TreeCellRenderer {
 
+	@Serial
 	private static final long serialVersionUID = 6710926584192230087L;
 
 	public TreeIconRenderer() {

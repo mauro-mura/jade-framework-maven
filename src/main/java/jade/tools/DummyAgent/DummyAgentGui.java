@@ -292,7 +292,7 @@ class DummyAgentGui extends JFrame
 					int n = -1;
 					try
 					{
-						Integer nn = new Integer(inp.readLine());
+						Integer nn = Integer.valueOf(inp.readLine());
 						n = nn.intValue();
 					}
 					catch(IOException ioEx) { 

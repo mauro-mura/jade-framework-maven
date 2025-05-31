@@ -26,6 +26,7 @@ package jade.core;
 //#APIDOC_EXCLUDE_FILE
 
 import jade.security.JADESecurityException;
+import java.io.Serial;
 import java.io.Serializable;
 
 import java.io.InterruptedIOException;
@@ -39,6 +40,7 @@ import java.io.InterruptedIOException;
  */
 public abstract class LifeCycle implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 2418624028204518468L;
 	protected Agent myAgent;
 	protected int myState;
@@ -110,8 +112,8 @@ public abstract class LifeCycle implements Serializable {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof LifeCycle) {
-			return myState == ((LifeCycle) obj).myState;
+		if (obj instanceof LifeCycle cycle) {
+			return myState == cycle.myState;
 		}
 		return false;
 	}

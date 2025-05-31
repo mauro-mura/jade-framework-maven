@@ -34,6 +34,8 @@
 
 package jade.imtp.leap.JICP;
 
+import java.io.Serial;
+
 import jade.mtp.TransportAddress;
 
 /**
@@ -44,6 +46,7 @@ import jade.mtp.TransportAddress;
  */
 public class JICPAddress implements TransportAddress {
 
+	@Serial
 	private static final long serialVersionUID = -4710902079347995551L;
 	protected String host;
 	protected String port;

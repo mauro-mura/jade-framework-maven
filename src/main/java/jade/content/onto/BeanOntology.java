@@ -25,10 +25,10 @@ package jade.content.onto;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.util.Arrays;
 
 import jade.content.onto.exception.BeanOntologyException;
-
 
 
 /**
@@ -107,6 +107,7 @@ import jade.content.onto.exception.BeanOntologyException;
  */
 public class BeanOntology extends Ontology {
 
+	@Serial
 	private static final long serialVersionUID = -2007125499000302494L;
 	
 	private transient BeanOntologyBuilder bob;

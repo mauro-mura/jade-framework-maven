@@ -25,7 +25,7 @@ public abstract class _MTSImplBase extends org.omg.CORBA.DynamicImplementation i
 
 	private static Dictionary _methods = new Hashtable<>();
 	static {
-		_methods.put("message", new java.lang.Integer(0));
+		_methods.put("message", Integer.valueOf(0));
 	}
 
 	// DSI Dispatch call

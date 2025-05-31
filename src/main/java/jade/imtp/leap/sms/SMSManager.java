@@ -56,14 +56,14 @@ public abstract class SMSManager {
 			if (tmp == null) {
 				tmp = "jade.imtp.leap.sms.PhoneBasedSMSManager";
 			}
-			if (tmp instanceof SMSManager) {
-				theInstance = (SMSManager) tmp;
+			if (tmp instanceof SMSManager manager) {
+				theInstance = manager;
 			}
 			else {
 				// Try as a string specifying the class to load
 				try {
 					myLogger.log(Logger.FINE, "Creating the SMSManager singleton instance: class is "+tmp);
-					theInstance = (SMSManager) Class.forName((String) tmp).newInstance();
+					theInstance = (SMSManager) Class.forName((String) tmp).getDeclaredConstructor().newInstance();
 					theInstance.init(pp);
 				}
 				catch (Throwable t) {

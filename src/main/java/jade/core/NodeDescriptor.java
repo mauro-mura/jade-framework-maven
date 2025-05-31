@@ -25,6 +25,7 @@ package jade.core;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.io.Serializable;
 import jade.security.JADEPrincipal;
 import jade.security.Credentials;
@@ -45,6 +46,7 @@ import jade.security.Credentials;
  */
 public class NodeDescriptor implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 3710819606287898461L;
 	/**
 	 * Builds a new node descriptor, describing the given node with the given name

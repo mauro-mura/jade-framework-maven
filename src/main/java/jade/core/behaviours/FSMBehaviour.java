@@ -36,6 +36,8 @@ import java.util.Map;
 
 import jade.core.Agent;
 import jade.util.Logger;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -74,6 +76,7 @@ import java.io.Serializable;
  */
 public class FSMBehaviour extends SerialBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 7089890201377074459L;
 	private Map<String, Behaviour> states = new HashMap<>();
 	private Behaviour current = null;
@@ -497,6 +500,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 */
 	class TransitionTable implements Serializable {
 		private Map<String, TransitionsFromState> transitions = new Hashtable<>();
+		@Serial
 		private static final long serialVersionUID = 3487495895819003L;
 
 		void clear() {
@@ -579,6 +583,7 @@ public class FSMBehaviour extends SerialBehaviour {
 		private int trigger;
 		private boolean def;
 		private String[] toBeReset;
+		@Serial
 		private static final long serialVersionUID = 3487495895819004L;
 
 		public Transition() {
@@ -665,6 +670,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 */
 	class TransitionsFromState extends Hashtable {
 		private Transition defaultTransition = null;
+		@Serial
 		private static final long serialVersionUID = 3487495895819005L;
 
 		void setDefaultTransition(Transition dt) {

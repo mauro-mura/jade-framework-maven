@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.tools.sniffer;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ import jade.util.Logger;
 
 public class ShowOnlyAction extends AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 5107905084397521486L;
 	private MainPanel mainPanel;
 	private Sniffer mySniffer;

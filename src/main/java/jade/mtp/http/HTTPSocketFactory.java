@@ -88,11 +88,11 @@ public class HTTPSocketFactory {
 					"jade.mtp.http.https.KeyStoreKeyManager");
 
 				HTTPSTrustManager tm =
-					(HTTPSTrustManager)Class.forName(trustManagerClass).newInstance();
+					(HTTPSTrustManager)Class.forName(trustManagerClass).getDeclaredConstructor().newInstance();
 				tm.init(profile);
 
 				HTTPSKeyManager km =
-					(HTTPSKeyManager)Class.forName(keyManagerClass).newInstance();
+					(HTTPSKeyManager)Class.forName(keyManagerClass).getDeclaredConstructor().newInstance();
 				km.init(profile);
 
 				if (profile

@@ -82,8 +82,8 @@ class TreePanel extends JPanel implements TreeSelectionListener {
        relCur= paths[i].getPath();
         wholePath="";
         for (int j=0;j<relCur.length;j++) {
-         if (relCur[j] instanceof AgentTree.Node) {
-           current=(AgentTree.Node)relCur[j];
+         if (relCur[j] instanceof AgentTree.Node node) {
+           current=node;
            wholePath=wholePath.concat(current.getName()+".");
           }
         }

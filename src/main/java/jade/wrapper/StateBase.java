@@ -20,6 +20,7 @@
  */
 package jade.wrapper;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -31,6 +32,7 @@ import java.io.Serializable;
  */
 public abstract class StateBase implements State, Comparable, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 239400483419437294L;
 
 	/**

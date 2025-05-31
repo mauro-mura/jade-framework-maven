@@ -24,11 +24,7 @@
  */
 package jade.content.frame;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -44,6 +40,7 @@ import jade.core.AID;
  */
 public class LEAPFrameCodec implements java.io.Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -195573710513917892L;
 
 	public static final String NAME = "LEAP";
@@ -143,34 +140,32 @@ public class LEAPFrameCodec implements java.io.Serializable {
 	 */
 	private void write(DataOutputStream stream, Object obj) throws Throwable {
 		// PRIMITIVES
-		if (obj instanceof String) {
-			writeString(stream, STRING, (String) obj);
-		} else if (obj instanceof Boolean) {
+		if (obj instanceof String string) {
+			writeString(stream, STRING, string);
+		} else if (obj instanceof Boolean boolean1) {
 			stream.writeByte(BOOLEAN);
-			stream.writeBoolean(((Boolean) obj).booleanValue());
-		} else if (obj instanceof Long) {
+			stream.writeBoolean(boolean1.booleanValue());
+		} else if (obj instanceof Long long1) {
 			stream.writeByte(INTEGER);
-			stream.writeLong(((Long) obj).longValue());
+			stream.writeLong(long1.longValue());
 		}
 
-		else if (obj instanceof Double) {
+		else if (obj instanceof Double double1) {
 			stream.writeByte(FLOAT);
-			stream.writeDouble(((Double) obj).doubleValue());
+			stream.writeDouble(double1.doubleValue());
 		}
 
-		else if (obj instanceof Date) {
+		else if (obj instanceof Date date) {
 			stream.writeByte(DATE);
-			stream.writeLong(((Date) obj).getTime());
-		} else if (obj instanceof byte[]) {
+			stream.writeLong(date.getTime());
+		} else if (obj instanceof byte[] b) {
 			stream.writeByte(BYTE_SEQUENCE);
-			byte[] b = (byte[]) obj;
 			stream.writeInt(b.length);
 			stream.write(b, 0, b.length);
 		}
 
 		// ORDERED FRAME
-		else if (obj instanceof OrderedFrame) {
-			OrderedFrame f = (OrderedFrame) obj;
+		else if (obj instanceof OrderedFrame f) {
 			int size = f.size();
 			String typeName = f.getTypeName();
 			if (typeName != null) {
@@ -188,8 +183,7 @@ public class LEAPFrameCodec implements java.io.Serializable {
 		}
 
 		// QUALIFIED_FRAME
-		else if (obj instanceof QualifiedFrame) {
-			QualifiedFrame f = (QualifiedFrame) obj;
+		else if (obj instanceof QualifiedFrame f) {
 			writeString(stream, OBJECT, f.getTypeName());
 
 			Enumeration<String> e = f.keys();
@@ -202,9 +196,9 @@ public class LEAPFrameCodec implements java.io.Serializable {
 		}
 
 		// AID
-		else if (obj instanceof AID) {
+		else if (obj instanceof AID iD) {
 			// Convert the AID into a qualified frame and call write() again
-			write(stream, aidToFrame((AID) obj));
+			write(stream, aidToFrame(iD));
 		}
 
 		else {

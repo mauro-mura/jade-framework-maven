@@ -1457,9 +1457,9 @@ public class AgentMobilityService extends BaseService {
 					// Something went wrong during the transfer. Rollback
 					myAgent.restoreBufferedState();
 					myDestination = null;
-					if (e instanceof JADESecurityException) {
+					if (e instanceof JADESecurityException exception) {
 						// Will be caught together with all other JADESecurityException-s
-						throw (JADESecurityException) e;
+						throw exception;
 					} else {
 						e.printStackTrace();
 					}
@@ -1495,14 +1495,14 @@ public class AgentMobilityService extends BaseService {
 
 			Object lastException = myService.submit(cmd);
 			if (lastException != null) {
-				if (lastException instanceof JADESecurityException) {
-					throw (JADESecurityException) lastException;
+				if (lastException instanceof JADESecurityException exception) {
+					throw exception;
 				}
-				if (lastException instanceof NotFoundException) {
-					throw (NotFoundException) lastException;
+				if (lastException instanceof NotFoundException exception) {
+					throw exception;
 				}
-				if (lastException instanceof IMTPException) {
-					throw (IMTPException) lastException;
+				if (lastException instanceof IMTPException exception) {
+					throw exception;
 				}
 			}
 		}
@@ -1554,9 +1554,9 @@ public class AgentMobilityService extends BaseService {
 					myDestination = null;
 					myNewName = null;
 					myAgent.restoreBufferedState();
-					if (e instanceof JADESecurityException) {
+					if (e instanceof JADESecurityException exception) {
 						// Will be catched together with all other JADESecurityException-s
-						throw (JADESecurityException) e;
+						throw exception;
 					} else {
 						e.printStackTrace();
 						return;
@@ -1597,17 +1597,17 @@ public class AgentMobilityService extends BaseService {
 
 			Object lastException = myService.submit(cmd);
 			if (lastException != null) {
-				if (lastException instanceof JADESecurityException) {
-					throw (JADESecurityException) lastException;
+				if (lastException instanceof JADESecurityException exception) {
+					throw exception;
 				}
-				if (lastException instanceof NotFoundException) {
-					throw (NotFoundException) lastException;
+				if (lastException instanceof NotFoundException exception) {
+					throw exception;
 				}
-				if (lastException instanceof IMTPException) {
-					throw (IMTPException) lastException;
+				if (lastException instanceof IMTPException exception) {
+					throw exception;
 				}
-				if (lastException instanceof NameClashException) {
-					throw (NameClashException) lastException;
+				if (lastException instanceof NameClashException exception) {
+					throw exception;
 				}
 			}
 		}

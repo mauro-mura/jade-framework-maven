@@ -23,6 +23,9 @@ Boston, MA  02111-1307, USA.
 
 package jade.mtp.exception;
 
+import java.io.Serial;
+
+
 import jade.util.WrapperException;
 
 /**
@@ -30,6 +33,7 @@ import jade.util.WrapperException;
  */
 public class MTPException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = 8734540542410641201L;
 
 	/**

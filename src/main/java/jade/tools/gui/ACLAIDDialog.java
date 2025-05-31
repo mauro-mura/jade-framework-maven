@@ -32,6 +32,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
+import java.io.Serial;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -53,6 +54,7 @@ import jade.core.Agent;
 
 public class ACLAIDDialog extends JDialog {
 
+	@Serial
 	private static final long serialVersionUID = 2555033263062665784L;
 
 	/**

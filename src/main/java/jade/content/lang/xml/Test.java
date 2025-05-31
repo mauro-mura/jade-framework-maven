@@ -76,7 +76,7 @@ public class Test {
 	
 	
 	public static String toHex(String arg) {
-	    return String.format("%x", new BigInteger(1, arg.getBytes()));
+	    return "%x".formatted(new BigInteger(1, arg.getBytes()));
 	}
 }
 

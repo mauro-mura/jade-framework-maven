@@ -107,7 +107,7 @@ public class OutgoingEncodingFilter extends Filter {
 				byte[] payload = encodeMessage(msg);
 				Envelope env = msg.getEnvelope();
 				if (env != null)
-					env.setPayloadLength(new Long(payload.length));
+					env.setPayloadLength(Long.valueOf(payload.length));
 
 				// Update the ACLMessage: some information are kept because they are
 				// required in other services
@@ -132,10 +132,10 @@ public class OutgoingEncodingFilter extends Filter {
 			Location destination = (Location) cmd.getParam(1);
 			if (!myAgentContainer.isLocalAgent(agent)) {
 				// The agent actually moved elsewhere
-				if (destination instanceof ContainerID) {
+				if (destination instanceof ContainerID iD) {
 					// The agent moved to a container inside the platform --> transfer its local
 					// aliases there
-					myService.transferLocalAliases(agent, (ContainerID) destination);
+					myService.transferLocalAliases(agent, iD);
 				}
 			}
 		}
@@ -202,7 +202,7 @@ public class OutgoingEncodingFilter extends Filter {
 
 		Long payloadLength = env.getPayloadLength();
 		if (payloadLength == null)
-			env.setPayloadLength(new Long(-1));
+			env.setPayloadLength(Long.valueOf(-1));
 	}
 
 	/**

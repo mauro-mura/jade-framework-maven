@@ -24,10 +24,7 @@
  */
 package jade.content.lang.leap;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +48,7 @@ import jade.content.schema.ObjectSchema;
  */
 public class LEAPCodec extends ByteArrayCodec {
 
+	@Serial
 	private static final long serialVersionUID = -8110787384183685969L;
 
 	public static final String NAME = "LEAP";
@@ -176,43 +174,41 @@ public class LEAPCodec extends ByteArrayCodec {
 
 	private void write(DataOutputStream stream, AbsObject abs) throws Throwable {
 		// PRIMITIVE
-		if (abs instanceof AbsPrimitive) {
+		if (abs instanceof AbsPrimitive primitive) {
 			// stream.writeByte(PRIMITIVE);
 
-			Object obj = ((AbsPrimitive) abs).getObject();
+			Object obj = primitive.getObject();
 
-			if (obj instanceof String) {
-				String s = (String) obj;
+			if (obj instanceof String s) {
 				if (s.length() >= 65535) {
 					writeBigString(stream, BIG_STRING, s);
 				} else {
 					writeString(stream, STRING, s);
 				}
-			} else if (obj instanceof Boolean) {
+			} else if (obj instanceof Boolean boolean1) {
 				stream.writeByte(BOOLEAN);
-				stream.writeBoolean(((Boolean) obj).booleanValue());
-			} else if (obj instanceof Integer) {
+				stream.writeBoolean(boolean1.booleanValue());
+			} else if (obj instanceof Integer integer) {
 				stream.writeByte(INTEGER);
-				stream.writeInt(((Integer) obj).intValue());
-			} else if (obj instanceof Long) {
+				stream.writeInt(integer.intValue());
+			} else if (obj instanceof Long long1) {
 				stream.writeByte(LONG);
-				stream.writeLong(((Long) obj).longValue());
+				stream.writeLong(long1.longValue());
 			}
 
-			else if (obj instanceof Float) {
+			else if (obj instanceof Float float1) {
 				stream.writeByte(FLOAT);
-				stream.writeFloat(((Float) obj).floatValue());
-			} else if (obj instanceof Double) {
+				stream.writeFloat(float1.floatValue());
+			} else if (obj instanceof Double double1) {
 				stream.writeByte(DOUBLE);
-				stream.writeDouble(((Double) obj).doubleValue());
+				stream.writeDouble(double1.doubleValue());
 			}
 
-			else if (obj instanceof Date) {
+			else if (obj instanceof Date date) {
 				stream.writeByte(DATE);
-				stream.writeLong(((Date) obj).getTime());
-			} else if (obj instanceof byte[]) {
+				stream.writeLong(date.getTime());
+			} else if (obj instanceof byte[] b) {
 				stream.writeByte(BYTE_SEQUENCE);
-				byte[] b = (byte[]) obj;
 				stream.writeInt(b.length);
 				stream.write(b, 0, b.length);
 			}
@@ -221,10 +217,8 @@ public class LEAPCodec extends ByteArrayCodec {
 		}
 
 		// AGGREGATE
-		if (abs instanceof AbsAggregate) {
+		if (abs instanceof AbsAggregate aggregate) {
 			writeString(stream, AGGREGATE, abs.getTypeName());
-
-			AbsAggregate aggregate = (AbsAggregate) abs;
 
 			for (int i = 0; i < aggregate.size(); i++) {
 				stream.writeByte(ELEMENT);
@@ -237,10 +231,8 @@ public class LEAPCodec extends ByteArrayCodec {
 		}
 
 		// CONTENT_ELEMENT_LIST
-		if (abs instanceof AbsContentElementList) {
+		if (abs instanceof AbsContentElementList acel) {
 			stream.writeByte(CONTENT_ELEMENT_LIST);
-
-			AbsContentElementList acel = (AbsContentElementList) abs;
 
 			for (int i = 0; i < acel.size(); i++) {
 				stream.writeByte(ELEMENT);

@@ -1,0 +1,812 @@
+Estimate time saved: 9h 32m
+
+[INFO] Running recipe(s)...
+[WARNING] Changes have been made to src\main\java\FIPA\MTSHelper.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\FIPA\_MTSImplBase.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\AppletBoot.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\BootException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\BootGUI.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsAgentAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsAggregate.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsConcept.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsConceptSlotFunction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsContentElementList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsExtendedPrimitive.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsHelper.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsIRE.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsObjectImpl.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsPredicate.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsPrimitive.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]             org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsPrimitiveSlotsHolder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsReference.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\abs\AbsVariable.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\ContentElementList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\ContentManager.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\exception\ContentException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\frame\FrameException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\frame\LEAPFrameCodec.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\frame\OrderedFrame.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\frame\QualifiedFrame.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\frame\SLFrameCodec.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]             org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\leap\LEAPCodec.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\ExtendedSLParser.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\ParseException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\SimpleSLCodec.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\SLCodec.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\SLParser.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\content\lang\sl\TokenMgrError.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\xml\Test.java by:
+[WARNING]     org.openrewrite.java.migrate.lang.StringFormatted: {addParentheses=false}
+[WARNING] Changes have been made to src\main\java\jade\content\lang\xml\TestAgent.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\content\lang\xml\XMLCodec.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\lang\xml\XMLEncoder.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\Action.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\Done.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\Equals.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\FalseProposition.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\Result.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\basic\TrueProposition.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\BasicOntology.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\onto\BeanIntrospector.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\BeanOntology.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\BeanOntologyBuilder.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\onto\exception\BeanOntologyException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\exception\OntologyException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\exception\UngroundedException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\exception\UnknownSchemaException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\exception\UnknownSlotException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\JavaCollectionOntology.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\content\onto\MicroIntrospector.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\NotAnAggregate.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\NotASpecialType.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\Ontology.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]             org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\ReflectiveIntrospector.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\SerializableOntology.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\SlotAccessData.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\onto\SlotKey.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\OntoACLMessage.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\OntoAID.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\content\schema\AggregateSchema.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\Agent.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\AgentContainerImpl.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\AgentState.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\AID.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\BackEndContainer.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\BackEndWrapper.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\BaseNode.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\BaseService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\BehaviourID.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\ActionExecutor.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\BaseInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\Behaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\BehaviourList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\CompositeBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\CyclicBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\DataStore.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\FSMBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\LoaderBehaviour.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\OneShotBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\OntologyServer.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\OutcomeManager.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\ParallelBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\ReceiverBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\SenderBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\SequentialBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\SerialBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\SimpleBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\TickerBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\WakerBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\behaviours\WrapperBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\CallbackInvokator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\CaseInsensitiveString.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\ContainerID.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\AgentEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\ContainerEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\JADEEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\MessageEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\MTPEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\NotificationProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\event\NotificationService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\event\PlatformEvent.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\IMTPException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\NameClashException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\NotFoundException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\PostponedException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\ProfileException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\ServiceException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\ServiceNotActiveException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\exception\UnreachableException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\faultRecovery\FaultRecoveryService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\FrontEndContainer.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\FullResourceManager.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\GenericCommand.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\LifeCycle.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\MainContainerImpl.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\management\AgentManagementProxy.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\management\AgentManagementService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\management\BEAgentManagementService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\management\CodeLocator.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\IncomingEncodingFilter.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\LightMessagingService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\MessageManager.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\MessagingProxy.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\MessagingService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\MomMessagingService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\OutgoingEncodingFilter.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\PersistentDeliveryManager.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\PersistentDeliveryProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\PersistentDeliveryService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\messaging\TopicManagementProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\mobility\AgentMobilityProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\mobility\AgentMobilityService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\NodeDescriptor.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\NodeFailureMonitor.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\nodeMonitoring\UDPNodeMonitoringProxy.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\nodeMonitoring\UDPNodeMonitoringService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\core\PlatformID.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\PlatformManagerImpl.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\ProfileImpl.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\replication\AddressNotificationProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\replication\AgentReplicationProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\replication\AgentReplicationService.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\replication\GlobalReplicationInfo.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\replication\MainReplicationProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\replication\MainReplicationService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\resource\ResourceManagementProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\sam\AverageMeasure.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\sam\SAMInfo.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\sam\SAMProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\sam\SAMService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\Scheduler.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\ServiceDescriptor.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\core\ServiceManagerImpl.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\core\SliceProxy.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\ams.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\AMSFipaAgentManagementBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\AMSJadeAgentManagementBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\df.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]             org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\DFAppletManagementBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\DFDBKB.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\DFFipaAgentManagementBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\DFGUIManagement\DFAppletOntology.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\DFJadeAgentManagementBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\DFService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\DFSubscriber.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\FIPAAgentManagement\AMSAgentDescription.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\FIPAAgentManagement\APDescription.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\FIPAAgentManagement\DFAgentDescription.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\FIPAAgentManagement\Envelope.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\FIPAAgentManagement\ServiceDescription.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\introspection\IntrospectionServer.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\domain\JADEAgentManagement\CreateAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\JADEAgentManagement\DebugOn.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\JADEAgentManagement\QueryAgentsOnLocation.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\JADEAgentManagement\SniffOff.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\JADEAgentManagement\SniffOn.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\KBManagement\DBKB.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\domain\mobility\LoadBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\domain\RemoteDFRequester.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\gui\AclGui.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\AgentTree.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\AIDGui.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\APDescriptionPanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\APServicePanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\ClassSelectionDialog.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\ConstraintDlg.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\gui\DFAgentDscDlg.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\GuiAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\TimeChooser.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\gui\TreeIconRenderer.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\gui\VisualStringList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\CommandDispatcher.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\ConnectionDropped.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\DeliverableDataInputStream.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\DeliverableDataOutputStream.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\exception\DispatcherException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\exception\ICPDispatchException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\exception\ICPException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\exception\LEAPSerializationException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\http\HTTPAddress.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\http\HTTPFEDispatcher.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\JICP\BIFEDispatcher.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\JICP\FrontEndDispatcher.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\JICP\JICPAddress.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\JICP\JICPClient.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\JICP\JICPServer.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\LEAPIMTPManager.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\MicroStub.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\nio\BEManagementService.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\nio\NIOHelper.java by:
+[WARNING]     org.openrewrite.java.migrate.lang.StringFormatted: {addParentheses=false}
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\NodeSkel.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\PlatformManagerStub.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\SerializationEngine.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\sms\SMSManager.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\sms\SMSManagerGui.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\leap\Stub.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\rmi\NodeAdapter.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\rmi\NodeRMIImpl.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\imtp\rmi\RMIIMTPManager.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\imtp\rmi\ServiceManagerRMIImpl.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\lang\acl\ACLMessage.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\lang\acl\MessageTemplate.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\lang\acl\TokenMgrError.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\lang\acl\UnreadableException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\mtp\exception\MTPException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\mtp\http\HTTPAddress.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\mtp\http\HTTPSocketFactory.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\mtp\http\XMLCodec.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\mtp\iiop\MessageTransportProtocol.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\mtp\MTPDescriptor.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\AchieveREInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\ContractNetInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\Initiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\ProposeInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\Responder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SimpleAchieveREInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SimpleAchieveREResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SSContractNetResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SSIteratedAchieveREResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SSResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SSResponderDispatcher.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\states\ReplySender.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SubscriptionInitiator.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\proto\SubscriptionResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\proto\TwoPhResponder.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\security\JADESecurityException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\DummyAgent\DummyAgentGui.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\tools\DummyAgent\MsgIndication.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLAIDDialog.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLAIDList.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLComboBox.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLPropertyList.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLTextArea.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLTimeChooserDialog.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\ACLTracePanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\gui\AIDAddressList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\introspector\gui\TreePanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\introspector\Introspector.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\logging\gui\LogManagerGUI.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING] Changes have been made to src\main\java\jade\tools\logging\LogHelperAgent.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\ActionProcessor.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\AddRemotePlatformFromURLAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\CloneAgentAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\CustomAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\MainPanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\MainWindow.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\ManageMTPsDialog.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\RefreshAMSAgentAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\RefreshAPDescriptionAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\RegisterRemoteAgentAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\RemoveRemoteAMSAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\rma.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\SuspendAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\TablePanel.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\rma\ViewAPDescriptionAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\ActionProcessor.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\Agent.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\AgentList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\DoNotSnifferAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\DoSnifferAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\MMCanvas.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\PopNoSniffAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\PopSniffAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\ShowOnlyAction.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\sniffer\Sniffer.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING]             org.openrewrite.java.migrate.lang.UseTextBlocks: {convertStringsWithoutNewlines=false}
+[WARNING] Changes have been made to src\main\java\jade\tools\SocketProxyAgent\SocketProxyAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\tools\testagent\TestAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\ToolAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\tools\ToolNotifier.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\Event.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\ExtendedProperties.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\ArrayList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\HashMap.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\HashSet.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\LinkedList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\Properties.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\leap\RoundList.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\Logger.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\PropertiesException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\util\TransportAddressWrapper.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\util\WrapperException.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\wrapper\AgentState.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\wrapper\ContainerController.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\wrapper\gateway\DynamicJadeGateway.java by:
+[WARNING]     org.openrewrite.java.migrate.Java8toJava11
+[WARNING]         org.openrewrite.java.migrate.lang.JavaLangAPIs
+[WARNING]             org.openrewrite.java.migrate.lang.MigrateClassNewInstanceToGetDeclaredConstructorNewInstance
+[WARNING]         org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING] Changes have been made to src\main\java\jade\wrapper\gateway\GatewayAgent.java by:
+[WARNING]     org.openrewrite.staticanalysis.InstanceOfPatternMatch
+[WARNING]         org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\wrapper\gateway\GatewayBehaviour.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID
+[WARNING] Changes have been made to src\main\java\jade\wrapper\StateBase.java by:
+[WARNING]     org.openrewrite.staticanalysis.AddSerialAnnotationToSerialVersionUID

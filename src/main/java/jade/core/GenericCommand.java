@@ -23,6 +23,7 @@
 
 package jade.core;
 
+import java.io.Serial;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ import java.util.List;
  */
 public class GenericCommand implements HorizontalCommand, VerticalCommand  {
 
+	@Serial
 	private static final long serialVersionUID = 4167440968739838468L;
 	
 	/**

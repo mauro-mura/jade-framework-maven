@@ -34,6 +34,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
@@ -62,6 +63,7 @@ import java.util.Iterator;
  */
 public class ACLAIDList extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -3811457087827909267L;
 
 	/**
@@ -349,8 +351,7 @@ public class ACLAIDList extends JPanel {
 		 */
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
-			if ((value != null) && (value instanceof AID)) {
-				AID theAID = (AID) value;
+			if ((value != null) && (value instanceof AID theAID)) {
 				setText(theAID.getName());
 			}
 			setBackground(isSelected ? Color.blue : Color.white);

@@ -25,6 +25,8 @@
 
 package jade.core;
 
+import java.io.Serial;
+
 import jade.domain.FIPANames;
 
 /**
@@ -37,6 +39,7 @@ import jade.domain.FIPANames;
  */
 public class PlatformID implements Location {
 
+	@Serial
 	private static final long serialVersionUID = -140500938506214278L;
 	private static final String NO_NAME = "__NO_NAME__";
 	

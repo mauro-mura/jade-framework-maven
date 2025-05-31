@@ -24,6 +24,7 @@ Boston, MA  02111-1307, USA.
 package jade.tools.rma;
 
 import java.awt.Frame;
+import java.io.Serial;
 
 import jade.core.AID;
 import jade.gui.AgentTree;
@@ -35,6 +36,7 @@ import jade.gui.AgentTree;
  */
 class CloneAgentAction extends AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = -3175778962830871322L;
 	private rma myRMA;
 	private Frame mainWnd;

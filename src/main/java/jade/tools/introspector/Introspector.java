@@ -778,9 +778,7 @@ public class Introspector extends ToolAgent {
 		}
 
 		protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response) {
-			if (aa instanceof DebugOn) {
-				// DEBUG ON
-				DebugOn requestDebugOn = (DebugOn) aa;
+			if (aa instanceof DebugOn requestDebugOn) {
 				// Start debugging existing agents.
 				// Put non existing agents in the preload map. We will start
 				// debug them as soon as they start.

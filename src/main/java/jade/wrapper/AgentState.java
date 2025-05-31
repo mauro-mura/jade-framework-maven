@@ -20,6 +20,8 @@
  */
 package jade.wrapper;
 
+import java.io.Serial;
+
 /**
  * Provides a concrete implementation of the State interface for agents.
    <br>
@@ -29,6 +31,7 @@ package jade.wrapper;
  */
 public class AgentState extends StateBase {
 
+	@Serial
 	private static final long serialVersionUID = -4704026899855408919L;
 
 	static final int LOWEST_STATE = 1;

@@ -25,6 +25,7 @@ package jade.util.leap;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.io.ObjectInputStream;
 import java.util.Vector;
 import java.util.Enumeration;
@@ -42,10 +43,11 @@ import java.util.Enumeration;
 public class ArrayList implements List, Serializable {
     private transient java.util.List realHiddenList = null;
     private Vector                        hiddenList;
-    
-    // This is needed to ensure compatibility with the J2ME version of 
-    // this class in serialization/deserialization operations
-    private static final long             serialVersionUID = 3487495895819393L;
+
+	// This is needed to ensure compatibility with the J2ME version of 
+	// this class in serialization/deserialization operations
+	@Serial
+	private static final long             serialVersionUID = 3487495895819393L;
 
     /**
      * Default Constructor, creates an empty List

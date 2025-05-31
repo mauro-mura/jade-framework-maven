@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain.JADEAgentManagement;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +42,7 @@ import jade.core.AID;
  */
 public class SniffOn implements AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 4898596844184623049L;
 	private AID sniffer;
 	private List<AID> sniffedAgents = new ArrayList<>();

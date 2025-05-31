@@ -22,6 +22,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
+
 import jade.core.Agent;
 
 /**
@@ -38,6 +40,7 @@ import jade.core.Agent;
  */
 public abstract class CyclicBehaviour extends SimpleBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 1789026083993338013L;
 
 	/**

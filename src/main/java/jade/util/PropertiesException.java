@@ -21,6 +21,8 @@
 
 package jade.util;
 
+import java.io.Serial;
+
 /**
  * Property related exception.
  * 
@@ -28,6 +30,7 @@ package jade.util;
  */
 public class PropertiesException extends RuntimeException {
 
+	@Serial
 	private static final long serialVersionUID = -1450002708389985321L;
 
 	/**

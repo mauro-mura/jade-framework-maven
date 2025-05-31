@@ -26,6 +26,7 @@ package jade.proto;
 //#CUSTOM_EXCLUDE_FILE
 
 import java.util.Vector;
+import java.io.Serial;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -94,6 +95,7 @@ import jade.util.Logger;
 
 public class SimpleAchieveREInitiator extends SimpleBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 1162985595501384440L;
 	private final static int PREPARE_MSG_STATE = 0;
 	private final static int SEND_MSG_STATE = 1;

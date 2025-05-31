@@ -3,9 +3,11 @@ package jade.util.leap;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 
 public class HashSet implements Set, Cloneable, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 5439595441274382166L;
 
 	private transient java.util.HashSet internalHashSet; 

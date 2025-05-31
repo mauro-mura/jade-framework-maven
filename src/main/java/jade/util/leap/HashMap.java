@@ -25,6 +25,7 @@ package jade.util.leap;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.io.ObjectInputStream;
 import java.util.Hashtable;
 import java.util.Enumeration;
@@ -51,13 +52,14 @@ public class HashMap implements Map, Serializable {
      */
     private transient Collection        values = null;
 
-  	/**
+	/**
    	   The following elements are required to ensure compatibility with 
    	   the J2ME version of this class in serialization/deserialization 
    	   operations.
-   	 */
-    private static final long     serialVersionUID = 3487495895819395L;
-  	private static final Long     nullValue = new Long(serialVersionUID);
+		 */
+		@Serial
+	private static final long     serialVersionUID = 3487495895819395L;
+  	private static final Long     nullValue = Long.valueOf(serialVersionUID);
     private Hashtable             hiddenMap;
 
     /**

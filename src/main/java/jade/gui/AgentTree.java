@@ -27,6 +27,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
+import java.io.Serial;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -62,6 +63,7 @@ import jade.domain.FIPAAgentManagement.APDescription;
  */
 public class AgentTree extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -2389570176280726870L;
 
 	// FIXME: Use better values for TYPE constants
@@ -92,6 +94,7 @@ public class AgentTree extends JPanel {
 	 */
 	public abstract class Node extends DefaultMutableTreeNode {
 
+		@Serial
 		private static final long serialVersionUID = -7108104644649498714L;
 		protected Icon img;
 		protected String name;
@@ -170,6 +173,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class AgentNode extends Node {
 
+		@Serial
 		private static final long serialVersionUID = -3875026962137252528L;
 		private String agentType;
 		private String agentAddress;
@@ -205,6 +209,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class ContainerNode extends Node {
 
+		@Serial
 		private static final long serialVersionUID = -8226683459916938084L;
 		private InetAddress addressmachine;
 		private String containerType;
@@ -239,6 +244,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class SuperContainer extends Node {
 
+		@Serial
 		private static final long serialVersionUID = -1086526489909189078L;
 
 		public SuperContainer(String name) {
@@ -262,6 +268,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class RemotePlatformsFolderNode extends Node {
 
+		@Serial
 		private static final long serialVersionUID = 6118274734439734398L;
 
 		public RemotePlatformsFolderNode(String name) {
@@ -285,6 +292,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class LocalPlatformFolderNode extends Node {
 
+		@Serial
 		private static final long serialVersionUID = 810488925287811480L;
 
 		public LocalPlatformFolderNode(String name) {
@@ -308,6 +316,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class RemotePlatformNode extends Node {
 
+		@Serial
 		private static final long serialVersionUID = 5266156222186329584L;
 		private APDescription AP_Profile;
 		private AID amsAID;
@@ -349,6 +358,7 @@ public class AgentTree extends JPanel {
 	 */
 	public class RemoteAgentNode extends AgentNode {
 
+		@Serial
 		private static final long serialVersionUID = 8083633063641363085L;
 		private AMSAgentDescription amsd;
 

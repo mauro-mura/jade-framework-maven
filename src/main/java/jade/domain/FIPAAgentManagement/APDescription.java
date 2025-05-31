@@ -26,6 +26,7 @@ package jade.domain.FIPAAgentManagement;
 import jade.content.Concept;
 import java.util.List;
 import java.util.Iterator;
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 */
 public class APDescription implements Concept {
 
+	@Serial
 	private static final long serialVersionUID = 9061740731651232875L;
 	private String name;
     private List services = new ArrayList<>(1); 

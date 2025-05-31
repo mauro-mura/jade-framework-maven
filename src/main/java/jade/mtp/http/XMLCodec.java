@@ -155,7 +155,7 @@ public class XMLCodec extends DefaultHandler {
 	 */
 	public XMLCodec(String parserClass) throws MTPException {
 		try {
-			parser = (XMLReader) Class.forName(parserClass).newInstance();
+			parser = (XMLReader) Class.forName(parserClass).getDeclaredConstructor().newInstance();
 			parser.setContentHandler(this);
 			parser.setErrorHandler(this);
 		} catch (Exception e) {
@@ -206,12 +206,12 @@ public class XMLCodec extends DefaultHandler {
 		String v = null;
 		Object o = p.getValue();
 		String type = PROP_STRING_TYPE;
-		if (o instanceof String) {
-			v = (String) o;
-		} else if (o instanceof byte[]) {
+		if (o instanceof String string) {
+			v = string;
+		} else if (o instanceof byte[] bytes1) {
 			type = PROP_BYTE_TYPE;
 			try {
-				v = new String(Base64.getEncoder().encode((byte[]) o), "US-ASCII");
+				v = new String(Base64.getEncoder().encode(bytes1), "US-ASCII");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
@@ -437,7 +437,7 @@ public class XMLCodec extends DefaultHandler {
 		} else if (REPRESENTATION_TAG.equalsIgnoreCase(localName)) {
 			env.setAclRepresentation(accumulator.toString());
 		} else if (LENGTH_TAG.equalsIgnoreCase(localName)) {
-			env.setPayloadLength(new Long(accumulator.toString()));
+			env.setPayloadLength(Long.valueOf(accumulator.toString()));
 			if (logger.isLoggable(Logger.WARNING))
 				logger.log(Logger.FINE, "Length: " + env.getPayloadLength());
 		} else if (ENCODING_TAG.equalsIgnoreCase(localName)) {

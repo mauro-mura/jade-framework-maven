@@ -25,6 +25,7 @@
 
 package jade.content.lang.xml;
 
+import java.io.Serial;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import jade.content.onto.exception.OntologyException;
 
 public class XMLCodec extends StringCodec {
 
+	@Serial
 	private static final long serialVersionUID = -711663402273632423L;
 
 	public static final String NAME = "XML";
@@ -168,8 +170,8 @@ public class XMLCodec extends StringCodec {
 	public AbsContentElement decode(Ontology ontology, String content) throws CodecException {
 		try {
 			AbsObject abs = decodeAbsObject(ontology, content);
-			if (abs instanceof AbsContentElement) {
-				return (AbsContentElement) abs;
+			if (abs instanceof AbsContentElement element) {
+				return element;
 			}
 			else {
 				throw new CodecException(abs.getTypeName()+" is not a content element");

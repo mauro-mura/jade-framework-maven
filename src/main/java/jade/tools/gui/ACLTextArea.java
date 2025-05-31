@@ -1733,18 +1733,16 @@ public class ACLTextArea extends JComponent {
 
       if (evt != null) {
         Object o = evt.getSource();
-        if (o instanceof Component) {
-          // find the parent text area
-          Component c = (Component)o;
+        if (o instanceof Component c) {
           for (; ; ) {
-            if (c instanceof ACLTextArea) {
-              return (ACLTextArea)c;
+            if (c instanceof ACLTextArea area) {
+              return area;
             }
             else if (c == null) {
               break;
             }
-            if (c instanceof JPopupMenu) {
-              c = ((JPopupMenu)c)
+            if (c instanceof JPopupMenu menu) {
+              c = menu
                 .getInvoker();
             }
 
@@ -1884,8 +1882,8 @@ public class ACLTextArea extends JComponent {
 
         if (st.hasMoreTokens()) {
           Object o = current.get(keyStroke);
-          if (o instanceof Hashtable) {
-            current = (Hashtable)o;
+          if (o instanceof Hashtable hashtable) {
+            current = hashtable;
           }
 
           else {
@@ -1953,8 +1951,8 @@ public class ACLTextArea extends JComponent {
           currentBindings = bindings;
           return;
         }
-        else if (o instanceof ActionListener) {
-          ((ActionListener)o).actionPerformed(
+        else if (o instanceof ActionListener listener) {
+          listener.actionPerformed(
             new ActionEvent(evt.getSource(),
             ActionEvent.ACTION_PERFORMED,
             null, modifiers));
@@ -1962,8 +1960,8 @@ public class ACLTextArea extends JComponent {
           evt.consume();
           return;
         }
-        else if (o instanceof Hashtable) {
-          currentBindings = (Hashtable)o;
+        else if (o instanceof Hashtable hashtable) {
+          currentBindings = hashtable;
           evt.consume();
           return;
         }

@@ -1,5 +1,6 @@
 package jade.wrapper.gateway;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -26,6 +27,7 @@ import jade.util.Logger;
  */
 public abstract class GatewayBehaviour extends CyclicBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -1564822437146743923L;
 
 	/**

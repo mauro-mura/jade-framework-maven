@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,7 @@ import jade.security.JADESecurityException;
  */
 class AMSFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -290456791163096519L;
 	private ams theAMS;
 
@@ -76,20 +78,20 @@ class AMSFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 		List<Object> resultItems = new ArrayList<>();
 
 		// REGISTER
-		if (action instanceof Register) {
-			theAMS.registerAction((Register) action, request.getSender());
+		if (action instanceof Register register) {
+			theAMS.registerAction(register, request.getSender());
 		}
 		// DEREGISTER
-		else if (action instanceof Deregister) {
-			theAMS.deregisterAction((Deregister) action, request.getSender());
+		else if (action instanceof Deregister deregister) {
+			theAMS.deregisterAction(deregister, request.getSender());
 		}
 		// MODIFY
-		else if (action instanceof Modify) {
-			theAMS.modifyAction((Modify) action, request.getSender());
+		else if (action instanceof Modify modify) {
+			theAMS.modifyAction(modify, request.getSender());
 		}
 		// SEARCH
-		else if (action instanceof Search) {
-			resultItems.addAll(theAMS.searchAction((Search) action, request.getSender()));
+		else if (action instanceof Search search) {
+			resultItems.addAll(theAMS.searchAction(search, request.getSender()));
 		}
 		// GET_DESCRIPTION
 		else if (action instanceof GetDescription) {

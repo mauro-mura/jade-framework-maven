@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.event;
 
+import java.io.Serial;
+
 import jade.core.AID;
 import jade.core.Channel;
 import jade.core.ContainerID;
@@ -39,6 +41,7 @@ import jade.lang.acl.ACLMessage;
  */
 public class MessageEvent extends JADEEvent {
 
+	@Serial
 	private static final long serialVersionUID = -4523909671253691304L;
 	public static final int SENT_MESSAGE = 1;
 	public static final int POSTED_MESSAGE = 2;

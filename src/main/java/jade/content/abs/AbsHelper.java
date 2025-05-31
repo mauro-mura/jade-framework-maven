@@ -324,7 +324,7 @@ public class AbsHelper {
 		java.util.Collection collection;
 
 		try {
-			collection = (java.util.Collection) Class.forName(aggregate.getTypeName()).newInstance();
+			collection = (java.util.Collection) Class.forName(aggregate.getTypeName()).getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			throw new OntologyException("Cannot instantiate java collection of class "+aggregate.getTypeName(), e);
 		}
@@ -527,22 +527,22 @@ public class AbsHelper {
 			return;
 		}
 		else if (abs.getAbsType() == AbsObject.ABS_IRE) {
-			if (attrValue instanceof AbsVariable && CaseInsensitiveString.equalsIgnoreCase(attrName, IRESchema.VARIABLE)) {
-				((AbsIRE) abs).setVariable((AbsVariable) attrValue);
+			if (attrValue instanceof AbsVariable variable && CaseInsensitiveString.equalsIgnoreCase(attrName, IRESchema.VARIABLE)) {
+				((AbsIRE) abs).setVariable(variable);
 				return;
 			}
-			else if (attrValue instanceof AbsPredicate && CaseInsensitiveString.equalsIgnoreCase(attrName, IRESchema.PROPOSITION)) {
-				((AbsIRE) abs).setProposition((AbsPredicate) attrValue);
+			else if (attrValue instanceof AbsPredicate predicate && CaseInsensitiveString.equalsIgnoreCase(attrName, IRESchema.PROPOSITION)) {
+				((AbsIRE) abs).setProposition(predicate);
 				return;
 			}
 		}
 		else if (abs.getAbsType() == AbsObject.ABS_VARIABLE) {
-			if (attrValue instanceof AbsPrimitive && CaseInsensitiveString.equalsIgnoreCase(attrName, VariableSchema.NAME)) {
-				((AbsVariable) abs).setName(((AbsPrimitive) attrValue).getString());
+			if (attrValue instanceof AbsPrimitive primitive1 && CaseInsensitiveString.equalsIgnoreCase(attrName, VariableSchema.NAME)) {
+				((AbsVariable) abs).setName(primitive1.getString());
 				return;
 			}
-			else if (attrValue instanceof AbsPrimitive && CaseInsensitiveString.equalsIgnoreCase(attrName, VariableSchema.VALUE_TYPE)) {
-				((AbsVariable) abs).setType(((AbsPrimitive) attrValue).getString());
+			else if (attrValue instanceof AbsPrimitive primitive && CaseInsensitiveString.equalsIgnoreCase(attrName, VariableSchema.VALUE_TYPE)) {
+				((AbsVariable) abs).setType(primitive.getString());
 				return;
 			}
 		}
@@ -565,8 +565,7 @@ public class AbsHelper {
 			return null;
 		}
 		// Remove empty AbsAggregate
-		if (removeEmptyAggregate && abs instanceof AbsAggregate) {
-			AbsAggregate absAggregate = (AbsAggregate)abs;
+		if (removeEmptyAggregate && abs instanceof AbsAggregate absAggregate) {
 			if (absAggregate.size() == 0) {
 				return null;
 			}
@@ -575,8 +574,7 @@ public class AbsHelper {
 		if (!abs.isGrounded()) {
 			
 			// Aggregate
-			if (abs instanceof AbsAggregate) {
-				AbsAggregate absAggregate = (AbsAggregate)abs;
+			if (abs instanceof AbsAggregate absAggregate) {
 				
 				Iterator it = absAggregate.iterator();
 				while (it.hasNext()) {
@@ -677,8 +675,8 @@ public class AbsHelper {
 			return false;
 		}
 		
-		if (abs instanceof AbsAggregate) {
-			Iterator it = ((AbsAggregate)abs).iterator();
+		if (abs instanceof AbsAggregate aggregate) {
+			Iterator it = aggregate.iterator();
 			while (it.hasNext()) {
 				if (!isAbsTemplate((AbsObject)it.next())) {
 					return false;
@@ -797,8 +795,7 @@ public class AbsHelper {
 			return new AbsVariable(createVariableName(prefix, viw), schema.getTypeName());
 		}
 
-		if (schema instanceof AggregateSchema) {
-			AggregateSchema aggregateSchema = (AggregateSchema)schema; 
+		if (schema instanceof AggregateSchema aggregateSchema) { 
 			AbsAggregate aggregate = new AbsAggregate(aggregateSchema.getTypeName());
 			
 			// If is present the element schema add this information in aggregate

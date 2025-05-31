@@ -37,14 +37,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.text.DateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -97,6 +90,7 @@ import jade.util.Logger;
 
 public class ACLTracePanel extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -6137388081869530587L;
 //logging
 

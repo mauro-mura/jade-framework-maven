@@ -25,6 +25,7 @@
 package jade.content.abs;
 
 import java.io.PrintStream;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +41,7 @@ import jade.content.lang.Codec;
  */
 public class AbsAggregate extends AbsConcept {
 
+	@Serial
 	private static final long serialVersionUID = 388174519762860702L;
 	private static final int UNNAMEDPREFIX_LENGTH = Codec.UNNAMEDPREFIX.length();
 	private List<AbsTerm> elements = new ArrayList<>();

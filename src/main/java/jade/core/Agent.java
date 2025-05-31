@@ -23,14 +23,7 @@
 
 package jade.core;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -78,6 +71,7 @@ public class Agent implements Runnable, Serializable
 		, TimerListener
 //#APIDOC_EXCLUDE_END
 {
+	@Serial
 	private static final long serialVersionUID = 3487495895819000L;
 
 	private Logger log = Logger.getJADELogger(this.getClass().getName());
@@ -88,6 +82,7 @@ public class Agent implements Runnable, Serializable
 	 * in the doWait() method.
 	 */
 	public static class Interrupted extends Error {
+		@Serial
 		private static final long serialVersionUID = -3487920879925004170L;
 		public Interrupted() {
 			super();
@@ -516,7 +511,7 @@ public class Agent implements Runnable, Serializable
 		String msgQueueClass = getProperty(MSG_QUEUE_CLASS, null);
 		if (msgQueueClass != null) {
 			try {
-				return (MessageQueue) Class.forName(msgQueueClass).newInstance();
+				return (MessageQueue) Class.forName(msgQueueClass).getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
 				log.warning("Error loading MessageQueue of class " + msgQueueClass + " [" + e + "]");
 			}
@@ -996,7 +991,8 @@ public class Agent implements Runnable, Serializable
 		if (mobHelper == null) {
 			mobHelper = (AgentMobilityHelper) getHelper(AgentMobilityHelper.NAME);
 			mobHelper.registerMovable(new Movable() {
-	
+
+				@Serial
 				private static final long serialVersionUID = -6369687405671300436L;
 
 				public void beforeMove() {
@@ -1525,6 +1521,7 @@ public class Agent implements Runnable, Serializable
 	 * Inner class ActiveLifeCycle
 	 */
 	private class ActiveLifeCycle extends LifeCycle {
+		@Serial
 		private static final long serialVersionUID = 11111;
 
 		private ActiveLifeCycle() {
@@ -1622,6 +1619,7 @@ public class Agent implements Runnable, Serializable
 	 * Inner class DeletedLifeCycle
 	 */
 	private class DeletedLifeCycle extends LifeCycle {
+		@Serial
 		private static final long serialVersionUID = 11112;
 
 		private DeletedLifeCycle() {
@@ -1644,6 +1642,7 @@ public class Agent implements Runnable, Serializable
 	 * Inner class SuspendedLifeCycle
 	 */
 	private class SuspendedLifeCycle extends LifeCycle {
+		@Serial
 		private static final long serialVersionUID = 11113;
 
 		private SuspendedLifeCycle() {

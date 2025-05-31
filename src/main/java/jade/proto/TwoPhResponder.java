@@ -29,6 +29,8 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import jade.proto.states.*;
+
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -90,7 +92,8 @@ public class TwoPhResponder extends Responder {
         
 		// HANDLE_CFP
 		b = new OneShotBehaviour(myAgent) {
-	  	private static final long     serialVersionUID = 4487495895818001L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818001L;
 	  	
 			public void action() {
 			    ACLMessage reply = handleCfp((ACLMessage) getDataStore().get(RECEIVED_KEY));
@@ -102,7 +105,8 @@ public class TwoPhResponder extends Responder {
 	
 		// HANDLE_QUERY_IF
 		b = new OneShotBehaviour(myAgent) {
-	  	private static final long     serialVersionUID = 4487495895818002L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818002L;
 	  	
 			public void action() {
 			    ACLMessage reply = handleQueryIf((ACLMessage) getDataStore().get(RECEIVED_KEY));
@@ -114,7 +118,8 @@ public class TwoPhResponder extends Responder {
 	
 		// HANDLE_ACCEPT_PROPOSAL
 		b = new OneShotBehaviour(myAgent) {
-	  	private static final long     serialVersionUID = 4487495895818003L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818003L;
 	  	
 			public void action() {
 			    ACLMessage reply = handleAcceptProposal((ACLMessage) getDataStore().get(RECEIVED_KEY));
@@ -126,7 +131,8 @@ public class TwoPhResponder extends Responder {
 	
 		// HANDLE_REJECT_PROPOSAL
 		b = new OneShotBehaviour(myAgent) {
-	  	private static final long     serialVersionUID = 4487495895818004L;
+			@Serial
+			private static final long     serialVersionUID = 4487495895818004L;
 	  	
 			public void action() {
 			    ACLMessage reply = handleRejectProposal((ACLMessage) getDataStore().get(RECEIVED_KEY));

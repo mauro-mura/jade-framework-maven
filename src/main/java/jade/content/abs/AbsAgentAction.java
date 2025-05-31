@@ -24,6 +24,8 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.AgentAction;
 
 /**
@@ -33,6 +35,7 @@ import jade.content.AgentAction;
  */
 public class AbsAgentAction extends AbsConcept implements AbsContentElement, AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 6312774993909760409L;
 	private boolean isAContentExpression = false;
 

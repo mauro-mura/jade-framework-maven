@@ -55,12 +55,11 @@ public class TransportAddressWrapper {
 		}
 		
 		TransportAddress otherTA = null;
-		if (obj instanceof TransportAddressWrapper) {
-			TransportAddressWrapper taw = (TransportAddressWrapper) obj;
+		if (obj instanceof TransportAddressWrapper taw) {
 			otherTA = taw.getAddress();
 		}
-		else if (obj instanceof TransportAddress) {
-			otherTA = (TransportAddress) obj; 
+		else if (obj instanceof TransportAddress address) {
+			otherTA = address; 
 		}
 		else {
 			return false;

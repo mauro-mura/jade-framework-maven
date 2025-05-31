@@ -28,6 +28,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.io.Serial;
 import java.net.InetAddress;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -60,6 +61,7 @@ import jade.lang.acl.ACLMessage;
  */
 class MainWindow extends JFrame {
 
+	@Serial
 	private static final long serialVersionUID = -8739797132610216376L;
 	private MainPanel tree;
 	private ActionProcessor actPro;

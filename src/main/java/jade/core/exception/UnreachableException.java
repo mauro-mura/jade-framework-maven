@@ -25,6 +25,11 @@ package jade.core.exception;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
+
+
+//#APIDOC_EXCLUDE_FILE
+
 import jade.util.WrapperException;
 
 /**
@@ -36,6 +41,7 @@ import jade.util.WrapperException;
  */
 public class UnreachableException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = 85196280208096964L;
 
 	/**

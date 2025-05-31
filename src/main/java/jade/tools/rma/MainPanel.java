@@ -179,8 +179,7 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 					for(int i=0; i<selectedItems.length; i++)
 					{
 						Object lastPath = selectedItems[i].getLastPathComponent();
-						if (lastPath instanceof AgentTree.Node) {
-							AgentTree.Node node = (AgentTree.Node)lastPath;
+						if (lastPath instanceof AgentTree.Node node) {
 							AID recipient = new AID(node.getName(), AID.ISGUID);
 							msg.addReceiver(recipient);
 						}

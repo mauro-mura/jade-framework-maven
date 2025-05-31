@@ -34,6 +34,8 @@ import jade.core.behaviours.DataStore;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.proto.states.MsgReceiver;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -89,6 +91,7 @@ import java.io.Serializable;
  **/
 public class AchieveREInitiator extends Initiator {
 
+	@Serial
 	private static final long serialVersionUID = -3295218476100282838L;
 	// Private data store keys (can't be static since if we register another
 	// instance of this class as state of the FSM
@@ -176,6 +179,7 @@ public class AchieveREInitiator extends Initiator {
 		Behaviour b = null;
 		// HANDLE_AGREE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long serialVersionUID = 3487495895818003L;
 
 			public void action() {
@@ -187,6 +191,7 @@ public class AchieveREInitiator extends Initiator {
 
 		// HANDLE_REFUSE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long serialVersionUID = 3487495895818004L;
 
 			public void action() {
@@ -198,6 +203,7 @@ public class AchieveREInitiator extends Initiator {
 
 		// HANDLE_INFORM
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long serialVersionUID = 3487495895818006L;
 
 			public void action() {
@@ -219,7 +225,8 @@ public class AchieveREInitiator extends Initiator {
 
 		// HANDLE_ALL_RESULT_NOTIFICATIONS
 		b = new OneShotBehaviour(myAgent) {
-			
+
+			@Serial
 			private static final long serialVersionUID = 6223335894492666537L;
 
 			public void action() {
@@ -232,6 +239,7 @@ public class AchieveREInitiator extends Initiator {
 		// CHECK_AGAIN
 		b = new OneShotBehaviour(myAgent) {
 
+			@Serial
 			private static final long serialVersionUID = 2758765053616045392L;
 
 			public void action() {

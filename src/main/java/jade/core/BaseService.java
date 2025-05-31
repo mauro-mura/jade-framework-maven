@@ -158,8 +158,8 @@ public abstract class BaseService implements Service {
 			if (includeMyself || !sliceName.equals(localNodeName)) {
 				slice.serve(cmd);
 				Object ret = cmd.getReturnValue();
-				if (ret instanceof Throwable) {
-					myLogger.log(Logger.WARNING, "Error propagating H-command " + cmd.getName() + " to slice " + sliceName, ((Throwable) ret));
+				if (ret instanceof Throwable throwable) {
+					myLogger.log(Logger.WARNING, "Error propagating H-command " + cmd.getName() + " to slice " + sliceName, throwable);
 				}
 			}
 		}

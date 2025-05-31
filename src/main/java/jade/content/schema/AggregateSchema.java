@@ -157,10 +157,10 @@ public class AggregateSchema extends TermSchema {
 	// Propagate the assignability check to the aggregate elements schemas
 	public boolean isAssignableFrom(ObjectSchema s) {
 		if (s != null &&
-			s instanceof AggregateSchema &&
+			s instanceof AggregateSchema schema &&
 			s.getTypeName().equals(getTypeName())) {
 			
-			return getElementsSchema().isAssignableFrom(((AggregateSchema)s).getElementsSchema());
+			return getElementsSchema().isAssignableFrom(schema.getElementsSchema());
 		}
 		return false;
 	}

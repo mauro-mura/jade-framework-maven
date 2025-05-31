@@ -41,9 +41,9 @@ class RemoveRemoteAMSAction extends PlatformAction {
 
   public void doAction(AgentTree.Node node ) {
 
-    	if(node instanceof AgentTree.RemotePlatformNode){
+    	if(node instanceof AgentTree.RemotePlatformNode platformNode){
     		//System.out.println("Remove Remote AMS");
-    	  myRMA.removeRemotePlatform(((AgentTree.RemotePlatformNode)node).getAPDescription());
+    	  myRMA.removeRemotePlatform(platformNode.getAPDescription());
     		
     	}
   }

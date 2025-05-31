@@ -41,9 +41,9 @@ class RefreshAPDescriptionAction extends PlatformAction {
 
   public void doAction(AgentTree.Node node ) {
 
-    	if(node instanceof AgentTree.RemotePlatformNode){
+    	if(node instanceof AgentTree.RemotePlatformNode platformNode){
     		//System.out.println("Refresh AP Description");
-    	  myRMA.addRemotePlatform(((AgentTree.RemotePlatformNode)node).getAmsAID());
+    	  myRMA.addRemotePlatform(platformNode.getAmsAID());
     		
     	}
   }

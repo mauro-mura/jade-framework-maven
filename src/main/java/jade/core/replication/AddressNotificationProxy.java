@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.replication;
 
+import java.io.Serial;
+
 import jade.core.GenericCommand;
 import jade.core.Node;
 import jade.core.SliceProxy;
@@ -38,6 +40,7 @@ import jade.core.exception.ServiceException;
 */
 public class AddressNotificationProxy extends SliceProxy implements AddressNotificationSlice {
 
+	@Serial
 	private static final long serialVersionUID = -4121018855219231977L;
 
 	public void addServiceManagerAddress(String addr) throws IMTPException {
@@ -48,8 +51,8 @@ public class AddressNotificationProxy extends SliceProxy implements AddressNotif
 	    Node n = getNode();
 	    Object result = n.accept(cmd);
 	    if((result != null) && (result instanceof Throwable)) {
-		if(result instanceof IMTPException) {
-		    throw (IMTPException)result;
+		if(result instanceof IMTPException exception) {
+		    throw exception;
 		}
 		else {
 		    throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -91,8 +94,8 @@ public class AddressNotificationProxy extends SliceProxy implements AddressNotif
 	    Node n = getNode();
 	    Object result = n.accept(cmd);
 	    if((result != null) && (result instanceof Throwable)) {
-		if(result instanceof IMTPException) {
-		    throw (IMTPException)result;
+		if(result instanceof IMTPException exception) {
+		    throw exception;
 		}
 		else {
 		    throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

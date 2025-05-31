@@ -22,6 +22,7 @@
  *****************************************************************/
 package jade.proto.states;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 import jade.core.AID;
@@ -44,6 +45,7 @@ import jade.lang.acl.ACLMessage;
  **/
 public class ReplySender extends OneShotBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -4038731546640878108L;
 	public static final int NO_REPLY_SENT = -1;
 	private int ret;

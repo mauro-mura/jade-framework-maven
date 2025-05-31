@@ -24,6 +24,7 @@
 package jade.tools.rma;
 
 import java.io.BufferedReader;
+import java.io.Serial;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -71,6 +72,7 @@ import jade.security.JADEPrincipal;
  */
 public class rma extends ToolAgent {
 
+	@Serial
 	private static final long serialVersionUID = 1369352453802112743L;
 
 	private APDescription myPlatformProfile;
@@ -78,6 +80,7 @@ public class rma extends ToolAgent {
 	// Sends requests to the AMS
 	private class AMSClientBehaviour extends SimpleAchieveREInitiator {
 
+		@Serial
 		private static final long serialVersionUID = 4185403355984487204L;
 		private String actionName;
 
@@ -117,6 +120,7 @@ public class rma extends ToolAgent {
 
 	private class handleAddRemotePlatformBehaviour extends AMSClientBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = -5677742266395666195L;
 
 		public handleAddRemotePlatformBehaviour(String an, ACLMessage request) {
@@ -147,6 +151,7 @@ public class rma extends ToolAgent {
 
 	private class handleRefreshRemoteAgentBehaviour extends AMSClientBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = 1762497725159917502L;
 		private APDescription platform;
 
@@ -180,6 +185,7 @@ public class rma extends ToolAgent {
 
 	class RMAAMSListenerBehaviour extends AMSListenerBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = -923175163860795771L;
 
 		protected void installHandlers(Map handlersTable) {
@@ -521,7 +527,7 @@ public class rma extends ToolAgent {
 			// with a specified owner name
 			try {
 				Class c = Class.forName("jade.security.impl.JADEPrincipalImpl");
-				intendedOwner = (JADEPrincipal) c.newInstance();
+				intendedOwner = (JADEPrincipal) c.getDeclaredConstructor().newInstance();
 				java.lang.reflect.Method setName = c.getDeclaredMethod("setName", new Class[] { String.class });
 				setName.invoke(intendedOwner, new Object[] { ownerName });
 			} catch (Exception e) {

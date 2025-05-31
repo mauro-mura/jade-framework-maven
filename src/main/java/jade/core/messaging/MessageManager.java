@@ -284,8 +284,8 @@ class MessageManager {
 				// If queue is full, trying to send back a FAILURE is useless since the FAILURE
 				// would be discarded too
 				if (!(e instanceof QueueFullException)) {
-					if (e instanceof StuckDeliverer) {
-						String name = ((StuckDeliverer) e).getDelivererName();
+					if (e instanceof StuckDeliverer deliverer) {
+						String name = deliverer.getDelivererName();
 
 						myLogger.log(Logger.WARNING,
 								"Deliverer " + name + " appears to be stuck!!!!! Try to interrupt it...");
@@ -477,10 +477,9 @@ class MessageManager {
 	 */
 	public static final String stringify(GenericMessage m) {
 
-		if (m instanceof MultipleGenericMessage) {
+		if (m instanceof MultipleGenericMessage mm) {
 			// MULTIPLE message
 			StringBuilder sb = new StringBuilder("[SET");
-			MultipleGenericMessage mm = (MultipleGenericMessage) m;
 			List<GenericMessage> l = mm.getMessages();
 			int cnt = 0;
 			for (GenericMessage gm : l) {

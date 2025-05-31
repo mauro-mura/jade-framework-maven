@@ -30,7 +30,10 @@ import jade.content.onto.exception.OntologyException;
 import jade.content.schema.AgentActionSchema;
 import jade.content.schema.ObjectSchema;
 import jade.content.schema.TermSchema;
+
 import jade.domain.FIPAAgentManagement.FIPAManagementOntology;
+
+import java.io.Serial;
 
 /**
  * This class represents the ontology <code>DFApplet-management</code>,
@@ -48,6 +51,7 @@ import jade.domain.FIPAAgentManagement.FIPAManagementOntology;
 
 public class DFAppletOntology extends Ontology implements DFAppletVocabulary {
 
+	@Serial
 	private static final long serialVersionUID = 4077049228906178235L;
 	private static Ontology theInstance = new DFAppletOntology();
 

@@ -249,14 +249,14 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 		cmd.addParam(id);
 		
 		Object ret = myCommandProcessor.processOutgoing(cmd);
-		if (ret instanceof NameClashException) {
-			throw new JADESecurityException(((NameClashException) ret).getMessage());
+		if (ret instanceof NameClashException exception2) {
+			throw new JADESecurityException(exception2.getMessage());
 		}
-		else if (ret instanceof JADESecurityException) {
-			throw (JADESecurityException) ret;
+		else if (ret instanceof JADESecurityException exception1) {
+			throw exception1;
 		}
-		else if (ret instanceof IMTPException) {
-			throw (IMTPException) ret;
+		else if (ret instanceof IMTPException exception) {
+			throw exception;
 		}
 		else if (ret instanceof Throwable) {
 			throw new IMTPException(null, (Exception) ret);
@@ -381,7 +381,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 		BECodec codec = serviceBECodecs.get(serviceName);
 		if (codec == null) {
 			try {
-				codec = (BECodec) Class.forName(serviceName+"BECodec").newInstance();	
+				codec = (BECodec) Class.forName(serviceName+"BECodec").getDeclaredConstructor().newInstance();	
 			}
 			catch (Exception e) {
 				// The service does not have a BECodec --> Use a dummy one

@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.domain.FIPAAgentManagement;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -41,6 +42,7 @@ import jade.util.leap.Properties;
  */
 public class Envelope implements Concept, java.io.Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -1402357956969690763L;
 	private static final int EXPECTED_LIST_SIZE = 2;
 	/**
@@ -95,7 +97,7 @@ public class Envelope implements Concept, java.io.Serializable {
 	 * Default constructor. Initializes the payloadLength to -1.
 	 **/
 	public Envelope() {
-		payloadLength = new Long(-1);
+		payloadLength = Long.valueOf(-1);
 	}
 
 	/**

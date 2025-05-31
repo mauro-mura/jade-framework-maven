@@ -114,9 +114,9 @@ class XMLEncoder {
 					String slotName = (String) tagSlotNames.get(i);
 					AbsObject slot = abs.getAbsObject(slotName);
 					if (slot != null) {
-						if (slot instanceof AbsPrimitive) {
+						if (slot instanceof AbsPrimitive primitive) {
 							// This must be a String otherwise it would have been already encoded as an attribute
-							encodeString(slotName, ((AbsPrimitive) slot).getString());
+							encodeString(slotName, primitive.getString());
 						}
 						else {
 							boolean closeSlotNameTag = false;
@@ -175,8 +175,8 @@ class XMLEncoder {
 			for (int i = 0; i < slotNames.length; ++i) {
 				String slotName = slotNames[i];
 				AbsObject slot = abs.getAbsObject(slotName);
-				if (slot != null && slot instanceof AbsPrimitive) {
-					Object obj = ((AbsPrimitive) slot).getObject();
+				if (slot != null && slot instanceof AbsPrimitive primitive) {
+					Object obj = primitive.getObject();
 					if (obj instanceof String && schema.getSchema(slotName) != BasicOntology.getInstance().getSchema(BasicOntology.STRING)) {
 						// String primitives are encoded as tag
 						tagSlotNames.add(slotName);
@@ -282,8 +282,8 @@ class XMLEncoder {
 	
 	private String getPrimitiveValue(AbsPrimitive abs) throws CodecException {
 		Object obj = abs.getObject();
-		if (obj instanceof Date) {
-			return ISO8601.toString((Date) obj);
+		if (obj instanceof Date date) {
+			return ISO8601.toString(date);
 		}
 		else if (preserveJavaTypes && obj instanceof Long) {
 			return obj.toString()+'L';
@@ -291,9 +291,9 @@ class XMLEncoder {
 		else if (preserveJavaTypes && obj instanceof Float) {
 			return obj.toString()+'F';
 		}
-		else if (obj instanceof byte[]) {
+		else if (obj instanceof byte[] bytes) {
 			try {
-				String base64Str = new String(Base64.getEncoder().encode((byte[]) obj), "US-ASCII"); 
+				String base64Str = new String(Base64.getEncoder().encode(bytes), "US-ASCII"); 
 				StringBuffer sb = new StringBuffer(XMLCodec.BINARY_STARTER);
 				sb.append(base64Str);
 				return sb.toString();
@@ -304,8 +304,8 @@ class XMLEncoder {
 		}
 		else {
 			// String -> encode text
-			if (obj instanceof String) {
-				return XMLCodec.toXML((String)obj);
+			if (obj instanceof String string) {
+				return XMLCodec.toXML(string);
 			}
 			
 			// Boolean, Integer, Double, (Long, Float if not preserving Java types) 

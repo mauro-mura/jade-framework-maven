@@ -24,6 +24,7 @@
  */
 package jade.content;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 import jade.core.AID;
@@ -38,6 +39,7 @@ import jade.lang.acl.ACLMessage;
  */
 public class OntoACLMessage extends ACLMessage implements AgentAction {
 
+	@Serial
 	private static final long serialVersionUID = 1133088693681487894L;
 
 	/**
@@ -70,8 +72,8 @@ public class OntoACLMessage extends ACLMessage implements AgentAction {
 	public static OntoACLMessage wrap(ACLMessage msg) {
 		OntoACLMessage wrapper = null;
 		if (msg != null) {
-			if (msg instanceof OntoACLMessage) {
-				wrapper = (OntoACLMessage) msg;
+			if (msg instanceof OntoACLMessage message) {
+				wrapper = message;
 			} else {
 				wrapper = new OntoACLMessage(msg.getPerformative());
 				// This automatically performs the wrapping

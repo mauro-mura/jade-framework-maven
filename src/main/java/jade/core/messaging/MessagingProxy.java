@@ -60,7 +60,7 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			cmd.addParam(receiverID);
 			long timeStamp = msg.getTimeStamp();
 			if (timeStamp > 0) {
-				cmd.addParam(new Long(timeStamp));
+				cmd.addParam(Long.valueOf(timeStamp));
 			}			
 			cmd.setPrincipal(msg.getSenderPrincipal());
 			cmd.setCredentials(msg.getSenderCredentials());
@@ -68,14 +68,14 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof JADESecurityException) {
-					throw (JADESecurityException)result;
+				else if(result instanceof JADESecurityException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -99,11 +99,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof MTPException) {
-					throw (MTPException)result;
+				else if(result instanceof MTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -124,11 +124,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -151,14 +151,14 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof MTPException) {
-					throw (MTPException)result;
+				else if(result instanceof MTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -180,14 +180,14 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception2) {
+					throw exception2;
 				}
-				else if(result instanceof NotFoundException) {
-					throw (NotFoundException)result;
+				else if(result instanceof NotFoundException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -209,11 +209,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -235,11 +235,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -261,11 +261,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -287,11 +287,11 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception1) {
+					throw exception1;
 				}
-				else if(result instanceof ServiceException) {
-					throw (ServiceException)result;
+				else if(result instanceof ServiceException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -312,8 +312,8 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -334,8 +334,8 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -356,8 +356,8 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
@@ -379,8 +379,8 @@ public class MessagingProxy extends SliceProxy implements MessagingSlice {
 			Node n = getNode();
 			Object result = n.accept(cmd);
 			if((result != null) && (result instanceof Throwable)) {
-				if(result instanceof IMTPException) {
-					throw (IMTPException)result;
+				if(result instanceof IMTPException exception) {
+					throw exception;
 				}
 				else {
 					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);

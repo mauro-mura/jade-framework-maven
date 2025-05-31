@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.util;
 
+import java.io.Serial;
+
 /**
 
   This class acts as a base class for all the exceptions that wrap
@@ -35,7 +37,8 @@ package jade.util;
 
  */
 public abstract class WrapperException extends Exception {
-	
+
+	@Serial
 	private static final long serialVersionUID = -5846338432615109597L;
 	private Throwable nested = null;
 

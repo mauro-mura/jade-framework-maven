@@ -26,6 +26,10 @@ package jade.content.onto;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
+
+//#APIDOC_EXCLUDE_FILE
+
 import jade.content.abs.*;
 import jade.content.onto.exception.OntologyException;
 import jade.content.schema.*;
@@ -40,6 +44,7 @@ import jade.content.schema.*;
  */
 public class MicroIntrospector implements Introspector {
 
+	@Serial
 	private static final long serialVersionUID = 6392882021384859146L;
 
 	/**
@@ -96,7 +101,7 @@ public class MicroIntrospector implements Introspector {
 	
 	public Object internalizeSpecialType(AbsObject abs, ObjectSchema schema, Class<?> javaClass, Ontology referenceOnto) throws OntologyException {
 		try {
-			Object obj = javaClass.newInstance();
+			Object obj = javaClass.getDeclaredConstructor().newInstance();
 			//DEBUG System.out.println("Object created");
 
 			Introspectable intro = (Introspectable) obj;

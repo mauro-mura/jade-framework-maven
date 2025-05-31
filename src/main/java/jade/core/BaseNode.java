@@ -25,6 +25,7 @@ package jade.core;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -46,6 +47,7 @@ import jade.util.Logger;
  */
 public abstract class BaseNode implements Node, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -1877731581378006536L;
 	private transient Logger myLogger;
 

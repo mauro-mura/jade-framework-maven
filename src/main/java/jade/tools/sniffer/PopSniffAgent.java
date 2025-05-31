@@ -24,6 +24,7 @@ package jade.tools.sniffer;
 
 //#DOTNET_EXCLUDE_BEGIN
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 //#DOTNET_EXCLUDE_END
 import java.util.List;
@@ -59,6 +60,7 @@ public class PopSniffAgent
  */
 {
 
+	@Serial
 	private static final long serialVersionUID = 2967516981445469445L;
 	private PopupAgent popAg;
 	private Sniffer mySniffer;

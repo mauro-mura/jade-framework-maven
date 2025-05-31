@@ -24,6 +24,8 @@
  */
 package jade.content.onto.basic;
 
+import java.io.Serial;
+
 import jade.content.*;
 
 /**
@@ -36,5 +38,6 @@ import jade.content.*;
  */
 public class FalseProposition implements Predicate {
 
+	@Serial
 	private static final long serialVersionUID = -7237507887156412772L;
 }

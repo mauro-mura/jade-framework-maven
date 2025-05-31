@@ -803,8 +803,7 @@ public class MessageTemplate implements Serializable {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof MessageTemplate) {
-			MessageTemplate tpl = (MessageTemplate) obj;
+		if (obj instanceof MessageTemplate tpl) {
 			if (this.id != null) {
 				// If this template has an ID, compare the IDs
 				return this.id.equals(tpl.id);

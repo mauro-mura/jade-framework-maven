@@ -26,10 +26,13 @@
 package jade.mtp;
 
 import jade.core.CaseInsensitiveString;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 public class MTPDescriptor implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 873677829926909410L;
 	private String name;
 	private String className;

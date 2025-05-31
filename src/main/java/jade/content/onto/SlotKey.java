@@ -23,12 +23,14 @@ Boston, MA  02111-1307, USA.
 
 package jade.content.onto;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 //#APIDOC_EXCLUDE_FILE
 
 class SlotKey implements Comparable<SlotKey>, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -8453558223437597538L;
 	String schemaName;
 	String slotName;

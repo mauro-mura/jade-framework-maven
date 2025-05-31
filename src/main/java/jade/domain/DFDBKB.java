@@ -739,8 +739,7 @@ public class DFDBKB extends DBKB {
 				while(iterS.hasNext()){
 					
 					Object propObj = iterS.next();
-					if (propObj instanceof MultiValueProperty) {
-						MultiValueProperty mvProp = (MultiValueProperty) propObj;
+					if (propObj instanceof MultiValueProperty mvProp) {
 						
 						int index = 1;
 						Iterator iterP = mvProp.getValues().iterator();
@@ -817,7 +816,7 @@ public class DFDBKB extends DBKB {
 	}
 	
 	private static final boolean needSerialization(Object value) {
-		return !((value instanceof String) && ( ((String) value).length() <= MAX_PROP_LENGTH ));		
+		return !((value instanceof String s) && ( s.length() <= MAX_PROP_LENGTH ));		
 	}
 	
 	/**

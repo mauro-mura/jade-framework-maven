@@ -350,7 +350,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 
 				// In the meanwhile load the ConnectionListener if any 
 				try {
-					myConnectionListener = (ConnectionListener) Class.forName(props.getProperty("connection-listener")).newInstance();
+					myConnectionListener = (ConnectionListener) Class.forName(props.getProperty("connection-listener")).getDeclaredConstructor().newInstance();
 				}
 				catch (Exception e) {
 					// Just ignore it

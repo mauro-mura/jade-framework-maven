@@ -38,8 +38,8 @@ public class MTSHelper {
 	    throws org.omg.CORBA.BAD_PARAM {
         if (that == null)
             return null;
-        if (that instanceof FIPA.MTS)
-            return (FIPA.MTS) that;
+        if (that instanceof FIPA.MTS tS)
+            return tS;
 	if (!that._is_a(id())) {
 	    throw new org.omg.CORBA.BAD_PARAM();
 	}

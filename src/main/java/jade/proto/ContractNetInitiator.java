@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -226,6 +227,7 @@ public class ContractNetInitiator extends Initiator {
 		Behaviour b = null;
 		// HANDLE_PROPOSE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895819003L;
 
 			public void action() {
@@ -239,6 +241,7 @@ public class ContractNetInitiator extends Initiator {
 
 		// HANDLE_REFUSE
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895819004L;
 
 			public void action() {
@@ -250,6 +253,7 @@ public class ContractNetInitiator extends Initiator {
 
 		// HANDLE_INFORM
 		b = new OneShotBehaviour(myAgent) {
+			@Serial
 			private static final long     serialVersionUID = 3487495895818006L;
 
 			public void action() {

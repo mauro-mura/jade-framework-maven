@@ -44,6 +44,7 @@ import java.io.File;
 // Import required java classes
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -141,6 +142,7 @@ import jade.util.Logger;
  */
 public class AclGui extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -2576037196381060832L;
 
 	// Controls for ACL message parameter editing
@@ -236,6 +238,7 @@ public class AclGui extends JPanel {
 	// #DOTNET_EXCLUDE_END
 	{
 
+		@Serial
 		private static final long serialVersionUID = -9077988285620240619L;
 
 		AclMessagePanel() {
@@ -1334,7 +1337,7 @@ public class AclGui extends JPanel {
 
 		try {
 			param = payloadLength.getText().trim();
-			env.setPayloadLength(new Long(param));
+			env.setPayloadLength(Long.valueOf(param));
 		} catch (Exception e) {
 			// System.err.println("Incorrect int format. payloadLength must be an integer.
 			// Automatic reset to -1.");

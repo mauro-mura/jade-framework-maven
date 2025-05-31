@@ -35,6 +35,7 @@ import jade.content.abs.AbsTerm;
 import jade.content.onto.exception.OntologyException;
 import jade.content.schema.ObjectSchema;
 
+import java.io.Serial;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Calendar;
@@ -46,6 +47,7 @@ import java.util.Map;
 
 class BeanIntrospector implements Introspector {
 
+	@Serial
 	private static final long serialVersionUID = 6896919407513408002L;
 
 	private static final String ENUM_SLOT_NAME = BeanOntologyBuilder.ENUM_SLOT_NAME;
@@ -148,8 +150,8 @@ class BeanIntrospector implements Introspector {
 		} else {
 			Iterator<String> iter;
 			String aggregateType;
-			if (slotValue instanceof Collection) {
-				iter = ((Collection)slotValue).iterator();
+			if (slotValue instanceof Collection collection) {
+				iter = collection.iterator();
 				if (slotValue instanceof java.util.List) {
 					aggregateType = BasicOntology.SEQUENCE;
 				} else {

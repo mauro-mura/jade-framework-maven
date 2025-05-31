@@ -28,6 +28,7 @@ package jade.tools.gui;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
+import java.io.Serial;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,6 +49,7 @@ import jade.lang.acl.ACLMessage;
 
 public class ACLComboBox extends JComboBox implements Observer {
 
+	@Serial
 	private static final long serialVersionUID = -8624460540190533576L;
 
 	/**

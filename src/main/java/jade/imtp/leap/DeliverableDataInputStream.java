@@ -142,7 +142,7 @@ class DeliverableDataInputStream extends DataInputStream {
 				case Serializer.BOOLEAN_ID:
 					return Boolean.valueOf(readBoolean());
 				case Serializer.INTEGER_ID:
-					return new Integer(readInt());
+					return Integer.valueOf(readInt());
 				case Serializer.DATE_ID:
 					return deserializeDate();
 				case Serializer.STRINGARRAY_ID:
@@ -195,7 +195,7 @@ class DeliverableDataInputStream extends DataInputStream {
 				
 				case Serializer.DEFAULT_ID:
 					String serName = readUTF();
-					Serializer s = (Serializer) Class.forName(serName).newInstance();
+					Serializer s = (Serializer) Class.forName(serName).getDeclaredConstructor().newInstance();
 					Object o = s.deserialize(this);
 					return o;
 				default:
@@ -559,7 +559,7 @@ class DeliverableDataInputStream extends DataInputStream {
 		try {
 			name = readUTF();
 			className = readUTF();
-			Service svc = (Service) Class.forName(className).newInstance();
+			Service svc = (Service) Class.forName(className).getDeclaredConstructor().newInstance();
 			return new ServiceDescriptor(name, svc);
 		} catch (ClassNotFoundException cnfe) {
 			throw new LEAPSerializationException(
@@ -573,7 +573,7 @@ class DeliverableDataInputStream extends DataInputStream {
 		String className = null;
 		try {
 			className = readUTF();
-			SliceProxy proxy = (SliceProxy) Class.forName(className).newInstance();
+			SliceProxy proxy = (SliceProxy) Class.forName(className).getDeclaredConstructor().newInstance();
 			proxy.setNode(readNode());
 			return proxy;
 		} catch (ClassNotFoundException cnfe) {
@@ -587,7 +587,7 @@ class DeliverableDataInputStream extends DataInputStream {
 	private Service.SliceProxy deserializeServiceSliceProxy() throws LEAPSerializationException {
 		try {
 			String className = readUTF();
-			Service.SliceProxy proxy = (Service.SliceProxy) Class.forName(className).newInstance();
+			Service.SliceProxy proxy = (Service.SliceProxy) Class.forName(className).getDeclaredConstructor().newInstance();
 			proxy.setNode(readNode());
 			return proxy;
 		} catch (Throwable t) {
@@ -647,7 +647,7 @@ class DeliverableDataInputStream extends DataInputStream {
 	private Stub deserializeStub() throws LEAPSerializationException {
 		try {
 			String stubClassName = readUTF();
-			Stub stub = (Stub) Class.forName(stubClassName).newInstance();
+			Stub stub = (Stub) Class.forName(stubClassName).getDeclaredConstructor().newInstance();
 
 			stub.remoteID = readInt();
 			stub.platformName = readString();
@@ -714,7 +714,7 @@ class DeliverableDataInputStream extends DataInputStream {
 			e.setFrom(readAID());
 			e.setComments(readString());
 			e.setAclRepresentation(readString());
-			e.setPayloadLength(new Long(readLong()));
+			e.setPayloadLength(Long.valueOf(readLong()));
 			e.setPayloadEncoding(readString());
 			e.setDate(readDate());
 
@@ -827,7 +827,7 @@ class DeliverableDataInputStream extends DataInputStream {
 		String className = readString();
 		String message = readString();
 		try {
-			Throwable result = (Throwable) Class.forName(className).newInstance();
+			Throwable result = (Throwable) Class.forName(className).getDeclaredConstructor().newInstance();
 			// FIXME: How do we set the message?
 			return result;
 		} catch (Throwable t) {

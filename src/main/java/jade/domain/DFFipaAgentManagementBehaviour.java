@@ -42,7 +42,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.domain.FIPAAgentManagement.*;
 import jade.security.JADESecurityException;
+
+
 import jade.util.Logger;
+
+import java.io.Serial;
 
 /**
  * This behaviour serves the actions of the FIPA management ontology supported
@@ -57,6 +61,7 @@ import jade.util.Logger;
  */
 class DFFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = 3681357655776665471L;
 	private df theDF;
 	// #DOTNET_EXCLUDE_BEGIN
@@ -93,21 +98,21 @@ class DFFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 		boolean asynchNotificationRequired = false;
 
 		// REGISTER
-		if (action instanceof Register) {
-			theDF.registerAction((Register) action, request.getSender());
+		if (action instanceof Register register) {
+			theDF.registerAction(register, request.getSender());
 		}
 		// DEREGISTER
-		else if (action instanceof Deregister) {
-			theDF.deregisterAction((Deregister) action, request.getSender());
+		else if (action instanceof Deregister deregister) {
+			theDF.deregisterAction(deregister, request.getSender());
 		}
 		// MODIFY
-		else if (action instanceof Modify) {
-			theDF.modifyAction((Modify) action, request.getSender());
+		else if (action instanceof Modify modify) {
+			theDF.modifyAction(modify, request.getSender());
 		}
 		// SEARCH
-		else if (action instanceof Search) {
+		else if (action instanceof Search search) {
 			theDF.storePendingRequest(action, request);
-			result = theDF.searchAction((Search) action, request.getSender());
+			result = theDF.searchAction(search, request.getSender());
 			if (result == null) {
 				asynchNotificationRequired = true;
 			}

@@ -144,6 +144,7 @@ import java.io.*;
  */
 public class Sniffer extends ToolAgent {
 
+	@Serial
 	private static final long serialVersionUID = 6907674616756410717L;
 	public static final boolean SNIFF_ON = true;
 	public static final boolean SNIFF_OFF = false;
@@ -208,15 +209,15 @@ public class Sniffer extends ToolAgent {
 					String content = null;
 					Envelope env = null;
 					AID unicastReceiver = null;
-					if (ev instanceof SentMessage) {
-						content = ((SentMessage) ev).getMessage().getPayload();
-						env = ((SentMessage) ev).getMessage().getEnvelope();
-						unicastReceiver = ((SentMessage) ev).getReceiver();
-					} else if (ev instanceof PostedMessage) {
-						content = ((PostedMessage) ev).getMessage().getPayload();
-						env = ((PostedMessage) ev).getMessage().getEnvelope();
-						unicastReceiver = ((PostedMessage) ev).getReceiver();
-						AID sender = ((PostedMessage) ev).getSender();
+					if (ev instanceof SentMessage message1) {
+						content = message1.getMessage().getPayload();
+						env = message1.getMessage().getEnvelope();
+						unicastReceiver = message1.getReceiver();
+					} else if (ev instanceof PostedMessage message) {
+						content = message.getMessage().getPayload();
+						env = message.getMessage().getEnvelope();
+						unicastReceiver = message.getReceiver();
+						AID sender = message.getSender();
 						// If the sender is currently under sniff, then the message was already
 						// displayed when the 'sent-message' event occurred --> just skip this message.
 						if (agentsUnderSniff.contains(new Agent(sender))) {
@@ -260,7 +261,9 @@ public class Sniffer extends ToolAgent {
 				} catch (Throwable e) {
 					// System.out.println("Serious problem Occurred");
 					myGUI.showError(
-							"An error occurred parsing the incoming message.\n" + "          The message was lost.");
+							"""
+							An error occurred parsing the incoming message.
+							          The message was lost.""");
 					if (logger.isLoggable(Logger.WARNING))
 						logger.log(Logger.WARNING,
 								"The sniffer lost the following message because of a parsing error:" + current);
@@ -784,9 +787,7 @@ public class Sniffer extends ToolAgent {
 		}
 
 		protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response) {
-			if (aa instanceof SniffOn) {
-				// SNIFF ON
-				SniffOn requestSniffOn = (SniffOn) aa;
+			if (aa instanceof SniffOn requestSniffOn) {
 				// Start sniffing existing agents.
 				// Put non existing agents in the preload map. We will start
 				// sniffing them as soon as they start.

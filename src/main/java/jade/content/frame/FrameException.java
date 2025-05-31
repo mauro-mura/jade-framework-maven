@@ -24,6 +24,9 @@
  */
 package jade.content.frame;
 
+import java.io.Serial;
+
+
 import jade.util.WrapperException;
 
 /**
@@ -33,6 +36,7 @@ import jade.util.WrapperException;
  */
 public class FrameException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = -8447917163309464556L;
 
 

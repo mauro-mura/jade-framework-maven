@@ -24,6 +24,8 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.Predicate;
 
 /**
@@ -34,6 +36,7 @@ import jade.content.Predicate;
  */
 public class AbsPredicate extends AbsPrimitiveSlotsHolder implements AbsContentElement, Predicate {
 
+	@Serial
 	private static final long serialVersionUID = -8655276412543339054L;
 	private boolean isAContentExpression = false;
 	private boolean isMeta = false;

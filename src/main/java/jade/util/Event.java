@@ -24,6 +24,7 @@
 
 package jade.util;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -43,6 +44,7 @@ import java.util.List;
  */
 public class Event extends EventObject {
 
+	@Serial
 	private static final long serialVersionUID = -2492016342799254194L;
 
 	/**

@@ -23,6 +23,8 @@
 
 package jade.core.behaviours;
 
+import java.io.Serial;
+
 import jade.core.*;
 
 /**
@@ -36,6 +38,7 @@ import jade.core.*;
  */
 public abstract class TickerBehaviour extends SimpleBehaviour {
 
+	@Serial
 	private static final long serialVersionUID = -5263859733687719228L;
 	private long wakeupTime;
 	private long period;

@@ -23,6 +23,7 @@
 
 package jade.tools;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,6 +80,7 @@ import jade.util.Logger;
  */
 public class ToolNotifier extends ToolAgent implements MessageListener, AgentListener {
 
+	@Serial
 	private static final long serialVersionUID = 4657818345219944422L;
 	private static final int IDLE_STATE = 0;
 	private static final int ACTIVE_STATE = 1;
@@ -424,6 +426,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	 */
 	private class SynchEventInformer extends SimpleBehaviour {
 
+		@Serial
 		private static final long serialVersionUID = 3180731801665726348L;
 		private Event ev;
 		private JADEEvent jev;
@@ -474,10 +477,10 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	private void removePendingEvent(JADEEvent ev) {
 		synchronized (pendingEvents) {
 			AID id = null;
-			if (ev instanceof AgentEvent) {
-				id = ((AgentEvent) ev).getAgent();
-			} else if (ev instanceof MessageEvent) {
-				id = ((MessageEvent) ev).getAgent();
+			if (ev instanceof AgentEvent event1) {
+				id = event1.getAgent();
+			} else if (ev instanceof MessageEvent event) {
+				id = event.getAgent();
 			}
 			List l = (List) pendingEvents.get(id);
 			if (l != null) {

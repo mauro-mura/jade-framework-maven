@@ -143,11 +143,11 @@ class MsgIndication
 			mi.date = df.parse(line);
 
 			// Direction
-			ii = new Integer(r.readLine());
+			ii = Integer.valueOf(r.readLine());
 			mi.direction = ii.intValue();
 			 
 			// Message length
-			ii = new Integer(r.readLine());
+			ii = Integer.valueOf(r.readLine());
 			int len = ii.intValue();
 
 			// Message

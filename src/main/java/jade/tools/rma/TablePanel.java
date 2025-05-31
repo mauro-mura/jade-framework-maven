@@ -104,8 +104,7 @@ class TablePanel extends JPanel {
     // Show colors by rendering them in their own color.
     DefaultTableCellRenderer colorRenderer = new DefaultTableCellRenderer() {
       public void setValue(Object value) {
-	if (value instanceof Color) {
-	  Color c = (Color)value;
+	if (value instanceof Color c) {
 	  setForeground(c);
 	  setText(c.getRed() + ", " + c.getGreen() + ", " + c.getBlue());
 	}
@@ -128,8 +127,8 @@ class TablePanel extends JPanel {
     for(int i=0;i<numPaths;i++) {
        relCur= paths[i].getPath();
          for (int j=0;j<relCur.length;j++) {
-	     if(relCur[j] instanceof AgentTree.AgentNode) {
-		 current = (AgentTree.AgentNode)relCur[j];
+	     if(relCur[j] instanceof AgentTree.AgentNode node) {
+		 current = node;
 		 data[i][0] = current.getName();
 		 data[i][1] = current.getAddress();
 		 data[i][2] = current.getState();

@@ -29,7 +29,10 @@ import jade.content.abs.*;
 import jade.content.onto.*;
 import jade.content.onto.exception.OntologyException;
 import jade.content.onto.exception.UngroundedException;
+
 import jade.core.AID;
+
+import java.io.Serial;
 
 /**
  * This class implements the <code>action</code> operator of the FIPA SL0
@@ -40,6 +43,7 @@ import jade.core.AID;
  */
 public class Action implements AgentAction, Introspectable {
 
+	@Serial
 	private static final long serialVersionUID = -7973839335943479229L;
 	private AID actor;
 	private Concept action;

@@ -213,7 +213,7 @@ public class JICPServer extends Thread
 			if (pdpContextManagerClass != null) {
 				try {
 					myLogger.log(Logger.INFO, "Loading PDPContextManager of class " + pdpContextManagerClass);
-					myPDPContextManager = (PDPContextManager) Class.forName(pdpContextManagerClass).newInstance();
+					myPDPContextManager = (PDPContextManager) Class.forName(pdpContextManagerClass).getDeclaredConstructor().newInstance();
 					myPDPContextManager.init(leapProps);
 					myPDPContextManager.registerListener(this);
 				} catch (Throwable t) {
@@ -745,7 +745,7 @@ public class JICPServer extends Thread
 	private JICPMediator startMediator(String id, Properties p) throws Exception {
 		String className = p.getProperty(JICPProtocol.MEDIATOR_CLASS_KEY);
 		if (className != null) {
-			JICPMediator m = (JICPMediator) Class.forName(className).newInstance();
+			JICPMediator m = (JICPMediator) Class.forName(className).getDeclaredConstructor().newInstance();
 			mergeProperties(p, leapProps);
 			myLogger.log(Logger.FINE, "Initializing mediator " + id + " with properties " + p);
 			m.init(this, id, p);

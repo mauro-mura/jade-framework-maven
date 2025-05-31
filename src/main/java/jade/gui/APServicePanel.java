@@ -33,6 +33,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -57,6 +58,7 @@ import jade.domain.FIPAAgentManagement.APService;
 
 public class APServicePanel extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -3663271888074100588L;
 	/** @serial */
 

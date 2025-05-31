@@ -430,7 +430,7 @@ public abstract class MomMessagingService extends MessagingService {
 		cmd.addParam(receiverID);
 		long timeStamp = msg.getTimeStamp();
 		if (timeStamp > 0) {
-			cmd.addParam(new Long(timeStamp));
+			cmd.addParam(Long.valueOf(timeStamp));
 		}			
 		cmd.setPrincipal(msg.getSenderPrincipal());
 		cmd.setCredentials(msg.getSenderCredentials());

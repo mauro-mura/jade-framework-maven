@@ -33,6 +33,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.Enumeration;
 
 import javax.swing.BorderFactory;
@@ -63,6 +64,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
  */
 public class DFAgentDscDlg extends JDialog implements ActionListener {
 
+	@Serial
 	private static final long serialVersionUID = -1465640499541308779L;
 	/**
 	 * @serial

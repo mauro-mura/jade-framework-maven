@@ -22,10 +22,13 @@
  *****************************************************************/
 package jade.imtp.leap;
 
+import java.io.Serial;
+
 import jade.imtp.leap.exception.ICPException;
 
 public class ConnectionDropped extends ICPException {
 
+	@Serial
 	private static final long serialVersionUID = 1692699274027736780L;
 
 	public ConnectionDropped() {

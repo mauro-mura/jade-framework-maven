@@ -336,7 +336,7 @@ public class DFService extends FIPAService {
 	}
 	
 	// constant used to set max results of SearchConstraints
-	private static Long MINUSONE = new Long(-1);
+	private static Long MINUSONE = Long.valueOf(-1);
 	/**
 	 Searches for data contained within a <b>DF</b> agent. 
 	 @param a is the Agent requesting the search 
@@ -1030,8 +1030,8 @@ public class DFService extends FIPAService {
 			sb.append(SPACE_COLON);
 			sb.append(name);
 			sb.append(' ');
-			if (val instanceof String) {
-				encodeString(sb, (String) val);
+			if (val instanceof String string) {
+				encodeString(sb, string);
 			}
 			else {
 				sb.append(val);
@@ -1048,17 +1048,17 @@ public class DFService extends FIPAService {
 			while (agg.hasNext()) {
 				sb.append(' ');
 				Object val = agg.next();
-				if (val instanceof ServiceDescription) {
-					encodeServiceDescription(sb, (ServiceDescription) val);
+				if (val instanceof ServiceDescription description) {
+					encodeServiceDescription(sb, description);
 				}
-				else if (val instanceof MultiValueProperty) {
-					encodeMultiValueProperty(sb, (MultiValueProperty) val);
+				else if (val instanceof MultiValueProperty property1) {
+					encodeMultiValueProperty(sb, property1);
 				}
-				else if (val instanceof Property) {
-					encodeProperty(sb, (Property) val);
+				else if (val instanceof Property property) {
+					encodeProperty(sb, property);
 				}
-				else if (val instanceof String) {
-					encodeString(sb, (String) val);
+				else if (val instanceof String string) {
+					encodeString(sb, string);
 				}
 				else {
 					sb.append(val);

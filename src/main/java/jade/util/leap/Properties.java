@@ -58,8 +58,9 @@ public class Properties extends java.util.Properties implements Serializable {
  	   This is required to ensure compatibility with 
  	   the J2ME version of this class in serialization/deserialization 
  	   operations.
- 	 */
-  private static final long     serialVersionUID = 3487495895819396L;
+	*/
+	@Serial
+	private static final long     serialVersionUID = 3487495895819396L;
   
   private static final String HEADER = "LEAP-Properties";
 
@@ -83,8 +84,8 @@ public class Properties extends Hashtable {
 
     
     public static Properties toLeapProperties(java.util.Properties pp) {
-    	if (pp instanceof Properties) {
-    		return (Properties) pp;
+    	if (pp instanceof Properties properties) {
+    		return properties;
     	}
     	else {
     		Properties leapPP = new Properties();

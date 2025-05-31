@@ -4,7 +4,11 @@ package jade.wrapper.gateway;
 
 import jade.core.Agent;
 import jade.core.behaviours.*;
+
+
 import jade.util.Logger;
+
+import java.io.Serial;
 
 /**
  * This agent is the gateway able to execute all commands requests received via
@@ -25,6 +29,7 @@ import jade.util.Logger;
  **/
 public class GatewayAgent extends Agent {
 
+	@Serial
 	private static final long serialVersionUID = -6380554009443776915L;
 	private GatewayBehaviour myB = null;
 	private GatewayListener listener;
@@ -48,11 +53,12 @@ public class GatewayAgent extends Agent {
 	 * its <code>onEnd()</code> method.
 	 **/
 	protected void processCommand(final Object command) {
-		if (command instanceof Behaviour) {
+		if (command instanceof Behaviour behaviour) {
 			SequentialBehaviour sb = new SequentialBehaviour(this);
-			sb.addSubBehaviour((Behaviour) command);
+			sb.addSubBehaviour(behaviour);
 			sb.addSubBehaviour(new OneShotBehaviour(this) {
-	
+
+				@Serial
 				private static final long serialVersionUID = 8267092688795587675L;
 
 				public void action() {
@@ -93,6 +99,7 @@ public class GatewayAgent extends Agent {
 		myLogger.log(Logger.INFO, "Started GatewayAgent " + getLocalName());
 		myB = new GatewayBehaviour() {
 
+			@Serial
 			private static final long serialVersionUID = 1183903658420251701L;
 
 			protected void processCommand(Object command) {
@@ -107,8 +114,8 @@ public class GatewayAgent extends Agent {
 			Object[] args = getArguments();
 			if (args != null) {
 				for (int i = 0; i < args.length; i++) {
-					if (args[i] instanceof GatewayListener) {
-						listener = (GatewayListener) args[i];
+					if (args[i] instanceof GatewayListener gatewayListener) {
+						listener = gatewayListener;
 						break;
 					}
 				}

@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -56,6 +57,7 @@ import jade.core.AID;
 
 public class AIDGui extends JDialog{
 
+	@Serial
 	private static final long serialVersionUID = 2974626094762646151L;
 	private boolean editable, checkSlots;
 	private AID agentAID;

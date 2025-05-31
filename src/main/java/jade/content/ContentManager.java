@@ -30,6 +30,7 @@ import jade.content.lang.StringCodec;
 import jade.content.lang.ByteArrayCodec;
 import jade.content.lang.Codec.CodecException;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,6 +56,7 @@ import jade.core.CaseInsensitiveString;
  */
 public class ContentManager implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -5101405271587539780L;
 	private transient Map<CaseInsensitiveString, Object> languages = new HashMap<>();
 	private transient Map<CaseInsensitiveString, Object> ontologies = new HashMap<>();
@@ -347,20 +349,20 @@ public class ContentManager implements Serializable {
 
 	private void encode(ACLMessage msg, AbsContentElement content, Codec codec, Ontology onto)
 			throws CodecException, OntologyException {
-		if (codec instanceof ByteArrayCodec)
-			msg.setByteSequenceContent(((ByteArrayCodec) codec).encode(onto, content));
-		else if (codec instanceof StringCodec)
-			msg.setContent(((StringCodec) codec).encode(onto, content));
+		if (codec instanceof ByteArrayCodec arrayCodec)
+			msg.setByteSequenceContent(arrayCodec.encode(onto, content));
+		else if (codec instanceof StringCodec stringCodec)
+			msg.setContent(stringCodec.encode(onto, content));
 		else
 			throw new CodecException("UnsupportedTypeOfCodec");
 	}
 
 	private AbsContentElement decode(ACLMessage msg, Codec codec, Ontology onto)
 			throws CodecException, OntologyException {
-		if (codec instanceof ByteArrayCodec)
-			return ((ByteArrayCodec) codec).decode(onto, msg.getByteSequenceContent());
-		else if (codec instanceof StringCodec)
-			return ((StringCodec) codec).decode(onto, msg.getContent());
+		if (codec instanceof ByteArrayCodec arrayCodec)
+			return arrayCodec.decode(onto, msg.getByteSequenceContent());
+		else if (codec instanceof StringCodec stringCodec)
+			return stringCodec.decode(onto, msg.getContent());
 		else
 			throw new CodecException("UnsupportedTypeOfCodec");
 	}

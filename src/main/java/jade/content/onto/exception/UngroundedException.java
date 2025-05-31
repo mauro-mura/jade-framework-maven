@@ -24,6 +24,8 @@
  */
 package jade.content.onto.exception;
 
+import java.io.Serial;
+
 /**
  * Thrown when working with an ungrounded abstract descriptor, i.e., a
  * descriptor containing variables. Typically, thrown when applying
@@ -36,6 +38,7 @@ package jade.content.onto.exception;
  */
 public class UngroundedException extends OntologyException {
 
+	@Serial
 	private static final long serialVersionUID = -3511249189398250872L;
 
 	/**

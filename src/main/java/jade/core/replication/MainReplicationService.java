@@ -426,7 +426,7 @@ public class MainReplicationService extends BaseService {
 				Object[] params = cmd.getParams();
 
 				if (cmdName.equals(MainReplicationSlice.H_GETLABEL)) {
-					Integer i = new Integer(getLabel());
+					Integer i = Integer.valueOf(getLabel());
 					cmd.setReturnValue(i);
 				} else if (cmdName.equals(MainReplicationSlice.H_INVOKESERVICEMETHOD)) {
 					String serviceName = (String) params[0];
@@ -794,7 +794,7 @@ public class MainReplicationService extends BaseService {
 				GenericCommand hCmd = new GenericCommand(MainReplicationSlice.H_REMOVEREPLICA,
 						MainReplicationSlice.NAME, null);
 				hCmd.addParam(monitoredSvcMgr);
-				hCmd.addParam(new Integer(monitoredLabel));
+				hCmd.addParam(Integer.valueOf(monitoredLabel));
 				broadcastToReplicas(hCmd, EXCLUDE_MYSELF);
 
 				int oldLabel = myLabel;
@@ -882,7 +882,7 @@ public class MainReplicationService extends BaseService {
 			if (includeSelf || !sliceName.equals(localNodeName)) {
 				slice.serve(cmd);
 				Object ret = cmd.getReturnValue();
-				if (ret instanceof Throwable) {
+				if (ret instanceof Throwable throwable) {
 					// FIXME: This may happen due to the fact that the replica is terminating. E.g.
 					// a tool running on
 					// the terminating replica that deregisters from the AMS: the DeadTool event may
@@ -890,7 +890,7 @@ public class MainReplicationService extends BaseService {
 					// when the replica is already dead. In these cases we should find a way to hide
 					// the exception
 					myLogger.log(Logger.SEVERE,
-							"Error propagating H-command " + cmd.getName() + " to slice " + sliceName, (Throwable) ret);
+							"Error propagating H-command " + cmd.getName() + " to slice " + sliceName, throwable);
 				}
 			}
 		}

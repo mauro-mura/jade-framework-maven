@@ -31,6 +31,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -56,6 +57,7 @@ import jade.domain.FIPAAgentManagement.APDescription;
  **/
 public class APDescriptionPanel extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = 8296225622463841726L;
 	private JTextField platformName_Field;
 	private VisualAPServiceList MTPs_List;

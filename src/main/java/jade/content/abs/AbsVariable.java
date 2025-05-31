@@ -24,6 +24,8 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.schema.*;
 
 /**
@@ -35,6 +37,7 @@ import jade.content.schema.*;
  */
 public class AbsVariable extends AbsObjectImpl implements AbsTerm {
 
+	@Serial
 	private static final long serialVersionUID = -8539476155331745306L;
 	private boolean isMeta = false;
 

@@ -1,5 +1,8 @@
 package jade.content.exception;
 
+import java.io.Serial;
+
+
 import jade.util.WrapperException;
 
 /**
@@ -7,6 +10,7 @@ import jade.util.WrapperException;
  */
 public class ContentException extends WrapperException {
 
+	@Serial
 	private static final long serialVersionUID = 547523605281874847L;
 
 	public ContentException(String message) {

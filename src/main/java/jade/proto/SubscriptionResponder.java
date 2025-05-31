@@ -589,9 +589,9 @@ public class SubscriptionResponder extends FSMBehaviour implements FIPANames.Int
 		}
 
 		public boolean equals(Object obj) {
-			if (obj != null && obj instanceof Subscription) {
+			if (obj != null && obj instanceof Subscription subscription1) {
 				// They are equals if they have the same conversation-id
-				return subscription.getConversationId().equals(((Subscription) obj).subscription.getConversationId());
+				return subscription.getConversationId().equals(subscription1.subscription.getConversationId());
 			}
 			return false;
 		}

@@ -36,6 +36,7 @@ import java.util.Iterator;
 import jade.util.leap.Properties;
 import jade.util.Logger;
 
+import java.io.Serial;
 import java.net.InetAddress;
 
 import jade.core.AID;
@@ -192,6 +193,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 	// #APIDOC_EXCLUDE_BEGIN
 
+	@Serial
 	private static final long serialVersionUID = 792052289213315239L;
 	// FIXME The size of the cache must be read from the Profile
 	private final static int SEARCH_ID_CACHE_SIZE = 16;
@@ -355,9 +357,9 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		DFKBFactory kbFactory = new DFKBFactory(); // Default factory
 		if (kbFactClass != null) {
 			try {
-				Object o = Class.forName(kbFactClass).newInstance();
-				if (o instanceof DFKBFactory) {
-					kbFactory = (DFKBFactory) o;
+				Object o = Class.forName(kbFactClass).getDeclaredConstructor().newInstance();
+				if (o instanceof DFKBFactory factory) {
+					kbFactory = factory;
 					sb.append("- Factory class = " + kbFactClass);
 					sb.append('\n');
 				} else {
@@ -725,9 +727,9 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		// Create the new SearchConstraints.
 		SearchConstraints newConstr = new SearchConstraints();
 		// Max-depth decreased by 1
-		newConstr.setMaxDepth(new Long((long) (maxDep - 1)));
+		newConstr.setMaxDepth(Long.valueOf((long) (maxDep - 1)));
 		// Max-results decreased by the number of items found locally
-		newConstr.setMaxResults(new Long((long) (maxRes - localResults.size())));
+		newConstr.setMaxResults(Long.valueOf((long) (maxRes - localResults.size())));
 		// New globally unique search-id unless already present
 		String searchId = constraints.getSearchId();
 		if (searchId == null) {
@@ -1503,7 +1505,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		if (gui == null) {
 			try {
 				Class c = Class.forName("jade.tools.dfgui.DFGUI");
-				gui = (DFGUIInterface) c.newInstance();
+				gui = (DFGUIInterface) c.getDeclaredConstructor().newInstance();
 				gui.setAdapter(df.this); // this method must be called to avoid reflection (the constructor of the df
 											// gui has no parameters).
 				DFAgentDescription matchEverything = new DFAgentDescription();
@@ -1623,12 +1625,12 @@ public class df extends GuiAgent implements DFGUIAdapter {
 			ACLMessage notification = request.createReply();
 			ContentElement ce = null;
 			Action act = new Action(getAID(), action);
-			if (result instanceof InternalError) {
+			if (result instanceof Predicate error) {
 				// Some error occurred during action processing
 				notification.setPerformative(ACLMessage.FAILURE);
 				ContentElementList cel = new ContentElementList();
 				cel.add(act);
-				cel.add((Predicate) result);
+				cel.add(error);
 				ce = cel;
 			} else {
 				// Action processing was OK

@@ -176,10 +176,10 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
             // Retrieve the ConnectionListener if any
             try {
                 Object obj = props.get("connection-listener");
-                if (obj instanceof ConnectionListener) {
-                    myConnectionListener = (ConnectionListener) obj;
+                if (obj instanceof ConnectionListener listener) {
+                    myConnectionListener = listener;
                 } else {
-                    myConnectionListener = (ConnectionListener) Class.forName(obj.toString()).newInstance();
+                    myConnectionListener = (ConnectionListener) Class.forName(obj.toString()).getDeclaredConstructor().newInstance();
                 }
             } catch (Exception e) {
                 // Just ignore it

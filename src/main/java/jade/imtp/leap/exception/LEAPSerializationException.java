@@ -34,6 +34,8 @@
 
 package jade.imtp.leap.exception;
 
+import java.io.Serial;
+
 /**
  * A <code>LEAPSerializationException</code> is used as generic exception to
  * ease the handling of all exceptions that may occur during the LEAP surrogate
@@ -49,6 +51,7 @@ package jade.imtp.leap.exception;
  */
 public class LEAPSerializationException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = -7977051879715979792L;
 	/**
 	 * Nested Exception to hold wrapped exception.

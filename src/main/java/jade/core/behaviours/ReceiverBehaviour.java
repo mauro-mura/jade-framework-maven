@@ -26,6 +26,8 @@ package jade.core.behaviours;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -47,6 +49,7 @@ import java.io.Serializable;
  */
 public final class ReceiverBehaviour extends Behaviour {
 
+	@Serial
 	private static final long serialVersionUID = -5214526369111671026L;
 
 	/**
@@ -58,6 +61,7 @@ public final class ReceiverBehaviour extends Behaviour {
 	 */
 	public static class TimedOut extends Exception {
 
+		@Serial
 		private static final long serialVersionUID = 337882592919674484L;
 
 		TimedOut() {
@@ -74,6 +78,7 @@ public final class ReceiverBehaviour extends Behaviour {
 	 */
 	public static class NotYetReady extends Exception {
 
+		@Serial
 		private static final long serialVersionUID = 3478606369589794427L;
 
 		NotYetReady() {
@@ -114,6 +119,7 @@ public final class ReceiverBehaviour extends Behaviour {
 
 	private static class MessageFuture implements Handle, Serializable {
 
+		@Serial
 		private static final long serialVersionUID = 7396658668049111542L;
 		private static final int OK = 0;
 		private static final int NOT_YET = 1;

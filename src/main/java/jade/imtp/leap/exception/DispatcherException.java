@@ -34,6 +34,8 @@
 
 package jade.imtp.leap.exception;
 
+import java.io.Serial;
+
 /**
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
@@ -41,6 +43,7 @@ package jade.imtp.leap.exception;
  */
 public class DispatcherException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = 5389356260310434672L;
 
 	/**

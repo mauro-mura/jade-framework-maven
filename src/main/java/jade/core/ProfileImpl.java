@@ -353,8 +353,8 @@ public class ProfileImpl extends Profile {
 		
 		// Check if the list of specs is already in the properties as a list
 		Object o = props.get(key);
-		if (o instanceof List) { // null isn't an instance of anything
-			return (List) o;
+		if (o instanceof List list) { // null isn't an instance of anything
+			return list;
 		}
 
 		// The list should be present as a string --> parse it
@@ -509,7 +509,7 @@ public class ProfileImpl extends Profile {
 			imtpClass = "jade.imtp.rmi.RMIIMTPManager";
 		}
 		try {
-			myIMTPManager = (IMTPManager) Class.forName(imtpClass).newInstance();
+			myIMTPManager = (IMTPManager) Class.forName(imtpClass).getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			throw new ProfileException("Error loading IMTPManager class " + imtpClass);
 		}
@@ -526,7 +526,7 @@ public class ProfileImpl extends Profile {
 		 */
 
 		try {
-			myResourceManager = (ResourceManager) Class.forName(className).newInstance();
+			myResourceManager = (ResourceManager) Class.forName(className).getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			throw new ProfileException("Error loading ResourceManager class " + className);
 		}

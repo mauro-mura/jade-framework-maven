@@ -34,6 +34,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -44,7 +45,8 @@ import java.util.Date;
  * @param <ResultT> The class of the result or Void if the action is not expected to return any result
  */
 public class ActionExecutor<ActionT extends AgentAction, ResultT> extends BaseInitiator {
-	
+
+	@Serial
 	private static final long serialVersionUID = 54354676089783L;
 	
 	protected ActionT action;
@@ -140,8 +142,7 @@ public class ActionExecutor<ActionT extends AgentAction, ResultT> extends BaseIn
 	public void handleInform(ACLMessage inform) {
 		try {
 			ContentElement el = myAgent.getContentManager().extractContent(inform);
-			if (el instanceof Result) {
-				Result r = (Result) el;
+			if (el instanceof Result r) {
 				result = extractResult(r);
 			}
 		}

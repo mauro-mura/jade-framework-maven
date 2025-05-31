@@ -168,8 +168,8 @@ class ActionProcessor {
 	private void agentAct(AgentTree.Node node){
 		AgentAction ag=(AgentAction) action;
 		AgentTree.AgentNode nod;
-		if(node instanceof AgentTree.AgentNode) {
-			nod=(AgentTree.AgentNode)node;
+		if(node instanceof AgentTree.AgentNode agentNode) {
+			nod=agentNode;
 			ag.doAction(nod);
 		}    
 	}
@@ -181,8 +181,8 @@ class ActionProcessor {
 			ac.doAction(null);
 		else	
 			try{
-				if(node instanceof AgentTree.ContainerNode){
-					nod=(AgentTree.ContainerNode)node;
+				if(node instanceof AgentTree.ContainerNode containerNode){
+					nod=containerNode;
 					ac.doAction(nod);
 				}
 				else throw new StartException();
@@ -195,12 +195,12 @@ class ActionProcessor {
 		AgentTree.AgentNode nod1;
 		AgentTree.ContainerNode nod2;
 		GenericAction ga=(GenericAction) action;
-		if(node instanceof AgentTree.ContainerNode){
-			nod2=(AgentTree.ContainerNode)node;
+		if(node instanceof AgentTree.ContainerNode containerNode){
+			nod2=containerNode;
 			ga.doAction(nod2);
 		}
-		else if(node instanceof AgentTree.AgentNode) {
-			nod1=(AgentTree.AgentNode)node;
+		else if(node instanceof AgentTree.AgentNode agentNode) {
+			nod1=agentNode;
 			ga.doAction(nod1);
 		}
 	}

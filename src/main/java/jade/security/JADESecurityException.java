@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade.security;
 
+import java.io.Serial;
+
 /**
  * The <code>JADESecurityException</code> is the base class for exceptions
  * thrown for unauthorized access or for authentication failures.
@@ -32,6 +34,7 @@ package jade.security;
  */
 public class JADESecurityException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = 5873789336675756258L;
 
 	/**

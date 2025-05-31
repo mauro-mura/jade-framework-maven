@@ -43,10 +43,12 @@ package jade.mtp.http;
 import jade.mtp.TransportAddress;
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.io.Serial;
 import java.net.InetAddress;
 
 public class HTTPAddress implements TransportAddress {
 
+	@Serial
 	private static final long serialVersionUID = 5682513837052433070L;
 	private URL url;
 

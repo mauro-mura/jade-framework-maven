@@ -32,9 +32,9 @@ public class TestAgent extends Agent {
 			sd.addProtocols("P5");
 			Property p = new Property("propName", "propVal");
 			sd.addProperties(p);
-			p = new Property("intPropName", new Integer(25));
+			p = new Property("intPropName", Integer.valueOf(25));
 			sd.addProperties(p);
-			p = new Property("boolPropName", new Boolean(true));
+			p = new Property("boolPropName", Boolean.valueOf(true));
 			sd.addProperties(p);
 			p = new Property("datePropName", new Date());
 			sd.addProperties(p);

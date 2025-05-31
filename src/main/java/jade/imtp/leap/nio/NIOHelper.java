@@ -111,8 +111,8 @@ public class NIOHelper {
 			return ByteBuffer.allocateDirect(b.capacity() + extraSpace);
 		} else {
 			ByteBuffer bigger = ByteBuffer.allocateDirect(b.capacity() + extraSpace);
-			logBuffer(b,String.format("before resize %s",name),Level.WARNING);
-			logBuffer(bigger,String.format("after resize %s",name),Level.WARNING);
+			logBuffer(b,"before resize %s".formatted(name),Level.WARNING);
+			logBuffer(bigger,"after resize %s".formatted(name),Level.WARNING);
 			return bigger;
 		}
 
@@ -127,8 +127,8 @@ public class NIOHelper {
 	public static ByteBuffer enlargeAndFillBuffer(ByteBuffer b, int extraSpace, String name) {
 		ByteBuffer bigger = enlargeBuffer(b, extraSpace, name,false);
 		bigger.put(b);
-		logBuffer(b,String.format("before resize %s",name),Level.WARNING);
-		logBuffer(bigger,String.format("after resize %s",name),Level.WARNING);
+		logBuffer(b,"before resize %s".formatted(name),Level.WARNING);
+		logBuffer(bigger,"after resize %s".formatted(name),Level.WARNING);
 		return bigger;
 	}
 }

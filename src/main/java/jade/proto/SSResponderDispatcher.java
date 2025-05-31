@@ -1,5 +1,7 @@
 package jade.proto;
 
+import java.io.Serial;
+
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -39,6 +41,7 @@ public abstract class SSResponderDispatcher extends CyclicBehaviour {
 			if (ssResponder != null) {
 				activeConversations.registerConversation(convId);
 				SequentialBehaviour sb = new SequentialBehaviour() {
+					@Serial
 					private static final long serialVersionUID = 12345678L;
 					
 					public int onEnd() {

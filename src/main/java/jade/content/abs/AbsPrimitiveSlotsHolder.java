@@ -24,6 +24,7 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -34,6 +35,7 @@ import java.util.Date;
  */
 public class AbsPrimitiveSlotsHolder extends AbsObjectImpl {
 
+	@Serial
 	private static final long serialVersionUID = 8605860415269011546L;
 
 	/**

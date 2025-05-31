@@ -110,8 +110,8 @@ public class CodeLocator {
 		ClassLoader cl = (ClassLoader) _agents.remove(name);
 
 		// If agent use JarClassLoader close it.
-		if (cl instanceof JarClassLoader) {
-			((JarClassLoader) cl).close();
+		if (cl instanceof JarClassLoader loader) {
+			loader.close();
 		}
 		
 		// Notify listeners.
@@ -135,8 +135,7 @@ public class CodeLocator {
 			ClassLoader clNewTemp = null;
 			
 			// JarClassLoader clonning.
-			if (cl instanceof JarClassLoader) {
-				JarClassLoader jcl = (JarClassLoader) cl;
+			if (cl instanceof JarClassLoader jcl) {
 				try {
 					clNew = new JarClassLoader(new File(jcl.getJarFileName()), jcl.getParent());
 				} catch (IOException ioe) {

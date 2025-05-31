@@ -1,5 +1,6 @@
 package jade.core;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -17,6 +18,7 @@ import jade.util.leap.Properties;
  */
 public class AID implements Comparable<AID>, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -5443350517037113743L;
 
 	public static final char HAP_SEPARATOR = '@';

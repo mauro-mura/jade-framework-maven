@@ -118,10 +118,10 @@ public class DynamicJadeGateway {
 		}
 		if (myAgent == null) {
 			try {
-				Agent a = (Agent) Class.forName(agentType).newInstance();
-				if (a instanceof GatewayAgent) {
+				Agent a = (Agent) Class.forName(agentType).getDeclaredConstructor().newInstance();
+				if (a instanceof GatewayAgent agent) {
 					//#DOTNET_EXCLUDE_BEGIN
-					((GatewayAgent) a).setListener(new GatewayListenerImpl());
+					agent.setListener(new GatewayListenerImpl());
 					//#DOTNET_EXCLUDE_END
 					
 					// We are able to detect the GatewayAgent state only if the internal agent is a GatewayAgent instance

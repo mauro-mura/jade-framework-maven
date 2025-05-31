@@ -344,55 +344,55 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 				return null;
 			} 
 
-			if (obj instanceof String) {
-				return AbsPrimitive.wrap((String) obj);
+			if (obj instanceof String string) {
+				return AbsPrimitive.wrap(string);
 			} 
-			if (obj instanceof Boolean) {
-				return AbsPrimitive.wrap(((Boolean) obj).booleanValue());
+			if (obj instanceof Boolean boolean1) {
+				return AbsPrimitive.wrap(boolean1.booleanValue());
 			} 
-			if (obj instanceof Integer) {
-				return AbsPrimitive.wrap(((Integer) obj).intValue());
+			if (obj instanceof Integer integer) {
+				return AbsPrimitive.wrap(integer.intValue());
 			} 
-			if (obj instanceof Long) {
-				return AbsPrimitive.wrap(((Long) obj).longValue());
-			} 
-			
-			if (obj instanceof Float) {
-				return AbsPrimitive.wrap(((Float) obj).floatValue());
-			} 
-			if (obj instanceof Double) {
-				return AbsPrimitive.wrap(((Double) obj).doubleValue());
+			if (obj instanceof Long long1) {
+				return AbsPrimitive.wrap(long1.longValue());
 			} 
 			
-			if (obj instanceof Date) {
-				return AbsPrimitive.wrap((Date) obj);
+			if (obj instanceof Float float1) {
+				return AbsPrimitive.wrap(float1.floatValue());
 			} 
-			if (obj instanceof byte[]) {
-				return AbsPrimitive.wrap((byte[]) obj);
+			if (obj instanceof Double double1) {
+				return AbsPrimitive.wrap(double1.doubleValue());
+			} 
+			
+			if (obj instanceof Date date) {
+				return AbsPrimitive.wrap(date);
+			} 
+			if (obj instanceof byte[] bytes) {
+				return AbsPrimitive.wrap(bytes);
 			} 
 
-			if (obj instanceof List) {
-				return AbsHelper.externaliseList((List) obj, referenceOnto, SEQUENCE);
+			if (obj instanceof List list) {
+				return AbsHelper.externaliseList(list, referenceOnto, SEQUENCE);
 			}
 
-			if (obj instanceof Set) {
-				return AbsHelper.externaliseSet((Set) obj, referenceOnto, SET);
+			if (obj instanceof Set set) {
+				return AbsHelper.externaliseSet(set, referenceOnto, SET);
 			}
 
-			if (obj instanceof Iterator) {
-				return AbsHelper.externaliseIterator((Iterator) obj, referenceOnto, SEQUENCE);
+			if (obj instanceof Iterator iterator) {
+				return AbsHelper.externaliseIterator(iterator, referenceOnto, SEQUENCE);
 			}
 
-			if(obj instanceof AID) {
-				return AbsHelper.externaliseAID((AID)obj);
+			if(obj instanceof AID iD) {
+				return AbsHelper.externaliseAID(iD);
 			}
 
-			if(obj instanceof Property) {
-				return AbsHelper.externaliseProperty((Property)obj, referenceOnto);
+			if(obj instanceof Property property) {
+				return AbsHelper.externaliseProperty(property, referenceOnto);
 			}
 			
-			if (obj instanceof ContentElementList) {
-				return AbsHelper.externaliseContentElementList((ContentElementList) obj, referenceOnto);
+			if (obj instanceof ContentElementList list) {
+				return AbsHelper.externaliseContentElementList(list, referenceOnto);
 			} 
 
 			if(obj instanceof TrueProposition) {
@@ -405,42 +405,41 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 				return absTrueProp;
 			}
 
-			if(obj instanceof Done) {
+			if(obj instanceof Done done) {
 				AbsPredicate absDone = new AbsPredicate(BasicOntology.DONE);
-				absDone.set(BasicOntology.DONE_ACTION, (AbsAgentAction) referenceOnto.fromObject(((Done) obj).getAction()));
-				if (((Done) obj).getCondition() != null) {
-					absDone.set(BasicOntology.DONE_CONDITION, (AbsPredicate) referenceOnto.fromObject(((Done) obj).getCondition()));
+				absDone.set(BasicOntology.DONE_ACTION, (AbsAgentAction) referenceOnto.fromObject(done.getAction()));
+				if (done.getCondition() != null) {
+					absDone.set(BasicOntology.DONE_CONDITION, (AbsPredicate) referenceOnto.fromObject(done.getCondition()));
 				}
 				return absDone;
 			}
 
-			if(obj instanceof Result) {
+			if(obj instanceof Result result) {
 				AbsPredicate absResult = new AbsPredicate(BasicOntology.RESULT);
-				absResult.set(BasicOntology.RESULT_ACTION, (AbsAgentAction) referenceOnto.fromObject(((Result) obj).getAction()));
-				absResult.set(BasicOntology.RESULT_VALUE, (AbsTerm) referenceOnto.fromObject(((Result) obj).getValue()));
+				absResult.set(BasicOntology.RESULT_ACTION, (AbsAgentAction) referenceOnto.fromObject(result.getAction()));
+				absResult.set(BasicOntology.RESULT_VALUE, (AbsTerm) referenceOnto.fromObject(result.getValue()));
 				return absResult;
 			}
 
-			if(obj instanceof Equals) {
+			if(obj instanceof Equals equals) {
 				AbsPredicate absEquals = new AbsPredicate(BasicOntology.EQUALS);
-				absEquals.set(BasicOntology.EQUALS_LEFT, (AbsTerm) referenceOnto.fromObject(((Equals) obj).getLeft()));
-				absEquals.set(BasicOntology.EQUALS_RIGHT, (AbsTerm) referenceOnto.fromObject(((Equals) obj).getRight()));
+				absEquals.set(BasicOntology.EQUALS_LEFT, (AbsTerm) referenceOnto.fromObject(equals.getLeft()));
+				absEquals.set(BasicOntology.EQUALS_RIGHT, (AbsTerm) referenceOnto.fromObject(equals.getRight()));
 				return absEquals;
 			}
 
-			if (obj instanceof Action) {
+			if (obj instanceof Action action) {
 				AbsAgentAction absAction = new AbsAgentAction(BasicOntology.ACTION);
-				((Action) obj).externalise(absAction, referenceOnto);
+				action.externalise(absAction, referenceOnto);
 				return absAction;
 			}
 
-			if (obj instanceof ACLMessage) {
-				return AbsHelper.externaliseACLMessage((ACLMessage)obj, referenceOnto);
+			if (obj instanceof ACLMessage message) {
+				return AbsHelper.externaliseACLMessage(message, referenceOnto);
 			}
 			
 			
-			if (obj instanceof ConceptSlotFunction) {
-				ConceptSlotFunction csf = (ConceptSlotFunction) obj;
+			if (obj instanceof ConceptSlotFunction csf) {
 				AbsObject absConcept = referenceOnto.fromObject(csf.getConcept());
 				AbsConcept absCsf = new AbsConcept(csf.getSlotName());
 				absCsf.set(ConceptSlotFunctionSchema.CONCEPT_SLOT_FUNCTION_CONCEPT, absConcept);
@@ -522,49 +521,49 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 				if (destClass == Integer.class ||
 					destClass == int.class) {
 					if (srcClass == Long.class) {
-						destValue = new Integer(((Long)srcValue).intValue());
+						destValue = Integer.valueOf(((Long) srcValue).intValue());
 					} 
 					else if (srcClass == String.class) {
-						destValue = new Integer(Integer.parseInt((String)srcValue));
+						destValue = Integer.valueOf(Integer.parseInt((String) srcValue));
 					}
 				}
 				else if (destClass == Long.class ||
 						 destClass == long.class) {
 					if (srcClass == Integer.class) {
-						destValue = new Long(((Integer)srcValue).longValue());
+						destValue = Long.valueOf(((Integer) srcValue).longValue());
 					} 
 					else if (srcClass == String.class) {
-						destValue = new Long(Long.parseLong((String)srcValue));
+						destValue = Long.valueOf(Long.parseLong((String) srcValue));
 					}
 				}
 				else if (destClass == Float.class ||
 						 destClass == float.class) {
 					if (srcClass == Integer.class) {
-						destValue = new Float(((Integer)srcValue).floatValue());
+						destValue = Float.valueOf(((Integer) srcValue).floatValue());
 					}
 					else if (srcClass == Long.class) {
-						destValue = new Float(((Long)srcValue).floatValue());
+						destValue = Float.valueOf(((Long) srcValue).floatValue());
 					}
 					else if (srcClass == Double.class) {
-						destValue = new Float(((Double)srcValue).floatValue());
+						destValue = Float.valueOf(((Double) srcValue).floatValue());
 					}
 					else if (srcClass == String.class) {
-						destValue = new Float(Float.parseFloat((String)srcValue));
+						destValue = Float.valueOf(Float.parseFloat((String) srcValue));
 					}
 				}
 				else if (destClass == Double.class ||
 						 destClass == double.class) {
 					if (srcClass == Integer.class) {
-						destValue = new Double(((Integer)srcValue).doubleValue());
+						destValue = Double.valueOf(((Integer) srcValue).doubleValue());
 					}
 					else if (srcClass == Long.class) {
-						destValue = new Double(((Long)srcValue).doubleValue());
+						destValue = Double.valueOf(((Long) srcValue).doubleValue());
 					}
 					else if (srcClass == Float.class) {
-						destValue = new Double(((Float)srcValue).doubleValue());
+						destValue = Double.valueOf(((Float) srcValue).doubleValue());
 					}
 					else if (srcClass == String.class) {
-						destValue = new Double(Double.parseDouble((String)srcValue));
+						destValue = Double.valueOf(Double.parseDouble((String) srcValue));
 					}
 				}
 				else if (destClass == String.class) {

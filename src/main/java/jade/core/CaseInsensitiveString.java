@@ -24,6 +24,7 @@ package jade.core;
 
 //#APIDOC_EXCLUDE_FILE
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -40,6 +41,7 @@ import java.io.Serializable;
  */
 public class CaseInsensitiveString implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 4312308195246571889L;
 	/**
 	 * @serial
@@ -83,11 +85,11 @@ public class CaseInsensitiveString implements Serializable {
 		if (o == null) {
 			return false;
 		}
-		if (o instanceof String) {
-			return equalsIgnoreCase(s, (String) o);
+		if (o instanceof String string) {
+			return equalsIgnoreCase(s, string);
 		}
-		if (o instanceof CaseInsensitiveString) {
-			return equalsIgnoreCase(s, ((CaseInsensitiveString) o).s);
+		if (o instanceof CaseInsensitiveString string) {
+			return equalsIgnoreCase(s, string.s);
 		}
 		return false;
 	}

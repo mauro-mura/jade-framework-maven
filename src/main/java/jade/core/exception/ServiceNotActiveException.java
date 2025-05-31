@@ -23,12 +23,15 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.exception;
 
+import java.io.Serial;
+
 /**
  * This exception is thrown when trying to access a JADE kernel level service
  * that is not installed in the local node.
  */
 public class ServiceNotActiveException extends ServiceException {
 
+	@Serial
 	private static final long serialVersionUID = 1827000958609315704L;
 
 	public ServiceNotActiveException(String serviceName) {

@@ -119,7 +119,7 @@ public class FaultRecoveryService extends BaseService {
 			String psClass = p.getParameter(PERSISTENT_STORAGE_CLASS, PERSISTENT_STORAGE_CLASS_DEFAULT);
 			try {
 				myLogger.log(Logger.CONFIG, "Loading PersistentStorage of class "+psClass);
-				myPS = (PersistentStorage) Class.forName(psClass).newInstance();
+				myPS = (PersistentStorage) Class.forName(psClass).getDeclaredConstructor().newInstance();
 				myPS.init(p);
 				boolean cleanStorage = p.getBooleanProperty(CLEAN_STORAGE, false);
 				if (cleanStorage) {

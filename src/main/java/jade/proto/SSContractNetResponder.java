@@ -25,6 +25,10 @@ package jade.proto;
 
 //#CUSTOM_EXCLUDE_FILE
 
+import java.io.Serial;
+
+//#CUSTOM_EXCLUDE_FILE
+
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -286,6 +290,7 @@ public class SSContractNetResponder extends SSResponder {
 	 Inner class CfpHandler
 	 */
 	private static class CfpHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 4766407563773001L;
 		
 		public CfpHandler(Agent a) {
@@ -310,6 +315,7 @@ public class SSContractNetResponder extends SSResponder {
 	 Inner class AcceptHandler
 	 */
 	private static class AcceptHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 4766407563773002L;
 		
 		public AcceptHandler(Agent a) {
@@ -337,6 +343,7 @@ public class SSContractNetResponder extends SSResponder {
 	 Inner class RejectHandler
 	 */
 	private static class RejectHandler extends OneShotBehaviour {
+		@Serial
 		private static final long     serialVersionUID = 4766407563773003L;
 		
 		public RejectHandler(Agent a) {

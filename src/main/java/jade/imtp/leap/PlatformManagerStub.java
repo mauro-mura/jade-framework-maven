@@ -23,6 +23,7 @@
 
 package jade.imtp.leap;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,6 +49,7 @@ import jade.security.JADESecurityException;
  */
 class PlatformManagerStub extends Stub implements PlatformManager {
 
+	@Serial
 	private static final long serialVersionUID = 560800377169782526L;
 	static final int GET_PLATFORM_NAME = 1;
 	static final int ADD_NODE = 2;

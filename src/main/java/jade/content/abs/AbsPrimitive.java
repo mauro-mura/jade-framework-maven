@@ -26,6 +26,7 @@ package jade.content.abs;
 
 import jade.content.onto.*;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -37,6 +38,7 @@ import java.util.Date;
  */
 public class AbsPrimitive implements AbsTerm {
 
+	@Serial
 	private static final long serialVersionUID = -4976477270014235832L;
 	private Object value = null;
 	private String typeName = null;
@@ -87,7 +89,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * a given <code>int</code> value.
 	 */
 	public static AbsPrimitive wrap(int value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, new Integer(value));
+		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, Integer.valueOf(value));
 		return ret;
 	}
 
@@ -96,7 +98,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * a given <code>long</code> value.
 	 */
 	public static AbsPrimitive wrap(long value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, new Long(value));
+		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, Long.valueOf(value));
 		return ret;
 	}
 
@@ -105,7 +107,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * given <code>float</code> value.
 	 */
 	public static AbsPrimitive wrap(float value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, new Float(value));
+		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, Float.valueOf(value));
 		return ret;
 	}
 
@@ -114,7 +116,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * given <code>double</code> value.
 	 */
 	public static AbsPrimitive wrap(double value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, new Double(value));
+		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, Double.valueOf(value));
 		return ret;
 	}
 
@@ -178,7 +180,7 @@ public class AbsPrimitive implements AbsTerm {
 	public void set(int value) {
 		if (!getTypeName().equals(BasicOntology.INTEGER))
 			throw new IllegalArgumentException("Wrong type");
-		this.value = new Integer(value);
+		this.value = Integer.valueOf(value);
 	}
 
 	/**
@@ -392,8 +394,8 @@ public class AbsPrimitive implements AbsTerm {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof AbsPrimitive)
-			return getObject().equals(((AbsPrimitive) obj).getObject());
+		if (obj instanceof AbsPrimitive primitive)
+			return getObject().equals(primitive.getObject());
 		else
 			return false;
 	}

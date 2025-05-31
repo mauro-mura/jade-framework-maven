@@ -12,7 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +28,14 @@ import javax.swing.event.ListSelectionListener;
  */
 public class ManageMTPsDialog extends JDialog {
 
+	@Serial
 	private static final long serialVersionUID = -8901143494307686275L;
 
 	private static final Object[] EMPTY_LIST = new Object[0];
 
 	private AbstractAction addMTPAction = new AbstractAction("Add MTP...") {
 
+		@Serial
 		private static final long serialVersionUID = 1189203546696450347L;
 
 		public void actionPerformed(ActionEvent ev) {
@@ -44,6 +46,7 @@ public class ManageMTPsDialog extends JDialog {
 
 	private AbstractAction removeMTPAction = new AbstractAction("Remove MTP") {
 
+		@Serial
 		private static final long serialVersionUID = 1602069995674767989L;
 
 		public void actionPerformed(ActionEvent ev) {

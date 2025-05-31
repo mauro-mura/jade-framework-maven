@@ -56,8 +56,8 @@ public class JavaCollectionOntology extends Ontology {
 	/**
 	 */
 	protected Object toObject(AbsObject abs, String lcType, Ontology globalOnto) throws UnknownSchemaException, UngroundedException, OntologyException {
-		if (abs instanceof AbsAggregate) {
-			return introspector.internalizeAggregate(null, (AbsAggregate) abs, null, globalOnto);
+		if (abs instanceof AbsAggregate aggregate) {
+			return introspector.internalizeAggregate(null, aggregate, null, globalOnto);
 		}
 		throw new UnknownSchemaException(false);
 	}

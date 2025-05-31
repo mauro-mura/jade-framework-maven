@@ -23,6 +23,7 @@
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jade.core.Agent;
@@ -40,7 +41,8 @@ import jade.core.Agent;
  * 
  */
 public abstract class Behaviour implements Serializable {
-	
+
+	@Serial
 	private static final long serialVersionUID = 3487495895819001L;
 
 	// #APIDOC_EXCLUDE_BEGIN
@@ -87,6 +89,7 @@ public abstract class Behaviour implements Serializable {
 	 * to behaviour's children (<em>downward notification</em>).
 	 */
 	protected class RunnableChangedEvent implements Serializable {
+		@Serial
 		private static final long serialVersionUID = 3487495895819002L;
 		/**
 		 * @serial

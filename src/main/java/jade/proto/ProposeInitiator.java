@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -235,7 +236,8 @@ public class ProposeInitiator extends FSMBehaviour {
     Behaviour b = null;
     // PREPARE_INITIATIONS
     b = new OneShotBehaviour(myAgent) {
-        private static final long serialVersionUID = 3487495895818000L;
+			@Serial
+			private static final long serialVersionUID = 3487495895818000L;
         public void action() {
           DataStore ds = getDataStore();
           Vector allInitiations = prepareInitiations((ACLMessage) ds.get(INITIATION_K));
@@ -247,7 +249,8 @@ public class ProposeInitiator extends FSMBehaviour {
 		
     // SEND_INITIATIONS
     b = new OneShotBehaviour(myAgent) {
-        private static final long serialVersionUID = 3487495895818001L;
+			@Serial
+			private static final long serialVersionUID = 3487495895818001L;
         public void action() {
           Vector allInitiations = (Vector) getDataStore().get(ALL_INITIATIONS_K);
           if (allInitiations != null) {
@@ -268,7 +271,8 @@ public class ProposeInitiator extends FSMBehaviour {
     // CHECK_IN_SEQ
     b = new OneShotBehaviour(myAgent) {
         int ret;
-        private static final long     serialVersionUID = 3487495895818002L;
+			@Serial
+			private static final long     serialVersionUID = 3487495895818002L;
   			
         public void action() {
           ACLMessage reply = (ACLMessage) getDataStore().get(REPLY_KEY);
@@ -289,7 +293,8 @@ public class ProposeInitiator extends FSMBehaviour {
     // HANDLE_ALL_RESPONSES
     b = new OneShotBehaviour(myAgent) {
 
-		private static final long serialVersionUID = 8058664737894867253L;
+			@Serial
+			private static final long serialVersionUID = 8058664737894867253L;
 
 		public void action() {
           handleAllResponses((Vector) getDataStore().get(ALL_RESPONSES_KEY));
@@ -301,7 +306,8 @@ public class ProposeInitiator extends FSMBehaviour {
     // HANDLE_ACCEPT_PROPOSAL
     b = new OneShotBehaviour(myAgent) {
 
-		private static final long serialVersionUID = -202210539261044255L;
+			@Serial
+			private static final long serialVersionUID = -202210539261044255L;
 
 		public void action() {
           handleAcceptProposal((ACLMessage) getDataStore().get(REPLY_KEY));
@@ -313,7 +319,8 @@ public class ProposeInitiator extends FSMBehaviour {
     // HANDLE_REJECT_PROPOSAL
     b = new OneShotBehaviour(myAgent) {
 
-		private static final long serialVersionUID = 2012912446752470652L;
+			@Serial
+			private static final long serialVersionUID = 2012912446752470652L;
 
 		public void action() {
           handleRejectProposal((ACLMessage) getDataStore().get(REPLY_KEY));
@@ -324,7 +331,8 @@ public class ProposeInitiator extends FSMBehaviour {
 	
     // HANDLE_NOT_UNDERSTOOD
     b = new OneShotBehaviour(myAgent) {
-        private static final long     serialVersionUID = 3487495895818005L;
+			@Serial
+			private static final long     serialVersionUID = 3487495895818005L;
   	
         public void action() {
           handleNotUnderstood((ACLMessage) getDataStore().get(REPLY_KEY));
@@ -335,7 +343,8 @@ public class ProposeInitiator extends FSMBehaviour {
 	
     // HANDLE_OUT_OF_SEQ
     b = new OneShotBehaviour(myAgent) {
-        private static final long     serialVersionUID = 3487495895818008L;
+			@Serial
+			private static final long     serialVersionUID = 3487495895818008L;
   	
         public void action() {
           handleOutOfSequence((ACLMessage) getDataStore().get(REPLY_KEY));
@@ -347,7 +356,8 @@ public class ProposeInitiator extends FSMBehaviour {
     // CHECK_SESSIONS
     b = new OneShotBehaviour(myAgent) {
         int ret;
-        private static final long     serialVersionUID = 3487495895818009L;
+			@Serial
+			private static final long     serialVersionUID = 3487495895818009L;
   	
         public void action() {
           ACLMessage reply = (ACLMessage) getDataStore().get(REPLY_KEY);
@@ -374,7 +384,8 @@ public class ProposeInitiator extends FSMBehaviour {
 
     // DUMMY_FINAL
     b = new OneShotBehaviour(myAgent) {
-        private static final long     serialVersionUID = 3487495895818010L;
+			@Serial
+			private static final long     serialVersionUID = 3487495895818010L;
   	
         public void action() {}
       };

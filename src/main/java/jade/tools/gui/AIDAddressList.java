@@ -33,6 +33,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -59,6 +60,7 @@ import jade.core.AID;
 
 public class AIDAddressList extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = 3021073352398117351L;
 	
 /**

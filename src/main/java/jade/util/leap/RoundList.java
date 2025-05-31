@@ -26,11 +26,12 @@ package jade.util.leap;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException; 
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of a RoundList with get/insert methods relative to the current
@@ -42,6 +43,7 @@ import java.util.NoSuchElementException;
  **/
 public class RoundList implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -2515257950583607199L;
 	private int cur = -1;
 	private List<Object> l = new LinkedList<>();

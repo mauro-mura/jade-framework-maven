@@ -638,8 +638,8 @@ public class AgentReplicationService extends BaseService {
 		if (agent != null) {
 			myContainer.releaseLocalAgent(masterAid);
 			try {
-				if (agent instanceof AgentReplicationHelper.Listener) {
-					((AgentReplicationHelper.Listener) agent).replicaAdded(r.replicaAid, r.where);
+				if (agent instanceof AgentReplicationHelper.Listener listener) {
+					listener.replicaAdded(r.replicaAid, r.where);
 				}
 			}
 			catch (Exception e) {
@@ -675,8 +675,8 @@ public class AgentReplicationService extends BaseService {
 		if (agent != null) {
 			myContainer.releaseLocalAgent(masterAid);
 			try {
-				if (agent instanceof AgentReplicationHelper.Listener) {
-					((AgentReplicationHelper.Listener) agent).replicaRemoved(removedReplica, where);
+				if (agent instanceof AgentReplicationHelper.Listener listener) {
+					listener.replicaRemoved(removedReplica, where);
 				}
 			}
 			catch (Exception e) {
@@ -703,8 +703,8 @@ public class AgentReplicationService extends BaseService {
 		if (agent != null) {
 			myContainer.releaseLocalAgent(masterAid);
 			try {
-				if (agent instanceof AgentReplicationHelper.Listener) {
-					((AgentReplicationHelper.Listener) agent).becomeMaster();
+				if (agent instanceof AgentReplicationHelper.Listener listener) {
+					listener.becomeMaster();
 				}
 			}
 			catch (Exception e) {

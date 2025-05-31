@@ -165,9 +165,9 @@ class JICPClient {
 	private void manageReadTimeout(ConnectionWrapper cw) {
 		if (cw.isReused()) {
 			Connection c = cw.getConnection();
-			if (c instanceof JICPConnection && readTimeout > 0) {
+			if (c instanceof JICPConnection connection && readTimeout > 0) {
 				try {
-					((JICPConnection) c).setReadTimeout(readTimeout);
+					connection.setReadTimeout(readTimeout);
 				}
 				catch (IOException e) {
 					try {

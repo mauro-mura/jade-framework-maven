@@ -24,6 +24,7 @@
  */
 package jade.content.lang.sl;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 import jade.content.abs.AbsAggregate;
@@ -43,12 +44,14 @@ import jade.content.schema.ObjectSchema;
 import jade.core.CaseInsensitiveString;
 import jade.lang.acl.ISO8601;
 import jade.util.Logger;
+
 /**
  * MIDP implementation of the SLCodec. Actually the MIDP version of the SLCodec just extends SimpleSLCodec
  * @version $Date: 2013-02-25 11:10:22 +0100 (lun, 25 feb 2013) $ $Revision: 6642 $
  **/
 public class SimpleSLCodec extends StringCodec {
-	
+
+	@Serial
 	private static final long serialVersionUID = 677306221060280959L;
 
 	@SuppressWarnings("unused")
@@ -69,8 +72,8 @@ public class SimpleSLCodec extends StringCodec {
 	 */
 	public String encode(Ontology ontology, AbsContentElement content) throws CodecException {
 		StringBuilder str = new StringBuilder("(");
-		if (content instanceof AbsContentElementList) {
-			for (Iterator<AbsContentElement> i=((AbsContentElementList)content).iterator(); i.hasNext(); ) {
+		if (content instanceof AbsContentElementList list) {
+			for (Iterator<AbsContentElement> i=list.iterator(); i.hasNext(); ) {
 				AbsObject abs = i.next();
 				stringify(abs, ontology, str);
 				str.append(" ");
@@ -84,12 +87,12 @@ public class SimpleSLCodec extends StringCodec {
 	}
 
 	private void stringify(AbsObject val, Ontology onto, StringBuilder str) throws CodecException {
-		if (val instanceof AbsPrimitive)
-			stringifyPrimitive((AbsPrimitive) val, str);
-		else if (val instanceof AbsVariable)
-			stringifyVariable((AbsVariable) val, str);
-		else if (val instanceof AbsAggregate)
-			stringifyAggregate((AbsAggregate)val, onto, str);
+		if (val instanceof AbsPrimitive primitive)
+			stringifyPrimitive(primitive, str);
+		else if (val instanceof AbsVariable variable)
+			stringifyVariable(variable, str);
+		else if (val instanceof AbsAggregate aggregate)
+			stringifyAggregate(aggregate, onto, str);
 		else
 			stringifyComplex(val, onto, str);
 	}
@@ -249,8 +252,8 @@ public class SimpleSLCodec extends StringCodec {
 			ObjectSchema s = o.getSchema(name);
 			if (s != null) {
 				abs = s.newInstance();
-				if (abs instanceof AbsAggregate) {
-					fillAggregate((AbsAggregate) abs, p, o);
+				if (abs instanceof AbsAggregate aggregate) {
+					fillAggregate(aggregate, p, o);
 				}
 				else if (p.nextToken().startsWith(":")) {
 					fillSlotsByName((AbsConcept) abs, p, o);

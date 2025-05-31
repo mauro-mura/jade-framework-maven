@@ -24,6 +24,7 @@
 
 package jade.core;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -56,6 +57,7 @@ import jade.core.behaviours.Behaviour;
  ****************************************************************/
 public class Scheduler implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 203639140849912829L;
 	
 	protected List<Behaviour> readyBehaviours = new LinkedList<>();

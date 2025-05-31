@@ -92,29 +92,29 @@ class SerializationEngine {
 	private final static void serializeObject(Object o, DataOutputStream dos) throws LEAPSerializationException {
 		try {
 			if (o != null) {
-				if (o instanceof String) {            // String
+				if (o instanceof String string) {            // String
 					dos.writeByte(STRING_ID);
-					dos.writeUTF((String) o);
+					dos.writeUTF(string);
 				} 
-				else if (o instanceof ACLMessage) {   // ACLMessage
+				else if (o instanceof ACLMessage message) {   // ACLMessage
 					dos.writeByte(ACL_ID);
-					LEAPACLCodec.serializeACL((ACLMessage) o, dos);
+					LEAPACLCodec.serializeACL(message, dos);
 				} 
-				else if (o instanceof AID) {   // AID
+				else if (o instanceof AID iD) {   // AID
 					dos.writeByte(AID_ID);
-					LEAPACLCodec.serializeAID((AID) o, dos);
+					LEAPACLCodec.serializeAID(iD, dos);
 				} 
-				else if (o instanceof String[]) {     // Array of Strings
+				else if (o instanceof String[] strings) {     // Array of Strings
 					dos.writeByte(STRING_ARRAY_ID);
-					serializeStringArray((String[]) o, dos);
+					serializeStringArray(strings, dos);
 				} 
-				else if (o instanceof Boolean) {      // Boolean
+				else if (o instanceof Boolean boolean1) {      // Boolean
 					dos.writeByte(BOOLEAN_ID);
-					dos.writeBoolean(((Boolean) o).booleanValue());
+					dos.writeBoolean(boolean1.booleanValue());
 				} 
-				else if (o instanceof Integer) {      // Integer
+				else if (o instanceof Integer integer) {      // Integer
 					dos.writeByte(INTEGER_ID);
-					dos.writeInt(((Integer) o).intValue());
+					dos.writeInt(integer.intValue());
 				} 
 				else {
 					throw new LEAPSerializationException("Unknown class "+o.getClass().getName());
@@ -155,7 +155,7 @@ class SerializationEngine {
 			case BOOLEAN_ID:
 				return Boolean.valueOf(dis.readBoolean());
 			case INTEGER_ID:
-				return new Integer(dis.readInt());
+				return Integer.valueOf(dis.readInt());
 			default:
 				/*System.out.println("Packet was:");
       	jade.imtp.leap.JICP.JICPPacket pkt = jade.imtp.leap.JICP.BIFEDispatcher.lastResponseCazzo;

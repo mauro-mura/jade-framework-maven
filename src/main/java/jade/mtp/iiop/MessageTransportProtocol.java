@@ -26,6 +26,7 @@ Boston, MA  02111-1307, USA.
 package jade.mtp.iiop;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -368,8 +369,8 @@ public class MessageTransportProtocol implements MTP {
 	private FIPA.Property marshalProperty(jade.domain.FIPAAgentManagement.Property p) {
 		org.omg.CORBA.Any value = myORB.create_any();
 		java.lang.Object v = p.getValue();
-		if (v instanceof java.io.Serializable) {
-			value.insert_Value((Serializable) v);
+		if (v instanceof Serializable serializable) {
+			value.insert_Value(serializable);
 		} else {
 			if (v != null) {
 				value.insert_Value(v.toString());
@@ -442,6 +443,7 @@ IIOPAddress ::= "ior:" (HexDigit HexDigit+)
  **/
 class IIOPAddress implements TransportAddress {
 
+	@Serial
 	private static final long serialVersionUID = 4589330782339653390L;
 	public static final byte BIG_ENDIAN = 0;
 	public static final byte LITTLE_ENDIAN = 1;

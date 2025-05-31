@@ -24,6 +24,8 @@
  */
 package jade.content.abs;
 
+import java.io.Serial;
+
 import jade.content.schema.IRESchema;
 
 /**
@@ -36,6 +38,7 @@ import jade.content.schema.IRESchema;
  */
 public class AbsIRE extends AbsObjectImpl implements AbsContentElement, AbsTerm {
 
+	@Serial
 	private static final long serialVersionUID = 7997942232452854076L;
 	private boolean isAContentExpression = false;
 	/**
@@ -69,11 +72,11 @@ public class AbsIRE extends AbsObjectImpl implements AbsContentElement, AbsTerm 
 	 * @param t The abstract descriptor holding the variable or sequence of variables.
 	 */
 	public void setTerm(AbsTerm t) {
-		if (t instanceof AbsVariable) {
-			setVariable((AbsVariable) t);
+		if (t instanceof AbsVariable variable) {
+			setVariable(variable);
 		}
-		else if (t instanceof AbsAggregate) {
-			setVariables((AbsAggregate) t);
+		else if (t instanceof AbsAggregate aggregate) {
+			setVariables(aggregate);
 		}
 		else {
 			throw new IllegalArgumentException("Invalid term "+t+" for an AbsIRE");

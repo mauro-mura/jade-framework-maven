@@ -37,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -69,6 +70,7 @@ import jade.util.ExtendedProperties;
  */
 public class BootGUI extends JDialog {
 
+	@Serial
 	private static final long serialVersionUID = -3791192916905838900L;
 	static String EXTENSION = "conf";
     static String TITLE = "--JADE Properties--";
@@ -605,8 +607,8 @@ public class BootGUI extends JDialog {
                              
         pv.add(new PropertyType(BootProfileImpl.MAIN_PORT,
                                 PropertyType.STRING_TYPE,
-                                new Integer(theProperties.getIntProperty(BootProfileImpl.MAIN_PORT,
-                                            BootProfileImpl.DEFAULT_PORT)).toString(),
+                                Integer.valueOf(theProperties.getIntProperty(BootProfileImpl.MAIN_PORT,
+																	BootProfileImpl.DEFAULT_PORT)).toString(),
                                 "Port Number of the main-container",
                                 false));
                                         
@@ -658,7 +660,8 @@ public class BootGUI extends JDialog {
      */
     class singlePanel extends JPanel {
 
-		private static final long serialVersionUID = -5684230496221654132L;
+			@Serial
+			private static final long serialVersionUID = -5684230496221654132L;
 
 		singlePanel() {
             super();

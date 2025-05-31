@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package jade;
 
+import java.io.Serial;
+
 //#APIDOC_EXCLUDE_FILE
 
 /**
@@ -36,6 +38,7 @@ package jade;
 
 public class BootException extends Exception {
 
+	@Serial
 	private static final long serialVersionUID = 5227051612709489555L;
 
 	public BootException(String msg) {

@@ -25,6 +25,7 @@
 package jade.content.onto;
 
 import java.io.PrintStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,6 +155,7 @@ import jade.util.Logger;
  */
 public class Ontology implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 171852701730104825L;
 	private static final String DEFAULT_INTROSPECTOR_CLASS = "jade.content.onto.ReflectiveIntrospector";
 	private Ontology[] base = new Ontology[0];
@@ -194,7 +196,7 @@ public class Ontology implements Serializable {
 	public Ontology(String name, Ontology base) {
 		this(name, base, null);
 		try {
-			introspector = (Introspector) Class.forName(DEFAULT_INTROSPECTOR_CLASS).newInstance();
+			introspector = (Introspector) Class.forName(DEFAULT_INTROSPECTOR_CLASS).getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			throw new RuntimeException("Class " + DEFAULT_INTROSPECTOR_CLASS + "for default Introspector not found");
 		}
@@ -620,8 +622,8 @@ public class Ontology implements Serializable {
 	protected AbsObject fromObject(Object obj, Ontology globalOnto) throws OntologyException {
 
 		// If obj is already an abstract descriptor --> just return it
-		if (obj instanceof AbsObject) {
-			return (AbsObject) obj;
+		if (obj instanceof AbsObject object) {
+			return object;
 		}
 
 		// Retrieve the Java class
@@ -1041,8 +1043,8 @@ public class Ontology implements Serializable {
 			addReferencedSchemas(superSchema, schemas);
 		}
 
-		if (schema instanceof AggregateSchema) {
-			ObjectSchema elementsSchema = ((AggregateSchema) schema).getElementsSchema();
+		if (schema instanceof AggregateSchema aggregateSchema) {
+			ObjectSchema elementsSchema = aggregateSchema.getElementsSchema();
 			if (elementsSchema != null) {
 				addReferencedSchemas(elementsSchema, schemas);
 			}
@@ -1141,17 +1143,13 @@ public class Ontology implements Serializable {
 					if (facets != null) {
 						for (int j = 0; j < facets.length; j++) {
 							Facet facet = facets[j];
-							if (facet instanceof DefaultValueFacet) {
-								DefaultValueFacet dvf = (DefaultValueFacet) facet;
+							if (facet instanceof DefaultValueFacet dvf) {
 								defaultValue = dvf.getDefaultValue();
-							} else if (facet instanceof RegexFacet) {
-								RegexFacet rf = (RegexFacet) facet;
+							} else if (facet instanceof RegexFacet rf) {
 								regex = rf.getRegex();
-							} else if (facet instanceof PermittedValuesFacet) {
-								PermittedValuesFacet pvf = (PermittedValuesFacet) facet;
+							} else if (facet instanceof PermittedValuesFacet pvf) {
 								pValues = pvf.getPermittedValuesAsString();
-							} else if (facet instanceof CardinalityFacet) {
-								CardinalityFacet cf = (CardinalityFacet) facet;
+							} else if (facet instanceof CardinalityFacet cf) {
 								cardMin = cf.getCardMin();
 								cardMax = cf.getCardMax();
 							}

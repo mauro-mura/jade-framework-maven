@@ -19,6 +19,7 @@ Boston, MA  02111-1307, USA.
 
 package jade.core.behaviours;
 
+import java.io.Serial;
 import java.util.HashMap;
 
 /**
@@ -28,6 +29,7 @@ import java.util.HashMap;
  */
 public class DataStore extends HashMap {
 
+	@Serial
 	private static final long serialVersionUID = 1157606487081560892L;
 
 	public DataStore() {
