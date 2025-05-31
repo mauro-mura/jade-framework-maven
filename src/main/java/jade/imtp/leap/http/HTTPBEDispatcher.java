@@ -56,13 +56,13 @@ public class HTTPBEDispatcher implements BEConnectionManager, Dispatcher, JICPMe
 
 	private JICPMediatorManager myMediatorManager;
 	private String myID;
-	private MicroSkeleton mySkel = null;
-	private FrontEndStub myStub = null;
-	private BackEndContainer myContainer = null;
+	private MicroSkeleton mySkel;
+	private FrontEndStub myStub;
+	private BackEndContainer myContainer;
 	private OutgoingsHandler myOutgoingsHandler;
-	private JICPPacket lastResponse = null;
+	private JICPPacket lastResponse;
 	private byte lastSid = 0x10;
-	private Logger myLogger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(this.getClass().getName());
 
 	/////////////////////////////////////
 	// JICPMediator interface implementation
@@ -310,23 +310,23 @@ public class HTTPBEDispatcher implements BEConnectionManager, Dispatcher, JICPMe
 		private static final int MAX_SID = 0x0f;
 		
 		private int frontEndStatus = CONNECTING;
-		private int outCnt = 0;
-		private Thread responseWaiter = null;
-		private JICPPacket currentCommand = null;
-		private JICPPacket currentResponse = null;
-		private boolean commandReady = false;
-		private boolean responseReady = false;
-		private boolean connectionReset = false;
+		private int outCnt;
+		private Thread responseWaiter;
+		private JICPPacket currentCommand;
+		private JICPPacket currentResponse;
+		private boolean commandReady;
+		private boolean responseReady;
+		private boolean connectionReset;
 		private long maxDisconnectionTime;
 		private long keepAliveTime;
-		private Timer maxDisconnectionTimer = null;
-		private boolean waitingForFlush = false;
+		private Timer maxDisconnectionTimer;
+		private boolean waitingForFlush;
 		private Object initialResponseLock = new Object();
 		private boolean initialResponseReceived;
 
 		public OutgoingsHandler(long maxDisconnectionTime, long keepAliveTime) {
 			this.maxDisconnectionTime = maxDisconnectionTime;
-			this.keepAliveTime = (keepAliveTime >= 0 ? keepAliveTime : 0);
+			this.keepAliveTime = keepAliveTime >= 0 ? keepAliveTime : 0;
 		}
 
 		/**

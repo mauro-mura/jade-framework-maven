@@ -31,14 +31,14 @@ public final class SSLEngineHelper implements BufferTransformer {
 
 	public static final ByteBuffer EMPTY_BUFFER = NIOHelper.EMPTY_BUFFER;
 
-	private SSLEngine ssle = null;
+	private SSLEngine ssle;
 
 	private ByteBuffer wrapData;
 	private ByteBuffer unwrapData;
 
-	private NIOJICPConnection connection = null;
+	private final NIOJICPConnection connection;
 
-	private static Logger log = Logger.getLogger(SSLEngineHelper.class.getName());
+	private static final Logger log = Logger.getLogger(SSLEngineHelper.class.getName());
 
 	/**
 	 * Creates and initializes ByteBuffers and SSLEngine necessary for ssl/nio.
@@ -150,8 +150,9 @@ public final class SSLEngineHelper implements BufferTransformer {
 			try {
 				// Unwrap (decode) the next SSL block. Unwrapped application data (if any) are put into the unwrapData buffer
 				result = ssle.unwrap(socketData, unwrapData);
-				if (log.isLoggable(Level.FINE))
-					log.fine("Decoded " + result.bytesConsumed() + " bytes; Produced "+result.bytesProduced()+" application-data bytes ["+getRemoteHost()+"]");
+				if (log.isLoggable(Level.FINE)) {
+					log.fine("Decoded " + result.bytesConsumed() + " bytes; Produced " + result.bytesProduced() + " application-data bytes [" + getRemoteHost() + "]");
+				}
 			} catch (SSLException e) {
 				// send close message to the client and re-throw the exception
 				log.log(Level.WARNING, "Unwrap failure ["+getRemoteHost()+"]", e);
@@ -171,11 +172,13 @@ public final class SSLEngineHelper implements BufferTransformer {
 		} else if (handshakeStatus.equals(HandshakeStatus.NEED_TASK)) {
 			log.warning("Unexpected NEED_TASK SSL handshake status after execution of handshake tasks ["+getRemoteHost()+"]");
 		} else if (handshakeStatus.equals(HandshakeStatus.NEED_UNWRAP)) {
-			if (log.isLoggable(Level.FINE))
-				log.fine("Need more data to proceed with Handshake ["+getRemoteHost()+"]");
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Need more data to proceed with Handshake [" + getRemoteHost() + "]");
+			}
 		} else if (handshakeStatus.equals(HandshakeStatus.NEED_WRAP)) {
-			if (log.isLoggable(Level.FINE))
-				log.fine("Send back Handshake data after task execution ["+getRemoteHost()+"]");
+			if (log.isLoggable(Level.FINE)) {
+				log.fine("Send back Handshake data after task execution [" + getRemoteHost() + "]");
+			}
 			wrapAndSend();
 		} else if (handshakeStatus.equals(HandshakeStatus.NOT_HANDSHAKING)) {
 			log.warning("Unexpected NOT_HANDSHAKING SSL handshake status after execution of handshake tasks ["+getRemoteHost()+"]");

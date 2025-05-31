@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class EnvelopeHelper {
+public final class EnvelopeHelper {
 	// It is useless to have instances of this class
 	private EnvelopeHelper() {
 	}
@@ -20,7 +20,7 @@ public class EnvelopeHelper {
 			}
 		}
 		{
-			if (that.from.length > (1L)) {
+			if (that.from.length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			out.write_long(that.from.length);
@@ -33,7 +33,7 @@ public class EnvelopeHelper {
 		out.write_long(that.payloadLength);
 		out.write_string(that.payloadEncoding);
 		{
-			if (that.date.length > (1L)) {
+			if (that.date.length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			out.write_long(that.date.length);
@@ -54,7 +54,7 @@ public class EnvelopeHelper {
 			}
 		}
 		{
-			if (that.received.length > (1L)) {
+			if (that.received.length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			out.write_long(that.received.length);
@@ -63,7 +63,7 @@ public class EnvelopeHelper {
 			}
 		}
 		{
-			if (that.transportBehaviour.length > (1L)) {
+			if (that.transportBehaviour.length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			out.write_long(that.transportBehaviour.length);
@@ -93,7 +93,7 @@ public class EnvelopeHelper {
 		}
 		{
 			int __length = in.read_long();
-			if (__length > (1L)) {
+			if (__length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			that.from = new FIPA.AgentID[__length];
@@ -107,7 +107,7 @@ public class EnvelopeHelper {
 		that.payloadEncoding = in.read_string();
 		{
 			int __length = in.read_long();
-			if (__length > (1L)) {
+			if (__length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			that.date = new FIPA.DateTime[__length];
@@ -131,7 +131,7 @@ public class EnvelopeHelper {
 		}
 		{
 			int __length = in.read_long();
-			if (__length > (1L)) {
+			if (__length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			that.received = new FIPA.ReceivedObject[__length];
@@ -141,7 +141,7 @@ public class EnvelopeHelper {
 		}
 		{
 			int __length = in.read_long();
-			if (__length > (1L)) {
+			if (__length > 1L) {
 				throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 			}
 			that.transportBehaviour = new FIPA.Property[__length][];
@@ -177,7 +177,7 @@ public class EnvelopeHelper {
 	private static org.omg.CORBA.TypeCode _tc;
 
 	@SuppressWarnings("unused")
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		int _memberCount = 12;
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {

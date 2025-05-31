@@ -59,16 +59,16 @@ public class PanelCanvas
 
   protected MMCanvas canvAgent;
   protected MMCanvas canvMess;
-  //#DOTNET_EXCLUDE_BEGIN
-  private PopMouserMessage popMess;
-  private PopMouserAgent popAgent;
-  //#DOTNET_EXCLUDE_END
-  /*#DOTNET_INCLUDE_BEGIN
+	//#DOTNET_EXCLUDE_BEGIN
+	private final PopMouserMessage popMess;
+	private final PopMouserAgent popAgent;
+	//#DOTNET_EXCLUDE_END
+	/*#DOTNET_INCLUDE_BEGIN
   private Panel myPanel;
   private PopupAgent popAgent;
   private PopupMessage popMess;
   #DOTNET_INCLUDE_END*/
-  private Sniffer mySniffer;
+	private final Sniffer mySniffer;
 
   public PanelCanvas(MainWindow mWnd,MainPanel mPan,Sniffer mySniffer) {
    /*#DOTNET_INCLUDE_BEGIN

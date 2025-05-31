@@ -67,10 +67,10 @@ class UDPNodeFailureMonitor extends NodeFailureMonitor {
 	private long deadlineId = -1;
 	private long lastPing = -1;
 	private int state = -1;
-	private long key = 0;
-	private UDPMonitorServer server;
-	private UDPNodeMonitoringService service;
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private long key;
+	private final UDPMonitorServer server;
+	private final UDPNodeMonitoringService service;
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 
 	/**

@@ -183,10 +183,10 @@ public class ContractNetInitiator extends Initiator {
 	// When step == 2 we deal with ACCEPT/REJECT_PROPOSAL and result notifications
 	private int step = 1;
 	// If set to true all responses not yet received are skipped
-	private boolean skipNextRespFlag = false;
+	private boolean skipNextRespFlag;
 	// Indicates that a new tranche of acceptances must be sent after all result notifications 
 	// have been received
-	private boolean moreAcceptancesToSend = false;
+	private boolean moreAcceptancesToSend;
 
 	/**
 	 * Constructor for the class that creates a new empty DataStore
@@ -344,7 +344,7 @@ public class ContractNetInitiator extends Initiator {
 			sessions.clear();
 		}
 
-		int ret = (step == 1 ? ALL_RESPONSES_RECEIVED : ALL_RESULT_NOTIFICATIONS_RECEIVED);
+		int ret = step == 1 ? ALL_RESPONSES_RECEIVED : ALL_RESULT_NOTIFICATIONS_RECEIVED;
 		if (reply != null) {
 			if (sessions.size() > 0) {
 				// If there are still active sessions we haven't received
@@ -362,7 +362,7 @@ public class ContractNetInitiator extends Initiator {
 		return ret;
 	}
 
-	private String[] toBeReset = null;
+	private String[] toBeReset;
 
 	/**
 	 */
@@ -714,7 +714,7 @@ public class ContractNetInitiator extends Initiator {
 		}
 
 		public boolean isCompleted() {
-			return (state == REPLY_RECEIVED);
+			return state == REPLY_RECEIVED;
 		}
 	} // End of inner class Session
 

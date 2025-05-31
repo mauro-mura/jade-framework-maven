@@ -41,10 +41,10 @@ import jade.domain.FIPAAgentManagement.AlreadyRegistered;
  * 
  * @author Giovanni Caire -  TILAB
  */
-public class LogManagementOntology extends Ontology implements LogManagementVocabulary {
+public final class LogManagementOntology extends Ontology implements LogManagementVocabulary {
 
 	// The singleton instance of this ontology
-	private static Ontology theInstance = new LogManagementOntology();
+	private static final Ontology theInstance = new LogManagementOntology();
 
 	/**
 	 * This method returns the unique instance (according to the singleton 

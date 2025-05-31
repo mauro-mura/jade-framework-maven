@@ -29,7 +29,7 @@ import jade.gui.AgentTree;
 
   class KillAction extends GenericAction {
 
-  private rma myRMA;
+		private final rma myRMA;
 
   public KillAction(String label, rma anRMA, ActionProcessor actPro) {
     super ("KillActionIcon", label,actPro);

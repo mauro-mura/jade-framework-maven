@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class InstallMTPAction extends ContainerAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public InstallMTPAction(rma anRMA, ActionProcessor actPro) {
     super ("InstallMTPIcon", "Install a new MTP", actPro);

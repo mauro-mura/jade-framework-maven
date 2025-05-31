@@ -40,7 +40,7 @@ public class ContentElementList implements ContentElement {
 
 	@Serial
 	private static final long serialVersionUID = 1908196475339998499L;
-	private List<ContentElement> elements = new ArrayList<>();
+	private final List<ContentElement> elements = new ArrayList<>();
 
 	/**
 	 * Construct a ContentElementList object
@@ -139,8 +139,9 @@ public class ContentElementList implements ContentElement {
 	public ContentElement[] toArray() {
 		int size = elements.size();
 		ContentElement[] tmp = new ContentElement[size];
-		for (int i = 0; i < size; i++)
+		for (int i = 0;i < size;i++) {
 			tmp[i] = elements.get(i);
+		}
 		return tmp;
 	}
 

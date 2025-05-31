@@ -54,27 +54,26 @@ public class PopMouserMessage extends MouseAdapter {
   }
 
   public void mouseReleased(MouseEvent e) {
-    if (e.isPopupTrigger())
-         if (checkCoordinate(e)) {
-          popup.setMessage(mess);
-          popup.show(e.getComponent(), e.getX(), e.getY());
-         } 
+		if (e.isPopupTrigger()) {
+			if (checkCoordinate(e)) {
+				popup.setMessage(mess);
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		} 
   }
 
   public void mousePressed(MouseEvent e) {
-     if (e.isPopupTrigger())
-        if(checkCoordinate(e)) {
-         popup.setMessage(mess);
-         popup.show(e.getComponent(), e.getX(), e.getY());
-        }
+		if (e.isPopupTrigger()) {
+			if (checkCoordinate(e)) {
+				popup.setMessage(mess);
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
   }
 
 
   private boolean checkCoordinate(MouseEvent evt) {
-
-   if ((mess = canvMess.selMessage(evt)) != null) return true;
-
-   else return false;
+		return (mess = canvMess.selMessage(evt)) != null;
 
  }
 

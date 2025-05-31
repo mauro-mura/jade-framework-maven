@@ -113,7 +113,7 @@ public class OntologyServer extends CyclicBehaviour {
 
 		this.onto = onto;
 		servedPerformatives = performatives;
-		this.serverDelegate = (serverDelegate != null ? serverDelegate : this);
+		this.serverDelegate = serverDelegate != null ? serverDelegate : this;
 		if (servedPerformatives != null) {
 			if (servedPerformatives.length == 1) {
 				// E.g. XXX-Ontology-Request-Server
@@ -243,7 +243,7 @@ public class OntologyServer extends CyclicBehaviour {
 		if (cm.lookupOntology(onto.getName()) == null) {
 			cm.registerOntology(onto);
 		}
-		this.codec = (codec != null ? codec : new SLCodec());
+		this.codec = codec != null ? codec : new SLCodec();
 		if (cm.lookupLanguage(codec.getName()) == null) {
 			cm.registerLanguage(codec);
 		}

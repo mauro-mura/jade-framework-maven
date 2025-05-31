@@ -32,9 +32,9 @@ import jade.util.Event;
  * @author Giovanni Caire - TILab 
  */
 public abstract class SensorManager extends CyclicBehaviour {
-	private Sensor mySensor;
+	private final Sensor mySensor;
 	
-	public SensorManager(Agent a, Sensor s) {
+	protected SensorManager(Agent a, Sensor s) {
 		super(a);
 		mySensor = s;
 		s.setManager(this);

@@ -45,7 +45,7 @@ import jade.gui.GuiEvent;
 
 class DFGUISearchAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUISearchAction(DFGUI gui)
 	{
@@ -63,21 +63,26 @@ class DFGUISearchAction extends AbstractAction
 		   {
 		    
 		   	  AID name = gui.getSelectedAgentInTable();
-		      if (name != null)
-		    	  df = name; //find the address of the parent-df
-		      else	
-			      df = gui.myAgent.getDescriptionOfThisDF().getName();
+				 if (name != null) {
+					 df = name;
+					 //find the address of the parent-df
+					}
+				 else {
+						df = gui.myAgent.getDescriptionOfThisDF().getName();
+					}
 		   	
-		   }	
-		else 
-		 	df = gui.myAgent.getDescriptionOfThisDF().getName();
+		   }
+		else {
+			df = gui.myAgent.getDescriptionOfThisDF().getName();
+		}
 		
 		ConstraintDlg constraintsGui = new ConstraintDlg(gui);
 		//insert the constraints for the search.
 	  SearchConstraints constraints = constraintsGui.setConstraint();
-		
-	  if(constraints == null) //pressed the cancel button
-	  	return;
+
+		if (constraints == null) { //pressed the cancel button
+			return;
+		}
 	  	
 	  DFAgentDscDlg dlg = new DFAgentDscDlg((Frame) gui);
 	

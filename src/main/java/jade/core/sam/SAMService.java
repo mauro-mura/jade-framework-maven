@@ -66,22 +66,22 @@ public class SAMService extends BaseService {
 
 	public static final String AGENTS_TO_MONITOR = "jade_core_sam_SAMService_agentstomonitor";
 
-	private List<EntityInfo> monitoredEntities = new ArrayList<EntityInfo>();
-	private List<CounterInfo> monitoredCounters = new ArrayList<CounterInfo>();
+	private final List<EntityInfo> monitoredEntities = new ArrayList<>();
+	private final List<CounterInfo> monitoredCounters = new ArrayList<>();
 
 	private Poller poller;
 
-	private SAMHelper myHelper = new SAMHelperImpl();
-	private static Object singletonLock = new Object();
+	private final SAMHelper myHelper = new SAMHelperImpl();
+	private static final Object singletonLock = new Object();
 	private static SAMHelper singletonHelper;
-	private ServiceComponent localSlice = new ServiceComponent();
-	private Filter outgoingFilter = null;
+	private final ServiceComponent localSlice = new ServiceComponent();
+	private Filter outgoingFilter;
 
 	private Profile myProfile;
 	private AgentContainer myContainer;
 
 	private Timer samTimer;
-	private List<MediatedMeasureProvider> providers = new ArrayList<MediatedMeasureProvider>();
+	private final List<MediatedMeasureProvider> providers = new ArrayList<>();
 	private MediatedMeasureProvider[] providersArray;
 
 	@SuppressWarnings("unused")
@@ -101,13 +101,13 @@ public class SAMService extends BaseService {
 				public boolean accept(VerticalCommand cmd) {
 					String name = cmd.getName();
 					try {
-						if (name.equals(AgentManagementSlice.SHUTDOWN_PLATFORM)) {
+						if (AgentManagementSlice.SHUTDOWN_PLATFORM.equals(name)) {
 							// If the platform is shutting down stop polling: some
 							// peripheral container may be already down causing annoying exceptions
 							if (poller != null) {
 								poller.stopPolling();
 							}
-						} else if (name.equals(MainReplicationSlice.LEADERSHIP_ACQUIRED)) {
+						} else if (MainReplicationSlice.LEADERSHIP_ACQUIRED.equals(name)) {
 							// If this is a backup Main Container that has just taken the leadership
 							// start polling again
 							startPolling();
@@ -205,7 +205,7 @@ public class SAMService extends BaseService {
 		try {
 			String hh = myProfile.getParameter(SAM_INFO_HANDLERS, SAM_INFO_HANDLERS_DEFAULT);
 			Vector<String> handlerClasses = new Vector<>();
-			if (!hh.equalsIgnoreCase("none")) {
+			if (!"none".equalsIgnoreCase(hh)) {
 				handlerClasses = Specifier.parseList(hh, ';');
 			}
 			SAMInfoHandler[] handlers = new SAMInfoHandler[handlerClasses.size()];
@@ -265,7 +265,7 @@ public class SAMService extends BaseService {
 	private Map<String, AverageMeasure> getEntityMeasures() {
 		// Mutual exclusion with modifications of entities/providers
 		synchronized (myHelper) {
-			Map<String, AverageMeasure> entityMeasures = new HashMap<String, AverageMeasure>();
+			Map<String, AverageMeasure> entityMeasures = new HashMap<>();
 			for (EntityInfo info : monitoredEntities) {
 				entityMeasures.put(info.getName(), info.getMeasure());
 			}
@@ -276,7 +276,7 @@ public class SAMService extends BaseService {
 	private Map<String, Long> getCounterValues() {
 		// Mutual exclusion with modifications of counters/providers
 		synchronized (myHelper) {
-			Map<String, Long> counterValues = new HashMap<String, Long>();
+			Map<String, Long> counterValues = new HashMap<>();
 			for (CounterInfo info : monitoredCounters) {
 				counterValues.put(info.getName(), info.getValue());
 			}
@@ -359,7 +359,7 @@ public class SAMService extends BaseService {
 		public VerticalCommand serve(HorizontalCommand cmd) {
 			try {
 				String cmdName = cmd.getName();
-				if (cmdName.equals(SAMSlice.H_GETSAMINFO)) {
+				if (SAMSlice.H_GETSAMINFO.equals(cmdName)) {
 					// Collect all SAM information from the local node
 					SAMInfo info = new SAMInfo(getEntityMeasures(), getCounterValues());
 					cmd.setReturnValue(info);
@@ -377,7 +377,7 @@ public class SAMService extends BaseService {
 	 */
 	private class EntityInfo {
 		private String name;
-		private List<AverageMeasureProvider> providers = new ArrayList<AverageMeasureProvider>();
+		private List<AverageMeasureProvider> providers = new ArrayList<>();
 
 		EntityInfo(String name) {
 			this.name = name;
@@ -422,8 +422,8 @@ public class SAMService extends BaseService {
 	 */
 	private class CounterInfo {
 		private String name;
-		private List<CounterValueProvider> providers = new ArrayList<CounterValueProvider>();
-		private List<Long> previousTotalValues = new ArrayList<Long>();
+		private List<CounterValueProvider> providers = new ArrayList<>();
+		private List<Long> previousTotalValues = new ArrayList<>();
 
 		CounterInfo(String name) {
 			this.name = name;

@@ -49,14 +49,20 @@ class PopUpMouser extends MouseAdapter
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (e.isPopupTrigger())
-         if (setPopup(e)) popup.show(e.getComponent(), e.getX(), e.getY());
+			if (e.isPopupTrigger()) {
+				if (setPopup(e)) {
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
 
     }
 
     public void mousePressed(MouseEvent e) {
-        if (e.isPopupTrigger())
-           if (setPopup(e)) popup.show(e.getComponent(), e.getX(), e.getY());
+			if (e.isPopupTrigger()) {
+				if (setPopup(e)) {
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
 
     }
 
@@ -74,15 +80,18 @@ class PopUpMouser extends MouseAdapter
       }
       current=(AgentTree.Node)selPath.getLastPathComponent();
       typeNode=current.getType();
-      if(!typeNode.equals("")) {
+      if(!"".equals(typeNode)) {
 	popup = agentTree.getPopupMenu(typeNode);
-	if(popup == null)
-	  return false;
+				if (popup == null) {
+					return false;
+				}
       }
 
       return true;
     }
-    else return false;
+		else {
+			return false;
+		}
   }
 
 } 

@@ -220,7 +220,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	/**
 	 * @serial
 	 */
-	private AID source = null;
+	private AID source;
 
 	/**
 	 * These constants represent the expected size of the 2 array lists used by this
@@ -231,7 +231,7 @@ public class ACLMessage implements Cloneable, Serializable {
 
 	
 	private List<AID> dests = new ArrayList<>(RECEIVERS_EXPECTED_SIZE);
-	private List<AID> reply_to = null;
+	private List<AID> reply_to;
 	
 	/*
 	 * #MIDP_INCLUDE_BEGIN private Vector dests = new
@@ -244,50 +244,50 @@ public class ACLMessage implements Cloneable, Serializable {
 	 */
 	// At a given time or content or byteSequenceContent are != null,
 	// it is not allowed that both are != null
-	private StringBuilder content = null;
-	private byte[] byteSequenceContent = null;
+	private StringBuilder content;
+	private byte[] byteSequenceContent;
 
 	/**
 	 * @serial
 	 */
-	private String reply_with = null;
+	private String reply_with;
 
 	/**
 	 * @serial
 	 */
-	private String in_reply_to = null;
+	private String in_reply_to;
 
 	/**
 	 * @serial
 	 */
-	private String encoding = null;
+	private String encoding;
 
 	/**
 	 * @serial
 	 */
-	private String language = null;
+	private String language;
 
 	/**
 	 * @serial
 	 */
-	private String ontology = null;
+	private String ontology;
 
 	/**
 	 * @serial
 	 */
-	private long reply_byInMillisec = 0;
+	private long reply_byInMillisec;
 
 	/**
 	 * @serial
 	 */
-	private String protocol = null;
+	private String protocol;
 
 	/**
 	 * @serial
 	 */
-	private String conversation_id = null;
+	private String conversation_id;
 
-	private Properties userDefProps = null;
+	private Properties userDefProps;
 
 	private long postTimeStamp = -1;
 
@@ -394,7 +394,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	public void addReplyTo(AID dest) {
 		if (dest != null) {
 			
-			reply_to = (reply_to == null ? new ArrayList<>(REPLYTO_EXPECTED_SIZE) : reply_to);
+			reply_to = reply_to == null ? new ArrayList<>(REPLYTO_EXPECTED_SIZE) : reply_to;
 			reply_to.add(dest);
 			
 			/*
@@ -543,11 +543,11 @@ public class ACLMessage implements Cloneable, Serializable {
 
 		try {
 			byte[] data = getByteSequenceContent();
-			if (data == null)
+			if (data == null) {
 				return null;
+			}
 			ObjectInputStream oin = new ObjectInputStream(new ByteArrayInputStream(data));
-			java.io.Serializable s = (java.io.Serializable) oin.readObject();
-			return s;
+			return (java.io.Serializable) oin.readObject();
 		} catch (java.lang.Error e) {
 			throw new UnreadableException(e.getMessage());
 		} catch (IOException e1) {
@@ -622,7 +622,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @see jade.lang.acl.ACLMessage#getReplyByDate()
 	 */
 	public void setReplyByDate(Date date) {
-		reply_byInMillisec = (date == null ? 0 : date.getTime());
+		reply_byInMillisec = date == null ? 0 : date.getTime();
 	}
 
 	/**
@@ -702,9 +702,11 @@ public class ACLMessage implements Cloneable, Serializable {
 	 */
 	public static int getInteger(String perf) {
 		String tmp = perf.toUpperCase();
-		for (int i = 0; i < performatives.length; i++)
-			if (performatives[i].equals(tmp))
+		for (int i = 0;i < performatives.length;i++) {
+			if (performatives[i].equals(tmp)) {
 				return i;
+			}
+		}
 		return -1;
 	}
 
@@ -724,7 +726,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @return true if it is a byteSequence, false if it is a String
 	 */
 	public boolean hasByteSequenceContent() {
-		return (byteSequenceContent != null);
+		return byteSequenceContent != null;
 	}
 
 	/**
@@ -744,10 +746,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @see jade.lang.acl.ACLMessage#getContentObject()
 	 */
 	public String getContent() {
-		if (content != null)
+		if (content != null) {
 			return new String(content);
-		else if (byteSequenceContent != null)
+		}
+		else if (byteSequenceContent != null) {
 			return new String(byteSequenceContent);
+		}
 		return null;
 	}
 
@@ -768,10 +772,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @see jade.lang.acl.ACLMessage#getContentObject()
 	 */
 	public byte[] getByteSequenceContent() {
-		if (content != null)
+		if (content != null) {
 			return content.toString().getBytes();
-		else if (byteSequenceContent != null)
+		}
+		else if (byteSequenceContent != null) {
 			return byteSequenceContent;
+		}
 		return null;
 	}
 
@@ -835,10 +841,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 *             <code>getReplyByDate</code> should be used that returns a Date
 	 */
 	public String getReplyBy() {
-		if (reply_byInMillisec != 0)
+		if (reply_byInMillisec != 0) {
 			return ISO8601.toString(new Date(reply_byInMillisec));
-		else
+		}
+		else {
 			return null;
+		}
 	}
 	
 
@@ -850,10 +858,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @see jade.lang.acl.ACLMessage#setReplyByDate(Date).
 	 */
 	public Date getReplyByDate() {
-		if (reply_byInMillisec != 0)
+		if (reply_byInMillisec != 0) {
 			return new Date(reply_byInMillisec);
-		else
+		}
+		else {
 			return null;
+		}
 	}
 
 	/**
@@ -887,7 +897,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @param value the property value
 	 */
 	public void addUserDefinedParameter(String key, String value) {
-		userDefProps = (userDefProps == null ? new Properties() : userDefProps);
+		userDefProps = userDefProps == null ? new Properties() : userDefProps;
 		userDefProps.setProperty(key, value);
 	}
 
@@ -899,10 +909,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @return the value in this ACLMessage with the specified key value.
 	 */
 	public String getUserDefinedParameter(String key) {
-		if (userDefProps == null)
+		if (userDefProps == null) {
 			return null;
-		else
+		}
+		else {
 			return userDefProps.getProperty(key);
+		}
 	}
 
 	/**
@@ -910,7 +922,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * object
 	 **/
 	public Properties getAllUserDefinedParameters() {
-		userDefProps = (userDefProps == null ? new Properties() : userDefProps);
+		userDefProps = userDefProps == null ? new Properties() : userDefProps;
 		return userDefProps;
 	}
 
@@ -930,7 +942,7 @@ public class ACLMessage implements Cloneable, Serializable {
 	 * @return true if the property has been found and removed, false otherwise
 	 */
 	public boolean removeUserDefinedParameter(String key) {
-		return (clearUserDefinedParameter(key) != null);
+		return clearUserDefinedParameter(key) != null;
 	}
 
 	/**
@@ -942,10 +954,12 @@ public class ACLMessage implements Cloneable, Serializable {
 	 *         present
 	 */
 	public Object clearUserDefinedParameter(String key) {
-		if (userDefProps == null)
+		if (userDefProps == null) {
 			return null;
-		else
+		}
+		else {
 			return userDefProps.remove(key);
+		}
 	}
 
 	public void setPostTimeStamp(long time) {
@@ -981,13 +995,14 @@ public class ACLMessage implements Cloneable, Serializable {
 		messageEnvelope.setFrom(source);
 		
 		Iterator<AID> it = dests.iterator();
-		
+
 		/*
 		 * #MIDP_INCLUDE_BEGIN Iterator it = new EnumIterator(dests.elements());
 		 * #MIDP_INCLUDE_END
 		 */
-		while (it.hasNext())
+		while (it.hasNext()) {
 			messageEnvelope.addTo(it.next());
+		}
 		
 		messageEnvelope.setAclRepresentation(StringACLCodec.NAME);
 		
@@ -1078,11 +1093,13 @@ public class ACLMessage implements Cloneable, Serializable {
 			}
 
 			// Deep clone user-def-properties if present
-			if (userDefProps != null)
+			if (userDefProps != null) {
 				result.userDefProps = (Properties) userDefProps.clone();
+			}
 			// Deep clone envelope if present
-			if (messageEnvelope != null)
+			if (messageEnvelope != null) {
 				result.messageEnvelope = (Envelope) messageEnvelope.clone();
+			}
 		} catch (CloneNotSupportedException cnse) {
 			throw new InternalError(); // This should never happen
 		}
@@ -1131,8 +1148,9 @@ public class ACLMessage implements Cloneable, Serializable {
 		source = null;
 		
 		dests.clear();
-		if (reply_to != null)
+		if (reply_to != null) {
 			reply_to.clear();
+		}
 		
 		/*
 		 * #MIDP_INCLUDE_BEGIN dests.removeAllElements(); if (reply_to != null)
@@ -1172,18 +1190,22 @@ public class ACLMessage implements Cloneable, Serializable {
 	public ACLMessage createReply(int performative) {
 		ACLMessage m = new ACLMessage(performative);
 		Iterator<AID> it = getAllReplyTo();
-		while (it.hasNext())
+		while (it.hasNext()) {
 			m.addReceiver((AID) it.next());
-		if ((reply_to == null) || reply_to.isEmpty())
+		}
+		if ((reply_to == null) || reply_to.isEmpty()) {
 			m.addReceiver(getSender());
+		}
 		m.setLanguage(getLanguage());
 		m.setOntology(getOntology());
 		m.setProtocol(getProtocol());
 		m.setInReplyTo(getReplyWith());
-		if (source != null)
+		if (source != null) {
 			m.setReplyWith(source.getName() + java.lang.System.currentTimeMillis());
-		else
+		}
+		else {
 			m.setReplyWith("X" + java.lang.System.currentTimeMillis());
+		}
 		m.setConversationId(getConversationId());
 		// Copy only well defined user-def-params
 		String trace = getUserDefinedParameter(TRACE);
@@ -1196,10 +1218,13 @@ public class ACLMessage implements Cloneable, Serializable {
 		if (messageEnvelope != null) {
 			m.setDefaultEnvelope();
 			String aclCodec = messageEnvelope.getAclRepresentation();
-			if (aclCodec != null)
+			if (aclCodec != null) {
 				m.getEnvelope().setAclRepresentation(aclCodec);
-		} else
+			}
+		}
+		else {
 			m.setEnvelope(null);
+		}
 		// #CUSTOM_EXCLUDE_END
 		return m;
 	}

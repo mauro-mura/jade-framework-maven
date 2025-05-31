@@ -81,8 +81,8 @@ import jade.util.Logger;
  */
 public class Introspector extends ToolAgent {
 
-	private Set allAgents = null;
-	private Hashtable preload = null;
+	private Set allAgents;
+	private Hashtable preload;
 
 	private class AMSRequester extends SimpleAchieveREInitiator {
 
@@ -102,8 +102,9 @@ public class Introspector extends ToolAgent {
 		}
 
 		protected void handleAgree(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "AGREE received");
+			}
 		}
 
 		protected void handleFailure(ACLMessage reply) {
@@ -111,8 +112,9 @@ public class Introspector extends ToolAgent {
 		}
 
 		protected void handleInform(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "INFORM received");
+			}
 		}
 
 	} // End of AMSRequester class
@@ -126,22 +128,22 @@ public class Introspector extends ToolAgent {
 	public static final int SUSPEND_EVENT = 6;
 
 	private IntrospectorGUI myGUI;
-	private Sensor guiSensor = new Sensor();
+	private final Sensor guiSensor = new Sensor();
 	private String myContainerName;
-	private Map windowMap = Collections.synchronizedMap(new TreeMap());
+	private final Map windowMap = Collections.synchronizedMap(new TreeMap());
 
 	// The set of agents that are observed in step-by-step mode
-	private Set stepByStepAgents = new HashSet<>();
+	private final Set stepByStepAgents = new HashSet<>();
 	// The set of agents that are observed in slow mode
-	private Set slowAgents = new HashSet<>();
+	private final Set slowAgents = new HashSet<>();
 	// Maps an observed agent with the String used as reply-with in the
 	// message that notified about an event that had to be observed synchronously
-	private Map pendingReplies = new HashMap<>();
+	private final Map pendingReplies = new HashMap<>();
 	// Maps an observed agent with the ToolNotifier that notifies events
 	// about that agent to this Introspector
-	private Map notifiers = new HashMap<>();
+	private final Map notifiers = new HashMap<>();
 
-	private SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
+	private final SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
 
 	class IntrospectorAMSListenerBehaviour extends AMSListenerBehaviour {
 
@@ -190,10 +192,12 @@ public class Introspector extends ToolAgent {
 						AID agent = ba.getAgent();
 						allAgents.add(agent);
 						myGUI.addAgent(container, agent);
-						if (preloadContains(agent.getName()) != null)
+						if (preloadContains(agent.getName()) != null) {
 							Introspector.this.addAgent(agent);
-						if (agent.equals(getAID()))
+						}
+						if (agent.equals(getAID())) {
 							myContainerName = container;
+						}
 					}
 				}
 			});
@@ -407,8 +411,9 @@ public class Introspector extends ToolAgent {
 			} catch (Exception fe) {
 				// When the AMS replies the tool notifier is no longer registered.
 				// But we don't care as we are exiting
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, fe.getMessage());
+				}
 			}
 		}
 
@@ -449,8 +454,9 @@ public class Introspector extends ToolAgent {
 					AddedBehaviour ab = (AddedBehaviour) ev;
 					AID agent = ab.getAgent();
 					MainWindow wnd = (MainWindow) windowMap.get(agent);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.behaviourAdded(wnd, ab);
+					}
 				}
 
 			});
@@ -460,8 +466,9 @@ public class Introspector extends ToolAgent {
 					RemovedBehaviour rb = (RemovedBehaviour) ev;
 					AID agent = rb.getAgent();
 					MainWindow wnd = (MainWindow) windowMap.get(agent);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.behaviourRemoved(wnd, rb);
+					}
 				}
 
 			});
@@ -495,8 +502,9 @@ public class Introspector extends ToolAgent {
 					AID sender = sm.getSender();
 
 					MainWindow wnd = (MainWindow) windowMap.get(sender);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.messageSent(wnd, sm);
+					}
 				}
 
 			});
@@ -507,8 +515,9 @@ public class Introspector extends ToolAgent {
 					AID receiver = rm.getReceiver();
 
 					MainWindow wnd = (MainWindow) windowMap.get(receiver);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.messageReceived(wnd, rm);
+					}
 				}
 
 			});
@@ -519,8 +528,9 @@ public class Introspector extends ToolAgent {
 					AID receiver = pm.getReceiver();
 
 					MainWindow wnd = (MainWindow) windowMap.get(receiver);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.messagePosted(wnd, pm);
+					}
 				}
 
 			});
@@ -531,8 +541,9 @@ public class Introspector extends ToolAgent {
 					AID agent = cas.getAgent();
 
 					MainWindow wnd = (MainWindow) windowMap.get(agent);
-					if (wnd != null)
+					if (wnd != null) {
 						myGUI.changedAgentState(wnd, cas);
+					}
 				}
 
 			});
@@ -549,8 +560,9 @@ public class Introspector extends ToolAgent {
 					EventRecord er = o.getWhat();
 					Event ev = er.getWhat();
 					// DEBUG
-					if (logger.isLoggable(Logger.FINEST))
+					if (logger.isLoggable(Logger.FINEST)) {
 						logger.log(Logger.FINEST, "Received event " + ev);
+					}
 					if (message.getReplyWith() != null) {
 						// A reply is expected --> put relevant information into the
 						// pendingReplies Map
@@ -559,13 +571,16 @@ public class Introspector extends ToolAgent {
 					}
 					String eventName = ev.getName();
 					EventHandler h = (EventHandler) handlers.get(eventName);
-					if (h != null)
+					if (h != null) {
 						h.handle(ev);
+					}
 				} catch (Exception fe) {
 					fe.printStackTrace();
 				}
-			} else
+			}
+			else {
 				block();
+			}
 		}
 
 	} // End of inner class IntrospectionListenerBehaviour
@@ -701,16 +716,20 @@ public class Introspector extends ToolAgent {
 		int expressionLength = aMatchExpression.length();
 		for (int i = 0; i < expressionLength; i++) {
 			char expChar = aMatchExpression.charAt(i);
-			if (expChar == '*')
+			if (expChar == '*') {
 				return true; // * matches the remainder of anything
-			if (i == aString.length())
+			}
+			if (i == aString.length()) {
 				return false; // if we run out of characters they don't match
-			if (expChar == '?')
+			}
+			if (expChar == '?') {
 				continue; // ? matches any single character so keep going
-			if (expChar != aString.charAt(i))
+			}
+			if (expChar != aString.charAt(i)) {
 				return false; // if non wild then must be exactly equal
+			}
 		}
-		return (expressionLength == aString.length());
+		return expressionLength == aString.length();
 	}
 
 	private void parsePreloadDescription(String aDescription) {
@@ -725,7 +744,7 @@ public class Introspector extends ToolAgent {
 
 		int performativeCount = ACLMessage.getAllPerformativeNames().length;
 		boolean[] filter = new boolean[performativeCount];
-		boolean initVal = (st.hasMoreTokens() ? false : true);
+		boolean initVal = st.hasMoreTokens() ? false : true;
 		for (int i = 0; i < performativeCount; i++) {
 			filter[i] = initVal;
 		}

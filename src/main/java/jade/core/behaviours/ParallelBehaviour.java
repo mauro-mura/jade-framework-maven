@@ -239,12 +239,14 @@ public class ParallelBehaviour extends CompositeBehaviour {
 			// was blocked too), restart this ParallelBehaviour and notify
 			// upwards
 			if (!isRunnable()) {
-				if (myAgent != null)
+				if (myAgent != null) {
 					myAgent.removeTimer(this);
+				}
 				myEvent.init(true, NOTIFY_UP);
 				super.handle(myEvent);
-				if (myAgent != null)
+				if (myAgent != null) {
 					myAgent.notifyRestarted(this);
+				}
 				// Also reset the currentExecuted flag so that a runnable
 				// child will be scheduled for execution
 				currentExecuted = true;
@@ -395,10 +397,10 @@ public class ParallelBehaviour extends CompositeBehaviour {
 			cond = subBehaviours.isEmpty();
 			break;
 		case WHEN_ANY:
-			cond = (terminatedChildren.size() > 0);
+			cond = !terminatedChildren.isEmpty();
 			break;
 		default:
-			cond = (terminatedChildren.size() >= whenToStop);
+			cond = terminatedChildren.size() >= whenToStop;
 			break;
 		}
 

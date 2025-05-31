@@ -35,12 +35,12 @@ import jade.content.Concept;
 */
 public class SearchConstraints implements Concept {
 
-    private Long max_depth = null; 
+    private Long max_depth; 
 
-    private Long max_results = null;
+    private Long max_results;
 
-    private String search_id = null;
-    private int cnt = 0;
+    private String search_id;
+    private int cnt;
 
     /**
      * Default constructor. Creates a new SearchConstraints by setting
@@ -66,7 +66,7 @@ public class SearchConstraints implements Concept {
     	// We also use a counter since System.currentTimeMillis() is not precise --> 
     	// Two calls to renewSearchId() may result in the same search_id value
     	// if they occur very close.
-        search_id = "s" + hashCode() + "_" + System.currentTimeMillis() + String.valueOf(cnt++);
+        search_id = "s" + hashCode() + "_" + System.currentTimeMillis() + cnt++;
         if (cnt >= 100) {
         	cnt = 0;
         }

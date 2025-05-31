@@ -44,7 +44,7 @@ import jade.gui.GuiEvent;
 
 class DFGUIRegisterAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIRegisterAction(DFGUI gui)
 	{
@@ -65,14 +65,17 @@ class DFGUIRegisterAction extends AbstractAction
 			if ((kind == DFGUI.PARENT_VIEW) || (kind == DFGUI.CHILDREN_VIEW)) // selected a df from the the federation
 			{
 				  AID name = gui.getSelectedAgentInTable();
-		      if (name != null)
-		    	  df = name; 
-		      else	
-			      df = gui.myAgent.getDescriptionOfThisDF().getName();
+				if (name != null) {
+					df = name;
+				}
+				else {
+					df = gui.myAgent.getDescriptionOfThisDF().getName();
+				}
 			  
 			}
-			else
-			df = gui.myAgent.getDescriptionOfThisDF().getName();
+			else {
+				df = gui.myAgent.getDescriptionOfThisDF().getName();
+			}
 
 			GuiEvent ev = new GuiEvent((Object)gui,DFGUIAdapter.REGISTER);
 		  ev.addParameter(df);

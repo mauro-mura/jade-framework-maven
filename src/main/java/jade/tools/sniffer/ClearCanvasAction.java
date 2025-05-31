@@ -47,9 +47,9 @@ import System.Drawing.FontStyle;
 
 public class ClearCanvasAction extends FixedAction{
 
-  private MainPanel mainPanel;
-  //#DOTNET_EXCLUDE_BEGIN
-  private Font font = new Font("Helvetica",Font.ITALIC,12);
+	private final MainPanel mainPanel;
+	//#DOTNET_EXCLUDE_BEGIN
+	private final Font font = new Font("Helvetica", Font.ITALIC, 12);
   //#DOTNET_EXCLUDE_END
   /*#DOTNET_INCLUDE_BEGIN
   private Font font = new Font("Helvetica", 12, FontStyle.Italic);

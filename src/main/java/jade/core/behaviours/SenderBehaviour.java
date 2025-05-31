@@ -53,7 +53,7 @@ public final class SenderBehaviour extends OneShotBehaviour {
 	/**
 	 * @serial
 	 */
-	private ACLMessage message;
+	private final ACLMessage message;
 
 	/**
 	 * Send a given ACL message. This constructor creates a
@@ -66,8 +66,9 @@ public final class SenderBehaviour extends OneShotBehaviour {
 	public SenderBehaviour(Agent a, ACLMessage msg) {
 		super(a);
 		message = msg;
-		if (msg != null)
+		if (msg != null) {
 			message.setSender(myAgent.getAID());
+		}
 	}
 
 	/**

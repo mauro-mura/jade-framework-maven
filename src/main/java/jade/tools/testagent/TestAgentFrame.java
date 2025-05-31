@@ -153,7 +153,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void helloWorldMenuItem_actionPerformed(ActionEvent e) {
+  void helloWorldMenuItemActionPerformed(ActionEvent e) {
     agent.doHelloWorld();
   }
 
@@ -163,7 +163,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void amsRegMenuItem_actionPerformed(ActionEvent e) {
+  void amsRegMenuItemActionPerformed(ActionEvent e) {
     agent.doRegisterAMS();
   }
 
@@ -173,7 +173,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void systemMenuItem_actionPerformed(ActionEvent e) {
+  void systemMenuItemActionPerformed(ActionEvent e) {
     agent.doSystemOut();
   }
 
@@ -183,7 +183,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void exitMenuItem_actionPerformed(ActionEvent e) {
+  void exitMenuItemActionPerformed(ActionEvent e) {
     agent.doExit();
   }
 
@@ -193,7 +193,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void newButton_actionPerformed(ActionEvent e) {
+  void newButtonActionPerformed(ActionEvent e) {
     agent.doNewMessage();
   }
 
@@ -203,7 +203,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void sendButton_actionPerformed(ActionEvent e) {
+  void sendButtonActionPerformed(ActionEvent e) {
     agent.sendMessage();
   }
 
@@ -213,7 +213,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void pingLausanneMenuItem_actionPerformed(ActionEvent e) {
+  void pingLausanneMenuItemActionPerformed(ActionEvent e) {
     agent.doLausannePing();
   }
 
@@ -223,7 +223,7 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void amsDeregMenuItem_actionPerformed(ActionEvent e) {
+  void amsDeregMenuItemActionPerformed(ActionEvent e) {
     agent.doDeRegisterAMS();
   }
 
@@ -233,42 +233,42 @@ public class TestAgentFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void amsSearchMenuItem_actionPerformed(ActionEvent e) {
+  void amsSearchMenuItemActionPerformed(ActionEvent e) {
     agent.doSearchAMS();
   }
 
 
-  void dfRegMenuItem_actionPerformed(ActionEvent e) {
+  void dfRegMenuItemActionPerformed(ActionEvent e) {
     agent.doRegisterDF();
   }
 
 
-  void dfDeregMenuItem_actionPerformed(ActionEvent e) {
+  void dfDeregMenuItemActionPerformed(ActionEvent e) {
     agent.doDeregisterDF();
   }
 
 
-  void dfSearchMenuItem_actionPerformed(ActionEvent e) {
+  void dfSearchMenuItemActionPerformed(ActionEvent e) {
     agent.doSearchDF();
   }
 
 
-  void aboutMenuItem_actionPerformed(ActionEvent e) {
+  void aboutMenuItemActionPerformed(ActionEvent e) {
     new AboutFrame().setVisible(true);
   }
 
 
-  void readQueueButton_actionPerformed(ActionEvent e) {
+  void readQueueButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.loadQueue();
   }
 
 
-  void writeQueueButton_actionPerformed(ActionEvent e) {
+  void writeQueueButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.saveQueue();
   }
 
 
-  void currentButton_actionPerformed(ActionEvent e) {
+  void currentButtonActionPerformed(ActionEvent e) {
 
     ACLMessage currentACL = this.aclTreePanel.getCurrentACL();
     if (currentACL != null) {
@@ -277,73 +277,73 @@ public class TestAgentFrame extends JFrame {
   }
 
 
-  void viewButton_actionPerformed(ActionEvent e) {
+  void viewButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.doShowCurrentACL();
   }
 
 
-  void deleteButton_actionPerformed(ActionEvent e) {
+  void deleteButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.deleteCurrent();
   }
 
 
-  void statisticsButton_actionPerformed(ActionEvent e) {
+  void statisticsButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.showStastistics();
   }
 
 
-  void quitButton_actionPerformed(ActionEvent e) {
+  void quitButtonActionPerformed(ActionEvent e) {
     agent.doDelete();
     System.exit(1);
   }
 
 
-  void replyButton_actionPerformed(ActionEvent e) {
+  void replyButtonActionPerformed(ActionEvent e) {
     agent.doReply();
   }
 
 
-  void newMenuItem_actionPerformed(ActionEvent e) {
+  void newMenuItemActionPerformed(ActionEvent e) {
     agent.doNewMessage();
   }
 
 
-  void loadMenuItem_actionPerformed(ActionEvent e) {
+  void loadMenuItemActionPerformed(ActionEvent e) {
     this.aclPanel.loadACL();
   }
 
 
-  void saveMenuItem_actionPerformed(ActionEvent e) {
+  void saveMenuItemActionPerformed(ActionEvent e) {
     this.aclPanel.saveACL();
   }
 
 
-  void sendMenuItem_actionPerformed(ActionEvent e) {
+  void sendMenuItemActionPerformed(ActionEvent e) {
     agent.sendMessage();
   }
 
 
-  void saveButton_actionPerformed(ActionEvent e) {
+  void saveButtonActionPerformed(ActionEvent e) {
     this.aclPanel.saveACL();
   }
 
 
-  void openButton_actionPerformed(ActionEvent e) {
+  void openButtonActionPerformed(ActionEvent e) {
     this.aclPanel.loadACL();
   }
 
 
-  void saveQueueMenuItem_actionPerformed(ActionEvent e) {
+  void saveQueueMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.saveQueue();
   }
 
 
-  void claerQueueMenuItem_actionPerformed(ActionEvent e) {
+  void claerQueueMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.clearACLModel();
   }
 
 
-  void currentMenuItem_actionPerformed(ActionEvent e) {
+  void currentMenuItemActionPerformed(ActionEvent e) {
     ACLMessage currentACL = this.aclTreePanel.getCurrentACL();
     if (currentACL != null) {
       this.aclPanel.setItsMsg((ACLMessage)currentACL.clone());
@@ -352,62 +352,62 @@ public class TestAgentFrame extends JFrame {
   }
 
 
-  void replyMenuItem_actionPerformed(ActionEvent e) {
+  void replyMenuItemActionPerformed(ActionEvent e) {
     agent.doReply();
   }
 
 
-  void deleteMenuItem_actionPerformed(ActionEvent e) {
+  void deleteMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.deleteCurrent();
   }
 
 
-  void statisticsMenuItem_actionPerformed(ActionEvent e) {
+  void statisticsMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.showStastistics();
   }
 
 
-  void loadMsgMenuItem_actionPerformed(ActionEvent e) {
+  void loadMsgMenuItemActionPerformed(ActionEvent e) {
     this.aclPanel.loadACL();
   }
 
 
-  void saveMsgMenuItem_actionPerformed(ActionEvent e) {
+  void saveMsgMenuItemActionPerformed(ActionEvent e) {
     this.aclPanel.saveACL();
   }
 
 
-  void loadQMenuItem_actionPerformed(ActionEvent e) {
+  void loadQMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.loadQueue();
   }
 
 
-  void saveQMenuItem_actionPerformed(ActionEvent e) {
+  void saveQMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.saveQueue();
   }
 
 
-  void systemButton_actionPerformed(ActionEvent e) {
+  void systemButtonActionPerformed(ActionEvent e) {
     this.aclTreePanel.doSystemOut();
   }
 
 
-  void systemOutMenuItem_actionPerformed(ActionEvent e) {
+  void systemOutMenuItemActionPerformed(ActionEvent e) {
     this.aclPanel.doSystemOut();
   }
 
 
-  void currentToOutMenuItem_actionPerformed(ActionEvent e) {
+  void currentToOutMenuItemActionPerformed(ActionEvent e) {
     this.aclTreePanel.doSystemOut();
   }
 
 
-  void pingRadioButtonMenuItem_stateChanged(ChangeEvent e) {
-    agent.pingBehaviour = (pingRadioButtonMenuItem.isSelected());
+  void pingRadioButtonMenuItemStateChanged(ChangeEvent e) {
+    agent.pingBehaviour = pingRadioButtonMenuItem.isSelected();
   }
 
 
-  void localPingMenuItem_actionPerformed(ActionEvent e) {
+  void localPingMenuItemActionPerformed(ActionEvent e) {
     agent.doLocalPing();
   }
 
@@ -431,7 +431,7 @@ public class TestAgentFrame extends JFrame {
     exitMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          exitMenuItem_actionPerformed(e);
+          exitMenuItemActionPerformed(e);
         }
       });
     messagesMenu.setBackground(Color.white);
@@ -445,7 +445,7 @@ public class TestAgentFrame extends JFrame {
     helloWorldMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          helloWorldMenuItem_actionPerformed(e);
+          helloWorldMenuItemActionPerformed(e);
         }
       });
     amsRegMenuItem.setBackground(Color.white);
@@ -455,7 +455,7 @@ public class TestAgentFrame extends JFrame {
     amsRegMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          amsRegMenuItem_actionPerformed(e);
+          amsRegMenuItemActionPerformed(e);
         }
       });
     amsDeregMenuItem.setBackground(Color.white);
@@ -465,7 +465,7 @@ public class TestAgentFrame extends JFrame {
     amsDeregMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          amsDeregMenuItem_actionPerformed(e);
+          amsDeregMenuItemActionPerformed(e);
         }
       });
     amsSearchMenuItem.setBackground(Color.white);
@@ -475,7 +475,7 @@ public class TestAgentFrame extends JFrame {
     amsSearchMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          amsSearchMenuItem_actionPerformed(e);
+          amsSearchMenuItemActionPerformed(e);
         }
       });
     this.getContentPane().setBackground(Color.white);
@@ -490,7 +490,7 @@ public class TestAgentFrame extends JFrame {
     pingLausanneMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          pingLausanneMenuItem_actionPerformed(e);
+          pingLausanneMenuItemActionPerformed(e);
         }
       });
     dfSearchMenuItem.setBackground(Color.white);
@@ -500,7 +500,7 @@ public class TestAgentFrame extends JFrame {
     dfSearchMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          dfSearchMenuItem_actionPerformed(e);
+          dfSearchMenuItemActionPerformed(e);
         }
       });
     dfRegMenuItem.setBackground(Color.white);
@@ -509,7 +509,7 @@ public class TestAgentFrame extends JFrame {
     dfRegMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          dfRegMenuItem_actionPerformed(e);
+          dfRegMenuItemActionPerformed(e);
         }
       });
     dfDeregMenuItem.setBackground(Color.white);
@@ -518,7 +518,7 @@ public class TestAgentFrame extends JFrame {
     dfDeregMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          dfDeregMenuItem_actionPerformed(e);
+          dfDeregMenuItemActionPerformed(e);
         }
       });
     helpMenu.setBackground(Color.white);
@@ -533,7 +533,7 @@ public class TestAgentFrame extends JFrame {
     aboutMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          aboutMenuItem_actionPerformed(e);
+          aboutMenuItemActionPerformed(e);
         }
       });
     leftPanel.setLayout(gridBagLayout2);
@@ -544,7 +544,7 @@ public class TestAgentFrame extends JFrame {
     writeQueueButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          writeQueueButton_actionPerformed(e);
+          writeQueueButtonActionPerformed(e);
         }
       });
     readQueueButton.setBackground(Color.white);
@@ -554,7 +554,7 @@ public class TestAgentFrame extends JFrame {
     readQueueButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          readQueueButton_actionPerformed(e);
+          readQueueButtonActionPerformed(e);
         }
       });
     openButton.setBackground(Color.white);
@@ -565,7 +565,7 @@ public class TestAgentFrame extends JFrame {
     openButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          openButton_actionPerformed(e);
+          openButtonActionPerformed(e);
         }
       });
     sendButton.setBackground(Color.white);
@@ -576,7 +576,7 @@ public class TestAgentFrame extends JFrame {
     sendButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          sendButton_actionPerformed(e);
+          sendButtonActionPerformed(e);
         }
       });
     newButton.setBackground(Color.white);
@@ -588,7 +588,7 @@ public class TestAgentFrame extends JFrame {
     newButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          newButton_actionPerformed(e);
+          newButtonActionPerformed(e);
         }
       });
     saveButton.setBackground(Color.white);
@@ -599,7 +599,7 @@ public class TestAgentFrame extends JFrame {
     saveButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          saveButton_actionPerformed(e);
+          saveButtonActionPerformed(e);
         }
       });
     messageToolBar.setBackground(Color.white);
@@ -612,7 +612,7 @@ public class TestAgentFrame extends JFrame {
     currentButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          currentButton_actionPerformed(e);
+          currentButtonActionPerformed(e);
         }
       });
     replyButton.setBorder(border1);
@@ -621,7 +621,7 @@ public class TestAgentFrame extends JFrame {
     replyButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          replyButton_actionPerformed(e);
+          replyButtonActionPerformed(e);
         }
       });
     viewButton.setBorder(border1);
@@ -630,7 +630,7 @@ public class TestAgentFrame extends JFrame {
     viewButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          viewButton_actionPerformed(e);
+          viewButtonActionPerformed(e);
         }
       });
     deleteButton.setBorder(border1);
@@ -639,7 +639,7 @@ public class TestAgentFrame extends JFrame {
     deleteButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          deleteButton_actionPerformed(e);
+          deleteButtonActionPerformed(e);
         }
       });
     statisticsButton.setBorder(border1);
@@ -648,7 +648,7 @@ public class TestAgentFrame extends JFrame {
     statisticsButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          statisticsButton_actionPerformed(e);
+          statisticsButtonActionPerformed(e);
         }
       });
     quitButton.setBorder(border1);
@@ -657,7 +657,7 @@ public class TestAgentFrame extends JFrame {
     quitButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          quitButton_actionPerformed(e);
+          quitButtonActionPerformed(e);
         }
       });
     leftPanel.setBackground(Color.white);
@@ -665,7 +665,7 @@ public class TestAgentFrame extends JFrame {
     newMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          newMenuItem_actionPerformed(e);
+          newMenuItemActionPerformed(e);
         }
       });
     newMenuItem.setText("New Message");
@@ -679,7 +679,7 @@ public class TestAgentFrame extends JFrame {
     loadMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          loadMenuItem_actionPerformed(e);
+          loadMenuItemActionPerformed(e);
         }
       });
     saveMenuItem.setBackground(Color.white);
@@ -688,7 +688,7 @@ public class TestAgentFrame extends JFrame {
     saveMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          saveMenuItem_actionPerformed(e);
+          saveMenuItemActionPerformed(e);
         }
       });
     sendMenuItem.setBackground(Color.white);
@@ -698,7 +698,7 @@ public class TestAgentFrame extends JFrame {
     sendMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          sendMenuItem_actionPerformed(e);
+          sendMenuItemActionPerformed(e);
         }
       });
     templatesMenuItem.setBackground(Color.white);
@@ -717,7 +717,7 @@ public class TestAgentFrame extends JFrame {
     claerQueueMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          claerQueueMenuItem_actionPerformed(e);
+          claerQueueMenuItemActionPerformed(e);
         }
       });
     currentMenuItem.setBackground(Color.white);
@@ -728,7 +728,7 @@ public class TestAgentFrame extends JFrame {
     currentMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          currentMenuItem_actionPerformed(e);
+          currentMenuItemActionPerformed(e);
         }
       });
     replyMenuItem.setBackground(Color.white);
@@ -739,13 +739,13 @@ public class TestAgentFrame extends JFrame {
     replyMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          replyMenuItem_actionPerformed(e);
+          replyMenuItemActionPerformed(e);
         }
       });
     deleteMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          deleteMenuItem_actionPerformed(e);
+          deleteMenuItemActionPerformed(e);
         }
       });
     deleteMenuItem.setText("Delete Current ACLMessage");
@@ -756,7 +756,7 @@ public class TestAgentFrame extends JFrame {
     statisticsMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          statisticsMenuItem_actionPerformed(e);
+          statisticsMenuItemActionPerformed(e);
         }
       });
     statisticsMenuItem.setText("Statistics...");
@@ -767,7 +767,7 @@ public class TestAgentFrame extends JFrame {
     loadMsgMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          loadMsgMenuItem_actionPerformed(e);
+          loadMsgMenuItemActionPerformed(e);
         }
       });
     loadMsgMenuItem.setText("Open ACLMessage...");
@@ -778,7 +778,7 @@ public class TestAgentFrame extends JFrame {
     saveMsgMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          saveMsgMenuItem_actionPerformed(e);
+          saveMsgMenuItemActionPerformed(e);
         }
       });
     saveMsgMenuItem.setText("Save ACLMessage...");
@@ -789,7 +789,7 @@ public class TestAgentFrame extends JFrame {
     loadQMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          loadQMenuItem_actionPerformed(e);
+          loadQMenuItemActionPerformed(e);
         }
       });
     loadQMenuItem.setText("Open ACLMessage Trace...");
@@ -800,7 +800,7 @@ public class TestAgentFrame extends JFrame {
     saveQMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          saveQMenuItem_actionPerformed(e);
+          saveQMenuItemActionPerformed(e);
         }
       });
     saveQMenuItem.setText("Save ACLMessage Trace...");
@@ -813,13 +813,13 @@ public class TestAgentFrame extends JFrame {
     systemButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          systemButton_actionPerformed(e);
+          systemButtonActionPerformed(e);
         }
       });
     systemOutMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          systemOutMenuItem_actionPerformed(e);
+          systemOutMenuItemActionPerformed(e);
         }
       });
     systemOutMenuItem.setText("To System.out");
@@ -830,7 +830,7 @@ public class TestAgentFrame extends JFrame {
     currentToOutMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          currentToOutMenuItem_actionPerformed(e);
+          currentToOutMenuItemActionPerformed(e);
         }
       });
     currentToOutMenuItem.setText("Current To System.out");
@@ -850,13 +850,13 @@ public class TestAgentFrame extends JFrame {
     pingRadioButtonMenuItem.addChangeListener(
       new javax.swing.event.ChangeListener() {
         public void stateChanged(ChangeEvent e) {
-          pingRadioButtonMenuItem_stateChanged(e);
+          pingRadioButtonMenuItemStateChanged(e);
         }
       });
     localPingMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          localPingMenuItem_actionPerformed(e);
+          localPingMenuItemActionPerformed(e);
         }
       });
     localPingMenuItem.setText("Local Ping");
@@ -958,72 +958,72 @@ public class TestAgentFrame extends JFrame {
     }
 
 
-    void logoLabel_mouseClicked(MouseEvent e) {
+    void logoLabelMouseClicked(MouseEvent e) {
       this.setVisible(false);
     }
 
 
-    void jLabel3_mousePressed(MouseEvent e) {
+    void jLabel3MousePressed(MouseEvent e) {
       this.setVisible(false);
     }
 
 
-    void jLabel2_mouseClicked(MouseEvent e) {
+    void jLabel2MouseClicked(MouseEvent e) {
       this.setVisible(false);
     }
 
 
-    void jLabel3_mouseClicked(MouseEvent e) {
+    void jLabel3MouseClicked(MouseEvent e) {
       this.setVisible(false);
     }
 
 
-    void logoLabel_mouseEntered(MouseEvent e) {
+    void logoLabelMouseEntered(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
 
-    void logoLabel_mouseExited(MouseEvent e) {
+    void logoLabelMouseExited(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
 
-    void jLabel3_mouseEntered(MouseEvent e) {
+    void jLabel3MouseEntered(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
 
-    void jLabel3_mouseExited(MouseEvent e) {
+    void jLabel3MouseExited(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
 
-    void jLabel2_mouseEntered(MouseEvent e) {
+    void jLabel2MouseEntered(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
 
-    void jLabel2_mouseExited(MouseEvent e) {
+    void jLabel2MouseExited(MouseEvent e) {
       this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
 
-    void logoLabel_mousePressed(MouseEvent e) {
+    void logoLabelMousePressed(MouseEvent e) {
 
     }
 
 
-    void logoLabel_mouseReleased(MouseEvent e) {
+    void logoLabelMouseReleased(MouseEvent e) {
 
     }
 
 
-    void jLabel2_mousePressed(MouseEvent e) {
+    void jLabel2MousePressed(MouseEvent e) {
 
     }
 
 
-    void jLabel2_mouseReleased(MouseEvent e) {
+    void jLabel2MouseReleased(MouseEvent e) {
 
     }
 
@@ -1041,17 +1041,17 @@ public class TestAgentFrame extends JFrame {
       logoLabel.addMouseListener(
         new java.awt.event.MouseAdapter() {
           public void mouseClicked(MouseEvent e) {
-            logoLabel_mouseClicked(e);
+            logoLabelMouseClicked(e);
           }
 
 
           public void mouseEntered(MouseEvent e) {
-            logoLabel_mouseEntered(e);
+            logoLabelMouseEntered(e);
           }
 
 
           public void mouseExited(MouseEvent e) {
-            logoLabel_mouseExited(e);
+            logoLabelMouseExited(e);
           }
         });
       jLabel1.setText("donated by Acklin B.V. to the Jade project");
@@ -1060,17 +1060,17 @@ public class TestAgentFrame extends JFrame {
       jLabel2.addMouseListener(
         new java.awt.event.MouseAdapter() {
           public void mouseClicked(MouseEvent e) {
-            jLabel2_mouseClicked(e);
+            jLabel2MouseClicked(e);
           }
 
 
           public void mouseEntered(MouseEvent e) {
-            jLabel2_mouseEntered(e);
+            jLabel2MouseEntered(e);
           }
 
 
           public void mouseExited(MouseEvent e) {
-            jLabel2_mouseExited(e);
+            jLabel2MouseExited(e);
           }
         });
       contentPanel.setBackground(Color.white);

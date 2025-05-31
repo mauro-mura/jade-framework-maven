@@ -37,7 +37,7 @@ public class QualifiedFrame extends Hashtable implements Frame {
 
 	@Serial
 	private static final long serialVersionUID = -7191634803252271554L;
-	private String typeName;
+	private final String typeName;
 
 	/**
 	   Create a QualifiedFrame with a given type-name.

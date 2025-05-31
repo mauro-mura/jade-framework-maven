@@ -31,7 +31,7 @@ package jade.tools.rma;
 
  class ShutDownAction extends FixedAction{
 
-  private rma myRMA;
+	 private final rma myRMA;
 
   public ShutDownAction (rma anRMA,ActionProcessor actPro) {
     super ("ShutDownActionIcon","Shut down Agent Platform",actPro);

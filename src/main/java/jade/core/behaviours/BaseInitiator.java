@@ -56,15 +56,15 @@ public abstract class BaseInitiator extends AchieveREInitiator {
 	protected OutcomeManager outcome;
 	protected ConversationList conversations;
 	private String convId;
-	private static int conversationCnt = 0;
+	private static int conversationCnt;
 
 	protected Logger myLogger = Logger.getJADELogger(getClass().getName());
 
-	public BaseInitiator() {
+	protected BaseInitiator() {
 		this(null);
 	}
 
-	public BaseInitiator(OutcomeManager om) {
+	protected BaseInitiator(OutcomeManager om) {
 		super(null, null);
 		outcome = om != null ? om : new OutcomeManager(this);
 	}
@@ -75,9 +75,9 @@ public abstract class BaseInitiator extends AchieveREInitiator {
 
 	protected void checkLanguage(String languageName) {
 		if (myAgent.getContentManager().lookupLanguage(languageName) == null) {
-			if (languageName.equals(FIPANames.ContentLanguage.FIPA_SL)) {
+			if (FIPANames.ContentLanguage.FIPA_SL.equals(languageName)) {
 				myAgent.getContentManager().registerLanguage(new SLCodec(true));
-			} else if (languageName.equals(LEAPCodec.NAME)) {
+			} else if (LEAPCodec.NAME.equals(languageName)) {
 				myAgent.getContentManager().registerLanguage(new LEAPCodec());
 			}
 		}
@@ -206,6 +206,6 @@ public abstract class BaseInitiator extends AchieveREInitiator {
 
 	private synchronized String buildConversationId() {
 		conversationCnt++;
-		return myAgent.getLocalName() + "-" + String.valueOf(conversationCnt) + "-" + System.currentTimeMillis();
+		return myAgent.getLocalName() + "-" + conversationCnt + "-" + System.currentTimeMillis();
 	}
 }

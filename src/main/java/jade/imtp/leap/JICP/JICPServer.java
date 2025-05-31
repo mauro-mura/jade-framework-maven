@@ -79,26 +79,26 @@ public class JICPServer extends Thread
 	private int state = LISTENING;
 
 	private String host;
-	private String exportHost;
+	private final String exportHost;
 	private Integer exportPort;
 
 	private ServerSocket server;
-	private ICP.Listener cmdListener;
+	private final ICP.Listener cmdListener;
 
 	private int mediatorCnt = 1;
-	private Hashtable<String, JICPMediator> mediators = new Hashtable<>();
+	private final Hashtable<String, JICPMediator> mediators = new Hashtable<>();
 
 	public static final String ACCEPT_MEDIATORS = "jade_imtp_leap_JICP_JICPServer_acceptmediators";
 	private boolean acceptMediators = true;
-	private Properties leapProps = new Properties();
+	private final Properties leapProps = new Properties();
 	private PDPContextManager myPDPContextManager;
 
-	private int maxHandlers;
-	private Vector<ConnectionHandler> connectionHandlers;
+	private final int maxHandlers;
+	private final Vector<ConnectionHandler> connectionHandlers;
 
-	private ConnectionFactory connFactory;
+	private final ConnectionFactory connFactory;
 
-	private Logger myLogger;
+	private final Logger myLogger;
 
 	/**
 	 * Constructor declaration
@@ -127,7 +127,7 @@ public class JICPServer extends Thread
 		sb.append(JICPProtocol.LOCAL_HOST_KEY);
 		host = p.getParameter(sb.toString(), null);
 		boolean acceptLocalHostOnly = false;
-		if (host == null || host.equals(Profile.LOCALHOST_CONSTANT)) {
+		if (host == null || Profile.LOCALHOST_CONSTANT.equals(host)) {
 			// Local host not specified --> Get it automatically
 			sb.setLength(idLength);
 			sb.append(JICPProtocol.REMOTE_URL_KEY);
@@ -225,12 +225,12 @@ public class JICPServer extends Thread
 
 		// Create the ServerSocket.
 		if (portRange == null) {
-			server = myPeer.getServerSocket((acceptLocalHostOnly ? host : null), port, changePortIfBusy);
+			server = myPeer.getServerSocket(acceptLocalHostOnly ? host : null, port, changePortIfBusy);
 		} else {
 			for (int i = 0; i < portRange.length; i++) {
 				int pi = portRange[i];
 				try {
-					server = myPeer.getServerSocket((acceptLocalHostOnly ? host : null), pi, false);
+					server = myPeer.getServerSocket(acceptLocalHostOnly ? host : null, pi, false);
 					break;
 				} catch (ICPException ioe) {
 					// Silently catch and try next port in range
@@ -270,8 +270,9 @@ public class JICPServer extends Thread
 	 */
 	public synchronized void shutdown() {
 
-		if (myLogger.isLoggable(Logger.FINE))
+		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, "Shutting down JICPServer...");
+		}
 
 		state = TERMINATING;
 
@@ -303,14 +304,16 @@ public class JICPServer extends Thread
 				Connection.socketCnt++;
 				InetAddress addr = s.getInetAddress();
 				int port = s.getPort();
-				if (myLogger.isLoggable(Logger.FINEST))
+				if (myLogger.isLoggable(Logger.FINEST)) {
 					myLogger.log(Logger.FINEST, "Incoming connection from " + addr + ":" + port);
+				}
 
 				Connection c = connFactory.createConnection(s);
 				ConnectionHandler ch = new ConnectionHandler(c, addr, port, chCount++);
 
-				if (myLogger.isLoggable(Logger.FINEST))
+				if (myLogger.isLoggable(Logger.FINEST)) {
 					myLogger.log(Logger.FINEST, "Create new ConnectionHandler (" + ch + ")");
+				}
 
 				connectionHandlers.addElement(ch);
 
@@ -322,8 +325,9 @@ public class JICPServer extends Thread
 				// server will exit).
 			} catch (Exception e) {
 				if (state == LISTENING) {
-					if (myLogger.isLoggable(Logger.WARNING))
+					if (myLogger.isLoggable(Logger.WARNING)) {
 						myLogger.log(Logger.WARNING, "Problems accepting a new connection");
+					}
 					e.printStackTrace();
 
 					// Stop listening
@@ -332,15 +336,17 @@ public class JICPServer extends Thread
 			}
 		} // END of while(listen)
 
-		if (myLogger.isLoggable(Logger.FINE))
+		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, "JICPServer terminated");
+		}
 
 		// release socket
 		try {
 			server.close();
 		} catch (IOException io) {
-			if (myLogger.isLoggable(Logger.WARNING))
+			if (myLogger.isLoggable(Logger.WARNING)) {
 				myLogger.log(Logger.WARNING, "I/O error closing the server socket");
+			}
 			io.printStackTrace();
 		}
 
@@ -389,7 +395,7 @@ public class JICPServer extends Thread
 		private Connection c;
 		private InetAddress addr;
 		private int port;
-		private boolean loop = false;
+		private boolean loop;
 		private int status = INIT;
 		private boolean closeConnection = true;
 
@@ -415,21 +421,24 @@ public class JICPServer extends Thread
 				loop = false;
 				closeConnection = true;
 
-				if (myLogger.isLoggable(Logger.FINEST))
+				if (myLogger.isLoggable(Logger.FINEST)) {
 					myLogger.log(Logger.FINEST, "Predispose to close connection handler (" + this + ")");
+				}
 
 			} else {
 				// We are waiting for the next request --> Close connection to force connection
 				// handler termination
 				try {
-					if (myLogger.isLoggable(Logger.FINEST))
+					if (myLogger.isLoggable(Logger.FINEST)) {
 						myLogger.log(Logger.FINEST,
-								"Close connection socket to force exit from connection handler (" + this + ")");
+							"Close connection socket to force exit from connection handler (" + this + ")");
+					}
 
 					c.close();
 				} catch (IOException e) {
-					if (myLogger.isLoggable(Logger.FINEST))
+					if (myLogger.isLoggable(Logger.FINEST)) {
 						myLogger.log(Logger.FINEST, "Exception closing connection with " + addr + ":" + port);
+					}
 				}
 			}
 		}
@@ -438,8 +447,9 @@ public class JICPServer extends Thread
 		 * Thread entry point
 		 */
 		public void run() {
-			if (myLogger.isLoggable(Logger.FINEST))
+			if (myLogger.isLoggable(Logger.FINEST)) {
 				myLogger.log(Logger.FINEST, "CommandHandler started");
+			}
 
 			byte type = (byte) 0;
 			try {
@@ -455,15 +465,17 @@ public class JICPServer extends Thread
 					case JICPProtocol.RESPONSE_TYPE:
 						// Get the right recipient and let it process the command.
 						String recipientID = pkt.getRecipientID();
-						if (myLogger.isLoggable(Logger.FINEST))
+						if (myLogger.isLoggable(Logger.FINEST)) {
 							myLogger.log(Logger.FINEST, "Recipient: " + recipientID);
+						}
 						if (recipientID != null) {
 
 							// The recipient is one of the mediators
 							JICPMediator m = (JICPMediator) mediators.get(recipientID);
 							if (m != null) {
-								if (myLogger.isLoggable(Logger.FINEST))
+								if (myLogger.isLoggable(Logger.FINEST)) {
 									myLogger.log(Logger.FINEST, "Passing incoming packet to mediator " + recipientID);
+								}
 								reply = m.handleJICPPacket(pkt, addr, port);
 							} else {
 								// If the packet is a response we don't need to reply
@@ -476,8 +488,9 @@ public class JICPServer extends Thread
 							// The recipient is my ICP.Listener (the local CommandDispatcher)
 							loop = true;
 							if (type == JICPProtocol.COMMAND_TYPE) {
-								if (myLogger.isLoggable(Logger.FINEST))
+								if (myLogger.isLoggable(Logger.FINEST)) {
 									myLogger.log(Logger.FINEST, "Passing incoming COMMAND to local listener");
+								}
 
 								byte[] rsp = cmdListener.handleCommand(pkt.getData());
 								byte dataInfo = JICPProtocol.DEFAULT_INFO;
@@ -498,8 +511,9 @@ public class JICPServer extends Thread
 
 					case JICPProtocol.GET_ADDRESS_TYPE:
 						// Respond sending back the caller address
-						if (myLogger.isLoggable(Logger.INFO))
+						if (myLogger.isLoggable(Logger.INFO)) {
 							myLogger.log(Logger.INFO, "Received a GET_ADDRESS request from " + addr + ":" + port);
+						}
 						String addressStr = addr.getHostAddress();
 						if (pkt.getData() != null) {
 							addressStr += ":" + port;
@@ -510,9 +524,10 @@ public class JICPServer extends Thread
 
 					case JICPProtocol.CREATE_MEDIATOR_TYPE:
 						if (acceptMediators) {
-							if (myLogger.isLoggable(Logger.INFO))
+							if (myLogger.isLoggable(Logger.INFO)) {
 								myLogger.log(Logger.INFO,
-										"Received a CREATE_MEDIATOR request from " + addr + ":" + port);
+									"Received a CREATE_MEDIATOR request from " + addr + ":" + port);
+							}
 
 							// Starts a new Mediator and sends back its ID
 							String s = new String(pkt.getData());
@@ -539,9 +554,10 @@ public class JICPServer extends Thread
 									myLogger.log(Logger.FINE, "PDPContext properties = " + pdpContextInfo);
 									mergeProperties(p, pdpContextInfo);
 								} catch (JADESecurityException jse) {
-									if (myLogger.isLoggable(Logger.WARNING))
+									if (myLogger.isLoggable(Logger.WARNING)) {
 										myLogger.log(Logger.WARNING,
-												"CREATE_MEDIATOR request from non authorized address: " + addr);
+											"CREATE_MEDIATOR request from non authorized address: " + addr);
+									}
 									reply = new JICPPacket(JICPProtocol.NOT_AUTHORIZED_ERROR, jse);
 									break;
 								}
@@ -553,10 +569,11 @@ public class JICPServer extends Thread
 							if (id != null) {
 								if (msisdn != null && !msisdn.equals(id)) {
 									// Security attack: Someone is pretending to be someone other
-									if (myLogger.isLoggable(Logger.WARNING))
+									if (myLogger.isLoggable(Logger.WARNING)) {
 										myLogger.log(Logger.WARNING,
-												"CREATE_MEDIATOR request with mediator-id != MSISDN. Address is: "
-														+ addr);
+											"CREATE_MEDIATOR request with mediator-id != MSISDN. Address is: "
+												+ addr);
+									}
 									reply = new JICPPacket(JICPProtocol.NOT_AUTHORIZED_ERROR,
 											new JADESecurityException("Inconsistent mediator-id and msisdn"));
 									break;
@@ -570,7 +587,7 @@ public class JICPServer extends Thread
 									// Construct a default id using the string representation of the server's TCP
 									// endpoint
 									id = "BE-" + getLocalHost() + ':' + getLocalPort() + '-'
-											+ String.valueOf(mediatorCnt++);
+											+ mediatorCnt++;
 								}
 							}
 
@@ -617,9 +634,10 @@ public class JICPServer extends Thread
 							// FIXME: If there is a PDPContextManager check that the recipientID is the
 							// MSISDN
 
-							if (myLogger.isLoggable(Logger.INFO))
+							if (myLogger.isLoggable(Logger.INFO)) {
 								myLogger.log(Logger.INFO, "Received a CONNECT_MEDIATOR request from " + addr + ":"
-										+ port + ". Mediator ID is " + recipientID);
+									+ port + ". Mediator ID is " + recipientID);
+							}
 							JICPMediator m = (JICPMediator) mediators.get(recipientID);
 							if (m != null) {
 								// Don't close the connection, but pass it to the proper
@@ -628,8 +646,9 @@ public class JICPServer extends Thread
 								reply = new JICPPacket(JICPProtocol.RESPONSE_TYPE, JICPProtocol.DEFAULT_INFO,
 										addr.getHostAddress().getBytes());
 							} else {
-								if (myLogger.isLoggable(Logger.INFO))
+								if (myLogger.isLoggable(Logger.INFO)) {
 									myLogger.log(Logger.INFO, "Mediator " + recipientID + " not found");
+								}
 								reply = new JICPPacket(JICPProtocol.NOT_FOUND_ERROR, null);
 							}
 						} else {
@@ -642,8 +661,9 @@ public class JICPServer extends Thread
 
 					default:
 						// Send back an error response
-						if (myLogger.isLoggable(Logger.WARNING))
+						if (myLogger.isLoggable(Logger.WARNING)) {
 							myLogger.log(Logger.WARNING, "Uncorrect JICP data type: " + pkt.getType());
+						}
 						reply = new JICPPacket("Uncorrect JICP data type: " + pkt.getType(), null);
 					}
 					status = REQUEST_SERVED;
@@ -658,15 +678,17 @@ public class JICPServer extends Thread
 			} catch (Exception e) {
 				switch (status) {
 				case INIT: {
-					if (myLogger.isLoggable(Logger.SEVERE))
+					if (myLogger.isLoggable(Logger.SEVERE)) {
 						myLogger.log(Logger.SEVERE,
-								"Communication error reading incoming packet from " + addr + ":" + port);
+							"Communication error reading incoming packet from " + addr + ":" + port);
+					}
 					e.printStackTrace();
 				}
 					break;
 				case REQUEST_READ:
-					if (myLogger.isLoggable(Logger.SEVERE))
+					if (myLogger.isLoggable(Logger.SEVERE)) {
 						myLogger.log(Logger.SEVERE, "Error handling incoming packet");
+					}
 					e.printStackTrace();
 					// If the incoming packet was a command, try
 					// to send back a generic error response
@@ -675,46 +697,53 @@ public class JICPServer extends Thread
 							c.writePacket(new JICPPacket("Unexpected error", e));
 						} catch (IOException ioe) {
 							// Just print a warning
-							if (myLogger.isLoggable(Logger.WARNING))
+							if (myLogger.isLoggable(Logger.WARNING)) {
 								myLogger.log(Logger.WARNING, "Can't send back error indication " + ioe);
+							}
 						}
 					}
 					break;
 				case REQUEST_SERVED:
-					if (myLogger.isLoggable(Logger.SEVERE))
+					if (myLogger.isLoggable(Logger.SEVERE)) {
 						myLogger.log(Logger.SEVERE, "Communication error writing return packet to " + addr + ":" + port
-								+ " [" + e.toString() + "]");
+							+ " [" + e.toString() + "]");
+					}
 					break;
 				case RESPONSE_SENT:
 					// This is a re-used connection waiting for the next incoming packet
 					if (e instanceof EOFException) {
-						if (myLogger.isLoggable(Logger.FINE))
+						if (myLogger.isLoggable(Logger.FINE)) {
 							myLogger.log(Logger.FINE, "Client " + addr + ":" + port + " has closed the connection.");
+						}
 					} else {
-						if (myLogger.isLoggable(Logger.FINE))
+						if (myLogger.isLoggable(Logger.FINE)) {
 							myLogger.log(Logger.FINE,
-									"Unexpected client " + addr + ":" + port + " termination. " + e.toString());
+								"Unexpected client " + addr + ":" + port + " termination. " + e.toString());
+						}
 					}
 				}
 			} finally {
 				try {
 					if (closeConnection) {
 						// Close connection
-						if (myLogger.isLoggable(Logger.FINEST))
+						if (myLogger.isLoggable(Logger.FINEST)) {
 							myLogger.log(Logger.FINEST, "Closing connection with " + addr + ":" + port);
+						}
 
 						c.close();
 					}
 				} catch (IOException io) {
-					if (myLogger.isLoggable(Logger.INFO))
+					if (myLogger.isLoggable(Logger.INFO)) {
 						myLogger.log(Logger.INFO, "I/O error while closing the connection");
+					}
 					io.printStackTrace();
 				}
 
 				connectionHandlers.remove(this);
 
-				if (myLogger.isLoggable(Logger.FINEST))
+				if (myLogger.isLoggable(Logger.FINEST)) {
 					myLogger.log(Logger.FINEST, "ConnectionHandler closed (" + this + ")");
+				}
 			}
 		}
 	} // END of inner class ConnectionHandler

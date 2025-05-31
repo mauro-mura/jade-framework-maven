@@ -127,7 +127,7 @@ public class ResourceManagementService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 				
-				if (cmdName.equals(ResourceManagementSlice.H_GETRESOURCE)) {
+				if (ResourceManagementSlice.H_GETRESOURCE.equals(cmdName)) {
 					String name = (String) params[0];
 					int fetchMode = (Integer) params[1];
 					

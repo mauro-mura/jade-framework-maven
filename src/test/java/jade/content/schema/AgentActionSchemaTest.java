@@ -10,7 +10,7 @@ import jade.content.abs.AbsObject;
 import jade.content.onto.*;
 
 public class AgentActionSchemaTest {
-	private Ontology basic = BasicOntology.getInstance();
+	private final Ontology basic = BasicOntology.getInstance();
 	
 	@Test
 	public void testSetResultTermSchema() throws Exception {	

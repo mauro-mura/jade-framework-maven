@@ -30,8 +30,8 @@ import jade.core.AID;
  * @author Giovanni Caire - TILAB
  */
 class TopicRegistration {
-	private AID aid;
-	private AID topic;
+	private final AID aid;
+	private final AID topic;
 	
 	public TopicRegistration(AID aid, AID topic) {
 		this.aid = aid;

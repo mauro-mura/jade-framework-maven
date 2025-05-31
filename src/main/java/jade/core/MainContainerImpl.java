@@ -96,26 +96,26 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	private static final String DF_CLASS = "jade_core_MainContainerImpl_dfclass";
 
 	// The two mandatory system agents.
-	private ams theAMS;
-	private df defaultDF;
-	private Map<AID, String> replicatedAgents = new HashMap<>();
-	private List<String> replicatedAgentClasses;
-	private boolean ignoreChildNodesOnShutdown;
-	private boolean verboseShutdown;
+	private final ams theAMS;
+	private final df defaultDF;
+	private final Map<AID, String> replicatedAgents = new HashMap<>();
+	private final List<String> replicatedAgentClasses;
+	private final boolean ignoreChildNodesOnShutdown;
+	private final boolean verboseShutdown;
 
 	private ContainerID localContainerID;
-	private PlatformManagerImpl myPlatformManager;
+	private final PlatformManagerImpl myPlatformManager;
 
-	private CommandProcessor myCommandProcessor;
+	private final CommandProcessor myCommandProcessor;
 
-	private List<AgentManager.Listener> platformListeners = new LinkedList<>();
-	private List<String> platformAddresses = new LinkedList<>();
-	private List<AID> agentTools = new LinkedList<>();
+	private final List<AgentManager.Listener> platformListeners = new LinkedList<>();
+	private final List<String> platformAddresses = new LinkedList<>();
+	private final List<AID> agentTools = new LinkedList<>();
 
-	private ContainerTable containers = new ContainerTable();
-	private GADT platformAgents = new GADT();
+	private final ContainerTable containers = new ContainerTable();
+	private final GADT platformAgents = new GADT();
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public MainContainerImpl(Profile p, PlatformManagerImpl pm) throws ProfileException {
 		
@@ -329,7 +329,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 					myLogger.log(Logger.WARNING, "Replacing dead agent " + aid.getName() + "...");
 					fireDeadAgent(old.getContainerID(), aid, false);
 				} else {
-					if (!old.getDescription().getState().equals(AMSAgentDescription.LATENT)) {
+					if (!AMSAgentDescription.LATENT.equals(old.getDescription().getState())) {
 						platformAgents.put(aid, old);
 						throw new NameClashException("Agent " + aid.getName() + " already present in the platform ");
 					}
@@ -359,8 +359,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public void deadAgent(AID name, boolean containerRemoved) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(name);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("DeadAgent failed to find " + name);
+		}
 		ContainerID cid = ad.getContainerID();
 		platformAgents.remove(name);
 		replicatedAgents.remove(name);
@@ -376,8 +377,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public void suspendedAgent(AID name) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(name);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("SuspendedAgent failed to find " + name);
+		}
 		AMSAgentDescription amsd = ad.getDescription();
 		if (amsd != null) {
 			amsd.setState(AMSAgentDescription.SUSPENDED);
@@ -394,8 +396,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public void resumedAgent(AID name) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(name);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("ResumedAgent failed to find " + name);
+		}
 		AMSAgentDescription amsd = ad.getDescription();
 		if (amsd != null) {
 			amsd.setState(AMSAgentDescription.ACTIVE);
@@ -426,8 +429,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public void frozenAgent(AID name, ContainerID bufferContainer) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(name);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("FrozenAgent failed to find " + name);
+		}
 		AMSAgentDescription amsd = ad.getDescription();
 		if (amsd != null) {
 			amsd.setState(AMSAgentDescription.SUSPENDED);
@@ -444,8 +448,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public void thawedAgent(AID name, ContainerID bufferContainer) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(name);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("ThawedAgent failed to find " + name);
+		}
 		AMSAgentDescription amsd = ad.getDescription();
 		if (amsd != null) {
 			amsd.setState(AMSAgentDescription.ACTIVE);
@@ -554,7 +559,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 *      arguments[], ContainerID cid, String ownership, CertificateFolder certs)
 	 *      throws UnreachableException, JADESecurityException, NotFoundException
 	 */
-	public void create(String name, String className, Object args[], ContainerID cid, JADEPrincipal owner,
+	public void create(String name, String className, Object[] args, ContainerID cid, JADEPrincipal owner,
 			Credentials initialCredentials, JADEPrincipal requesterPrincipal, Credentials requesterCredentials)
 			throws UnreachableException, JADESecurityException, NotFoundException, NameClashException {
 
@@ -1027,7 +1032,6 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 			}
 		}
 
-		MTPDescriptor dsc = (MTPDescriptor) ret;
 		/***
 		 * System.out.println("--- New MTP ---"); System.out.println("Name: " +
 		 * dsc.getName()); System.out.println("Addresses: "); for(int i = 0; i <
@@ -1037,7 +1041,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 		 * System.out.println("[" + dsc.getSupportedProtocols()[i] + "]"); }
 		 ***/
 
-		return dsc;
+		return (MTPDescriptor) ret;
 	}
 
 	/**
@@ -1371,8 +1375,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public ContainerID getContainerID(AID agentID) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(agentID);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("getContainerID() failed to find agent " + agentID.getName());
+		}
 		ContainerID result = ad.getContainerID();
 		platformAgents.release(agentID);
 		return result;
@@ -1390,8 +1395,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 	 */
 	public AMSAgentDescription getAMSDescription(AID agentID) throws NotFoundException {
 		AgentDescriptor ad = platformAgents.acquire(agentID);
-		if (ad == null)
+		if (ad == null) {
 			throw new NotFoundException("getAMSDescription() failed to find agent " + agentID.getName());
+		}
 		AMSAgentDescription amsd = ad.getDescription();
 		platformAgents.release(agentID);
 		return amsd;
@@ -1425,22 +1431,25 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 			String o1 = templateDesc.getOwnership();
 			if (o1 != null) {
 				String o2 = factDesc.getOwnership();
-				if ((o2 == null) || (!o1.equalsIgnoreCase(o2)))
+				if ((o2 == null) || (!o1.equalsIgnoreCase(o2))) {
 					return false;
+				}
 			}
 
 			String s1 = templateDesc.getState();
 			if (s1 != null) {
 				String s2 = factDesc.getState();
-				if ((s2 == null) || (!s1.equalsIgnoreCase(s2)))
+				if ((s2 == null) || (!s1.equalsIgnoreCase(s2))) {
 					return false;
+				}
 			}
 
 			AID id1 = templateDesc.getName();
 			if (id1 != null) {
 				AID id2 = factDesc.getName();
-				if ((id2 == null) || (!matchAID(id1, id2)))
+				if ((id2 == null) || (!matchAID(id1, id2))) {
 					return false;
+				}
 			}
 
 			return true;
@@ -1455,8 +1464,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 		String templateName = template.getName();
 		if (templateName != null) {
 			String factName = fact.getName();
-			if ((factName == null) || (!templateName.equalsIgnoreCase(factName)))
+			if ((factName == null) || (!templateName.equalsIgnoreCase(factName))) {
 				return false;
+			}
 		}
 
 		// Match the address sequence. See 'FIPA Agent Management Specification, Sect.
@@ -1475,8 +1485,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 				String factAddr = (String) itFact.next();
 				found = templateAddr.equalsIgnoreCase(factAddr);
 			}
-			if (!found) // An element of the template does not appear in the fact sequence
+			if (!found) { // An element of the template does not appear in the fact sequence
 				return false;
+			}
 		}
 
 		// Match the resolvers sequence. See 'FIPA Agent Management Specification, Sect.
@@ -1493,8 +1504,9 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 				AID factRes = itFactAID.next();
 				found = matchAID(templateRes, factRes); // Recursive call
 			}
-			if (!found) // An element of the template does not appear in the fact sequence
+			if (!found) { // An element of the template does not appear in the fact sequence
 				return false;
+			}
 		}
 
 		return true;
@@ -1656,7 +1668,7 @@ public class MainContainerImpl implements MainContainer, AgentManager {
 				if (id != null) {
 					if (CaseInsensitiveString.equalsIgnoreCase(id.getName(), name)) {
 						String localName = aid.getLocalName();
-						if (localName.equals(FIPANames.AMS) || localName.equals(FIPANames.DEFAULT_DF)
+						if (FIPANames.AMS.equals(localName) || FIPANames.DEFAULT_DF.equals(localName)
 								|| replicatedAgents.containsKey(aid)) {
 							ad.getDescription().setState(AMSAgentDescription.LATENT);
 							platformAgents.release(aid);

@@ -86,9 +86,7 @@ public class JICPPeer implements ICP, ProtocolManager {
 		ticker.start();
 
 		// Creates the local transport address
-		TransportAddress localTA = getProtocol().buildAddress(server.getLocalHost(), String.valueOf(server.getLocalPort()), null, null);
-
-		return localTA;
+		return getProtocol().buildAddress(server.getLocalHost(), String.valueOf(server.getLocalPort()), null, null);
 	} 
 
 	/**
@@ -111,7 +109,7 @@ public class JICPPeer implements ICP, ProtocolManager {
 	public byte[] deliverCommand(TransportAddress ta, byte[] payload, boolean requireFreshConnection) throws ICPException {
 		byte[] respPayload = client.send(ta, JICPProtocol.COMMAND_TYPE, payload, requireFreshConnection);
 
-		return (respPayload);
+		return respPayload;
 	} 
 
 	final String getID() {
@@ -141,7 +139,7 @@ public class JICPPeer implements ICP, ProtocolManager {
 					+icpe.getMessage());
 		} 
 
-		return (new String(respPayload));
+		return new String(respPayload);
 	} 
 
 	/**
@@ -162,8 +160,7 @@ public class JICPPeer implements ICP, ProtocolManager {
 				return new JICPConnection(s);
 			}
 			public Connection createConnection(TransportAddress ta) throws IOException {
-				JICPConnection con = new JICPConnection(ta, connectionTimeout);
-				return con;
+				return new JICPConnection(ta, connectionTimeout);
 			}
 		};
 	}  
@@ -194,9 +191,9 @@ public class JICPPeer implements ICP, ProtocolManager {
 	/**
      Inner class Ticker
 	 */
-	private class Ticker extends Thread {
+	private final class Ticker extends Thread {
 		private long period;
-		private boolean active = false;
+		private boolean active;
 
 		private Ticker(long period) {
 			super();

@@ -55,7 +55,7 @@ import jade.mtp.TransportAddress;
  * @author Moreno LAGO
  */
 public class MaskableJICPPeer extends JICPPeer {
-	private Vector<int[]> masks = new Vector<>();
+	private final Vector<int[]> masks = new Vector<>();
 
 	/**
 	 * Default constructor

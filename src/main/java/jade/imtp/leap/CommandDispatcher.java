@@ -67,7 +67,7 @@ import jade.util.Logger;
  * @author Moreno LAGO
  * @version 1.0
  */
-class CommandDispatcher implements StubHelper, ICP.Listener {
+final class CommandDispatcher implements StubHelper, ICP.Listener {
 
 	private static final String MAIN_PROTO_CLASS = "main-proto-class";
 
@@ -77,7 +77,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	 */
 	protected static final String DEFAULT_NAME = "Default";
 
-	private static boolean enableMultiplePlatforms;
+	private static final boolean enableMultiplePlatforms;
 
 	/**
 	 * The default singleton instance of the command dispatcher.
@@ -102,7 +102,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	 * The transport address of the default router. Commands that cannot be
 	 * dispatched directly will be sent to this address.
 	 */
-	protected TransportAddress routerTA = null;
+	protected TransportAddress routerTA;
 
 	/**
 	 * This hashtable maps the IDs of the objects remotized by this command
@@ -148,9 +148,9 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	 * The stub for the platform service manager. This stub will be shared by all
 	 * nodes within this Java virtual Machine.
 	 */
-	private PlatformManager thePlatformManager = null;
+	private PlatformManager thePlatformManager;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());;
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	static {
 		enableMultiplePlatforms = "true".equals(System.getProperty("jade.enable.multiple.platforms"));
@@ -165,7 +165,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	 * @return the singleton instance of the CommandDispatcher for the indicated
 	 *         platform.
 	 */
-	public static final synchronized CommandDispatcher getDispatcher(String name) throws IMTPException {
+	public static synchronized CommandDispatcher getDispatcher(String name) throws IMTPException {
 		if (enableMultiplePlatforms) {
 			if (name != null) {
 				CommandDispatcher cd = (CommandDispatcher) dispatchers.get(name);
@@ -188,7 +188,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 		}
 	}
 
-	private synchronized static void removeDispatcher(String name) {
+	private static synchronized void removeDispatcher(String name) {
 		if (enableMultiplePlatforms) {
 			dispatchers.remove(name);
 		}
@@ -229,7 +229,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 	private void setPlatformManager(PlatformManager pm) throws IMTPException {
 		thePlatformManager = pm;
 		String actualPlatformName = thePlatformManager.getPlatformName();
-		if (platformName != null && !platformName.equals("*")) { // * is the wild-card for automatic main detection
+		if (platformName != null && !"*".equals(platformName)) { // * is the wild-card for automatic main detection
 			// PlatformName already set --> Check that it is consistent with the actual name
 			// of the platform
 			if (!platformName.equals(actualPlatformName)) {
@@ -298,14 +298,16 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 			try {
 				TransportAddress ta = stringToAddr(url);
 				if (routerTA != null && !routerTA.equals(ta)) {
-					if (myLogger.isLoggable(Logger.WARNING))
+					if (myLogger.isLoggable(Logger.WARNING)) {
 						myLogger.log(Logger.WARNING, "Transport address of current router has been changed");
+					}
 				}
 				routerTA = ta;
 			} catch (Exception e) {
 				// Just print a warning: default (i.e. main TA) will be used
-				if (myLogger.isLoggable(Logger.WARNING))
+				if (myLogger.isLoggable(Logger.WARNING)) {
 					myLogger.log(Logger.WARNING, "Can't initialize router address");
+				}
 			}
 		}
 	}
@@ -347,7 +349,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 
 		// If the dispatched command was an ADD_NODE --> get the
 		// name from the response and use it as the name of the CommandDispatcher
-		if (command.getCode() == Command.ADD_NODE && name.equals(DEFAULT_NAME)) {
+		if (command.getCode() == Command.ADD_NODE && DEFAULT_NAME.equals(name)) {
 			name = (String) response.getParamAt(0);
 		}
 		return response;
@@ -357,8 +359,8 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 		try {
 			TransportAddress ta1 = addresses.get(0);
 			TransportAddress ta2 = destTAs.get(0);
-			return (ta1.getHost().equals(ta2.getHost()) && ta1.getPort().equals(ta2.getPort())
-					&& ta2.getFile() == null);
+			return ta1.getHost().equals(ta2.getHost()) && ta1.getPort().equals(ta2.getPort())
+					&& ta2.getFile() == null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -498,12 +500,12 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 
 			// DispatcherException (some error occurred in the remote
 			// CommandDispatcher) --> throw a DispatcherException.
-			if (exception.equals("jade.imtp.leap.DispatcherException")) {
+			if ("jade.imtp.leap.DispatcherException".equals(exception)) {
 				throw new DispatcherException("DispatcherException in remote site. " + response.getParamAt(1));
 			} else // UnreachableException (the Command was sent to the router,
 			// but the final destination was unreachable from there)
 			// --> throw an UnreachableException
-			if (exception.equals("jade.core.UnreachableException")) {
+			if ("jade.core.UnreachableException".equals(exception)) {
 				throw new UnreachableException((String) response.getParamAt(1));
 			}
 		}
@@ -613,7 +615,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 			String proto = tp.getName().toLowerCase();
 			List list = (List) icps.get(proto);
 			if (list == null) {
-				icps.put(proto, (list = new ArrayList<>()));
+				icps.put(proto, list = new ArrayList<>());
 			}
 
 			list.add(peer);
@@ -625,7 +627,7 @@ class CommandDispatcher implements StubHelper, ICP.Listener {
 
 	TransportProtocol getProtocol(String protoName) {
 		List list = (List) icps.get(protoName.toLowerCase());
-		if (list != null && list.size() > 0) {
+		if (list != null && !list.isEmpty()) {
 			ICP icp = (ICP) list.get(0);
 			return icp.getProtocol();
 		}

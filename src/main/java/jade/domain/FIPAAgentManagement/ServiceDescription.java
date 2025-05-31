@@ -45,10 +45,10 @@ public class ServiceDescription implements Concept {
 	private String name;
 	private String type;
 	private String ownership;
-	private List interactionProtocols = new ArrayList<>();
-	private List ontology = new ArrayList<>();
-	private List language = new ArrayList<>();
-	private List properties = new ArrayList<>();
+	private final List interactionProtocols = new ArrayList<>();
+	private final List ontology = new ArrayList<>();
+	private final List language = new ArrayList<>();
+	private final List properties = new ArrayList<>();
 
 	/**
 	 * Default constructor. A default constructor is necessary for JADE ontological

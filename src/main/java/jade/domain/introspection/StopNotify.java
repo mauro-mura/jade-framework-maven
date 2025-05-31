@@ -45,7 +45,7 @@ import jade.core.AID;
 public class StopNotify implements AgentAction {
 
     private AID observed;
-    private List events = new ArrayList<>();
+	private final List events = new ArrayList<>();
 
 
     /**

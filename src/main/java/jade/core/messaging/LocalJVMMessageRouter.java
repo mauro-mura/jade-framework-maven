@@ -9,9 +9,9 @@ import java.util.Map;
 import jade.core.AID;
 
 class LocalJVMMessageRouter {
-	private static Map<String, LocalJVMMessageRouter> localRouters = new HashMap<String, LocalJVMMessageRouter>();
+	private static final Map<String, LocalJVMMessageRouter> localRouters = new HashMap<>();
 
-	synchronized static LocalJVMMessageRouter getRouter(String platformID) {
+	static synchronized LocalJVMMessageRouter getRouter(String platformID) {
 		LocalJVMMessageRouter router = localRouters.get(platformID);
 		if (router == null) {
 			router = new LocalJVMMessageRouter();
@@ -19,9 +19,9 @@ class LocalJVMMessageRouter {
 		}
 		return router;
 	}
-	
-	
-	private Map<String, MomMessagingService> localServices = new HashMap<String, MomMessagingService>();
+
+
+	private final Map<String, MomMessagingService> localServices = new HashMap<>();
 	
 	public void register(String location, MomMessagingService mms) {
 		localServices.put(location, mms);

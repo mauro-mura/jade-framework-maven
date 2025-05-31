@@ -36,7 +36,7 @@ import jade.gui.TreeHelp;
 
 class DFGUIAboutAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIAboutAction(DFGUI gui)
 	{

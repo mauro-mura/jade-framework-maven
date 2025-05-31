@@ -6,13 +6,14 @@
  */
 
 package FIPA;
-public class OptReceivedObjectHelper {
+
+public final class OptReceivedObjectHelper {
      // It is useless to have instances of this class
      private OptReceivedObjectHelper() { }
 
     public static void write(org.omg.CORBA.portable.OutputStream out, FIPA.ReceivedObject[] that)  {
           {
-              if (that.length > (1L)) {
+              if (that.length > 1L) {
                   throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
               }
               out.write_long(that.length);
@@ -25,7 +26,7 @@ public class OptReceivedObjectHelper {
           FIPA.ReceivedObject[] that;
           {
               int __length = in.read_long();
-              if (__length > (1L)) {
+              if (__length > 1L) {
                   throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
               }
               that = new FIPA.ReceivedObject[__length];
@@ -46,9 +47,10 @@ public class OptReceivedObjectHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "OptReceivedObject", org.omg.CORBA.ORB.init().create_sequence_tc((int) (1L), FIPA.ReceivedObjectHelper.type()));
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "OptReceivedObject", org.omg.CORBA.ORB.init().create_sequence_tc((int) (1L), FIPA.ReceivedObjectHelper.type()));
+		 }
       return _tc;
    }
    public static String id() {

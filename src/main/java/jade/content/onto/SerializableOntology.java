@@ -43,7 +43,7 @@ import java.util.Base64;
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
  */
-public class SerializableOntology extends Ontology {
+public final class SerializableOntology extends Ontology {
 	// The singleton instance of this ontology
 	private static final SerializableOntology theInstance = new SerializableOntology();
 

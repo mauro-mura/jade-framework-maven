@@ -51,9 +51,9 @@ public class DoNotSnifferAction extends AgentAction {
 
 	@Serial
 	private static final long serialVersionUID = -3188833889197924578L;
-	private MainPanel mainPanel;
-	private Sniffer mySniffer;
-	private List noSniffedAgents = new ArrayList<>();
+	private final MainPanel mainPanel;
+	private final Sniffer mySniffer;
+	private final List noSniffedAgents = new ArrayList<>();
 	private Agent agent;
 
 	public DoNotSnifferAction(ActionProcessor actPro, MainPanel mainPanel, Sniffer mySniffer) {
@@ -80,8 +80,9 @@ public class DoNotSnifferAction extends AgentAction {
 	private String checkString(String nameAgent) {
 		int index;
 		index = nameAgent.indexOf("@");
-		if (index != -1)
+		if (index != -1) {
 			return nameAgent.substring(0, index);
+		}
 		else {
 			Logger.getMyLogger(this.getClass().getName()).log(Logger.WARNING, "The agent's name is not correct");
 			return null;

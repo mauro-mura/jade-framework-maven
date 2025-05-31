@@ -38,7 +38,7 @@ import java.awt.event.WindowEvent;
  */
 class WindowCloser extends WindowAdapter {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public WindowCloser(rma anRMA) {
     myRMA = anRMA;

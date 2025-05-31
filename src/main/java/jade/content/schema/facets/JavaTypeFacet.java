@@ -30,7 +30,7 @@ import jade.content.onto.exception.OntologyException;
 import jade.content.schema.Facet;
 
 public class JavaTypeFacet implements Facet {
-	private String javaType;
+	private final String javaType;
 	
 	/**
 	   Construct a <code>JavaTypeFacet</code> that 

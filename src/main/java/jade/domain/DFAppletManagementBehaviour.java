@@ -48,7 +48,7 @@ import jade.security.JADESecurityException;
  */
 class DFAppletManagementBehaviour extends RequestManagementBehaviour {
 
-  private df theDF;
+	private final df theDF;
   
   protected DFAppletManagementBehaviour(df a, MessageTemplate mt) {
 		super(a, mt);

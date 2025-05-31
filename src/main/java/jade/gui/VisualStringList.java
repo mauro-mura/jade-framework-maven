@@ -169,10 +169,12 @@ public class VisualStringList extends JPanel {
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String param = e.getActionCommand();
-				if (param.equals(EDIT_LABEL))
+				if (EDIT_LABEL.equals(param)) {
 					editAction();
-				else if (param.equals(VIEW_LABEL))
+				}
+				else if (VIEW_LABEL.equals(param)) {
 					viewAction();
+				}
 			}
 		});
 
@@ -182,11 +184,12 @@ public class VisualStringList extends JPanel {
 		addItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String param = e.getActionCommand();
-				if (param.equals(ADD_LABEL)) {
+				if (ADD_LABEL.equals(param)) {
 					Object el = editElement(null, true);
 
-					if (el != null)
+					if (el != null) {
 						addElement(el);
+					}
 
 				}
 
@@ -198,11 +201,12 @@ public class VisualStringList extends JPanel {
 		removeItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String param = e.getActionCommand();
-				if (param.equals(REMOVE_LABEL)) {
+				if (REMOVE_LABEL.equals(param)) {
 					if (genericList.getModel().getSize() > 0) {
 						Object el = genericList.getSelectedValue();
-						if (el != null)
+						if (el != null) {
 							removeElement(el);
+						}
 					}
 
 				}
@@ -217,8 +221,9 @@ public class VisualStringList extends JPanel {
 	private void viewAction() {
 		if (genericList.getModel().getSize() > 0) {
 			Object el = genericList.getSelectedValue();
-			if (el != null)
+			if (el != null) {
 				editElement(el, false);
+			}
 		}
 	}
 
@@ -229,8 +234,9 @@ public class VisualStringList extends JPanel {
 
 			if (el != null) {
 				Object new_el = editElement(el, true);
-				if (new_el != null)
+				if (new_el != null) {
 					listModel.set(index, new_el);
+				}
 			}
 		}
 	}
@@ -245,8 +251,9 @@ public class VisualStringList extends JPanel {
 		addItem.setEnabled(enabled);
 		removeItem.setEnabled(enabled);
 
-		if (!enabled)
+		if (!enabled) {
 			editItem.setText(VIEW_LABEL);
+		}
 
 	}
 
@@ -308,7 +315,7 @@ public class VisualStringList extends JPanel {
 	 * Returns the list of items
 	 */
 	public Enumeration getContent() {
-		return (listModel.elements());
+		return listModel.elements();
 	}
 
 	/**
@@ -346,23 +353,27 @@ public class VisualStringList extends JPanel {
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			if (e.isPopupTrigger())
+			if (e.isPopupTrigger()) {
 				popUp.show(e.getComponent(), e.getX(), e.getY());
+			}
 
 		}
 
 		public void mousePressed(MouseEvent e) {
-			if (e.isPopupTrigger())
+			if (e.isPopupTrigger()) {
 				popUp.show(e.getComponent(), e.getX(), e.getY());
+			}
 
 		}
 
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
-				if (e.getComponent().getParent().getParent().getParent().isEnabled())
+				if (e.getComponent().getParent().getParent().getParent().isEnabled()) {
 					((VisualStringList) e.getComponent().getParent().getParent().getParent()).editAction();
-				else
+				}
+				else {
 					((VisualStringList) e.getComponent().getParent().getParent().getParent()).viewAction();
+				}
 
 			}
 		}

@@ -35,7 +35,7 @@ import jade.gui.AgentTree;
  
 abstract class ContainerAction extends RMAAction{
 
-  public ContainerAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected ContainerAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
 

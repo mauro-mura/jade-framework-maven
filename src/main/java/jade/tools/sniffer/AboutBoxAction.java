@@ -48,9 +48,9 @@ import javax.swing.ImageIcon;
 
 public class AboutBoxAction extends AbstractAction{
 
-  private JFrame gui;
+	private final JFrame gui;
   private JLabel label;
-  private String imageFile = "images/jadelogo.jpg";
+	private final String imageFile = "images/jadelogo.jpg";
 
 
   Color dark_blue = new java.awt.Color(0,0,160);

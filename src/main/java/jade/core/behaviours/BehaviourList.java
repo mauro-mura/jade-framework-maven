@@ -37,7 +37,7 @@ public class BehaviourList extends LinkedList<Behaviour> implements Serializable
 
 	@Serial
 	private static final long serialVersionUID = 8405444557861877061L;
-	private int current = 0;
+	private int current;
 
 	/**
 	 * Add a Behaviour to the tail of the list. This does not require adjusting the
@@ -91,7 +91,7 @@ public class BehaviourList extends LinkedList<Behaviour> implements Serializable
 	 * Check whether the current behaviour is the last in the list
 	 */
 	private boolean currentIsLast() {
-		return (current == (size() - 1));
+		return current == (size() - 1);
 	}
 
 	/**

@@ -76,7 +76,7 @@ public class AchieveREResponder extends FSMBehaviour implements FIPANames.Intera
 	
 	
 	// The MsgReceiver behaviour used to receive request messages
-	MsgReceiver rec = null;
+	MsgReceiver rec;
 	
 	/**
 	 This static method can be used 
@@ -86,14 +86,17 @@ public class AchieveREResponder extends FSMBehaviour implements FIPANames.Intera
 	 @see FIPANames.InteractionProtocol
 	 **/
 	public static MessageTemplate createMessageTemplate(String iprotocol){
-		
-		if(CaseInsensitiveString.equalsIgnoreCase(FIPA_REQUEST,iprotocol))
-			return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_REQUEST),MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
+
+		if (CaseInsensitiveString.equalsIgnoreCase(FIPA_REQUEST, iprotocol)) {
+			return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_REQUEST), MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
+		}
 		else
-			if(CaseInsensitiveString.equalsIgnoreCase(FIPA_QUERY,iprotocol))
-				return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_QUERY),MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF),MessageTemplate.MatchPerformative(ACLMessage.QUERY_REF)));
-			else
+			if (CaseInsensitiveString.equalsIgnoreCase(FIPA_QUERY, iprotocol)) {
+				return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_QUERY), MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF), MessageTemplate.MatchPerformative(ACLMessage.QUERY_REF)));
+			}
+			else {
 				return MessageTemplate.MatchProtocol(iprotocol);
+			}
 	}
 	
 	

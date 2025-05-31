@@ -34,9 +34,9 @@ import jade.gui.AgentTree;
    @version $Date: 2002-12-13 14:34:24 +0100 (ven, 13 dic 2002) $ $Revision: 3529 $
  */
 class MoveAgentAction extends AgentAction {
- 
- private rma myRMA;
- private Frame mainWnd;
+
+	private final rma myRMA;
+	private final Frame mainWnd;
  
  MoveAgentAction(rma anRMA, ActionProcessor act,Frame f)
  {

@@ -69,40 +69,40 @@ import jade.util.Logger;
  */
 class UDPMonitorServer {
 
-	private Logger logger;
-	
-	private UDPNodeMonitoringService myService = null;
-	
-	private String host;
-	private boolean acceptLocalHostOnly;
+	private final Logger logger;
+
+	private final UDPNodeMonitoringService myService;
+
+	private final String host;
+	private final boolean acceptLocalHostOnly;
 	private int port;
-	private int pingDelay;
-	private int pingDelayLimit;
-	private int unreachLimit;
-	
-	private NetworkChecker checker;
+	private final int pingDelay;
+	private final int pingDelayLimit;
+	private final int unreachLimit;
+
+	private final NetworkChecker checker;
 
 	//#DOTNET_EXCLUDE_BEGIN
 	private DatagramChannel server;
 	private Selector selector;
 	//#DOTNET_EXCLUDE_END
 	
-	private Hashtable targets = new Hashtable();
+	private final Hashtable targets = new Hashtable();
 	private PingHandler pingHandler;
 	private Timer timer;
-	private Hashtable deadlines = new Hashtable();
-	
-	private int orphanNodePingsCnt;
-	private int maxTracedUnknownPings;
-	private Hashtable unknownPingCounters = new Hashtable();
+	private final Hashtable deadlines = new Hashtable();
+
+	private final int orphanNodePingsCnt;
+	private final int maxTracedUnknownPings;
+	private final Hashtable unknownPingCounters = new Hashtable();
 
 	/*#DOTNET_INCLUDE_BEGIN
 	 private Socket server;
 	 #DOTNET_INCLUDE_END*/
 
-	private static long currentId = 0;
+	private static long currentId;
 
-	private synchronized static long getUniqueId() {
+	private static synchronized long getUniqueId() {
 		return currentId++;
 	}
 
@@ -163,7 +163,7 @@ class UDPMonitorServer {
 	private class PingHandler implements Runnable {
 
 		private final byte TERMINATING_INFO = 1; // bit 1
-		private boolean interrupted = false;
+		private boolean interrupted;
 		private Thread thread;
 
 		public PingHandler(String name) {
@@ -236,7 +236,7 @@ class UDPMonitorServer {
 					selector.select();
 
 					Set keys = selector.selectedKeys();
-					interrupted = keys.size() == 0;
+					interrupted = keys.isEmpty();
 					Iterator i = keys.iterator();
 
 					while (i.hasNext()) {
@@ -401,16 +401,18 @@ class UDPMonitorServer {
 			//#DOTNET_EXCLUDE_END
 
 			/*#DOTNET_INCLUDE_BEGIN
-			 server.Shutdown(SocketShutdown.Both);
-			 server.Close();
-			 #DOTNET_INCLUDE_END*/
+				rver.Shutdown(SocketShutdown.Both);
+				rver.Close();
+				OTNET_INCLUDE_END*/
 
-			if (logger.isLoggable(Logger.INFO))
+			if (logger.isLoggable(Logger.INFO)) {
 				logger.log(Logger.INFO, "UDP monitoring server has been stopped.");
+			}
 
 		} catch (Exception e) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Error shutting down the UDP monitor server");
+			}
 		}
 	}
 
@@ -500,7 +502,7 @@ class UDPMonitorServer {
 	
 	
 	private class Counter {
-		private int value = 0; 
+		private int value; 
 		
 		private void increment() {
 			value++;
@@ -549,9 +551,10 @@ class UDPMonitorServer {
 				addDeadline(nodeID, unreachLimit);
 			}
 		}
-		
-		if (newState != oldState)
+
+		if (newState != oldState) {
 			mon.setState(newState);
+		}
 	}
 
 	private void addDeadline(String nodeID, int delay) {

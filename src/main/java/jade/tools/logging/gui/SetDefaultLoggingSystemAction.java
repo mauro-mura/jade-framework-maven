@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class SetDefaultLoggingSystemAction extends AbstractAction {
-	private LogManagerGUI gui;
+	private final LogManagerGUI gui;
 	
 	public SetDefaultLoggingSystemAction(LogManagerGUI gui) {
 		super ("Set default logging system");

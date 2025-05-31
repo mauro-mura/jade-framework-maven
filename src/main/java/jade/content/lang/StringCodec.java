@@ -37,7 +37,7 @@ public abstract class StringCodec extends Codec{
     /**
      * Construct a StringCodec object with the given name
      */
-    public StringCodec(String name) {
+    protected StringCodec(String name) {
     	super(name);
     }
 

@@ -33,7 +33,7 @@ import java.util.List;
    @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
 */
 public class MessageTableModel extends AbstractTableModel {
-  private List items;
+	private final List items;
   String title;
 
   public MessageTableModel(List l, String title) {

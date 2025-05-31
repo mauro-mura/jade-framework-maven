@@ -36,9 +36,9 @@ import jade.util.leap.Properties;
 class BackEndWrapper implements BackEnd {
 	private static final String CONN_MGR_CLASS_DEFAULT = "jade.imtp.leap.JICP.BIFEDispatcher";
 
-	private FrontEndContainer myContainer;
-	private Properties properties;
-	private FEConnectionManager connectionManager;
+	private final FrontEndContainer myContainer;
+	private final Properties properties;
+	private final FEConnectionManager connectionManager;
 	private BackEnd backEnd;
 
 	BackEndWrapper(FrontEndContainer fec, Properties pp) throws Exception {

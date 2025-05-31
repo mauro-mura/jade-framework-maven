@@ -69,18 +69,18 @@ abstract class SSResponder extends FSMBehaviour {
 	protected static final String HANDLE_OUT_OF_SEQUENCE = "Handle-Out-of-seq";
 	protected static final String SEND_REPLY = "Send-Reply";
 	protected static final String DUMMY_FINAL = "Dummy-Final";
-	
-	private ACLMessage initiation;
-	private String initiationKey;
+
+	private final ACLMessage initiation;
+	private final String initiationKey;
 	
 	
 	/**
 	 */
-	public SSResponder(Agent a, ACLMessage initiation, DataStore store, boolean useInitiationKey) {
+	protected SSResponder(Agent a, ACLMessage initiation, DataStore store, boolean useInitiationKey) {
 		super(a);
 		setDataStore(store);
 		this.initiation = initiation;
-		initiationKey = (useInitiationKey ? INITIATION_KEY : RECEIVED_KEY);
+		initiationKey = useInitiationKey ? INITIATION_KEY : RECEIVED_KEY;
 		
 		registerDefaultTransition(RECEIVE_NEXT, CHECK_IN_SEQ);
 		registerTransition(CHECK_IN_SEQ, HANDLE_OUT_OF_SEQUENCE, OUT_OF_SEQUENCE_EXIT_CODE);

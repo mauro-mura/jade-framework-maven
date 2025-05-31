@@ -164,14 +164,14 @@ public class SLFrameCodec implements java.io.Serializable {
 	/**
 	 */
 	private Object read(SimpleSLTokenizer st) throws Throwable {
-		if (st.nextToken().equals("(")) {
+		if ("(".equals(st.nextToken())) {
 			st.consumeChar('(');
 			String typeName = st.getElement();
 			if (st.nextToken().startsWith(":")) {
 				QualifiedFrame qf = new QualifiedFrame(typeName);
 				fillQualified(st, qf);
 				// If this QualifiedFrame represents an AID, convert it
-				if (qf.getTypeName().equals(SL0Vocabulary.AID)) {
+				if (SL0Vocabulary.AID.equals(qf.getTypeName())) {
 					return frameToAid(qf);
 				}
 				else {
@@ -208,10 +208,10 @@ public class SLFrameCodec implements java.io.Serializable {
 			catch (Exception e) {
 			}
 			// Boolean
-			if (val.equals("true")) {
+			if ("true".equals(val)) {
 				return Boolean.valueOf(true);
 			}
-			if (val.equals("false")) {
+			if ("false".equals(val)) {
 				return Boolean.valueOf(false);
 			}
 			// String
@@ -220,7 +220,7 @@ public class SLFrameCodec implements java.io.Serializable {
 	} 
 
 	private void fillQualified(SimpleSLTokenizer st, QualifiedFrame qf) throws Throwable {
-		while (!st.nextToken().equals(")")) {
+		while (!")".equals(st.nextToken())) {
 			String key = st.getElement();
 			Object val = read(st);
 			qf.put(key, val);
@@ -229,7 +229,7 @@ public class SLFrameCodec implements java.io.Serializable {
 	}
 
 	private void fillOrdered(SimpleSLTokenizer st, OrderedFrame of) throws Throwable {
-		while (!st.nextToken().equals(")")) {
+		while (!")".equals(st.nextToken())) {
 			of.addElement(read(st));
 		}
 		st.consumeChar(')');

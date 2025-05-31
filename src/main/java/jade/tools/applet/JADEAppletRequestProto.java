@@ -101,8 +101,8 @@ public class JADEAppletRequestProto extends AppletRequestProto
     request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
     request.setLanguage(FIPANames.ContentLanguage.FIPA_SL);
     request.setOntology(DFAppletOntology.NAME);
-    request.setReplyWith("rw"+(new Date()).getTime());
-    request.setConversationId("conv"+(new Date()).getTime());
+    request.setReplyWith("rw"+new Date().getTime());
+    request.setConversationId("conv"+new Date().getTime());
 
     this.reqMsg = (ACLMessage)request.clone();
     this.action = actionName;
@@ -111,7 +111,7 @@ public class JADEAppletRequestProto extends AppletRequestProto
 
     Action act = new Action();
     act.setActor(receiver);
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.FEDERATE))
+    if(DFAppletVocabulary.FEDERATE.equalsIgnoreCase(actionName))
     {
 
     	Federate action = new Federate();
@@ -122,58 +122,61 @@ public class JADEAppletRequestProto extends AppletRequestProto
 
     }
     else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.GETDESCRIPTION))
-    	act.setAction(new GetDescription());
+			if (DFAppletVocabulary.GETDESCRIPTION.equalsIgnoreCase(actionName)) {
+				act.setAction(new GetDescription());
+			}
 
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.GETPARENTS))
-    	act.setAction(new GetParents());
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.GETDESCRIPTIONUSED))
-    {
-      GetDescriptionUsed action = new GetDescriptionUsed();
-      action.setParentDF((AID) parentDF);
-      act.setAction(action);
-    }
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.DEREGISTERFROM))
-    {
-    	DeregisterFrom action = new DeregisterFrom();
-    	action.setDf((AID) parentDF);
-    	action.setDescription((DFAgentDescription) description);
+			else
+				if (DFAppletVocabulary.GETPARENTS.equalsIgnoreCase(actionName)) {
+					act.setAction(new GetParents());
+				}
+				else
+					if (DFAppletVocabulary.GETDESCRIPTIONUSED.equalsIgnoreCase(actionName))
+					{
+						GetDescriptionUsed action = new GetDescriptionUsed();
+						action.setParentDF((AID) parentDF);
+						act.setAction(action);
+					}
+					else
+						if (DFAppletVocabulary.DEREGISTERFROM.equalsIgnoreCase(actionName))
+						{
+							DeregisterFrom action = new DeregisterFrom();
+							action.setDf((AID) parentDF);
+							action.setDescription((DFAgentDescription) description);
 
-    	act.setAction(action);
-    }
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.REGISTERWITH))
-    {
-    	RegisterWith action = new RegisterWith();
-    	action.setDf((AID)parentDF);
-    	action.setDescription((DFAgentDescription)description);
+							act.setAction(action);
+						}
+						else
+							if (DFAppletVocabulary.REGISTERWITH.equalsIgnoreCase(actionName))
+							{
+								RegisterWith action = new RegisterWith();
+								action.setDf((AID) parentDF);
+								action.setDescription((DFAgentDescription) description);
 
-    	act.setAction(action);
-    }
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.SEARCHON))
-    {
-    	SearchOn action = new SearchOn();
-    	action.setDf((AID)parentDF);
-    	action.setDescription((DFAgentDescription)description);
-    	action.setConstraints(constraints);
+								act.setAction(action);
+							}
+							else
+								if (DFAppletVocabulary.SEARCHON.equalsIgnoreCase(actionName))
+								{
+									SearchOn action = new SearchOn();
+									action.setDf((AID) parentDF);
+									action.setDescription((DFAgentDescription) description);
+									action.setConstraints(constraints);
 
-    	act.setAction(action);
-    }
-    else
-    if(actionName.equalsIgnoreCase(DFAppletVocabulary.MODIFYON))
-    {
-    	ModifyOn action = new ModifyOn();
-    	action.setDf((AID)parentDF);
-    	action.setDescription((DFAgentDescription)description);
+									act.setAction(action);
+								}
+								else
+									if (DFAppletVocabulary.MODIFYON.equalsIgnoreCase(actionName))
+									{
+										ModifyOn action = new ModifyOn();
+										action.setDf((AID) parentDF);
+										action.setDescription((DFAgentDescription) description);
 
-    	act.setAction(action);
-    }
-    else
-    throw new UnsupportedFunction();
+										act.setAction(action);
+									}
+									else {
+										throw new UnsupportedFunction();
+									}
 
 
      // initialize SL0 Codec and FIPAAgentManagementOntology
@@ -210,16 +213,19 @@ public class JADEAppletRequestProto extends AppletRequestProto
 	*/
   public List getResult() throws FIPAException, NotYetReady
   {
-  	if (notYetReady)
-  		throw new NotYetReady();
-  	if(lastMsg.getPerformative() != ACLMessage.INFORM)
-  		throw new FIPAException(lastMsg);
+		if (notYetReady) {
+			throw new NotYetReady();
+		}
+		if (lastMsg.getPerformative() != ACLMessage.INFORM) {
+			throw new FIPAException(lastMsg);
+		}
 
   	Result r = AppletRequestProto.extractContent(lastMsg.getContent(),(SLCodec)c,o);
     Iterator i = r.getItems().iterator(); //this is the set of DFAgentDescription
     List l = new ArrayList<>();
-    while (i.hasNext())
-     l.add(i.next());
+		while (i.hasNext()) {
+			l.add(i.next());
+		}
     return l;
 
   }
@@ -236,13 +242,13 @@ public class JADEAppletRequestProto extends AppletRequestProto
    		try{
    	      notYetReady = false;
    				lastMsg = (ACLMessage)msg.clone();
-   				if(this.action.equalsIgnoreCase(DFAppletVocabulary.FEDERATE))
+   				if(DFAppletVocabulary.FEDERATE.equalsIgnoreCase(this.action))
    				   {
    				   	  gui.showStatusMsg("Request processed. Ready for new  request.");
    				   	  gui.addParent(this.parent);
    				   }
    				 else
-   				 if(this.action.equalsIgnoreCase(DFAppletVocabulary.GETDESCRIPTION))
+   				 if(DFAppletVocabulary.GETDESCRIPTION.equalsIgnoreCase(this.action))
    				 {
    				 	//UPDATE the thisDf variable.
    				  try{
@@ -254,26 +260,29 @@ public class JADEAppletRequestProto extends AppletRequestProto
    				  }
    				 }
    				 else
-   				 if(this.action.equalsIgnoreCase(DFAppletVocabulary.GETPARENTS))
-             	gui.showStatusMsg("Request processed. Ready for new Request.");
-           else
-           if(this.action.equalsIgnoreCase(DFAppletVocabulary.DEREGISTERFROM))
-           {
-           		gui.showStatusMsg("Request processed. Ready for a new request");
-           		gui.removeParent(this.parent);
-           }
-           else
-           if(this.action.equalsIgnoreCase(DFAppletVocabulary.REGISTERWITH))
-           	gui.showStatusMsg("Request processed. Ready for new request.");
-           else
-           if(this.action.equalsIgnoreCase(DFAppletVocabulary.SEARCHON))
-           {
-           	gui.refreshLastSearchResults(getResult(),(AID)parent);
-           	gui.showStatusMsg("Request processed. Ready for new request.");
-           }
-           else
-           if(this.action.equalsIgnoreCase(DFAppletVocabulary.MODIFYON))
-             gui.showStatusMsg("Request processed. Ready for new request.");
+							if (DFAppletVocabulary.GETPARENTS.equalsIgnoreCase(this.action)) {
+								gui.showStatusMsg("Request processed. Ready for new Request.");
+							}
+							else
+								if (DFAppletVocabulary.DEREGISTERFROM.equalsIgnoreCase(this.action))
+								{
+									gui.showStatusMsg("Request processed. Ready for a new request");
+									gui.removeParent(this.parent);
+								}
+								else
+									if (DFAppletVocabulary.REGISTERWITH.equalsIgnoreCase(this.action)) {
+										gui.showStatusMsg("Request processed. Ready for new request.");
+									}
+									else
+										if (DFAppletVocabulary.SEARCHON.equalsIgnoreCase(this.action))
+										{
+											gui.refreshLastSearchResults(getResult(), (AID) parent);
+											gui.showStatusMsg("Request processed. Ready for new request.");
+										}
+										else
+											if (DFAppletVocabulary.MODIFYON.equalsIgnoreCase(this.action)) {
+												gui.showStatusMsg("Request processed. Ready for new request.");
+											}
 
    		}catch(Exception e){
    		e.printStackTrace();

@@ -97,12 +97,12 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 
 	@Serial
 	private static final long serialVersionUID = 1162985595501384440L;
-	private final static int PREPARE_MSG_STATE = 0;
-	private final static int SEND_MSG_STATE = 1;
-	private final static int RECEIVE_REPLY_STATE = 2;
-	private final static int RECEIVE_2ND_REPLY_STATE = 3;
-	private final static int ALL_REPLIES_RECEIVED_STATE = 4;
-	private final static int ALL_RESULT_NOTIFICATION_RECEIVED_STATE = 5;
+	private static final int PREPARE_MSG_STATE = 0;
+	private static final int SEND_MSG_STATE = 1;
+	private static final int RECEIVE_REPLY_STATE = 2;
+	private static final int RECEIVE_2ND_REPLY_STATE = 3;
+	private static final int ALL_REPLIES_RECEIVED_STATE = 4;
+	private static final int ALL_RESULT_NOTIFICATION_RECEIVED_STATE = 5;
 
 	/**
 	 * key to retrive from the datastore the ACLMessage passed in the constructor
@@ -130,12 +130,12 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	public final String ALL_RESULT_NOTIFICATIONS_KEY = "_all-result-notification" + hashCode();
 
 	// private ACLMessage request = null;
-	private MessageTemplate mt = null;
+	private MessageTemplate mt;
 
 	private int state = PREPARE_MSG_STATE;
 	private boolean finished;
 	private long timeout = -1;
-	private long endingTime = 0;
+	private long endingTime;
 
 	private Logger logger = Logger.getMyLogger(this.getClass().getName());
 
@@ -192,8 +192,10 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 				if (request.getConversationId() == null) {
 					conversationID = "C" + hashCode() + "_" + System.currentTimeMillis();
 					request.setConversationId(conversationID);
-				} else
+				}
+				else {
 					conversationID = request.getConversationId();
+				}
 
 				mt = MessageTemplate.MatchConversationId(conversationID);
 
@@ -202,10 +204,12 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 				AID r = receivers.next();
 				request.clearAllReceiver();
 				request.addReceiver(r);
-				if (receivers.hasNext())
-					if (logger.isLoggable(Logger.WARNING))
+				if (receivers.hasNext()) {
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING,
-								"The message you are sending has more than one receivers. The message will be sent only to the first one !!");
+							"The message you are sending has more than one receivers. The message will be sent only to the first one !!");
+					}
+				}
 				if (r.equals(myAgent.getAID())) {
 					// if myAgent is the receiver then modify the messageTemplate
 					// to avoid intercepting the request as it was a reply.
@@ -216,10 +220,12 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 				// FIXME: if the Timeout is already expired before the message will be sent, it
 				// will be considered a infinite timeout
 				Date d = request.getReplyByDate();
-				if (d != null)
-					timeout = d.getTime() - (new Date()).getTime();
-				else
+				if (d != null) {
+					timeout = d.getTime() - new Date().getTime();
+				}
+				else {
 					timeout = -1;
+				}
 				endingTime = System.currentTimeMillis() + timeout;
 
 				myAgent.send(request);
@@ -281,14 +287,18 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 				if (timeout > 0) {
 					long blockTime = endingTime - System.currentTimeMillis();
 
-					if (blockTime <= 0)
+					if (blockTime <= 0) {
 						// timeout Expired
 						state = ALL_REPLIES_RECEIVED_STATE;
-					else // timeout not yet expired.
+					}
+					else { // timeout not yet expired.
 						block(blockTime);
+					}
 
-				} else // request without timeout.
+				}
+				else { // request without timeout.
 					block();
+				}
 
 				break;
 			}
@@ -381,8 +391,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param agree the received agree message
 	 **/
 	protected void handleAgree(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "in HandleAgree: " + msg.toString());
+		}
 
 	}
 
@@ -395,8 +406,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param refuse the received refuse message
 	 **/
 	protected void handleRefuse(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "in HandleRefuse: " + msg.toString());
+		}
 	}
 
 	/**
@@ -408,8 +420,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param notUnderstood the received not-understood message
 	 **/
 	protected void handleNotUnderstood(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "in HandleNotUnderstood: " + msg.toString());
+		}
 	}
 
 	/**
@@ -421,8 +434,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param inform the received inform message
 	 **/
 	protected void handleInform(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "in HandleInform: " + msg.toString());
+		}
 	}
 
 	/**
@@ -434,8 +448,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param failure the received failure message
 	 **/
 	protected void handleFailure(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINEST))
+		if (logger.isLoggable(Logger.FINEST)) {
 			logger.log(Logger.FINEST, "in HandleFailure: " + msg.toString());
+		}
 	}
 
 	/**
@@ -447,8 +462,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param msg the received message
 	 **/
 	protected void handleOutOfSequence(ACLMessage msg) {
-		if (logger.isLoggable(Logger.FINEST))
+		if (logger.isLoggable(Logger.FINEST)) {
 			logger.log(Logger.FINEST, "in HandleOutOfSequence: " + msg.toString());
+		}
 	}
 
 	/**
@@ -463,8 +479,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param responses the Vector of ACLMessage objects that have been received
 	 **/
 	protected void handleAllResponses(Vector msgs) {
-		if (logger.isLoggable(Logger.FINEST))
+		if (logger.isLoggable(Logger.FINEST)) {
 			logger.log(Logger.FINEST, myAgent.getName() + "in handleAllResponses: ");
+		}
 	}
 
 	/**
@@ -479,8 +496,9 @@ public class SimpleAchieveREInitiator extends SimpleBehaviour {
 	 * @param resultNodifications the Vector of ACLMessage object received
 	 **/
 	protected void handleAllResultNotifications(Vector msgs) {
-		if (logger.isLoggable(Logger.FINEST))
+		if (logger.isLoggable(Logger.FINEST)) {
 			logger.log(Logger.FINEST, myAgent.getName() + "in HandleAllResultNotification: ");
+		}
 	}
 
 	/**

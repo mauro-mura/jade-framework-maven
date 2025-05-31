@@ -87,10 +87,10 @@ class XMLDecoder {
 
 	private AbsObject decodeNode(Node n) throws CodecException, OntologyException {
 		String typeName = n.getNodeName();
-		if (typeName.equals(XMLCodec.PRIMITIVE_TAG)) {
+		if (XMLCodec.PRIMITIVE_TAG.equals(typeName)) {
 			return decodePrimitive(n);
 		}
-		else if (typeName.equals(ContentElementListSchema.BASE_NAME)) {
+		else if (ContentElementListSchema.BASE_NAME.equals(typeName)) {
 			return decodeContentElementList(n);
 		}
 		else {
@@ -146,7 +146,7 @@ class XMLDecoder {
 					// The slot schema allows the value to be an aggregate. If this is the case the "aggregate" attribute is set to true
 					attributes = slot.getAttributes();
 					Node attr = attributes.getNamedItem(XMLCodec.AGGREGATE_ATTR);
-					if (attr != null && attr.getNodeValue().equals("true")) {
+					if (attr != null && "true".equals(attr.getNodeValue())) {
 						slotValue = decodeAggregate(slotChildList, attributes, null);
 					}
 				}
@@ -320,15 +320,15 @@ class XMLDecoder {
 		}
 		
 		// Try as a Boolean (note that Boolean.parseBoolean() returns false for all strings but "true")
-		if (value.equalsIgnoreCase("true")) {
+		if ("true".equalsIgnoreCase(value)) {
 			return AbsPrimitive.wrap(true);
 		}
-		if (value.equalsIgnoreCase("false")) {
+		if ("false".equalsIgnoreCase(value)) {
 			return AbsPrimitive.wrap(false);
 		}
 		
 		// It must be a String
-		return AbsPrimitive.wrap(value.toString());
+		return AbsPrimitive.wrap(value);
 	}
 	
 	private void setPrimitiveSlot(AbsPrimitiveSlotsHolder abs, String slotName, String slotTypeName, String value) {
@@ -380,7 +380,7 @@ class XMLDecoder {
 						// The slot schema allows the value to be an aggregate. If this is the case the "aggregate" attribute is set to true
 						NamedNodeMap attributes = slot.getAttributes();
 						Node attr = attributes.getNamedItem(XMLCodec.AGGREGATE_ATTR);
-						if (attr != null && attr.getNodeValue().equals("true")) {
+						if (attr != null && "true".equals(attr.getNodeValue())) {
 							slotValues[i] = decodeAggregate(slot.getChildNodes(), attributes, null);
 							return true;
 						}

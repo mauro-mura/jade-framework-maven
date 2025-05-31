@@ -49,7 +49,9 @@ public class MyFilterImage extends RGBImageFilter {
   public int filterRGB(int x, int y, int rgb) {
    int intensity;
    int alpha=128;
-   int redComponent,greenComponent,bluComponent;
+		int redComponent;
+		int greenComponent;
+		int bluComponent;
 
    redComponent=(rgb & 0xFF0000) >> 16;
    greenComponent=(rgb & 0xff00) >> 8;
@@ -60,7 +62,7 @@ public class MyFilterImage extends RGBImageFilter {
    bluComponent=intensity;
    alpha=alpha << 24;
 
-   return (alpha + redComponent + greenComponent + bluComponent);
+   return alpha + redComponent + greenComponent + bluComponent;
   }
 
 }

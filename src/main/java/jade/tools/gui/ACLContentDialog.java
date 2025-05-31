@@ -60,8 +60,8 @@ public class ACLContentDialog extends JDialog {
 
     contentTextArea.register(itsMsg, "Content");
 
-    String contentLanguage = (itsMsg.getLanguage() != null ? itsMsg.getLanguage() : "<unknown>");
-    String contentOntology = (itsMsg.getOntology() != null ? itsMsg.getOntology() : "<unknown>");
+    String contentLanguage = itsMsg.getLanguage() != null ? itsMsg.getLanguage() : "<unknown>";
+    String contentOntology = itsMsg.getOntology() != null ? itsMsg.getOntology() : "<unknown>";
 
     this.titleLabel.setText("content with language=" + contentLanguage + " and ontology=" + contentOntology);
 
@@ -75,7 +75,7 @@ public class ACLContentDialog extends JDialog {
     this.addFocusListener(
       new java.awt.event.FocusAdapter() {
         public void focusGained(FocusEvent e) {
-          this_focusGained(e);
+          thisFocusGained(e);
         }
       });
     contentPanel.setBackground(Color.white);
@@ -90,7 +90,7 @@ public class ACLContentDialog extends JDialog {
     doneButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          doneButton_actionPerformed(e);
+          doneButtonActionPerformed(e);
         }
       });
     contentTextArea.setElectricScroll(1);
@@ -101,12 +101,12 @@ public class ACLContentDialog extends JDialog {
   }
 
 
-  void doneButton_actionPerformed(ActionEvent e) {
+  void doneButtonActionPerformed(ActionEvent e) {
     this.setVisible(false);
   }
 
 
-  void this_focusGained(FocusEvent e) {
+  void thisFocusGained(FocusEvent e) {
     this.contentTextArea.requestFocus();
   }
 

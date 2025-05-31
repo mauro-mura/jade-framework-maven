@@ -26,8 +26,8 @@ import jade.imtp.leap.exception.ICPException;
  */
 public class NIOJICPSConnection extends NIOJICPConnection {
 
-	private SSLEngineHelper helper = null;
-	private static Logger log = Logger.getLogger(NIOJICPSConnection.class.getName());
+	private SSLEngineHelper helper;
+	private static final Logger log = Logger.getLogger(NIOJICPSConnection.class.getName());
 
 	public NIOJICPSConnection() {
 	}

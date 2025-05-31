@@ -75,7 +75,7 @@ import java.util.Properties;
     MyDefaults = new UIDefaults (icons);     // (My)Create a defaults table initialized with the specified key/value pairs.
   }
 
-  public static final Icon getIcon(String key) {
+  public static Icon getIcon(String key) {
     Icon i = MyDefaults.getIcon(key);       // Le controlla tutte ?
     if (i == null) {
       //System.out.println(key);
@@ -83,7 +83,9 @@ import java.util.Properties;
     	//no icon associated to the action.
       return null;
     }
-    else return MyDefaults.getIcon(key);
+		else {
+			return MyDefaults.getIcon(key);
+		}
   }
 
 } 

@@ -53,9 +53,9 @@ import jade.lang.acl.StringACLCodec;
  */
 public class OutgoingEncodingFilter extends Filter {
 
-	private Map messageEncodings;
-	private AgentContainer myAgentContainer;
-	private MessagingService myService;
+	private final Map messageEncodings;
+	private final AgentContainer myAgentContainer;
+	private final MessagingService myService;
 
 	public OutgoingEncodingFilter(Map m, AgentContainer ac, MessagingService ms) {
 		messageEncodings = m;
@@ -78,7 +78,7 @@ public class OutgoingEncodingFilter extends Filter {
 	public boolean accept(VerticalCommand cmd) {
 		String name = cmd.getName();
 
-		if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+		if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 			GenericMessage gmsg = (GenericMessage) cmd.getParam(1);
 			myService.stamp(gmsg);
 			AID sender = (AID) cmd.getParam(0);
@@ -87,8 +87,9 @@ public class OutgoingEncodingFilter extends Filter {
 
 			// Set the sender unless already set
 			try {
-				if (msg.getSender().getName().length() < 1)
+				if (msg.getSender().getName().length() < 1) {
 					msg.setSender(sender);
+				}
 			} catch (NullPointerException e) {
 				msg.setSender(sender);
 			}
@@ -106,8 +107,9 @@ public class OutgoingEncodingFilter extends Filter {
 			try {
 				byte[] payload = encodeMessage(msg);
 				Envelope env = msg.getEnvelope();
-				if (env != null)
+				if (env != null) {
 					env.setPayloadLength(Long.valueOf(payload.length));
+				}
 
 				// Update the ACLMessage: some information are kept because they are
 				// required in other services
@@ -117,7 +119,7 @@ public class OutgoingEncodingFilter extends Filter {
 				// FIXME
 				ee.printStackTrace();
 			}
-		} else if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+		} else if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 			// A local agent is terminating --> remove its local aliases if any
 			myService.removeLocalAliases((AID) cmd.getParam(0));
 		}
@@ -127,7 +129,7 @@ public class OutgoingEncodingFilter extends Filter {
 	public void postProcess(VerticalCommand cmd) {
 		String name = cmd.getName();
 
-		if (name.equals(jade.core.mobility.AgentMobilityHelper.INFORM_MOVED)) {
+		if (jade.core.mobility.AgentMobilityHelper.INFORM_MOVED.equals(name)) {
 			AID agent = (AID) cmd.getParam(0);
 			Location destination = (Location) cmd.getParam(1);
 			if (!myAgentContainer.isLocalAgent(agent)) {
@@ -169,16 +171,18 @@ public class OutgoingEncodingFilter extends Filter {
 		// If no ACL representation is set, use the default one ("LEAP" for
 		// local receivers and "String" for foreign receivers)
 		String rep = env.getAclRepresentation();
-		if (rep == null)
+		if (rep == null) {
 			env.setAclRepresentation(defaultRepresentation);
+		}
 
 		// If no 'to' slot is present, copy the 'to' slot from the
 		// 'receiver' slot of the ACL message
 		Iterator<AID> itTo = env.getAllTo();
 		if (!itTo.hasNext()) {
 			Iterator<AID> itReceiver = msg.getAllReceiver();
-			while (itReceiver.hasNext())
+			while (itReceiver.hasNext()) {
 				env.addTo(itReceiver.next());
+			}
 		}
 
 		// If no 'from' slot is present, copy the 'from' slot from the
@@ -190,8 +194,9 @@ public class OutgoingEncodingFilter extends Filter {
 
 		// Set the 'date' slot to 'now' if not present already
 		Date d = env.getDate();
-		if (d == null)
+		if (d == null) {
 			env.setDate(new Date());
+		}
 
 		// Write 'intended-receiver' slot as per 'FIPA Agent Message
 		// Transport Service Specification': this ACC splits all
@@ -201,8 +206,9 @@ public class OutgoingEncodingFilter extends Filter {
 		env.addIntendedReceiver(receiver);
 
 		Long payloadLength = env.getPayloadLength();
-		if (payloadLength == null)
+		if (payloadLength == null) {
 			env.setPayloadLength(Long.valueOf(-1));
+		}
 	}
 
 	/**
@@ -216,7 +222,7 @@ public class OutgoingEncodingFilter extends Filter {
 	public byte[] encodeMessage(ACLMessage msg) throws MessagingService.UnknownACLEncodingException {
 
 		Envelope env = msg.getEnvelope();
-		String enc = (env != null ? env.getAclRepresentation() : LEAPACLCodec.NAME);
+		String enc = env != null ? env.getAclRepresentation() : LEAPACLCodec.NAME;
 
 		if (enc != null) { // A Codec was selected
 			ACLCodec codec = (ACLCodec) messageEncodings.get(enc.toLowerCase());

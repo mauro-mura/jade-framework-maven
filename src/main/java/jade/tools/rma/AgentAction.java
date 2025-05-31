@@ -34,7 +34,7 @@ import jade.gui.AgentTree;
 
 	abstract class AgentAction extends RMAAction {
 
-  public AgentAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected AgentAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
 

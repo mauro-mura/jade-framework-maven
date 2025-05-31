@@ -40,7 +40,7 @@ import jade.util.leap.Properties;
  */
 final class DummyToolkit implements AgentToolkit {
 
-	static AgentToolkit at = null;
+	static AgentToolkit at;
 
 	static AgentToolkit instance() {
 		if (at == null) {

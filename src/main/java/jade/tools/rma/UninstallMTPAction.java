@@ -31,7 +31,7 @@ import jade.gui.AgentTree;
  */
 class UninstallMTPAction extends ContainerAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public UninstallMTPAction(rma anRMA, ActionProcessor actPro) {
     super ("UninstallMTPIcon", "Uninstall an MTP", actPro);

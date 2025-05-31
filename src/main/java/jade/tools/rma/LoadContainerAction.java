@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class LoadContainerAction extends ContainerAction {
 
-    private rma myRMA;
+	private final rma myRMA;
 
     LoadContainerAction(rma anRMA, ActionProcessor act)
     {

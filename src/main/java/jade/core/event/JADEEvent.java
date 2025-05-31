@@ -42,7 +42,7 @@ public class JADEEvent extends Event {
 
 	@Serial
 	private static final long serialVersionUID = -1013967458027421351L;
-	private Date time;
+	private final Date time;
 
 	public JADEEvent(int type, ContainerID cid) {
 		super(type, cid);

@@ -70,7 +70,7 @@ public class SSContractNetResponder extends SSResponder {
 	public static final String HANDLE_ACCEPT_PROPOSAL = "Handle-Accept-Proposal";
 	public static final String HANDLE_REJECT_PROPOSAL = "Handle-Reject-Proposal";
 	
-	private boolean proposeSent = false;
+	private boolean proposeSent;
 	
 	/**
 	 Construct a SSContractNetResponder that is activated 

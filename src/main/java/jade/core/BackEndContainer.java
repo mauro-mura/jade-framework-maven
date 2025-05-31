@@ -73,27 +73,27 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	// This flag is used to prevent two parallel shut-down processes and
 	// also to be sure that threads possibly started by this BEContainer
 	// do not survive after the BEContainer shutdown. 
-	private boolean terminating = false;
+	private boolean terminating;
 	
 	// The FrontEnd this BackEndContainer is connected to
 	private FrontEnd myFrontEnd;
-	
+
 	// The manager of the connection with the FrontEnd
-	private BEConnectionManager myConnectionManager;
+	private final BEConnectionManager myConnectionManager;
 	
 	private BackEndManager theBEManager;
+
+	private final Map<AID, AgentImage> agentImages = new HashMap<>(1);
 	
-	private Map<AID, AgentImage> agentImages = new HashMap<>(1);
-	
-	private Map<String, BECodec> serviceBECodecs = null; // Lazy initialization
+	private Map<String, BECodec> serviceBECodecs; // Lazy initialization
 	
 	// private Map principals = new HashMap<>(1);
 	
 	// The original properties passed to this container when it was created
 	@SuppressWarnings("unused")
 	private Properties creationProperties;
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	private static Properties adjustProperties(Properties pp) {
 		// A BackEndContainer is never a Main
@@ -371,7 +371,7 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	private boolean isCompatible(Method method, Object[] params) {
 		// FIXME: At present we just check the number of parameters. Implement types compatibility
 		int length = params != null ? params.length : 0;
-		return (method.getParameterTypes().length == length);
+		return method.getParameterTypes().length == length;
 	}
 
 	private BECodec getBECodec(String serviceName) {
@@ -641,12 +641,12 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 Inner class AgentImage
 	 */
-	public class AgentImage extends Agent {
+	public final class AgentImage extends Agent {
 
 		private static final long serialVersionUID = 5197526324963762029L;
 
@@ -729,9 +729,9 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 	////////////////////////////////////////////////////////////
 	
 	// Flag indicating that the front-end synchronization process is in place
-	private boolean synchronizing = false;  
-	private Object frontEndSynchLock = new Object();
-	private List<MessageSenderPair> fronEndSynchBuffer = new ArrayList<>();
+	private boolean synchronizing;
+	private final Object frontEndSynchLock = new Object();
+	private final List<MessageSenderPair> fronEndSynchBuffer = new ArrayList<>();
 	
 	/**
 	 Start the front-end synchronization process.
@@ -798,12 +798,12 @@ public class BackEndContainer extends AgentContainerImpl implements BackEnd {
 			fronEndSynchBuffer.clear();
 			synchronizing = false;
 		}
-	}  		
-	
+	}
+
 	/** 
 	 Inner class MessageSenderPair
 	 */
-	private class MessageSenderPair {
+	private final class MessageSenderPair {
 		private ACLMessage msg;
 		private String sender;
 		

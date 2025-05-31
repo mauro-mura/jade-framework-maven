@@ -61,18 +61,18 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 
 	@Serial
 	private static final long serialVersionUID = 1L;
-	private JPanel jContentPane = null;
-	private JPanel jPanel = null;
-	private JButton jButtonOk = null;
-	private JButton jButtonCancel = null;
-	private JLabel jLabelStatus = null;
-	private JScrollPane jScrollPane = null;
-	private JTable jTable = null;
+	private JPanel jContentPane;
+	private JPanel jPanel;
+	private JButton jButtonOk;
+	private JButton jButtonCancel;
+	private JLabel jLabelStatus;
+	private JScrollPane jScrollPane;
+	private JTable jTable;
 	private ClassesTableModel jTableModel;
 	private int result;
 	private String selectedClassname;
-	public final static int DLG_OK = 1;
-	public final static int DLG_CANCEL = 0;
+	public static final int DLG_OK = 1;
+	public static final int DLG_CANCEL = 0;
 	private boolean classesLoaded;
 	private String classname;
 	private ClassFinderFilter classfilter;
@@ -83,7 +83,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 	private class ClassFilter implements ClassFinderFilter {
 		public boolean include(Class superClazz, Class clazz) {
 			int modifiers = clazz.getModifiers();
-			boolean doInclude = ((modifiers & (ACC_ABSTRACT | ACC_INTERFACE)) == 0);
+			boolean doInclude = (modifiers & (ACC_ABSTRACT | ACC_INTERFACE)) == 0;
 			if (doInclude) {
 				doInclude = !clazz.getName().equals(classname);
 			}
@@ -93,7 +93,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 
 	private class ClassUpdater implements Runnable, ClassFinderListener {
 
-		private final static int UPDATE_EVERY = 1;
+		private static final int UPDATE_EVERY = 1;
 
 		private int numberOfClasses;
 		private List classNamesCache;
@@ -119,7 +119,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 			numberOfClasses = 0;
 			ClassFinder cf = new ClassFinder();
 			cf.findSubclasses(classname, this, classfilter);
-			if (classNamesCache.size() > 0) {
+			if (!classNamesCache.isEmpty()) {
 				appendToList(classNamesCache);
 				classNamesCache.clear();
 			}
@@ -163,7 +163,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 		}
 
 		public void appendStaticRows(Collection newRows) {
-			if (newRows.size() > 0) {
+			if (!newRows.isEmpty()) {
 				int firstRow = staticRowData.size();
 				staticRowData.addAll(newRows);
 				fireTableRowsInserted(firstRow, staticRowData.size()-1);
@@ -173,7 +173,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 		public void setDynamicRows(Collection rows) {
 			dynamicRowData.clear();
 			fireTableRowsDeleted(0, dynamicRowData.size());
-			if (rows.size() > 0) {
+			if (!rows.isEmpty()) {
 				dynamicRowData.addAll(rows);
 				fireTableRowsInserted(0, dynamicRowData.size()-1);
 			}
@@ -190,7 +190,7 @@ public class ClassSelectionDialog extends JDialog implements WindowListener, Act
 
 	private void appendToList(List list) {
 		synchronized (jTable) {
-			boolean stillSearching = list.size() > 0;
+			boolean stillSearching = !list.isEmpty();
 			if (stillSearching) {
 				jTableModel.appendStaticRows(list);
 			}

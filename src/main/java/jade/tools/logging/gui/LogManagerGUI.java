@@ -32,16 +32,19 @@ import jade.lang.acl.ACLMessage;
  */
 public class LogManagerGUI extends JFrame {
 	private static final String DEFAULT_LOG_MANAGER_CLASS = "jade.tools.logging.JavaLoggingLogManagerImpl";
-	
-	private Agent myAgent;
-	
-	private AgentTree agentTree;
-	private JDesktopPane desktopPane;
-	private JSplitPane jsp;
-	
-	private AbstractAction startManagingLogAction, stopManagingLogAction, setDefaultLoggingSystemAction, exitAction;
-	
-	private Map managedContainers = new HashMap<>();
+
+	private final Agent myAgent;
+
+	private final AgentTree agentTree;
+	private final JDesktopPane desktopPane;
+	private final JSplitPane jsp;
+
+	private final AbstractAction startManagingLogAction;
+	private final AbstractAction stopManagingLogAction;
+	private final AbstractAction setDefaultLoggingSystemAction;
+	private final AbstractAction exitAction;
+
+	private final Map managedContainers = new HashMap<>();
 	private LogManager defaultLogManager;
 	
 	public LogManagerGUI(Agent a) {
@@ -235,7 +238,7 @@ public class LogManagerGUI extends JFrame {
 					window.moveToFront();
 				}
 				catch (FIPAException fe) {
-					String msg = (state == 0 ? "Cannot create Log Helper agent on container "+containerName : "Cannot retrieve logging information from container "+containerName);
+					String msg = state == 0 ? "Cannot create Log Helper agent on container "+containerName : "Cannot retrieve logging information from container "+containerName;
 					int res = JOptionPane.showConfirmDialog(this, msg+"\nWould you like to see the message?", "WARNING", JOptionPane.YES_NO_OPTION);
 					if (res == JOptionPane.YES_OPTION) {
 						AclGui.showMsgInDialog(fe.getACLMessage(), this);

@@ -43,16 +43,16 @@ import jade.util.Logger;
  */
 class Connection extends Thread {
 	/** my logger */
-	private final static Logger logger = Logger.getMyLogger(Server.class.getName());
+	private static final Logger logger = Logger.getMyLogger(Server.class.getName());
 	private Agent myAgent;
 	private Socket client;
 	private DataInputStream in;
 	private PrintStream out;
-	private boolean done = false;
-	private boolean closed = false;
+	private boolean done;
+	private boolean closed;
 
 	/** Name of the agents who intend to receive any message from this agent */
-	private Vector allowedNames;
+	private final Vector allowedNames;
 
 	/**
 	 * this class is a thread to listen on socket and copy to receivers
@@ -102,7 +102,7 @@ class Connection extends Thread {
 		}
 		Iterator<AID> itor = msg.getAllReceiver();
 		while (itor.hasNext()) {
-			if (!isValidReceiver((itor.next()).getName())) {
+			if (!isValidReceiver(itor.next().getName())) {
 				return false;
 			}
 		}
@@ -118,7 +118,7 @@ class Connection extends Thread {
 	private boolean isValidReceiver(String aName) {
 		for (int i = 0; i < allowedNames.size(); i++) {
 			String allowName = (String) allowedNames.elementAt(i);
-			if (allowName.equals("*") || allowName.equalsIgnoreCase(aName)) {
+			if ("*".equals(allowName) || allowName.equalsIgnoreCase(aName)) {
 				if (logger.isLoggable(Logger.FINER)) {
 					logger.log(Logger.FINER, aName + " is allowed");
 				}
@@ -215,7 +215,7 @@ class Connection extends Thread {
 		} catch (Throwable any) {
 
 			// Jade puts "<EOF>" in the exception message
-			if ((gotOneMessage) && (any.getMessage() != null) && (any.getMessage().indexOf("<EOF>") >= 0)) {
+			if (gotOneMessage && (any.getMessage() != null) && (any.getMessage().contains("<EOF>"))) {
 				// ignore it
 			} else {
 				msg = new ACLMessage(ACLMessage.FAILURE);
@@ -227,12 +227,6 @@ class Connection extends Thread {
 			}
 			close();
 			return;
-		}
-	}
-
-	protected void finalize() {
-		if (!closed) {
-			close();
 		}
 	}
 

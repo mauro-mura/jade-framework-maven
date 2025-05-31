@@ -73,17 +73,17 @@ public class StartDialog extends JDialog implements ActionListener {
 	protected static JButton jButtonOk = new JButton("OK");
 	protected static JButton jButtonCancel = new JButton("Cancel");
 
-	private final static String ttAgentName = "Name of the Agent to start";
-	private final static String ttClassname = "Class Name of the Agent to start";
-	private final static String ttArguments = "Arguments passed to the agent constructor";
-	private final static String ttOwner = "The user under which the agent has to be started";
-	private final static String ttContainer = "Container on which the Agent will start";
-	private final static String ttSelectClassname = "Search in classpath for classes extending Agent";
+	private static final String ttAgentName = "Name of the Agent to start";
+	private static final String ttClassname = "Class Name of the Agent to start";
+	private static final String ttArguments = "Arguments passed to the agent constructor";
+	private static final String ttOwner = "The user under which the agent has to be started";
+	private static final String ttContainer = "Container on which the Agent will start";
+	private static final String ttSelectClassname = "Search in classpath for classes extending Agent";
 
-	public final static int OK_BUTTON = 0;
-	public final static int CANCEL_BUTTON = 1;
+	public static final int OK_BUTTON = 0;
+	public static final int CANCEL_BUTTON = 1;
 
-	private static StartDialog dialog;
+	private static final StartDialog dialog;
 
 	private static int choice = CANCEL_BUTTON;
 	private static String classname;
@@ -92,7 +92,7 @@ public class StartDialog extends JDialog implements ActionListener {
 	private ClassSelectionDialog csd;
 
 	private static class AgentClassFilter implements ClassFinderFilter {
-		private final static String[] excluded = new String[] {
+		private static final String[] excluded = new String[] {
 			"jade.domain.ams",
 			"jade.tools.ToolNotifier",
 			"jade.tools.logging.LogHelperAgent"
@@ -105,7 +105,7 @@ public class StartDialog extends JDialog implements ActionListener {
 		public boolean include(Class superClazz, Class clazz) {
 			String clazzName = clazz.getName();
 			int modifiers = clazz.getModifiers();
-			boolean doInclude = ((modifiers & (ClassSelectionDialog.ACC_ABSTRACT | ClassSelectionDialog.ACC_INTERFACE)) == 0);
+			boolean doInclude = (modifiers & (ClassSelectionDialog.ACC_ABSTRACT | ClassSelectionDialog.ACC_INTERFACE)) == 0;
 			if (doInclude) {
 				if (clazzName.startsWith("jade.core")) {
 					doInclude = Agent.class.getName().equals(clazzName);
@@ -266,7 +266,7 @@ public class StartDialog extends JDialog implements ActionListener {
 	}
 
 	public Dimension getPreferredSize() {
-		return (new Dimension(540, 150));
+		return new Dimension(540, 150);
 	}
 
 	private void insertOrMoveComboItem(String s) {

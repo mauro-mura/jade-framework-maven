@@ -82,7 +82,7 @@ public class TwoPh0Initiator extends Initiator {
     private static final int ALL_RESPONSES_RECEIVED = 1;
     
     /* Data store output key */
-    private String outputKey = null;
+    private String outputKey;
     
     private int totSessions;
 
@@ -151,7 +151,7 @@ public class TwoPh0Initiator extends Initiator {
     
     public int onEnd() {
       Vector nextPhMsgs = (Vector) getDataStore().get(outputKey);
-      if (nextPhMsgs.size() != 0) {
+      if (!nextPhMsgs.isEmpty()) {
         return ((ACLMessage) nextPhMsgs.get(0)).getPerformative();
       }
       else {
@@ -159,7 +159,7 @@ public class TwoPh0Initiator extends Initiator {
       }
     }
 
-	private String[] toBeReset = null;
+	private String[] toBeReset;
 
     /* User can override these methods */
 
@@ -354,7 +354,7 @@ public class TwoPh0Initiator extends Initiator {
     		// phase (unless already filled by the user)
         DataStore ds = getDataStore();
     		Vector nextPhMsgs = (Vector) ds.get(outputKey);
-    		if (nextPhMsgs.size() == 0) {
+    		if (nextPhMsgs.isEmpty()) {
 	        Vector proposes = (Vector) ds.get(ALL_PROPOSES_KEY);
 	        Vector pendings = (Vector) ds.get(ALL_PENDINGS_KEY);
 	        fillNextPhInitiations(nextPhMsgs, proposes, pendings);
@@ -464,7 +464,7 @@ public class TwoPh0Initiator extends Initiator {
         }
 
         public boolean isCompleted() {
-            return (state == REPLY_RECEIVED);
+            return state == REPLY_RECEIVED;
         }
     }
 }

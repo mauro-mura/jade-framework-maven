@@ -46,7 +46,7 @@ public class TwoPhResponder extends Responder {
 	private static final String HANDLE_ACCEPT_PROPOSAL = "Handle-Accept";
 	private static final String HANDLE_REJECT_PROPOSAL = "Handle-Reject";
 	
-	private int phase = 0;
+	private int phase;
 	
 	/**
 	* Constructor of the behaviour that creates a new empty DataStore
@@ -279,11 +279,11 @@ public class TwoPhResponder extends Responder {
   	int perf = received.getPerformative();
   	switch (phase) {
   	case 0:
-  		return (perf == ACLMessage.CFP);
+  		return perf == ACLMessage.CFP;
   	case 1:
-  		return (perf == ACLMessage.CFP || perf == ACLMessage.QUERY_IF || perf == ACLMessage.REJECT_PROPOSAL);
+  		return perf == ACLMessage.CFP || perf == ACLMessage.QUERY_IF || perf == ACLMessage.REJECT_PROPOSAL;
   	case 2:
-  		return (perf == ACLMessage.ACCEPT_PROPOSAL || perf == ACLMessage.REJECT_PROPOSAL);
+  		return perf == ACLMessage.ACCEPT_PROPOSAL || perf == ACLMessage.REJECT_PROPOSAL;
   	}
   	return false;
   }

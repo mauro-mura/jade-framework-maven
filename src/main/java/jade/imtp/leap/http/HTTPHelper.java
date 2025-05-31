@@ -29,11 +29,10 @@ public class HTTPHelper {
 	public static JICPPacket readPacketFromHttp(InputStream is) throws IOException {
 		HTTPRequest request = new HTTPRequest();
 		request.readFrom(is);
-		if (request.getMethod().equals("GET")) {
+		if ("GET".equals(request.getMethod())) {
 			// This is a CONNECT_MEDIATOR
 			String recipientID = request.getField(RECIPIENT_ID_FIELD);
-			JICPPacket pkt = new JICPPacket(JICPProtocol.CONNECT_MEDIATOR_TYPE, JICPProtocol.DEFAULT_INFO, recipientID, null);
-			return pkt;
+			return new JICPPacket(JICPProtocol.CONNECT_MEDIATOR_TYPE, JICPProtocol.DEFAULT_INFO, recipientID, null);
 		} else {
 			// Read the JICPPacket from the HTTP request payload
 			ByteArrayInputStream bis = new ByteArrayInputStream(request.getPayload());

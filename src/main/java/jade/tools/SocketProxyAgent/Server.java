@@ -38,12 +38,12 @@ class Server extends Thread
 {
 
 	/** my logger */
-	private final static Logger logger = 
+	private static final Logger logger = 
 		Logger.getMyLogger(Server.class.getName());
 	private ServerSocket listen_socket;
-	private Agent myAgent;
-	private Vector myOnlyReceivers;
-	private boolean done = false;
+	private final Agent myAgent;
+	private final Vector myOnlyReceivers;
+	private boolean done;
 	private Socket client_socket;
 	private Connection c;
 
@@ -113,10 +113,7 @@ class Server extends Thread
 				myAgent.doDelete();
 			}
 		}
-		finally {
-			finalize();
-		}
-	}
+    }
 
 	/**
 	 * stop listening
@@ -131,36 +128,6 @@ class Server extends Thread
 		}
 		catch (Exception e) {
 			// Do nothing
-		}
-	}
-
-	/**
-	 * try to clean up on GC
-	 */
-	protected void finalize() {
-		closeDown();
-
-		try	{
-			if (client_socket != null) {
-				client_socket.close();
-				client_socket = null;
-			}
-		}
-		catch (Exception e) {
-			// Do nothing            
-		}
-
-		try	{
-			if (c != null) {
-				if (c.isAlive()) {
-					c.close();
-				}
-				c.join(1000);
-				c = null;
-			}
-		}
-		catch (Exception e) {
-			// Do nothing            
 		}
 	}
 

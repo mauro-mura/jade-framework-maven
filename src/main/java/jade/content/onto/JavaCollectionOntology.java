@@ -33,12 +33,12 @@ import jade.content.onto.exception.UngroundedException;
 import jade.content.onto.exception.UnknownSchemaException;
 
 
-public class JavaCollectionOntology extends Ontology {
+public final class JavaCollectionOntology extends Ontology {
 
 	// The singleton instance of this ontology
 	private static final JavaCollectionOntology theInstance = new JavaCollectionOntology();
-	
-	private Introspector introspector = new CFReflectiveIntrospector();
+
+	private final Introspector introspector = new CFReflectiveIntrospector();
 	
 	/**
 	 * Returns the singleton instance of the <code>JavaCollectionOntology</code>.

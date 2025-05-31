@@ -46,7 +46,7 @@ import jade.core.Profile;
  * @author  Nicolas Lhuillier - Motorola
  *
  */
-class PersistentDeliveryManager {
+final class PersistentDeliveryManager {
 
 	public static synchronized PersistentDeliveryManager instance(Profile p, MessageManager.Channel ch) {
 		if(theInstance == null) {
@@ -138,7 +138,7 @@ class PersistentDeliveryManager {
 			myThread.interrupt();
 		}
 
-		private boolean active = false;
+		private boolean active;
 		private long period;
 		private Thread myThread;
 
@@ -320,7 +320,7 @@ class PersistentDeliveryManager {
 	private long users;
 
 	// The table of undelivered messages to send
-	private Map pendingMessages = new HashMap<>();
+	private final Map pendingMessages = new HashMap<>();
 
 	// The active object that periodically checks the due date of ACL
 	// messages and sends them after it expired

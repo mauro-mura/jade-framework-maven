@@ -43,7 +43,7 @@ import jade.core.AID;
 public class DebugOff implements AgentAction {
 
 	private AID debugger;
-	private List debuggedAgents = new ArrayList<>();
+	private final List debuggedAgents = new ArrayList<>();
 	private String password;
 
 	/**

@@ -63,7 +63,7 @@ class DFFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 
 	@Serial
 	private static final long serialVersionUID = 3681357655776665471L;
-	private df theDF;
+	private final df theDF;
 	// #DOTNET_EXCLUDE_BEGIN
 	private AverageMeasureProviderImpl serveRequestTimeProvider;
 	// #DOTNET_EXCLUDE_END

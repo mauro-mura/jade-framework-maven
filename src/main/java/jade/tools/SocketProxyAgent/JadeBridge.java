@@ -39,7 +39,7 @@ public class JadeBridge {
 	public static final int DEFAULT_AGENT_PROXY_PORT = SocketProxyAgent.DEFAULT_PORT;
 
 	/** my logger */
-	private final static Logger logger = Logger.getMyLogger(JadeBridge.class.getName());
+	private static final Logger logger = Logger.getMyLogger(JadeBridge.class.getName());
 
 	/** host */
 	private String host;

@@ -59,13 +59,13 @@ public abstract class CompositeBehaviour extends Behaviour {
 	/**
 	 * This variable marks the state when all child-behaviours have been run.
 	 */
-	private boolean finished = false;
+	private boolean finished;
 
 	private boolean currentDone;
 	private int currentResult;
 
 	// #APIDOC_EXCLUDE_BEGIN
-	protected boolean currentExecuted = false;
+	protected boolean currentExecuted;
 	// #APIDOC_EXCLUDE_END
 
 	/**
@@ -140,7 +140,7 @@ public abstract class CompositeBehaviour extends Behaviour {
 	 *         finished executing, <code>false</code>otherwise.
 	 */
 	public final boolean done() {
-		return (finished);
+		return finished;
 	}
 
 	/**

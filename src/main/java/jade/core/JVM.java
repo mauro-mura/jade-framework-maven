@@ -13,7 +13,7 @@ class JVM {
 	public static final String JVM_NAME = "jvm-name";
 	public static final String ENABLE_GLOBAL_MONITORING = "enable-global-monitoring";
 	
-	private static boolean initialized = false;
+	private static boolean initialized;
 	
 	public static void started(AgentContainerImpl aci, Profile p) {
 		if (p.getBooleanProperty(ENABLE_GLOBAL_MONITORING, false)) {

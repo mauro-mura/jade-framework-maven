@@ -44,7 +44,7 @@ import jade.gui.GuiEvent;
 
 class DFGUIDeregisterAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIDeregisterAction(DFGUI gui)
 	{
@@ -69,8 +69,9 @@ class DFGUIDeregisterAction extends AbstractAction
 				dfd = new DFAgentDescription();
 				dfd.setName(name); 
 			}
-			else
-			  return;
+			else {
+				return;
+			}
 		}
 		else
 		if (kind == DFGUI.PARENT_VIEW)
@@ -79,13 +80,15 @@ class DFGUIDeregisterAction extends AbstractAction
 
 			df = gui.getSelectedAgentInTable();
 			if (df != null)
-			    {
-			    	dfd = gui.myAgent.getDescriptionOfThisDF(df);
-			      if(dfd == null)
-			    	  return; //should never happen
-			    }
-			else 
-			    return;
+			{
+				dfd = gui.myAgent.getDescriptionOfThisDF(df);
+				if (dfd == null) {
+					return; //should never happen
+				}
+			}
+			else {
+				return;
+			}
 		}
 		else // kind=LASTSEARCH_VIEW
 		{
@@ -96,8 +99,9 @@ class DFGUIDeregisterAction extends AbstractAction
 				dfd = new DFAgentDescription();
 				dfd.setName(name); 
 			}
-			else
-			  return;
+			else {
+				return;
+			}
 		}
 			
 		GuiEvent ev = new GuiEvent((Object)gui,DFGUIAdapter.DEREGISTER);

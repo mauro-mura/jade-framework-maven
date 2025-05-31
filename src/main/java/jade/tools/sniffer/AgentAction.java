@@ -40,7 +40,7 @@ import jade.gui.AgentTree;
 
  abstract class AgentAction extends SnifferAction{
 
-  public AgentAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected AgentAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
 

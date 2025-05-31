@@ -64,12 +64,12 @@ public class SimpleAchieveREResponder extends SimpleBehaviour implements FIPANam
 
 	@Serial
 	private static final long serialVersionUID = 2894538391832870443L;
-	private final static int WAITING_MSG_STATE = 0;
-	private final static int PREPARE_RESPONSE_STATE = 1;
-	private final static int SEND_RESPONSE_STATE = 2;
-	private final static int PREPARE_RES_NOT_STATE = 3;
-	private final static int SEND_RESULT_NOTIFICATION_STATE = 4;
-	private final static int RESET_STATE = 5;
+	private static final int WAITING_MSG_STATE = 0;
+	private static final int PREPARE_RESPONSE_STATE = 1;
+	private static final int SEND_RESPONSE_STATE = 2;
+	private static final int PREPARE_RES_NOT_STATE = 3;
+	private static final int SEND_RESULT_NOTIFICATION_STATE = 4;
+	private static final int RESET_STATE = 5;
 
 	/**
 	 * @see AchieveREResponder#REQUEST_KEY
@@ -88,7 +88,7 @@ public class SimpleAchieveREResponder extends SimpleBehaviour implements FIPANam
 
 	private MessageTemplate template;
 	private int state = WAITING_MSG_STATE;
-	private boolean finished = false;
+	private boolean finished;
 
 	/**
 	 * This static method can be used to set the proper message Template (based on
@@ -134,8 +134,10 @@ public class SimpleAchieveREResponder extends SimpleBehaviour implements FIPANam
 			if (request != null) {
 				getDataStore().put(REQUEST_KEY, request);
 				state = PREPARE_RESPONSE_STATE;
-			} else
+			}
+			else {
 				block();
+			}
 			break;
 		}
 		case PREPARE_RESPONSE_STATE: {
@@ -165,10 +167,12 @@ public class SimpleAchieveREResponder extends SimpleBehaviour implements FIPANam
 
 				response = arrangeMessage(receivedMsg, response);
 				myAgent.send(response);
-				if (response.getPerformative() == ACLMessage.AGREE)
+				if (response.getPerformative() == ACLMessage.AGREE) {
 					state = PREPARE_RES_NOT_STATE;
-				else
+				}
+				else {
 					state = RESET_STATE;
+				}
 
 			} else {
 				// could directly send a resultNotification message.

@@ -33,9 +33,9 @@ import jade.gui.AgentTree;
 	/**
    * Progressive Number to give always a new name to DummyAgent
    */
-  private int progressiveNumber = 0;
+  private int progressiveNumber;
 
-  private rma myRMA;
+		private final rma myRMA;
 
    public LogManagerAgentAction(rma anRMA,ActionProcessor actPro) {
       super ("LoggerAgentActionIcon","Start LogManagerAgent",actPro);
@@ -46,8 +46,9 @@ import jade.gui.AgentTree;
    public void doAction(AgentTree.ContainerNode node) {
    	 
    	String containerName = "";
-   	if(node != null)
-   	  	containerName = node.getName();
+		 if (node != null) {
+			 containerName = node.getName();
+		 }
       myRMA.newAgent("log"+progressiveNumber, "jade.tools.logging.LogManagerAgent", new Object[0], containerName);
       progressiveNumber++;
      }

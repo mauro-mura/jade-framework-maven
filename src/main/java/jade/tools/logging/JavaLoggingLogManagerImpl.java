@@ -38,7 +38,7 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 	
 	public static final String JAVA_LOGGING_LOG_MANAGER_CLASS = "jade.tools.logging.JavaLoggingLogManagerImpl";
 	private static final String DEFAULT_ROOT_LOGGER_NAME = "__ROOT_LOGGER";
-	private static List levels = new ArrayList<>();
+	private static final List levels = new ArrayList<>();
 	
 	static {
 		levels.add(new LevelInfo(Level.ALL.getName() ,Level.ALL.intValue()));
@@ -51,12 +51,12 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 		levels.add(new LevelInfo(Level.FINEST.getName() ,Level.FINEST.intValue()));
 		levels.add(new LevelInfo(Level.OFF.getName() ,Level.OFF.intValue()));
 	}
-	
-	
-	private java.util.logging.LogManager logManager = java.util.logging.LogManager.getLogManager();
+
+
+	private final java.util.logging.LogManager logManager = java.util.logging.LogManager.getLogManager();
 	private static final String LOGGER_FRIENDLY_NAME = "Java Util Logging";
-	private List loggers = null;
-	private java.util.ArrayList rootHandlers = null; //root handlers specified in configuration file.
+	private List loggers;
+	private java.util.ArrayList rootHandlers; //root handlers specified in configuration file.
 	
 	
 	public String getName() {
@@ -82,10 +82,11 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 				}
 				StringTokenizer st = new StringTokenizer(handlers, separator);
 				while(st.hasMoreTokens()){
-					if(this.rootHandlers == null)
+					if (this.rootHandlers == null) {
 						this.rootHandlers = new java.util.ArrayList();
+					}
 					String handlerName = st.nextToken().trim();
-					fhExists = (handlerName.indexOf("java.util.logging.FileHandler") > -1);
+					fhExists = handlerName.contains("java.util.logging.FileHandler");
 					this.rootHandlers.add(handlerName);
 				}
 			}
@@ -112,9 +113,9 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 					
 					//retrieves all the handlers associated to the logger
 					//root handlers are inherited by default
-					List loggerHandlers = (this.rootHandlers == null ? new ArrayList<>() : new ArrayList<>(this.rootHandlers));
+					List loggerHandlers = this.rootHandlers == null ? new ArrayList<>() : new ArrayList<>(this.rootHandlers);
 					//root logger handlers have been already set.
-					if(!logName.equals("")){
+					if(!"".equals(logName)){
 						Handler[] handlers = theLogger.getHandlers();
 						//if an handler has been specified at runtime it will have a format
 						//i.e java.util.logging.FileHandler@1234556 so we remove the last part.
@@ -122,7 +123,7 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 						for (int i=0;i<handlers.length;i++){
 							String temp = handlers[i].toString();
 							if (!fhExists){
-				          String userHandler = (temp.indexOf('@') < 0 ? temp : temp.substring(0, temp.indexOf('@')));
+				          String userHandler = temp.indexOf('@') < 0 ? temp : temp.substring(0, temp.indexOf('@'));
 				          loggerHandlers.add(userHandler);
 							}
 						}
@@ -166,7 +167,7 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 				break;
 			}
 		}	
-		if(name.equals(DEFAULT_ROOT_LOGGER_NAME)) {
+		if(DEFAULT_ROOT_LOGGER_NAME.equals(name)) {
 			name = "";
 		}
 		
@@ -215,7 +216,7 @@ public class JavaLoggingLogManagerImpl implements LogManager {
 					break;
 				}
 			}
-			if(name.equals(DEFAULT_ROOT_LOGGER_NAME)) {
+			if(DEFAULT_ROOT_LOGGER_NAME.equals(name)) {
 				name = "";
 			}
 			Logger logger = logManager.getLogger(name);

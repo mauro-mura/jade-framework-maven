@@ -37,7 +37,7 @@ import jade.tools.introspector.Introspector;
 class TreeAgentPopupMenu extends JPopupMenu {
   Introspector debugger;
   String agentName;
-  private AgentTree tree;
+	private final AgentTree tree;
 
   public TreeAgentPopupMenu(Introspector d, AgentTree t) {
     debugger = d;
@@ -65,10 +65,10 @@ class TreeAgentPopupMenu extends JPopupMenu {
       for(int i = 0; i < paths.length; i++) {
 	AgentTree.Node node = (AgentTree.Node) (paths[i].getLastPathComponent());
 	String agentName = node.getName();
-	if(source.getName().equals("on")) {
+	if("on".equals(source.getName())) {
 	  debugger.addAgent(new AID(agentName, AID.ISGUID));
 	}
-	else if(source.getName().equals("off")) {
+	else if("off".equals(source.getName())) {
 	  debugger.removeAgent(new AID(agentName, AID.ISGUID));
 	}
       }

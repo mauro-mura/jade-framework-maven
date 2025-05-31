@@ -6,7 +6,8 @@
  */
 
 package FIPA;
-public class AgentIDsHelper {
+
+public final class AgentIDsHelper {
      // It is useless to have instances of this class
      private AgentIDsHelper() { }
 
@@ -40,9 +41,10 @@ public class AgentIDsHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "AgentIDs", org.omg.CORBA.ORB.init().create_sequence_tc(0, FIPA.AgentIDHelper.type()));
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "AgentIDs", org.omg.CORBA.ORB.init().create_sequence_tc(0, FIPA.AgentIDHelper.type()));
+		 }
       return _tc;
    }
    public static String id() {

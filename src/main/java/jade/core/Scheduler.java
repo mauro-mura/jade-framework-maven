@@ -62,11 +62,11 @@ public class Scheduler implements Serializable {
 	
 	protected List<Behaviour> readyBehaviours = new LinkedList<>();
 	protected List<Behaviour> blockedBehaviours = new LinkedList<>();
-	
+
 	/**
 	 @serial
 	 */
-	private Agent owner;
+	private final Agent owner;
 	
 	/**
 	 @serial
@@ -123,9 +123,10 @@ public class Scheduler implements Serializable {
 		
 		Behaviour[] behaviours = new Behaviour[readyBehaviours.size()];
 		int counter = 0;
-		
-		for(Iterator<Behaviour> it = readyBehaviours.iterator(); it.hasNext();)
+
+		for (Iterator<Behaviour> it = readyBehaviours.iterator();it.hasNext();) {
 			behaviours[counter++] = it.next();
+		}
 		
 		for(int i = 0; i < behaviours.length; i++) {
 			Behaviour b = behaviours[i];
@@ -255,12 +256,14 @@ public class Scheduler implements Serializable {
 		int index = readyBehaviours.indexOf(b);
 		if(index != -1) {
 			readyBehaviours.remove(b);
-			if(index < currentIndex)
+			if (index < currentIndex) {
 				--currentIndex;
-			//if(currentIndex < 0)
-			//  currentIndex = 0;
-			else if (index == currentIndex && currentIndex == readyBehaviours.size())
+				//if(currentIndex < 0)
+				//  currentIndex = 0;
+			}
+			else if (index == currentIndex && currentIndex == readyBehaviours.size()) {
 				currentIndex = 0;
+			}
 		}
 		return index != -1;
 	}

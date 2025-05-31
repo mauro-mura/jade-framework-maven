@@ -49,8 +49,8 @@ class FileMessageStorage implements MessageStorage {
 	private static final String RECEIVER_PREFIX = "AID-";
 	private static final String MESSAGE_PREFIX = "MSG-";
 	private static final String FOREVER = "FOREVER";
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public void init(Profile p) {
 		// Retrieve the base directory from the profile
@@ -197,8 +197,7 @@ class FileMessageStorage implements MessageStorage {
 		long hc2 = msg.toString().hashCode();
 		String hashedName = MESSAGE_PREFIX + (hc1*2 + hc2); 
 
-		File message = new File(subDir, hashedName);
-		return message;
+		return new File(subDir, hashedName);
 	}
 
 	private void incrementCounter(File f) throws IOException {

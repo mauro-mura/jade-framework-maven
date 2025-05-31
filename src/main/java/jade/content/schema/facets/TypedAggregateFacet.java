@@ -38,7 +38,7 @@ import jade.content.abs.*;
  * @author Giovanni Caire - TILAB
  */
 public class TypedAggregateFacet implements Facet {
-	private ObjectSchema type;
+	private final ObjectSchema type;
 	
 	/**
 	   Construct a <code>TypedAggregateFacet</code> that forces

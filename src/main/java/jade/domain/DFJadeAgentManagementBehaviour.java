@@ -46,7 +46,7 @@ import jade.security.JADESecurityException;
  */
 class DFJadeAgentManagementBehaviour extends RequestManagementBehaviour {
 
-	private df theDF;
+	private final df theDF;
 	
   protected DFJadeAgentManagementBehaviour(df a, MessageTemplate mt){
 		super(a,mt);

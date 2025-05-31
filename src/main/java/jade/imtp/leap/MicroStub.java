@@ -47,9 +47,9 @@ public class MicroStub {
 	
 	protected Dispatcher myDispatcher;
 	protected List<PostponedCommand> pendingCommands = new ArrayList<>();
-	private boolean flushing = false;
+	private boolean flushing;
 	private Thread flushingThread;
-	private Vector<Thread> dispatchingThreads = new Vector<>();
+	private final Vector<Thread> dispatchingThreads = new Vector<>();
 	protected Logger logger;
 	
 	public MicroStub(Dispatcher d) {
@@ -79,7 +79,7 @@ public class MicroStub {
 					logger.log(Logger.SEVERE,msg);
 					throw new IMTPException(msg);
 				}
-				else if (((String) r.getParamAt(1)).equals("jade.core.IMTPException")) {
+				else if ("jade.core.IMTPException".equals((String) r.getParamAt(1))) {
 					throw new IMTPException((String) r.getParamAt(2));
 				}
 			}
@@ -104,7 +104,7 @@ public class MicroStub {
 					// trying to dispatch the command, wait for N-M sec only  
 					long elapsedTime = System.currentTimeMillis() - start;
 					long remainingTime = timeout - elapsedTime;
-					timeout = (remainingTime > MINIMUM_TIMEOUT ? remainingTime : MINIMUM_TIMEOUT);
+					timeout = remainingTime > MINIMUM_TIMEOUT ? remainingTime : MINIMUM_TIMEOUT;
 				}
 				int dispatchSessionId = -1;
 				if (icpe instanceof ICPDispatchException exception) {
@@ -220,7 +220,7 @@ public class MicroStub {
 	}
 	
 	public boolean isEmpty() {
-		return ((pendingCommands.isEmpty()) && (!flushing));
+		return (pendingCommands.isEmpty()) && (!flushing);
 	}
 	
 	protected void handlePostponedCommandExpired(Command c, ICPException exception) {
@@ -267,7 +267,7 @@ public class MicroStub {
 				// Throw a suitable exception to avoid that.
 				throw new FlushDeadlock();
 			}
-			while (dispatchingThreads.size() > 0) {
+			while (!dispatchingThreads.isEmpty()) {
 				try {
 					pendingCommands.wait();
 				}
@@ -295,7 +295,7 @@ public class MicroStub {
 	private PostponedCommand removeFirst() {
 		synchronized (pendingCommands) {
 			PostponedCommand pc = null;
-			if (pendingCommands.size() > 0) {
+			if (!pendingCommands.isEmpty()) {
 				pc = (PostponedCommand) pendingCommands.get(0);
 				pendingCommands.remove(0);
 			}

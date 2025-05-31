@@ -61,7 +61,7 @@ import java.io.ByteArrayOutputStream;
    */
   private static int next(int val)
   {
-	return (val==252)?(0):(val+1);
+	return val==252?0:(val+1);
   }
 
   /**
@@ -69,7 +69,7 @@ import java.io.ByteArrayOutputStream;
    */
   private static int back(int val, int num)
   {
-	return (num>val)?(253+val-num):(val-num);
+	return num>val?(253+val-num):(val-num);
   }
 
   /**
@@ -77,7 +77,7 @@ import java.io.ByteArrayOutputStream;
    */
   private static int sum(int val, int num)
   {
-	return (num + val >= 253)?(val + num - 253):(val + num);
+	return num + val >= 253?(val + num - 253):(val + num);
   }
 
   /**
@@ -85,7 +85,7 @@ import java.io.ByteArrayOutputStream;
    */
   private static int min(int a, int b)
   {
-	return (a > b)?(b):(a);
+	return a > b?b:a;
   }
 
   /**
@@ -96,7 +96,9 @@ import java.io.ByteArrayOutputStream;
    *
    */
   public static byte[] compress(byte[] data) {
-    if (data == null) return null;
+		if (data == null) {
+			return null;
+		}
     int dataSize=data.length;
     byte[] result=null;
     try {
@@ -134,7 +136,9 @@ import java.io.ByteArrayOutputStream;
     {
       if (!dataEnded)
       {
-	while((pos < dataSize)&&(!(is_separator(data[pos]) || !inWord))) pos++;
+				while ((pos < dataSize) && (!(is_separator(data[pos]) || !inWord))) {
+					pos++;
+				}
 	if ((pos < dataSize)&&(is_separator(data[pos]) || !inWord))
 	{
 	  inWord = !is_separator(data[pos]);
@@ -149,7 +153,7 @@ import java.io.ByteArrayOutputStream;
 	    }
 	  }
       int j;
-      for(j=(startFlag && (i<126))?(0):(back(i,126)); j!=i; j=next(j))	//trying to find the occurance of the current word; the history lenght is 126 words
+      for(j=startFlag && (i<126)?0:(back(i,126)); j!=i; j=next(j))	//trying to find the occurance of the current word; the history lenght is 126 words
       {
 	countWords=charCounter=0;
 	while( (words[i]+charCounter < dataSize - 1) && 		    //if the position with which we are comparing
@@ -158,16 +162,17 @@ import java.io.ByteArrayOutputStream;
 									    //the current position
 	       (data[words[i]+charCounter]==data[words[j]+charCounter]))    //and the characters are the same
 	{
-	  charCounter++;
-	  if( (sum(j,countWords+1) != i) &&
-	      (words[j]+charCounter >= words[sum(j,countWords+1)]) &&
-	      (sum(i,countWords+1) != numWords) &&
-	      (words[i]+charCounter >= words[sum(i,countWords+1)]) )
-	    countWords++;  //if we achieved the next word boundary
-									  //'+1' means that we count the word only when we
-									  //have aready check all of its symbols
-									  //(each space is one symbol word)
-	}
+			charCounter++;
+			if ((sum(j, countWords + 1) != i) &&
+				(words[j] + charCounter >= words[sum(j, countWords + 1)]) &&
+				(sum(i, countWords + 1) != numWords) &&
+				(words[i] + charCounter >= words[sum(i, countWords + 1)])) {
+				countWords++;  //if we achieved the next word boundary
+				//'+1' means that we count the word only when we
+				//have aready check all of its symbols
+				//(each space is one symbol word)
+			}
+		}
 	if(countWords > 0) //the correspondance was found
 	{
 	  if((countWords == 1)&&(words[next(i)]-words[i]<=2))
@@ -175,12 +180,14 @@ import java.io.ByteArrayOutputStream;
 	    int k;
 	    for(k=0; k< words[next(i)]-words[i]; k++)
 	    {
-	      if(data[words[i]+k]>=0) stream.write(data[words[i]+k]);
-	      else
-	      {
-		stream.write(-127);
-		stream.write(data[words[i]+k]);
-	      }
+				if (data[words[i] + k] >= 0) {
+					stream.write(data[words[i] + k]);
+				}
+				else
+				{
+					stream.write(-127);
+					stream.write(data[words[i] + k]);
+				}
 	    }
 	  }
 	  else
@@ -196,15 +203,19 @@ import java.io.ByteArrayOutputStream;
       {
 	for(j=0; j< words[next(i)]-words[i]; j++)
 	{
-	  if(data[words[i]+j]>=0) stream.write(data[words[i]+j]);
-	  else
-	  {
-	    stream.write(-127);
-	    stream.write(data[words[i]+j]);
-	  }
+		if (data[words[i] + j] >= 0) {
+			stream.write(data[words[i] + j]);
+		}
+		else
+		{
+			stream.write(-127);
+			stream.write(data[words[i] + j]);
+		}
 	}
       }
-      if(i==252) startFlag=false;
+			if (i == 252) {
+				startFlag = false;
+			}
     }
     result = stream.toByteArray();
     /**************************
@@ -233,9 +244,11 @@ import java.io.ByteArrayOutputStream;
    *
    */
   public static byte[] decompress(byte[] data) {
-    if (data == null) return null;
+		if (data == null) {
+			return null;
+		}
     int dataSize = data.length;
-    int outputSize = ((data[0]>=0)?(data[0]):(256 + data[0]))*256 + ((data[1]>=0)?(data[1]):(256 + data[1]));
+    int outputSize = (data[0]>=0?(data[0]):(256 + data[0]))*256 + (data[1]>=0?(data[1]):(256 + data[1]));
     //System.out.print("Data size ");
     //System.out.println(outputSize);
     byte[] output = new byte[outputSize]; //first byte is the array length
@@ -253,15 +266,16 @@ import java.io.ByteArrayOutputStream;
     {
       if( (data[i] < 0) && (data[i] > -127) )
       {
-	int wordsCount = (((i+1 < dataSize)&&(data[i+1] < 0)&&(data[i+1] > -127))?(-data[i+1]):1);
-	int symCount = words[sum(back(numWords,(-data[i])), wordsCount)] - words[back(numWords,(-data[i]))];
+	int wordsCount = (i+1 < dataSize)&&(data[i+1] < 0)&&(data[i+1] > -127)?(-data[i+1]):1;
+	int symCount = words[sum(back(numWords,-data[i]), wordsCount)] - words[back(numWords,-data[i])];
 	int k;
 	for(k=0; k < symCount; k++)
 	{
-	  output[j+k] = output[words[back(numWords,(-data[i]))] + k];
+	  output[j+k] = output[words[back(numWords,-data[i])] + k];
 	}
-	for(k=0; k < wordsCount; k++)
-	  words[sum(numWords,k)] = words[sum(back(numWords, (-data[i])), k)] - words[back(numWords, (-data[i]))]+ j;
+				for (k = 0;k < wordsCount;k++) {
+					words[sum(numWords, k)] = words[sum(back(numWords, -data[i]), k)] - words[back(numWords, -data[i])] + j;
+				}
 	j+=symCount;
 	numWords=sum(numWords,wordsCount);
 	i+=2;
@@ -284,7 +298,9 @@ import java.io.ByteArrayOutputStream;
 	}
 	while( (i< dataSize) && (is_separator(data[i])) && ((data[i]>=0)||(data[i] == -127)) ) //copying the separators
 	{
-	  if(data[i] == -127) i++;
+		if (data[i] == -127) {
+			i++;
+		}
 	  words[numWords]=j;
 	  numWords=next(numWords);
 	  output[j]=data[i];

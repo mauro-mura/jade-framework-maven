@@ -38,7 +38,7 @@ import jade.domain.DFGUIAdapter;
 
 class DFGUIExitDFAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIExitDFAction(DFGUI gui)
 	{

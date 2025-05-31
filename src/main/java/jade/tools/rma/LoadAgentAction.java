@@ -37,8 +37,8 @@ import jade.gui.AIDGui;
  */
 class LoadAgentAction extends ContainerAction {
 
-    private rma myRMA;
-    private Frame mainWnd;
+	private final rma myRMA;
+	private final Frame mainWnd;
 
     LoadAgentAction(rma anRMA, ActionProcessor act, Frame f)
     {

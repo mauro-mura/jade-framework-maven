@@ -43,9 +43,9 @@ import jade.core.exception.NotFoundException;
  */
 class AgentControllerImpl implements AgentController {
 
-	private AID agentID;
-	private ContainerProxy myProxy;
-	private jade.core.AgentContainer myContainer;
+	private final AID agentID;
+	private final ContainerProxy myProxy;
+	private final jade.core.AgentContainer myContainer;
 
 	/**
      This constructor should not be called by applications.
@@ -172,9 +172,10 @@ class AgentControllerImpl implements AgentController {
 		}
 		try {
 			T o2aInterfaceImpl = adaptee.getO2AInterface(theInterface);
-	
-			if(o2aInterfaceImpl == null)
+
+			if (o2aInterfaceImpl == null) {
 				return null;
+			}
 	
 			ClassLoader classLoader = o2aInterfaceImpl.getClass().getClassLoader();
 	

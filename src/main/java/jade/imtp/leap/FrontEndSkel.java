@@ -41,7 +41,7 @@ public class FrontEndSkel extends MicroSkeleton {
 	static final int EXIT = 15;
 	static final int SYNCH = 16;
 
-	private FrontEnd myFrontEnd;
+	private final FrontEnd myFrontEnd;
 
 	public FrontEndSkel(FrontEnd fe) {
 		myFrontEnd = fe;

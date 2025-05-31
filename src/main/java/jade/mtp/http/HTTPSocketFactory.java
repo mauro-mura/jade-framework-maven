@@ -55,6 +55,7 @@ import javax.net.ssl.TrustManager;
 
 import jade.mtp.exception.MTPException;
 import jade.mtp.http.https.*;
+
 //#DOTNET_EXCLUDE_END
 
 /**
@@ -64,17 +65,18 @@ import jade.mtp.http.https.*;
  * @author <a href="mailto:Joan.Ametller@uab.es">Joan Ametller Esquerra</a>
  * 
  */
-public class HTTPSocketFactory {
+public final class HTTPSocketFactory {
 
   public static HTTPSocketFactory getInstance() {
-    if (_instance == null)
-      _instance = new HTTPSocketFactory();
+		if (_instance == null) {
+			_instance = new HTTPSocketFactory();
+		}
     return _instance;
   }
 
 	public void configure(Profile profile, HTTPAddress hta) throws Exception {
 		//#DOTNET_EXCLUDE_BEGIN
-		if (hta.getProto().equals("https")) {
+		if ("https".equals(hta.getProto())) {
 			_usingHttps = true;
 			try {
 				String trustManagerClass =
@@ -95,10 +97,11 @@ public class HTTPSocketFactory {
 					(HTTPSKeyManager)Class.forName(keyManagerClass).getDeclaredConstructor().newInstance();
 				km.init(profile);
 
-				if (profile
-					.getParameter(PREFIX + "needClientAuth", "no")
-					.equals("yes"))
+				if ("yes"
+					.equals(profile
+						.getParameter(PREFIX + "needClientAuth", "no"))) {
 					_needClientAuth = true;
+				}
 
 				SSLContext sctx = SSLContext.getInstance("TLS");
 				sctx.init(new KeyManager[] { km }, new TrustManager[] { tm }, null);
@@ -168,12 +171,13 @@ public class HTTPSocketFactory {
   }
 
   public ServerSocket createServerSocket(String interfaceAddress, int port) throws IOException {
-	InetAddress ifAddr = interfaceAddress == null || interfaceAddress.equals(Profile.LOCALHOST_CONSTANT) ? null : InetAddress.getByName(interfaceAddress);
+	InetAddress ifAddr = interfaceAddress == null || Profile.LOCALHOST_CONSTANT.equals(interfaceAddress) ? null : InetAddress.getByName(interfaceAddress);
     ServerSocket ss = _serverSocketFactory.createServerSocket(port, 0,  ifAddr);
-    
-    //#DOTNET_EXCLUDE_BEGIN
-	if (_usingHttps)
-       ((SSLServerSocket)ss).setNeedClientAuth(_needClientAuth);
+
+		//#DOTNET_EXCLUDE_BEGIN
+	if (_usingHttps) {
+			((SSLServerSocket) ss).setNeedClientAuth(_needClientAuth);
+		}
 	//#DOTNET_EXCLUDE_END
     return ss;
   }
@@ -187,7 +191,7 @@ public class HTTPSocketFactory {
   private static final int DEFAULT_CONNECT_TIMEOUT = -1;
   private SocketFactory _socketFactory;
   private ServerSocketFactory _serverSocketFactory;
-  private boolean _needClientAuth = false;
-  private boolean _usingHttps = false;
+  private boolean _needClientAuth;
+  private boolean _usingHttps;
   private int connectTimeout;  
 }

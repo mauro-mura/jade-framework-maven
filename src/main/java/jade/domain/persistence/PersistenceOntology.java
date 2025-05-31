@@ -40,12 +40,12 @@ import jade.domain.FIPAAgentManagement.NotRegistered;
    JADE-Persistence ontology is a singleton and is accessible through
    the static method <code>getInstance()</code>
 
-   @author Giovanni Rimassa -  FRAMeTech s.r.l.
+	@author Giovanni Rimassa -  FRAMeTech s.r.l.
  */
-public class PersistenceOntology extends Ontology implements PersistenceVocabulary {
- 
-    // The singleton instance of this ontology
-    private static Ontology theInstance = new PersistenceOntology();
+public final class PersistenceOntology extends Ontology implements PersistenceVocabulary {
+
+	// The singleton instance of this ontology
+	private static final Ontology theInstance = new PersistenceOntology();
 	
     /**
        This method returns the unique instance (according to the singleton 

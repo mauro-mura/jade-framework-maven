@@ -46,7 +46,7 @@ public abstract class CyclicBehaviour extends SimpleBehaviour {
 	/**
 	 * Default constructor. It does not set the owner agent.
 	 */
-	public CyclicBehaviour() {
+	protected CyclicBehaviour() {
 		super();
 	}
 
@@ -55,7 +55,7 @@ public abstract class CyclicBehaviour extends SimpleBehaviour {
 	 * 
 	 * @param a The agent this behaviour must belong to.
 	 */
-	public CyclicBehaviour(Agent a) {
+	protected CyclicBehaviour(Agent a) {
 		super(a);
 	}
 

@@ -84,8 +84,9 @@ public interface ACLCodec {
 		 * Print the stack trace for this exception on the standard output stream.
 		 */
 		public void printStackTrace() {
-			if (nested != null)
+			if (nested != null) {
 				nested.printStackTrace();
+			}
 			super.printStackTrace();
 		}
 	}

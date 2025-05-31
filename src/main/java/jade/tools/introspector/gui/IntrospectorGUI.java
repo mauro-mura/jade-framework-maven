@@ -49,20 +49,20 @@ import jade.tools.introspector.Introspector;
 */
 public class IntrospectorGUI extends JFrame implements WindowListener {
 
-  private Introspector debugger;
+	private final Introspector debugger;
 
-  private TreePanel panel;
-  private JDesktopPane desk;
-  private JSplitPane split;
-  private JScrollPane scroll;
+	private final TreePanel panel;
+	private final JDesktopPane desk;
+	private final JSplitPane split;
+	private final JScrollPane scroll;
 
-  private JMenuBar bar;
-  private JMenu menuFile;
-  private JMenu menuAbout;
-  private JMenuItem item;
- 
+	private final JMenuBar bar;
+	private final JMenu menuFile;
+	private final JMenu menuAbout;
+	private final JMenuItem item;
 
-  private String logoIntrospector =  "images/bug.gif";
+
+	private final String logoIntrospector = "images/bug.gif";
   
 public IntrospectorGUI(Introspector i) {
 
@@ -110,7 +110,7 @@ public IntrospectorGUI(Introspector i) {
     	
     item.addActionListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {
-        exit_actionPerformed(e);
+        exitActionPerformed(e);
       }
     });
 
@@ -128,7 +128,7 @@ public IntrospectorGUI(Introspector i) {
   }
 
 
-  void exit_actionPerformed(ActionEvent e){
+  void exitActionPerformed(ActionEvent e){
     this.debugger.doDelete();
   }
 
@@ -140,7 +140,7 @@ public IntrospectorGUI(Introspector i) {
 
   // interface WindowListener
   public void windowClosing(WindowEvent e){
-    this.exit_actionPerformed(null);
+    this.exitActionPerformed(null);
   }
 
   public void windowClosed(WindowEvent e){}
@@ -250,7 +250,7 @@ public IntrospectorGUI(Introspector i) {
   // Shuts down the desktop
   public void disposeAsync() {
     class disposeIt implements Runnable {
-      private Window toDispose;
+			private final Window toDispose;
       public disposeIt(Window w) {
 	      toDispose = w;
       }

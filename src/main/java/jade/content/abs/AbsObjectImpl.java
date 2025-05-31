@@ -43,13 +43,13 @@ public class AbsObjectImpl implements AbsObject {
 
 	@Serial
 	private static final long serialVersionUID = -5723008914669583458L;
-	private HashMap<CaseInsensitiveString, AbsObject> elements = new HashMap<>();
+	private final HashMap<CaseInsensitiveString, AbsObject> elements = new HashMap<>();
 	/** This list keeps the keys in the same order as they were added **/
-	private ArrayList<String> orderedKeys = new ArrayList<>();
-	private String typeName = null;
+	private final ArrayList<String> orderedKeys = new ArrayList<>();
+	private String typeName;
 	/** true if this object is changed and its hash must be recomputed **/
 	private boolean changed = true;
-	private int hashCode = 0;
+	private int hashCode;
 
 	/**
 	 * Construct an Abstract descriptor to hold an object of the proper type.
@@ -132,8 +132,9 @@ public class AbsObjectImpl implements AbsObject {
 	public String[] getNames() {
 		String[] names = new String[orderedKeys.size()];
 		int j = 0;
-		for (Iterator<String> i = orderedKeys.iterator(); i.hasNext();)
+		for (Iterator<String> i = orderedKeys.iterator();i.hasNext();) {
 			names[j++] = i.next();
+		}
 		return names;
 	}
 

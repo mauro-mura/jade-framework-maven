@@ -63,8 +63,8 @@ public abstract class Filter {
 	 */
 	public static final boolean OUTGOING = true;
 
-	private boolean blocking = false;
-	private boolean skipping = false;
+	private boolean blocking;
+	private boolean skipping;
 
 	// The next filter in the filter chain
 	private Filter next;

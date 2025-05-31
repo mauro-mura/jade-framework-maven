@@ -41,7 +41,7 @@ import jade.gui.DFAgentDscDlg;
 
 class DFGUIViewAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 	
 
 	public DFGUIViewAction(DFGUI gui)
@@ -57,29 +57,36 @@ class DFGUIViewAction extends AbstractAction
 	    int kind = gui.kindOfOperation();
 		
 	    AID name = gui.getSelectedAgentInTable();
-	  
-	    //something was selected
-		  if (name != null)
-		  	if ( kind == DFGUI.AGENT_VIEW || kind == DFGUI.CHILDREN_VIEW || kind == DFGUI.LASTSEARCH_VIEW)
-	      {
-	      	try
-	      	{
-	      		if(kind == DFGUI.LASTSEARCH_VIEW)
-	      	  	dfd = gui.getDFAgentSearchDsc(name); // the dsc is maintained in a variable of the gui
-	          else
-	  			    dfd = gui.myAgent.getDFAgentDsc(name); // agent registered
-	      	}catch (FIPAException fe){
-	  			  gui.showStatusMsg("WARNING! No description for agent called " + name + " is found");
-	  			  return;}
-	  	  }
-	      else
-	  	  {
-	  	  	if (kind == DFGUI.PARENT_VIEW)
-	  	      // In this case the description that will be shown will be the description used to federate the df 
-	  		    dfd = gui.myAgent.getDescriptionOfThisDF(name);
-	  	  }
-	    else //nothing selected
-	  	  return;
+
+		//something was selected
+		if (name != null) {
+			if (kind == DFGUI.AGENT_VIEW || kind == DFGUI.CHILDREN_VIEW || kind == DFGUI.LASTSEARCH_VIEW)
+			{
+				try
+				{
+					if (kind == DFGUI.LASTSEARCH_VIEW) {
+						dfd = gui.getDFAgentSearchDsc(name);
+						// the dsc is maintained in a variable of the gui
+					}
+					else {
+						dfd = gui.myAgent.getDFAgentDsc(name); // agent registered
+					}
+				} catch (FIPAException fe) {
+					gui.showStatusMsg("WARNING! No description for agent called " + name + " is found");
+					return;
+				}
+			}
+			else
+			{
+				if (kind == DFGUI.PARENT_VIEW) {
+					// In this case the description that will be shown will be the description used to federate the df 
+					dfd = gui.myAgent.getDescriptionOfThisDF(name);
+				}
+			}
+		}
+		else { //nothing selected
+			return;
+		}
 
 	    if(dfd != null && kind != -1)
 	    {

@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 abstract class GenericAction extends RMAAction{
 
-  public GenericAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected GenericAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
 

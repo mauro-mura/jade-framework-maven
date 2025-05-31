@@ -33,8 +33,8 @@ import jade.content.lang.Codec;
  */
 public class SimpleSLTokenizer {
 	private static final String msg = "Parse error: unexpected end of content at #";
-	private String content;
-	private int current = 0;
+	private final String content;
+	private int current;
 
 	/**
 	   Construct a SimpleSLTokenizer that will act on the given String
@@ -166,8 +166,7 @@ public class SimpleSLTokenizer {
 		while (!isSpace(c) && c != ')' && c != '(') {
 			c = content.charAt(++current);
 		}
-		String s = content.substring(start, current);
-		return s;
+		return content.substring(start, current);
 	}
 
 	private void skipSpaces() {
@@ -177,7 +176,7 @@ public class SimpleSLTokenizer {
 	}
 
 	private boolean isSpace(char c) {
-		return (c == ' ' || c == '\t' || c == '\n');
+		return c == ' ' || c == '\t' || c == '\n';
 	}
 
 	private static final String illegalFirstChar = "#0123456789:-?";
@@ -189,7 +188,7 @@ public class SimpleSLTokenizer {
 	 * that a Word can not contain a '\"', that would confuse the parser at
 	 * the other end.
 	 */
-	public final static boolean isAWord( String s) {
+	public static boolean isAWord( String s) {
 		// This should permit strings of length 0 to be encoded.
 		if( s==null || s.length()==0 ) {
 			return false; // words must have at least one character
@@ -219,11 +218,14 @@ public class SimpleSLTokenizer {
 		// StringBuffer will automatically grow as needed).
 		StringBuilder result = new StringBuilder(s.length()+20);
 		result.append("\"");
-		for( int i=0; i<s.length(); i++)
-			if( s.charAt(i) == '"' ) 
+		for (int i = 0;i < s.length();i++) {
+			if (s.charAt(i) == '"') {
 				result.append("\\\"");
-			else 
+			}
+			else {
 				result.append(s.charAt(i));
+			}
+		}
 		result.append("\"");
 		return result.toString();
 	}

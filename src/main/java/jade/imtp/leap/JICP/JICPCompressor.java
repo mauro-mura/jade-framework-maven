@@ -58,9 +58,9 @@ public class JICPCompressor {
 	// internal fields
 	private static final int RLE_FLUSH = 0x100;
 	private int rleOldValue = RLE_FLUSH;
-	private int rleOccurrence = 0;
+	private int rleOccurrence;
 	@SuppressWarnings("unused")
-	private int count = 0;
+	private int count;
 	private byte[] ba;
 
 	private static boolean isSep(int value) {
@@ -147,8 +147,9 @@ public class JICPCompressor {
 	 *
 	 */
 	public static byte[] compress(byte[] ba) {
-		if (ba == null)
+		if (ba == null) {
 			return null;
+		}
 		else {
 			return new JICPCompressor().compressHelper(ba);
 		}
@@ -156,7 +157,7 @@ public class JICPCompressor {
 
 	private byte[] compressHelper(byte[] uba) {
 
-		int wordIndexes[] = new int[MAX_WORDS];
+		int[] wordIndexes = new int[MAX_WORDS];
 //        int                   beginIndex    = 0;
 		int wordIndex = 0;
 		int lastWordIndex = 0;
@@ -254,7 +255,7 @@ public class JICPCompressor {
 	}
 
 	private byte[] decompressHelper(byte[] cba) {
-		int wordIndexes[] = new int[MAX_WORDS];
+		int[] wordIndexes = new int[MAX_WORDS];
 		int wordIndex = 0;
 		int currentIndex = 0;
 //        int                  beginIndex    = 0;

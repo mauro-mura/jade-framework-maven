@@ -44,16 +44,16 @@ import java.io.Serial;
  * <p>
  * 
  * @author Elisabetta Cortese - TiLab S.p.A.
-   @author Moreno LAGO
-   @version $Date: 2003-08-26 11:15:34 +0200 (mar, 26 ago 2003) $ $Revision: 4243 $
+	@author Moreno LAGO
+	@version $Date: 2003-08-26 11:15:34 +0200 (mar, 26 ago 2003) $ $Revision: 4243 $
  * 
  */
 
-public class DFAppletOntology extends Ontology implements DFAppletVocabulary {
+public final class DFAppletOntology extends Ontology implements DFAppletVocabulary {
 
 	@Serial
 	private static final long serialVersionUID = 4077049228906178235L;
-	private static Ontology theInstance = new DFAppletOntology();
+	private static final Ontology theInstance = new DFAppletOntology();
 
 	/**
 	 * This method grants access to the unique instance of the ontology.

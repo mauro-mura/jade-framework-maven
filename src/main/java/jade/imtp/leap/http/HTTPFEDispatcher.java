@@ -63,7 +63,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 	private KeepAliveManager myKeepAliveManager;
 	private InputManager myInputManager;
 	private int outCnt;
-	private boolean waitingForFlush = false;
+	private boolean waitingForFlush;
 	private long maxDisconnectionTime;
 	private long keepAliveTime;
 	private Properties props;
@@ -78,11 +78,11 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 
 	private ConnectionListener myConnectionListener;
 
-	private Object connectorLock = new Object();
-	private boolean locked = false;
+	private final Object connectorLock = new Object();
+	private boolean locked;
 
-	private int verbosity = 1;
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final int verbosity = 1;
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	protected String myMediatorClass = "jade.imtp.leap.http.HTTPBEDispatcher";
 
@@ -329,9 +329,9 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 	// These variables are only used within the InputManager class,
 	// but are declared externally since they must "survive" when 
 	// an InputManager is replaced
-	private JICPPacket lastResponse = null;
+	private JICPPacket lastResponse;
 	private byte lastSid = 0x10;
-	private int cnt = 0;
+	private int cnt;
 
 	/**
      Inner class InputManager
@@ -340,7 +340,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 	private class InputManager extends Thread {
 
 		private boolean active = true;
-		private Connection myConnection = null;
+		private Connection myConnection;
 		private int myId;
 
 		public void run() {
@@ -529,9 +529,9 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 	 * Inner class DisconnectionManager.
 	 * Manages issues related to disconnection of the device.
 	 */
-	class DisconnectionManager implements Runnable {
-		private boolean reachable = false;
-		private boolean pingOK = false;
+	final class DisconnectionManager implements Runnable {
+		private boolean reachable;
+		private boolean pingOK;
 		private Thread myThread;
 		private long retryTime;
 		private long maxDisconnectionTime;
@@ -541,7 +541,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 			this.maxDisconnectionTime = maxDisconnectionTime;
 		}
 
-		private synchronized final boolean isReachable() {
+		private final synchronized boolean isReachable() {
 			return reachable;
 		}
 
@@ -653,7 +653,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
      This class is responsible for taking track of keep-alive packets
      and detect problems when they miss.
 	 */
-	private class KeepAliveManager implements TimerListener {
+private final class KeepAliveManager implements TimerListener {
 		private long kaTimeout = -1;
 		private Timer kaTimer;
 
@@ -705,7 +705,7 @@ public class HTTPFEDispatcher implements FEConnectionManager, Dispatcher, TimerL
 				if (pkt.getType() == JICPProtocol.ERROR_TYPE) {
 					// Communication OK, but there was a JICP error.
 					String errorMsg = new String(pkt.getData());
-					if (errorMsg.equals(JICPProtocol.NOT_FOUND_ERROR)) {
+					if (JICPProtocol.NOT_FOUND_ERROR.equals(errorMsg)) {
 						// Back-end not found: either the max disconnection time expired server side or there was a fault and restart
 						// --> Try to recreate the Back-end
 						myLogger.log(Logger.WARNING, "Communication OK, but Back-end no longer present. Try to recreate it");

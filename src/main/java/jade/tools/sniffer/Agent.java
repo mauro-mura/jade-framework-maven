@@ -48,14 +48,14 @@ import jade.gui.AgentTree;
 
 public class Agent implements Serializable{
 
-	public static int i = 0;
+	public static int i;
 	public static final int hRet = 30;
 	public static final int bRet = 50;
 	public static final int yRet = 20;
 	public String agentName;
 	private AID myAID;
 
-	private int pos = 0;
+	private int pos;
 
 	/**
 	 * This flag is <em>true</em> for agents on canvas and <em>false</em> for agents

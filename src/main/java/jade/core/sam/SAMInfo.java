@@ -54,7 +54,7 @@ public class SAMInfo implements Serializable {
 	
 	
 	SAMInfo() {
-		this(new HashMap<String, AverageMeasure>(), new HashMap<String, Long>());
+		this(new HashMap<>(), new HashMap<>());
 	}
 	
 	SAMInfo(Map<String, AverageMeasure> entityMeasures, Map<String, Long> counterValues) {
@@ -129,7 +129,7 @@ public class SAMInfo implements Serializable {
 	}
 	
 	private static Map<String, AverageMeasure> oneShotComputeAggregatedMeasures(Map<String, AverageMeasure> measures) {
-		Map<String, AverageMeasure> aggregatedMeasures = new HashMap<String, AverageMeasure>();
+		Map<String, AverageMeasure> aggregatedMeasures = new HashMap<>();
 		for (String entityName : measures.keySet()) {
 			AverageMeasure am = measures.get(entityName);
 			AggregationInfo ai = getAggregationInfo(entityName, AVG_AGGREGATION);
@@ -161,7 +161,7 @@ public class SAMInfo implements Serializable {
 	}
 	
 	private static Map<String, Long> oneShotComputeAggregatedCounters(Map<String, Long> counters) {
-		Map<String, CounterAggregator> aggregatedCounters = new HashMap<String, CounterAggregator>();
+		Map<String, CounterAggregator> aggregatedCounters = new HashMap<>();
 		for (String counterName : counters.keySet()) {
 			Long c = counters.get(counterName);
 			AggregationInfo ai = getAggregationInfo(counterName, SUM_AGGREGATION);
@@ -177,7 +177,7 @@ public class SAMInfo implements Serializable {
 			}
 		}
 		
-		Map<String, Long> result = new HashMap<String, Long>(aggregatedCounters.size());
+		Map<String, Long> result = new HashMap<>(aggregatedCounters.size());
 		for (Map.Entry<String, CounterAggregator> entry : aggregatedCounters.entrySet()) {
 			result.put(entry.getKey(), entry.getValue().getAggregatedValue());
 		}
@@ -196,7 +196,7 @@ public class SAMInfo implements Serializable {
 	}
 	
 	
-	public static final AggregationInfo getAggregationInfo(String name, int defaultAggregation) {
+	public static AggregationInfo getAggregationInfo(String name, int defaultAggregation) {
 		for (int i = name.length() - 1; i >= 0; --i) {
 			AggregationInfo ai = null;
 			char c = name.charAt(i);
@@ -238,7 +238,7 @@ public class SAMInfo implements Serializable {
 	 */
 	private static class CounterAggregator {
 		private double aggregatedVal = 0;
-		private int contributionsCnt = 0;
+		private int contributionsCnt;
 		
 		public void update(long contribution, int aggregation) {
 			if (aggregation == AVG_AGGREGATION) {

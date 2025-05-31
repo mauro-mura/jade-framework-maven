@@ -40,7 +40,7 @@ class StartException extends Exception
   public StartException()
     {}
 
-  public static final void handle ()
+  public static void handle ()
     {
       JOptionPane.showMessageDialog(new JFrame(),ErrorMessage,ErrorPaneTitle,JOptionPane.ERROR_MESSAGE);
     }

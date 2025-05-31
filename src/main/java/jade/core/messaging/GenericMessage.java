@@ -55,10 +55,10 @@ public class GenericMessage implements Serializable {
 	private transient AID sender;
 	private transient JADEPrincipal senderPrincipal;
 	private transient Credentials senderCredentials;
-	private boolean isAMSFailure = false;
-	private transient boolean foreignReceiver = false;
+	private boolean isAMSFailure;
+	private transient boolean foreignReceiver;
 	private transient boolean modifiable = true;
-	private String traceID = null;
+	private String traceID;
 	private long timeStamp = -1;
 
 	public GenericMessage(){
@@ -160,7 +160,7 @@ public class GenericMessage implements Serializable {
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		// Updates the payload if not present, before serialising
 		if (payload==null){
-			payload = (new LEAPACLCodec()).encode(msg, null);
+			payload = new LEAPACLCodec().encode(msg, null);
 		}
 		out.defaultWriteObject();
 	}
@@ -187,7 +187,7 @@ public class GenericMessage implements Serializable {
 
 	// DEBUG
 	public String toString(){
-		return "GenericMessage\n\t"+msg+"\n\t"+env+"\n\t"+((payload==null)?"null payload":payload.toString())+"\n";
+		return "GenericMessage\n\t"+msg+"\n\t"+env+"\n\t"+(payload==null?"null payload":payload.toString())+"\n";
 	}
 
 	public int length() {

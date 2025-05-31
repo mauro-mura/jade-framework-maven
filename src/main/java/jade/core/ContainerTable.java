@@ -42,7 +42,7 @@ class ContainerTable {
 	// Initial size of containers hash table
 	private static final int CONTAINERS_SIZE = 10;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	private static class Entry {
 		
@@ -66,7 +66,7 @@ class ContainerTable {
 	} // End of Entry class
 
 
-	private Map<ContainerID, Entry> entries = new HashMap<>(CONTAINERS_SIZE);
+	private final Map<ContainerID, Entry> entries = new HashMap<>(CONTAINERS_SIZE);
 
 	public synchronized void addContainer(ContainerID cid) {
 		Entry e = new Entry();
@@ -75,8 +75,9 @@ class ContainerTable {
 
 	public synchronized void addMTP(ContainerID cid, MTPDescriptor mtp) throws NotFoundException {
 		Entry e = entries.get(cid);
-		if(e == null)
+		if (e == null) {
 			throw new NotFoundException("No container named " + cid.getName() + " was found.");
+		}
 		List<MTPDescriptor> l = e.getMTPs();
 		l.add(mtp);
 	}
@@ -89,16 +90,18 @@ class ContainerTable {
 
 	public synchronized void removeMTP(ContainerID cid, MTPDescriptor mtp) throws NotFoundException {
 		Entry e = entries.get(cid);
-		if(e == null)
+		if (e == null) {
 			throw new NotFoundException("No container named " + cid.getName() + " was found.");
+		}
 		List<MTPDescriptor> l = e.getMTPs();
 		l.remove(mtp);
 	}
 
 	public synchronized List<MTPDescriptor> getMTPs(ContainerID cid) throws NotFoundException {
 		Entry e = entries.get(cid);
-		if(e == null)
+		if (e == null) {
 			throw new NotFoundException("No container named " + cid.getName() + " was found.");
+		}
 		return e.getMTPs();
 	}
 

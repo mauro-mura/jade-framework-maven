@@ -37,9 +37,9 @@ import jade.gui.AgentTree;
   /**
    * Progressive Number to give always a new name to IntrospectoAgent
    */
-  private int progressiveNumber = 0;
+  private int progressiveNumber;
 
-  private rma myRMA;
+		private final rma myRMA;
 
   public IntrospectorAction(rma anRMA,ActionProcessor actPro) {
       super ("IntrospectorActionIcon","Start IntrospectorAgent",actPro);
@@ -50,8 +50,9 @@ import jade.gui.AgentTree;
    public void doAction(AgentTree.ContainerNode node) {
    	 
    	String containerName = "";
-   	if(node != null)
-   	  	containerName = node.getName();
+		 if (node != null) {
+			 containerName = node.getName();
+		 }
       myRMA.newAgent("Introspector"+progressiveNumber, "jade.tools.introspector.Introspector", new Object[0], containerName);
       progressiveNumber++;
      }

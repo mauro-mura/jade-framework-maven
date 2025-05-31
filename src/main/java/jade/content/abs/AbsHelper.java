@@ -118,8 +118,9 @@ public class AbsHelper {
 		AbsAggregate ret = new AbsAggregate(AggregateType);
 
 		try {
-			while(obj.hasNext())
+			while (obj.hasNext()) {
 				ret.add((AbsTerm) (onto.fromObject(obj.next())));
+			}
 		}
 		catch (ClassCastException cce) {
 			throw new OntologyException("Non term object in aggregate");

@@ -114,16 +114,16 @@ public class Boot {
 				// Parse next option
 
 				// Switch options require special handling
-				if (args[i].equalsIgnoreCase("-version")) {
+				if ("-version".equalsIgnoreCase(args[i])) {
 					logger.log(Logger.INFO, "----------------------------------\n" + Runtime.getCopyrightNotice()
 							+ "----------------------------------------");
 					return null;
 				}
-				if (args[i].equalsIgnoreCase("-help")) {
+				if ("-help".equalsIgnoreCase(args[i])) {
 					printUsage();
 					return null;
 				}
-				if (args[i].equalsIgnoreCase("-container")) {
+				if ("-container".equalsIgnoreCase(args[i])) {
 					props.setProperty(Profile.MAIN, "false");
 				} else if (args[i].equalsIgnoreCase("-" + Profile.LOCAL_SERVICE_MANAGER)) {
 					props.setProperty(Profile.LOCAL_SERVICE_MANAGER, "true");
@@ -133,13 +133,13 @@ public class Boot {
 					props.setProperty(Profile.NO_MTP, "true");
 				}
 				// Options that can be specified in different ways require special handling
-				else if (args[i].equalsIgnoreCase("-name")) {
+				else if ("-name".equalsIgnoreCase(args[i])) {
 					if (++i < args.length) {
 						props.setProperty(Profile.PLATFORM_ID, args[i]);
 					} else {
 						throw new IllegalArgumentException("No platform name specified after \"-name\" option");
 					}
-				} else if (args[i].equalsIgnoreCase("-mtp")) {
+				} else if ("-mtp".equalsIgnoreCase(args[i])) {
 					if (++i < args.length) {
 						props.setProperty(Profile.MTPS, args[i]);
 					} else {
@@ -147,15 +147,16 @@ public class Boot {
 					}
 				}
 				// The -conf option requires special handling
-				else if (args[i].equalsIgnoreCase("-conf")) {
+				else if ("-conf".equalsIgnoreCase(args[i])) {
 					if (++i < args.length) {
 						// Some parameters are specified in a properties file
 						try {
 							props.load(args[i]);
 						} catch (Exception e) {
-							if (logger.isLoggable(Logger.SEVERE))
+							if (logger.isLoggable(Logger.SEVERE)) {
 								logger.log(Logger.SEVERE,
-										"WARNING: error loading properties from file " + args[i] + ". " + e);
+									"WARNING: error loading properties from file " + args[i] + ". " + e);
+							}
 						}
 					} else {
 						throw new IllegalArgumentException(
@@ -175,25 +176,29 @@ public class Boot {
 			} else {
 				// Get agents at the end of command line
 				if (props.getProperty(Profile.AGENTS) != null) {
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING,
-								"WARNING: overriding agents specification set with the \"-agents\" option");
+							"WARNING: overriding agents specification set with the \"-agents\" option");
+					}
 				}
 				String agents = args[i];
 				props.setProperty(Profile.AGENTS, args[i]);
 				if (++i < args.length) {
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING, "WARNING: ignoring command line argument " + args[i]
-								+ " occurring after agents specification");
+							+ " occurring after agents specification");
+					}
 					if (agents != null && agents.indexOf('(') != -1 && !agents.endsWith(")")) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING,
-									"Note that agent arguments specifications must not contain spaces");
+								"Note that agent arguments specifications must not contain spaces");
+						}
 					}
 					if (args[i].indexOf(':') != -1) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING,
-									"Note that agent specifications must be separated by a semicolon character \";\" without spaces");
+								"Note that agent specifications must be separated by a semicolon character \";\" without spaces");
+						}
 					}
 				}
 				break;
@@ -202,9 +207,10 @@ public class Boot {
 
 		// Consistency check
 		if ("true".equals(props.getProperty(Profile.NO_MTP)) && props.getProperty(Profile.MTPS) != null) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING,
-						"WARNING: both \"-mtps\" and \"-nomtp\" options specified. The latter will be ignored");
+					"WARNING: both \"-mtps\" and \"-nomtp\" options specified. The latter will be ignored");
+			}
 			props.remove(Profile.NO_MTP);
 		}
 

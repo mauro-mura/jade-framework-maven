@@ -51,15 +51,15 @@ import jade.imtp.leap.http.HTTPProtocol;
  * @author Giovanni Caire - TILAB
  */
 class ConnectionPool {
-	private Map<String, List<ConnectionWrapper>> connections = new HashMap<>();
-	private TransportProtocol myProtocol;
-	private ConnectionFactory myFactory;
+	private final Map<String, List<ConnectionWrapper>> connections = new HashMap<>();
+	private final TransportProtocol myProtocol;
+	private final ConnectionFactory myFactory;
 	private int maxSize;
 	private int size;
-	private boolean closed = false;
+	private boolean closed;
 
-	private long hitCnt = 0;
-	private long missCnt = 0;
+	private long hitCnt;
+	private long missCnt;
 
 	ConnectionPool(TransportProtocol p, ConnectionFactory f, int ms) {
 		myProtocol = p;

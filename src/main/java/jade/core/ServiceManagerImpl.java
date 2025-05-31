@@ -52,19 +52,19 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 	private static final int ACTIVE_STATUS = 1;
 	private static final int TERMINATING_STATUS = 2;
 
-	private IMTPManager myIMTPManager;
-	private CommandProcessor myCommandProcessor;
+	private final IMTPManager myIMTPManager;
+	private final CommandProcessor myCommandProcessor;
 	private PlatformManager myPlatformManager;
 	private boolean invalidPlatformManager;
 	private String platformName;
 	private Node localNode;
 	private NodeDescriptor localNodeDescriptor;
-	private Map<String, ServiceDescriptor> localServices;
-	private Map<String, PlatformManager> backupManagers;
+	private final Map<String, ServiceDescriptor> localServices;
+	private final Map<String, PlatformManager> backupManagers;
 
 	private int status = IDLE_STATUS;
 
-	private jade.util.Logger myLogger;
+	private final jade.util.Logger myLogger;
 
 	/**
 	 * Constructs a new Service Manager implementation complying with a given JADE
@@ -247,7 +247,7 @@ public class ServiceManagerImpl implements ServiceManager, ServiceFinder {
 	}
 
 	private boolean isLocal(Service svc) {
-		return (svc instanceof BaseService bs && bs.isLocal());
+		return svc instanceof BaseService bs && bs.isLocal();
 	}
 
 	public void deactivateService(String name) throws IMTPException, ServiceException {

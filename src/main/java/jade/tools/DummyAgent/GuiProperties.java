@@ -57,14 +57,16 @@ public class GuiProperties {
     MyDefaults = new UIDefaults (icons);
   }
 
-  public static final Icon getIcon(String key) {
+  public static Icon getIcon(String key) {
     Icon i = MyDefaults.getIcon(key);
     if (i == null) {
       System.out.println(key);
       System.exit(-1);
       return null;
     }
-    else return MyDefaults.getIcon(key);
+		else {
+			return MyDefaults.getIcon(key);
+		}
   }
 }
 

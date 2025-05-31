@@ -43,15 +43,15 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 class ClassDiscover {
-	
-	private static Logger myLogger = Logger.getMyLogger(ClassDiscover.class.getName());
+
+	private static final Logger myLogger = Logger.getMyLogger(ClassDiscover.class.getName());
 	
 	static List<Class<?>> getClassesForPackage(String pkgname) throws ClassNotFoundException {
 		// This will hold a list of directories matching the pckgname.
 		// There may be more than one if a package is split over multiple
 		// jars/paths
 		List<Class<?>> classes = new ArrayList<>();
-		ArrayList<File> directories = new ArrayList<File>();
+		ArrayList<File> directories = new ArrayList<>();
 		try {
 			ClassLoader cld = Thread.currentThread().getContextClassLoader();
 			if (cld == null) {
@@ -61,7 +61,7 @@ class ClassDiscover {
 			Enumeration<URL> resources = cld.getResources(pkgname.replace('.', '/'));
 			while (resources.hasMoreElements()) {
 				URL res = resources.nextElement();
-				if (res.getProtocol().equalsIgnoreCase("jar")) {
+				if ("jar".equalsIgnoreCase(res.getProtocol())) {
 					JarURLConnection conn = (JarURLConnection) res.openConnection();
 					JarFile jar = conn.getJarFile();
 					for (JarEntry e : Collections.list(jar.entries())) {
@@ -72,8 +72,10 @@ class ClassDiscover {
 							classes.add(Class.forName(className));
 						}
 					}
-				} else
+				}
+				else {
 					directories.add(new File(URLDecoder.decode(res.getPath(), "UTF-8")));
+				}
 			}
 		} catch (NullPointerException x) {
 			throw new ClassNotFoundException(pkgname + " does not appear to be " + "a valid package (Null pointer exception)");

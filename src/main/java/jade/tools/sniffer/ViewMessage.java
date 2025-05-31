@@ -53,7 +53,7 @@ public class ViewMessage
 	extends MenuItem {
 	#DOTNET_INCLUDE_END*/
 
- private MainWindow mWnd;
+	private final MainWindow mWnd;
  private Message message;
 
  public ViewMessage(MainWindow mWnd) {

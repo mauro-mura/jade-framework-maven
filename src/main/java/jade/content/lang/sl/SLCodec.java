@@ -70,16 +70,16 @@ public class SLCodec extends StringCodec {
 	private transient SLParser parser;
 	private transient ExtendedSLParser extendedParser;
 	private SL0Ontology slOnto; // ontology of the content language
-	private Ontology domainOnto = null; // application ontology
+	private Ontology domainOnto; // application ontology
 	/** This is the StringBuffer used by the encode method **/
-	private transient StringBuilder buffer = null;
+	private transient StringBuilder buffer;
 	/**
 	 * This variable is true, when meta symbols are allowed (metas are a
 	 * semantics-specific extension to the SL Grammar)
 	 **/
 	private boolean metaAllowed = true; // FIXME set/unset this variable to do
 
-	private boolean preserveJavaTypes = false;
+	private boolean preserveJavaTypes;
 
 	/**
 	 * Construct a Codec object for the full SL-language (FIPA-SL).
@@ -123,11 +123,12 @@ public class SLCodec extends StringCodec {
 	 *                          be preserved
 	 */
 	public SLCodec(int slType, boolean preserveJavaTypes) {
-		super((slType == 0 ? FIPANames.ContentLanguage.FIPA_SL0
+		super(slType == 0 ? FIPANames.ContentLanguage.FIPA_SL0
 				: (slType == 1 ? FIPANames.ContentLanguage.FIPA_SL1
-						: (slType == 2 ? FIPANames.ContentLanguage.FIPA_SL2 : FIPANames.ContentLanguage.FIPA_SL))));
-		if ((slType < 0) || (slType > 2)) // if outside range, set to full SL
+						: (slType == 2 ? FIPANames.ContentLanguage.FIPA_SL2 : FIPANames.ContentLanguage.FIPA_SL)));
+		if ((slType < 0) || (slType > 2)) { // if outside range, set to full SL
 			slType = 3;
+		}
 		slOnto = (SL0Ontology) (slType == 0 ? SL0Ontology.getInstance()
 				: (slType == 1 ? SL1Ontology.getInstance()
 						: (slType == 2 ? SL2Ontology.getInstance() : SLOntology.getInstance())));
@@ -187,8 +188,10 @@ public class SLCodec extends StringCodec {
 					encodeAndAppend(o);
 					buffer.append(' ');
 				}
-			} else
+			}
+			else {
 				encodeAndAppend(content);
+			}
 			buffer.append(')');
 			return buffer.toString();
 		} finally {
@@ -203,8 +206,8 @@ public class SLCodec extends StringCodec {
 	private void encodeAndAppend(String val) {
 		// if the slotName is a String of words then quote it. If it is a meta (i.e.
 		// startsWith "??") do not quote it.
-		String out = ((SimpleSLTokenizer.isAWord(val) || (metaAllowed && val.startsWith("??"))) ? val
-				: SimpleSLTokenizer.quoteString(val));
+		String out = SimpleSLTokenizer.isAWord(val) || (metaAllowed && val.startsWith("??")) ? val
+				: SimpleSLTokenizer.quoteString(val);
 		buffer.append(out);
 	}
 
@@ -305,9 +308,11 @@ public class SLCodec extends StringCodec {
 				}
 			}
 			buffer.append(')');
-		} else
+		}
+		else {
 			// Proposition
 			encodeAndAppend(propositionSymbol);
+		}
 	}
 
 	private void encodeAndAppend(AbsIRE val) throws CodecException {
@@ -384,18 +389,21 @@ public class SLCodec extends StringCodec {
 
 	private void encodeAndAppend(AbsPrimitive val) throws CodecException {
 		Object v = val.getObject();
-		if (v instanceof Date date)
+		if (v instanceof Date date) {
 			buffer.append(ISO8601.toString(date));
+		}
 		else if (v instanceof Number) {
 			buffer.append(v.toString());
 			if (preserveJavaTypes) {
 				if (v instanceof Long) {
 					buffer.append('L');
-				} else if (v instanceof Float) {
+				}
+				else if (v instanceof Float) {
 					buffer.append('F');
 				}
 			}
-		} else if (v instanceof byte[] b) {
+		}
+		else if (v instanceof byte[] b) {
 			b = Base64.getEncoder().encode(b);
 
 			buffer.append('#');
@@ -406,39 +414,51 @@ public class SLCodec extends StringCodec {
 			} catch (UnsupportedEncodingException uee) {
 				throw new CodecException("Error encoding byte-array to Base64 US-ASCII", uee);
 			}
-		} else if (v instanceof Boolean)
+		}
+		else if (v instanceof Boolean) {
 			buffer.append(v.toString());
+		}
 		else {
 			String vs = v.toString();
 			if ((CaseInsensitiveString.equalsIgnoreCase("true", vs))
-					|| (CaseInsensitiveString.equalsIgnoreCase("false", vs))) {
+				|| (CaseInsensitiveString.equalsIgnoreCase("false", vs))) {
 				// quote true and false to avoid confusion with booleans
 				buffer.append('"');
 				buffer.append(vs);
 				buffer.append('"');
-			} else
+			}
+			else {
 				encodeAndAppend(vs);
+			}
 		}
 	}
 
 	private void encodeAndAppend(AbsObject val) throws CodecException {
-		if (val instanceof AbsPrimitive primitive)
+		if (val instanceof AbsPrimitive primitive) {
 			encodeAndAppend(primitive);
-		else if (val instanceof AbsPredicate predicate)
+		}
+		else if (val instanceof AbsPredicate predicate) {
 			encodeAndAppend(predicate);
-		else if (val instanceof AbsIRE rE)
+		}
+		else if (val instanceof AbsIRE rE) {
 			encodeAndAppend(rE);
-		else if (val instanceof AbsVariable variable)
+		}
+		else if (val instanceof AbsVariable variable) {
 			encodeAndAppend(variable);
-		// if (val instanceof AbsAgentAction) return toString( (AbsAgentAction)val);
-		else if (val instanceof AbsAggregate aggregate)
+			// if (val instanceof AbsAgentAction) return toString( (AbsAgentAction)val);
+		}
+		else if (val instanceof AbsAggregate aggregate) {
 			encodeAndAppend(aggregate);
-		else if (val instanceof AbsConcept concept)
+		}
+		else if (val instanceof AbsConcept concept) {
 			encodeAndAppend(concept);
-		else if (val instanceof AbsReference reference)
+		}
+		else if (val instanceof AbsReference reference) {
 			encodeAndAppend(reference);
-		else
+		}
+		else {
 			throw new CodecException("SLCodec cannot encode this object " + val);
+		}
 	}
 
 	/**
@@ -473,10 +493,12 @@ public class SLCodec extends StringCodec {
 				parser.reinit(ontology, content);
 				tuple = parser.Content();
 			}
-			if (tuple.size() > 1)
+			if (tuple.size() > 1) {
 				return tuple;
-			else // if there is a single ContentExpression than return just it, not the tuple
+			}
+			else { // if there is a single ContentExpression than return just it, not the tuple
 				return tuple.get(0);
+			}
 		} catch (Throwable e) { // both ParseException and TokenMgrError
 			throw new CodecException("Parse exception", e);
 		}

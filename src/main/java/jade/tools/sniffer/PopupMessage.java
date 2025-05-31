@@ -56,15 +56,15 @@ public class PopupMessage
 	extends ContextMenu
 	#DOTNET_INCLUDE_END*/
 {
- 
- //#DOTNET_EXCLUDE_BEGIN
- private JMenuItem tmp;
+
+	//#DOTNET_EXCLUDE_BEGIN
+	private final JMenuItem tmp;
  //#DOTNET_EXCLUDE_END
  /*#DOTNET_INCLUDE_BEGIN
  private MenuItem tmp;
  #DOTNET_INCLUDE_END*/
  private  MainWindow mWnd;
- private  ViewMessage viewMessage;
+	private final  ViewMessage viewMessage;
 
   public PopupMessage(MainWindow mWnd) {
    super();

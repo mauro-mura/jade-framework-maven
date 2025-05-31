@@ -39,7 +39,7 @@ public class AbsVariable extends AbsObjectImpl implements AbsTerm {
 
 	@Serial
 	private static final long serialVersionUID = -8539476155331745306L;
-	private boolean isMeta = false;
+	private boolean isMeta;
 
 	/**
 	 * Construct an Abstract descriptor to hold a variable
@@ -119,7 +119,7 @@ public class AbsVariable extends AbsObjectImpl implements AbsTerm {
 
 	// Easy way to access the Java class representing AbsVariable.
 	// Useful in MIDP where XXX.class is not available
-	private static Class<?> absVariableClass = null;
+	private static Class<?> absVariableClass;
 
 	public static Class<?> getJavaClass() {
 		if (absVariableClass == null) {

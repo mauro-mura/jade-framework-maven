@@ -43,7 +43,7 @@ import jade.core.AID;
 public class StartNotify implements AgentAction {
 
     private AID observed;
-    private List events = new ArrayList<>();
+	private final List events = new ArrayList<>();
 
     /**
        Default constructor. A default constructor is necessary for

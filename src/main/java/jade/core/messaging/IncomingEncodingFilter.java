@@ -50,8 +50,8 @@ import jade.lang.acl.LEAPACLCodec;
  */
 public class IncomingEncodingFilter extends Filter {
 
-	private Map messageEncodings;
-	private MessagingService myService;
+	private final Map messageEncodings;
+	private final MessagingService myService;
 
 	public IncomingEncodingFilter(Map m, MessagingService svc) {
 		messageEncodings = m;
@@ -68,7 +68,7 @@ public class IncomingEncodingFilter extends Filter {
 	 */
 	public boolean accept(VerticalCommand cmd) {
 		String name = cmd.getName();
-		if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+		if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 			Object[] params = cmd.getParams();
 			GenericMessage gmsg = (GenericMessage) params[1];
 
@@ -119,7 +119,7 @@ public class IncomingEncodingFilter extends Filter {
 //					return false;
 //				}
 //			}
-		} else if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+		} else if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 			// An agent is terminating --> remove its global aliases if any
 			Object[] params = cmd.getParams();
 			myService.removeGlobalAliases((AID) params[0]);
@@ -146,8 +146,6 @@ public class IncomingEncodingFilter extends Filter {
 		// when the payload is null
 		byte[] payload = gmsg.getPayload();
 		if (payload == null) {
-			// If a real ACLMessage is present, just do nothing!
-			return;
 		} else {
 			Envelope env = gmsg.getEnvelope();
 			ACLMessage msg = decodeMessage(env, payload);
@@ -171,7 +169,7 @@ public class IncomingEncodingFilter extends Filter {
 
 	public void postProcess(VerticalCommand cmd) {
 		String name = cmd.getName();
-		if (name.equals(Service.REATTACHED)) {
+		if (Service.REATTACHED.equals(name)) {
 			// The Main Container lost all information about the local container -->
 			// Send it again local MTPs information
 			myService.notifyLocalMTPs();

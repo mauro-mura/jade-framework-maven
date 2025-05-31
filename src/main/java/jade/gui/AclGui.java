@@ -149,15 +149,15 @@ public class AclGui extends JPanel {
 	static String ADD_NEW_RECEIVER = "Insert receiver";
 
 	// the owner of the panel.
-	private Component ownerGui;
+	private final Component ownerGui;
 
 	// the logger
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 	AID senderAID = new AID();
-	AID newAIDSender = null;
+	AID newAIDSender;
 	AID fromAID = new AID();
-	AID newAIDFrom = null;
+	AID newAIDFrom;
 
 	VisualAIDList receiverListPanel;
 	VisualAIDList replyToListPanel;
@@ -184,20 +184,25 @@ public class AclGui extends JPanel {
 	// Data for panel layout definition
 	GridBagLayout lm = new GridBagLayout();
 	GridBagConstraints constraint = new GridBagConstraints();
-	private int leftBorder, rightBorder, topBorder, bottomBorder;
-	private int xSpacing, ySpacing;
-	private int gridNCol, gridNRow;
-	private int colWidth[];
+	private int leftBorder;
+	private int rightBorder;
+	private int topBorder;
+	private int bottomBorder;
+	private int xSpacing;
+	private int ySpacing;
+	private int gridNCol;
+	private int gridNRow;
+	private int[] colWidth;
 	private static final int TEXT_SIZE = 30;
 
 	private Vector fipaActVector;
 
-	private static int N_FIPA_PROTOCOLS = 8;
-	private static String fipaProtocols[] = { FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION,
-			FIPANames.InteractionProtocol.FIPA_DUTCH_AUCTION, FIPANames.InteractionProtocol.FIPA_CONTRACT_NET,
-			FIPANames.InteractionProtocol.FIPA_ITERATED_CONTRACT_NET, FIPANames.InteractionProtocol.FIPA_QUERY,
-			FIPANames.InteractionProtocol.FIPA_REQUEST, FIPANames.InteractionProtocol.FIPA_REQUEST_WHEN,
-			FIPANames.InteractionProtocol.FIPA_PROPOSE };
+	private static final int N_FIPA_PROTOCOLS = 8;
+	private static final String[] fipaProtocols = {FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION,
+		FIPANames.InteractionProtocol.FIPA_DUTCH_AUCTION, FIPANames.InteractionProtocol.FIPA_CONTRACT_NET,
+		FIPANames.InteractionProtocol.FIPA_ITERATED_CONTRACT_NET, FIPANames.InteractionProtocol.FIPA_QUERY,
+		FIPANames.InteractionProtocol.FIPA_REQUEST, FIPANames.InteractionProtocol.FIPA_REQUEST_WHEN,
+		FIPANames.InteractionProtocol.FIPA_PROPOSE};
 
 	private ArrayList fipaProtocolArrayList;
 
@@ -249,8 +254,9 @@ public class AclGui extends JPanel {
 			// Initialize the Vector of interaction protocols
 			fipaProtocolArrayList = new ArrayList<>();
 
-			for (i = 0; i < N_FIPA_PROTOCOLS; ++i)
+			for (i = 0;i < N_FIPA_PROTOCOLS;++i) {
 				fipaProtocolArrayList.add((Object) fipaProtocols[i]);
+			}
 
 			aclPanel = new JPanel();
 
@@ -297,11 +303,12 @@ public class AclGui extends JPanel {
 					String command = e.getActionCommand();
 					AIDGui guiSender = new AIDGui(getChildrenOwner());
 
-					if (command.equals("Set")) {
+					if ("Set".equals(command)) {
 						AID senderToView = senderAID;
 						// another sender was already inserted.
-						if (newAIDSender != null)
+						if (newAIDSender != null) {
 							senderToView = newAIDSender;
+						}
 						senderToView = guiSender.ShowAIDGui(senderToView, true, true);
 						// if the cancel button was clicked --> maintain the old value inserted.
 						if (senderToView != null) {
@@ -309,8 +316,9 @@ public class AclGui extends JPanel {
 							// the name can be different
 							sender.setText(newAIDSender.getName());
 						}
-					} else if (command.equals("View"))
+					} else if ("View".equals(command)) {
 						guiSender.ShowAIDGui(senderAID, false, false);
+					}
 
 				}
 			});
@@ -344,8 +352,9 @@ public class AclGui extends JPanel {
 			communicativeAct = new JComboBox<>();
 
 			String[] comm_Act = ACLMessage.getAllPerformativeNames();
-			for (int ii = 0; ii < comm_Act.length; ii++)
+			for (int ii = 0;ii < comm_Act.length;ii++) {
 				communicativeAct.addItem(comm_Act[ii].toLowerCase());
+			}
 
 			communicativeAct.setSelectedIndex(0);
 			put(aclPanel, communicativeAct, 1, 3, 2, 1, true);
@@ -400,8 +409,9 @@ public class AclGui extends JPanel {
 			// #DOTNET_EXCLUDE_END
 			put(aclPanel, l, 0, 12, 1, 1, false);
 			protocol = new JComboBox<>();
-			for (i = 0; i < fipaProtocolArrayList.size(); ++i)
+			for (i = 0;i < fipaProtocolArrayList.size();++i) {
 				protocol.addItem((String) fipaProtocolArrayList.get(i));
+			}
 			protocol.addItem(LABEL_TO_ADD_PROT);
 			protocol.addItem("Null");
 			protocol.setSelectedItem("Null");
@@ -416,7 +426,7 @@ public class AclGui extends JPanel {
 					// or null was selected)
 					if (!protocol.isEditable()) {
 						// If a user defined protocol has just been selected --> set editable to true
-						if (fipaProtocolArrayList.indexOf((Object) param) < 0 && !param.equals("Null")) {
+						if (fipaProtocolArrayList.indexOf((Object) param) < 0 && !"Null".equals(param)) {
 							protocol.setEditable(true);
 						}
 					}
@@ -425,26 +435,27 @@ public class AclGui extends JPanel {
 					else {
 						// The user selected a FIPA protocol or null (he didn't perform any editing
 						// operation)
-						if (fipaProtocolArrayList.indexOf((Object) param) >= 0 || param.equals("Null")) {
+						if (fipaProtocolArrayList.indexOf((Object) param) >= 0 || "Null".equals(param)) {
 							protocol.setEditable(false);
 							protocol.setSelectedItem(param);
 						}
 						// The user selected the label to add a new protocol (he didn't perform any
 						// editing operation)
-						else if (param.equals(LABEL_TO_ADD_PROT)) {
+						else if (LABEL_TO_ADD_PROT.equals(param)) {
 							protocol.setSelectedItem(param);
 						}
 						// The user added a new protocol
-						else if (lastSelectedItem.equals(LABEL_TO_ADD_PROT)) {
+						else if (LABEL_TO_ADD_PROT.equals(lastSelectedItem)) {
 							// The new protocol is actually added only if it is != "" and is not already
 							// present
-							if (!param.equals("")) {
+							if (!"".equals(param)) {
 								protocol.addItem(param);
 								int cnt = protocol.getItemCount();
 								protocol.setSelectedItem(param);
 								int n = protocol.getSelectedIndex();
-								if (n != cnt - 1)
+								if (n != cnt - 1) {
 									protocol.removeItemAt(cnt - 1);
+								}
 							} else {
 								protocol.setEditable(false);
 								protocol.setSelectedItem("Null");
@@ -453,7 +464,7 @@ public class AclGui extends JPanel {
 						// The user modified/deleted a previously added user defined protocol
 						else if (lastSelectedItem != LABEL_TO_ADD_PROT) {
 							protocol.removeItemAt(lastSelectedIndex); // The old protocol is removed
-							if (param.equals("")) // Deletion
+							if ("".equals(param)) // Deletion
 							{
 								protocol.setEditable(false);
 								protocol.setSelectedItem("Null");
@@ -519,23 +530,26 @@ public class AclGui extends JPanel {
 					// TimeChooser t = new TimeChooser(replyByDate);
 					TimeChooser t = new TimeChooser();
 					String d = replyBy.getText();
-					if (!d.equals("")) {
+					if (!"".equals(d)) {
 						try {
 							t.setDate(ISO8601.toDate(d));
 						} catch (Exception ee) {
-							if (logger.isLoggable(Logger.SEVERE))
+							if (logger.isLoggable(Logger.SEVERE)) {
 								logger.log(Logger.WARNING, "Incorrect date format");
+							}
 						}
 					}
-					if (command.equals("Set")) {
+					if ("Set".equals(command)) {
 						if (t.showEditTimeDlg(null) == TimeChooser.OK) {
 							replyByDate = t.getDate();
-							if (replyByDate == null)
+							if (replyByDate == null) {
 								replyBy.setText("");
-							else
+							}
+							else {
 								replyBy.setText(ISO8601.toString(replyByDate));
+							}
 						}
-					} else if (command.equals("View")) {
+					} else if ("View".equals(command)) {
 						t.showViewTimeDlg(null);
 					}
 				} // END actionPerformed(ActionEvent e)
@@ -559,23 +573,27 @@ public class AclGui extends JPanel {
 
 		// #DOTNET_EXCLUDE_BEGIN
 		public void dragOver(java.awt.dnd.DropTargetDragEvent p1) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "dragOver");
+			}
 		}
 
 		public void dropActionChanged(java.awt.dnd.DropTargetDragEvent p1) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "dropActionChanged");
+			}
 		}
 
 		public void dragEnter(java.awt.dnd.DropTargetDragEvent dragEvent) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "dragEnter");
+			}
 		}
 
 		public void dragExit(java.awt.dnd.DropTargetEvent p1) {
-			if (logger.isLoggable(Logger.FINEST))
+			if (logger.isLoggable(Logger.FINEST)) {
 				logger.log(Logger.FINEST, "dragExit");
+			}
 		}
 
 		public void drop(java.awt.dnd.DropTargetDropEvent dropEvent) {
@@ -590,8 +608,9 @@ public class AclGui extends JPanel {
 			} catch (UnsupportedFlavorException exc) {
 				completionStatus = false;
 			} catch (IOException exc) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+				}
 				completionStatus = false;
 			} finally {
 				dropEvent.dropComplete(completionStatus);
@@ -607,8 +626,9 @@ public class AclGui extends JPanel {
 						Enumeration receivers = receiverListPanel.getContent();
 						setMsg(aclParser.parse(aclMsgFile));
 						if (receivers.hasMoreElements()) {
-							if (logger.isLoggable(Logger.FINE))
+							if (logger.isLoggable(Logger.FINE)) {
 								logger.log(Logger.FINE, "revert to saved list");
+							}
 							ArrayList list = new ArrayList<>();
 							while (receivers.hasMoreElements()) {
 								list.add(receivers.nextElement());
@@ -616,20 +636,25 @@ public class AclGui extends JPanel {
 							receiverListPanel.resetContent(list.iterator());
 						}
 					} catch (IOException exc) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+						}
 					} catch (ParseException exc) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+						}
 					} catch (Exception exc) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+						}
 					} catch (Error exc) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+						}
 					} catch (Throwable exc) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+						}
 					}
 				} // ~ while (fileItor.hasNext())
 			} // ~ if (selectedItems != null)
@@ -684,18 +709,20 @@ public class AclGui extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					String command = e.getActionCommand();
 					AIDGui guiFrom = new AIDGui(ownerGui);
-					if (command.equals("Set")) {
+					if ("Set".equals(command)) {
 						AID fromToView = fromAID;
-						if (newAIDFrom != null)
+						if (newAIDFrom != null) {
 							fromToView = newAIDFrom;
+						}
 						fromToView = guiFrom.ShowAIDGui(fromToView, true, true);
 						if (fromToView != null) {
 							newAIDFrom = fromToView;
 							from.setText(newAIDFrom.getName());
 						}
 					} else {
-						if (command.equals("View"))
+						if ("View".equals(command)) {
 							guiFrom.ShowAIDGui(fromAID, false, false);
+						}
 					}
 				}
 			});
@@ -747,23 +774,26 @@ public class AclGui extends JPanel {
 					// TimeChooser t = new TimeChooser(replyByDate);
 					TimeChooser t = new TimeChooser();
 					String d = date.getText();
-					if (!d.equals("")) {
+					if (!"".equals(d)) {
 						try {
 							t.setDate(ISO8601.toDate(d));
 						} catch (Exception ee) {
-							if (logger.isLoggable(Logger.WARNING))
+							if (logger.isLoggable(Logger.WARNING)) {
 								logger.log(Logger.WARNING, "Incorrect date format");
+							}
 						}
 					}
-					if (command.equals("Set")) {
+					if ("Set".equals(command)) {
 						if (t.showEditTimeDlg(null) == TimeChooser.OK) {
 							dateDate = t.getDate();
-							if (dateDate == null)
+							if (dateDate == null) {
 								date.setText("");
-							else
+							}
+							else {
 								date.setText(ISO8601.toString(dateDate));
+							}
 						}
-					} else if (command.equals("View")) {
+					} else if ("View".equals(command)) {
 						t.showViewTimeDlg(null);
 					}
 				}
@@ -821,23 +851,26 @@ public class AclGui extends JPanel {
 					// TimeChooser t = new TimeChooser(replyByDate);
 					TimeChooser t = new TimeChooser();
 					String d = dateRec.getText();
-					if (!d.equals("")) {
+					if (!"".equals(d)) {
 						try {
 							t.setDate(ISO8601.toDate(d));
 						} catch (Exception ee) {
-							if (logger.isLoggable(Logger.WARNING))
+							if (logger.isLoggable(Logger.WARNING)) {
 								logger.log(Logger.WARNING, "Incorrect date format");
+							}
 						}
 					}
-					if (command.equals("Set")) {
+					if ("Set".equals(command)) {
 						if (t.showEditTimeDlg(null) == TimeChooser.OK) {
 							dateRecDate = t.getDate();
-							if (dateRecDate == null)
+							if (dateRecDate == null) {
 								dateRec.setText("");
-							else
+							}
+							else {
 								dateRec.setText(ISO8601.toString(dateRecDate));
+							}
 						}
-					} else if (command.equals("View")) {
+					} else if ("View".equals(command)) {
 						t.showViewTimeDlg(null);
 					}
 				}
@@ -885,7 +918,7 @@ public class AclGui extends JPanel {
 			defaultEnvelopeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String command = e.getActionCommand();
-					if (command.equals("Set Default Envelope")) {
+					if ("Set Default Envelope".equals(command)) {
 						ACLMessage tmp = getMsg();
 						tmp.setDefaultEnvelope();
 						Envelope envtmp = tmp.getEnvelope();
@@ -965,28 +998,35 @@ public class AclGui extends JPanel {
 	}
 
 	private void put(JPanel panel, JComponent c, int x, int y, int dx, int dy, boolean fill) {
-		int leftMargin, rightMargin, topMargin, bottomMargin;
-		int preferredWidth, preferredHeight;
+		int leftMargin;
+		int rightMargin;
+		int topMargin;
+		int bottomMargin;
+		int preferredWidth;
+		int preferredHeight;
 
 		constraint.gridx = x;
 		constraint.gridy = y;
 		constraint.gridwidth = dx;
 		constraint.gridheight = dy;
 		constraint.anchor = GridBagConstraints.WEST;
-		if (fill)
+		if (fill) {
 			constraint.fill = GridBagConstraints.BOTH;
-		else
+		}
+		else {
 			constraint.fill = GridBagConstraints.VERTICAL;
+		}
 
-		leftMargin = (x == 0 ? leftBorder : 0);
-		rightMargin = (x + dx == gridNCol ? rightBorder : xSpacing);
-		topMargin = (y == 0 ? topBorder : 0);
-		bottomMargin = (y + dy == gridNRow ? bottomBorder : ySpacing);
+		leftMargin = x == 0 ? leftBorder : 0;
+		rightMargin = x + dx == gridNCol ? rightBorder : xSpacing;
+		topMargin = y == 0 ? topBorder : 0;
+		bottomMargin = y + dy == gridNRow ? bottomBorder : ySpacing;
 
 		int i;
 		preferredWidth = 0;
-		for (i = 0; i < dx; ++i)
+		for (i = 0;i < dx;++i) {
 			preferredWidth += colWidth[x + i] + xSpacing;
+		}
 		preferredWidth -= xSpacing;
 		preferredHeight = c.getPreferredSize().height;
 		c.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
@@ -998,7 +1038,7 @@ public class AclGui extends JPanel {
 
 	private void updateEnabled() {
 		communicativeAct.setEnabled(guiEnabledFlag);
-		senderButton.setText((guiEnabledFlag && senderEnabledFlag) ? "Set" : "View");
+		senderButton.setText(guiEnabledFlag && senderEnabledFlag ? "Set" : "View");
 
 		receiverListPanel.setEnabled(guiEnabledFlag);
 		replyToListPanel.setEnabled(guiEnabledFlag);
@@ -1090,10 +1130,12 @@ public class AclGui extends JPanel {
 
 		// Date
 		dateDate = envelope.getDate();
-		if (dateDate != null)
+		if (dateDate != null) {
 			date.setText(ISO8601.toString(dateDate));
-		else
+		}
+		else {
 			date.setText("");
+		}
 
 		// #DOTNET_EXCLUDE_BEGIN
 		intendedReceiverPanel.resetContent(envelope.getAllIntendedReceiver());
@@ -1146,10 +1188,11 @@ public class AclGui extends JPanel {
 	 */
 	public void setMsg(ACLMessage msg) {
 		int i;
-		String param, lowerCase;
+		String param;
+		String lowerCase;
 
 		int perf = msg.getPerformative();
-		lowerCase = (ACLMessage.getPerformative(perf)).toLowerCase();
+		lowerCase = ACLMessage.getPerformative(perf).toLowerCase();
 
 		// No control if the ACLMessage is a well-known one
 		// if not present the first of the comboBox is selected
@@ -1172,19 +1215,23 @@ public class AclGui extends JPanel {
 
 		Enumeration e = msg.getAllUserDefinedParameters().propertyNames();
 		ArrayList list = new ArrayList<>();
-		while (e.hasMoreElements())
+		while (e.hasMoreElements()) {
 			list.add(e.nextElement());
+		}
 		propertiesListPanel.resetContent(list.iterator());
 		propertiesListPanel.setContentProperties(msg.getAllUserDefinedParameters());
 
-		if ((param = msg.getReplyWith()) == null)
+		if ((param = msg.getReplyWith()) == null) {
 			param = "";
+		}
 		replyWith.setText(param);
-		if ((param = msg.getInReplyTo()) == null)
+		if ((param = msg.getInReplyTo()) == null) {
 			param = "";
+		}
 		inReplyTo.setText(param);
-		if ((param = msg.getConversationId()) == null)
+		if ((param = msg.getConversationId()) == null) {
 			param = "";
+		}
 		conversationId.setText(param);
 		try {
 			param = ISO8601.toString(msg.getReplyByDate());
@@ -1193,10 +1240,12 @@ public class AclGui extends JPanel {
 		}
 		replyBy.setText(param);
 
-		if ((param = msg.getProtocol()) == null)
+		if ((param = msg.getProtocol()) == null) {
 			protocol.setSelectedItem("Null");
-		else if (param.equals("") || param.equalsIgnoreCase("Null"))
+		}
+		else if ("".equals(param) || "Null".equalsIgnoreCase(param)) {
 			protocol.setSelectedItem("Null");
+		}
 		else {
 			lowerCase = param.toLowerCase();
 			if ((i = fipaProtocolArrayList.indexOf((Object) lowerCase)) < 0) {
@@ -1205,38 +1254,47 @@ public class AclGui extends JPanel {
 				int cnt = protocol.getItemCount();
 				protocol.setSelectedItem(param);
 				int n = protocol.getSelectedIndex();
-				if (n != cnt - 1)
+				if (n != cnt - 1) {
 					protocol.removeItemAt(cnt - 1);
-			} else
+				}
+			}
+			else {
 				protocol.setSelectedIndex(i);
+			}
 		}
 		String lang;
-		if ((lang = msg.getLanguage()) == null)
+		if ((lang = msg.getLanguage()) == null) {
 			lang = "";
+		}
 		language.setText(lang);
-		if ((param = msg.getOntology()) == null)
+		if ((param = msg.getOntology()) == null) {
 			param = "";
+		}
 		ontology.setText(param);
 
-		if ((param = msg.getContent()) == null)
+		if ((param = msg.getContent()) == null) {
 			param = "";
-		if ((lang.equalsIgnoreCase(FIPANames.ContentLanguage.FIPA_SL0)
-				|| lang.equalsIgnoreCase(FIPANames.ContentLanguage.FIPA_SL1)
-				|| lang.equalsIgnoreCase(FIPANames.ContentLanguage.FIPA_SL2)
-				|| lang.equalsIgnoreCase(FIPANames.ContentLanguage.FIPA_SL)) && (slFormatter != null))
+		}
+		if ((FIPANames.ContentLanguage.FIPA_SL0.equalsIgnoreCase(lang)
+			|| FIPANames.ContentLanguage.FIPA_SL1.equalsIgnoreCase(lang)
+			|| FIPANames.ContentLanguage.FIPA_SL2.equalsIgnoreCase(lang)
+			|| FIPANames.ContentLanguage.FIPA_SL.equalsIgnoreCase(lang)) && (slFormatter != null)) {
 			// Try inserting formatted SL content.
 			param = slFormatter.format(param);
+		}
 		content.setText(param);
 
-		if ((param = msg.getEncoding()) == null)
+		if ((param = msg.getEncoding()) == null) {
 			param = "";
+		}
 		encoding.setText(param);
 
 		// Envelope
 		Envelope envelope = msg.getEnvelope();
 
-		if (envelope != null)
+		if (envelope != null) {
 			showEnvelope(envelope);
+		}
 
 	}
 
@@ -1253,24 +1311,28 @@ public class AclGui extends JPanel {
 		int perf = ACLMessage.getInteger(param);
 		ACLMessage msg = new ACLMessage(perf);
 
-		if (newAIDSender != null)
+		if (newAIDSender != null) {
 			senderAID = newAIDSender;
+		}
 
 		/*
 		 * if ( ((param = sender.getText()).trim()).length() > 0 )
 		 * SenderAID.setName(param);
 		 */
 		// check if SenderAID has a guid. SenderAID is surely not null here
-		if (senderAID.getName().length() > 0)
+		if (senderAID.getName().length() > 0) {
 			msg.setSender(senderAID);
+		}
 
 		Enumeration rec_Enum = receiverListPanel.getContent();
-		while (rec_Enum.hasMoreElements())
+		while (rec_Enum.hasMoreElements()) {
 			msg.addReceiver((AID) rec_Enum.nextElement());
+		}
 
 		Enumeration replyTo_Enum = replyToListPanel.getContent();
-		while (replyTo_Enum.hasMoreElements())
+		while (replyTo_Enum.hasMoreElements()) {
 			msg.addReplyTo((AID) replyTo_Enum.nextElement());
+		}
 
 		Properties user_Prop = propertiesListPanel.getContentProperties();
 		Enumeration keys = user_Prop.propertyNames();
@@ -1280,16 +1342,19 @@ public class AclGui extends JPanel {
 		}
 
 		param = replyWith.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setReplyWith(param);
+		}
 
 		param = inReplyTo.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setInReplyTo(param);
+		}
 
 		param = conversationId.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setConversationId(param);
+		}
 
 		param = replyBy.getText().trim();
 		try {
@@ -1297,43 +1362,53 @@ public class AclGui extends JPanel {
 		} catch (Exception e) {
 		}
 
-		if (!(param = (String) protocol.getSelectedItem()).equals("Null"))
+		if (!"Null".equals(param = (String) protocol.getSelectedItem())) {
 			msg.setProtocol(param);
+		}
 
 		param = language.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setLanguage(param);
+		}
 
 		param = ontology.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setOntology(param);
+		}
 
 		param = content.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setContent(param);
+		}
 
-		param = (encoding.getText()).trim();
-		if (param.length() > 0)
+		param = encoding.getText().trim();
+		if (param.length() > 0) {
 			msg.setEncoding(param);
+		}
 
 		Envelope env = new Envelope();
 
 		Enumeration to_Enum = toPanel.getContent();
-		while (to_Enum.hasMoreElements())
+		while (to_Enum.hasMoreElements()) {
 			env.addTo((AID) to_Enum.nextElement());
+		}
 
-		if (newAIDFrom != null)
+		if (newAIDFrom != null) {
 			fromAID = newAIDFrom;
-		if (fromAID.getName().length() > 0)
+		}
+		if (fromAID.getName().length() > 0) {
 			env.setFrom(fromAID);
+		}
 
 		param = comments.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			env.setComments(param);
+		}
 
 		param = representation.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			env.setAclRepresentation(param);
+		}
 
 		try {
 			param = payloadLength.getText().trim();
@@ -1346,20 +1421,24 @@ public class AclGui extends JPanel {
 		}
 
 		param = payloadEncoding.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			env.setPayloadEncoding(param);
+		}
 
 		// setDate require a Date not a String
-		if (dateDate != null)
+		if (dateDate != null) {
 			env.setDate(dateDate);
+		}
 
 		Enumeration int_Enum = intendedReceiverPanel.getContent();
-		while (int_Enum.hasMoreElements())
+		while (int_Enum.hasMoreElements()) {
 			env.addIntendedReceiver((AID) int_Enum.nextElement());
+		}
 
 		param = language.getText().trim();
-		if (param.length() > 0)
+		if (param.length() > 0) {
 			msg.setLanguage(param);
+		}
 
 		/*
 		 * ReceivedObject recObject = new ReceivedObject(); boolean filled = false;
@@ -1427,8 +1506,10 @@ public class AclGui extends JPanel {
 		if (firstPaintFlag) {
 			firstPaintFlag = false;
 			minDim = aclPanel.getSize();
-		} else
+		}
+		else {
 			aclPanel.setMinimumSize(minDim);
+		}
 
 		super.paint(g);
 	}
@@ -1440,7 +1521,7 @@ public class AclGui extends JPanel {
 	 * Pops up a dialog window including an editing-disabled AclGui panel and
 	 * displays the specified ACL message in it.
 	 * 
-	 * @param m      The ACL message to be displayed
+	 * @param msg      The ACL message to be displayed
 	 * @param parent The parent window of the dialog window
 	 * @see AclGui#editMsgInDialog(ACLMessage msg, Frame parent)
 	 */
@@ -1471,11 +1552,13 @@ public class AclGui extends JPanel {
 		tempAclDlg.setResizable(false);
 		if (parent != null) {
 			int locx = parent.getX() + (parent.getWidth() - tempAclDlg.getWidth()) / 2;
-			if (locx < 0)
+			if (locx < 0) {
 				locx = 0;
+			}
 			int locy = parent.getY() + (parent.getHeight() - tempAclDlg.getHeight()) / 2;
-			if (locy < 0)
+			if (locy < 0) {
 				locy = 0;
+			}
 			tempAclDlg.setLocation(locx, locy);
 		}
 		tempAclDlg.setVisible(true);
@@ -1486,7 +1569,7 @@ public class AclGui extends JPanel {
 	 * displays the specified ACL message in it. The dialog window also includes an
 	 * OK and a Cancel button to accept or discard the performed editing.
 	 * 
-	 * @param m      The ACL message to be initially displayed
+	 * @param msg      The ACL message to be initially displayed
 	 * @param parent The parent window of the dialog window
 	 * @return The ACL message displayed in the dialog window or null depending on
 	 *         whether the user close the window by clicking the OK or Cancel button
@@ -1536,8 +1619,9 @@ public class AclGui extends JPanel {
 		tempAclDlg.setVisible(true);
 
 		ACLMessage m = null;
-		if (editedMsg != null)
+		if (editedMsg != null) {
 			m = (ACLMessage) editedMsg.clone();
+		}
 
 		return m;
 	}

@@ -45,8 +45,8 @@ import java.util.ArrayList;
 class ShowDFGuiAction extends FixedAction
 {
 
-  private rma myRMA;
-  private ACLMessage msg;
+	private final rma myRMA;
+	private final ACLMessage msg;
   
   ShowDFGuiAction(rma anRMA,ActionProcessor actPro ) {
 

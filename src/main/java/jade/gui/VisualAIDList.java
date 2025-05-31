@@ -58,7 +58,7 @@ public class VisualAIDList extends VisualStringList
 	
 	protected String getElementName(Object el)
 	{
-		return (((AID)el).getName());
+		return ((AID)el).getName();
 	}
 
     /**

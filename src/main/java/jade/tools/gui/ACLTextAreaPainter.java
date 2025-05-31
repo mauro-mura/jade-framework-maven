@@ -64,7 +64,6 @@ public class ACLTextAreaPainter extends JComponent implements TabExpander {
     caretColor = Color.red;
     selectionColor = new Color(0xccccff);
     lineHighlightColor = new Color(0xe0e0e0);
-    ;
     lineHighlight = true;
     bracketHighlightColor = Color.black;
     bracketHighlight = true;
@@ -829,9 +828,9 @@ public class ACLTextAreaPainter extends JComponent implements TabExpander {
       int offset = textArea.getCaretPosition()
          - textArea.getLineStartOffset(line);
       int caretX = textArea.offsetToX(line, offset);
-      int caretWidth = ((blockCaret ||
-        textArea.isOverwriteEnabled()) ?
-        fm.charWidth('w') : 1);
+      int caretWidth = blockCaret ||
+        textArea.isOverwriteEnabled() ?
+        fm.charWidth('w') : 1;
       y += fm.getLeading() + fm.getMaxDescent();
       int height = fm.getHeight();
 

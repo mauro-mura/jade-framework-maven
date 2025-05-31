@@ -38,12 +38,12 @@ import jade.content.schema.*;
    Exception-ontology is a singleton and is accessible through 
    the static method <code>getInstance()</code>
    
-   @author Giovanni Caire - CSELT S.p.A.
-   @version $Date: 2003-02-20 11:54:12 +0100 (gio, 20 feb 2003) $ $Revision: 3675 $
+	@author Giovanni Caire - CSELT S.p.A.
+	@version $Date: 2003-02-20 11:54:12 +0100 (gio, 20 feb 2003) $ $Revision: 3675 $
  */
-public class ExceptionOntology extends Ontology implements ExceptionVocabulary {
+public final class ExceptionOntology extends Ontology implements ExceptionVocabulary {
 
-  private static Ontology theInstance = new ExceptionOntology();
+	private static final Ontology theInstance = new ExceptionOntology();
   
   /**
      This method returns the unique instance (according to the singleton 

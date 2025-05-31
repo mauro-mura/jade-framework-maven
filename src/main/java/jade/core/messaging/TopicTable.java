@@ -50,7 +50,7 @@ import java.util.StringTokenizer;
  * @author Giovanni Caire - TILAB
  */
 class TopicTable {
-	private TTNode root = new TTNode("", null);
+	private final TTNode root = new TTNode("", null);
 	
 	/**
 	 * Register the interest of an agent for a given topic
@@ -106,16 +106,16 @@ class TopicTable {
 		}
 		return sb.toString();
 	}
-	
-	
+
+
 	/**
 	 * Inner class RegistrationInfo.
 	 * This class includes the information related to a given registration properly 
 	 * prepared to be registered in the TopicTable
 	 */
-	private class RegistrationInfo {
+	private final class RegistrationInfo {
 		private AID aid;
-		private boolean template = false;
+		private boolean template;
 		private StringTokenizer st;
 		
 		private RegistrationInfo(AID aid, AID topic) {
@@ -131,7 +131,7 @@ class TopicTable {
 			String name = null;
 			if (st.hasMoreTokens()) {
 				name = st.nextToken();
-				if (name.equals(TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD)) {
+				if (TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD.equals(name)) {
 					template = true;
 					name = null;
 				}
@@ -152,7 +152,7 @@ class TopicTable {
 	/**
 	 * Inner class TTNode
 	 */
-	private class TTNode {
+	private final class TTNode {
 		private String name;
 		private List interestedAgents = new LinkedList();
 		private List templateInterestedAgents = new LinkedList();
@@ -222,15 +222,15 @@ class TopicTable {
 		private final void fillRegistrations(List allRegistrations) {
 			// Fill local registrations
 			String topicName = getTopicName();
-			if (interestedAgents.size() > 0) {
+			if (!interestedAgents.isEmpty()) {
 				AID topic = TopicUtility.createTopic(topicName);
 				for (int i = 0; i < interestedAgents.size(); ++i) {
 					AID aid = (AID) interestedAgents.get(i);
 					allRegistrations.add(new TopicRegistration(aid, topic));
 				}
 			}
-			if (templateInterestedAgents.size() > 0) {
-				String templateTopicName = (topicName.length() > 0 ? topicName+'.'+TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD);
+			if (!templateInterestedAgents.isEmpty()) {
+				String templateTopicName = topicName.length() > 0 ? topicName+'.'+TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD;
 				AID topic = TopicUtility.createTopic(templateTopicName);
 				for (int i = 0; i < templateInterestedAgents.size(); ++i) {
 					AID aid = (AID) templateInterestedAgents.get(i);
@@ -253,7 +253,7 @@ class TopicTable {
 				relevantTopics.add(TopicUtility.createTopic(topicName));
 			}
 			if (templateInterestedAgents.contains(aid)) {
-				String templateTopicName = (topicName.length() > 0 ? topicName+'.'+TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD);
+				String templateTopicName = topicName.length() > 0 ? topicName+'.'+TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD;
 				relevantTopics.add(TopicUtility.createTopic(templateTopicName));
 			}
 			

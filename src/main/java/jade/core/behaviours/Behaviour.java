@@ -173,7 +173,7 @@ public abstract class Behaviour implements Serializable {
 	 * Flag indicating whether this Behaviour is runnable or not
 	 */
 	private volatile boolean runnableState = true;
-	private volatile long restartCounter = 0;
+	private volatile long restartCounter;
 	private volatile String executionState = STATE_READY;
 
 	// #APIDOC_EXCLUDE_BEGIN
@@ -229,14 +229,14 @@ public abstract class Behaviour implements Serializable {
 	/**
 	 * Default constructor. It does not set the agent owning this behaviour object.
 	 */
-	public Behaviour() {
+	protected Behaviour() {
 		// Construct a default name
 		myName = getClass().getName();
 		// Remove the class name and the '$' characters from
 		// the class name for readability.
 		int dotIndex = myName.lastIndexOf('.');
 		int dollarIndex = myName.lastIndexOf('$');
-		int lastIndex = (dotIndex > dollarIndex ? dotIndex : dollarIndex);
+		int lastIndex = dotIndex > dollarIndex ? dotIndex : dollarIndex;
 
 		if (lastIndex != -1) {
 			myName = myName.substring(lastIndex + 1);
@@ -248,7 +248,7 @@ public abstract class Behaviour implements Serializable {
 	 * 
 	 * @param a The agent owning this behaviour.
 	 */
-	public Behaviour(Agent a) {
+	protected Behaviour(Agent a) {
 		this();
 		myAgent = a;
 	}

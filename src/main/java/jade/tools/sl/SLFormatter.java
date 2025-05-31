@@ -105,43 +105,48 @@ public class SLFormatter {
     private static String format(myStringIterator src, int indentation)
     {
         StringBuffer result = new StringBuffer();
-        char current, previous=0;
+			char current;
+			char previous = 0;
         int indentStep=INDENT_EXPRESSION;
         boolean insideQuote=false;
         while( src.hasNext() )
         {
             current = src.next();
-            if( insideQuote )
-                result.append(current);
-            else
-                switch(current)
-                {
-                    case ':':
-                        if( previous == ' ' || previous == '\n' || previous == '\r')
-                        {
-                            indentStep=INDENT_EXPRESSION+INDENT_ARGUMENT;
-                            result.append(spacing.substring(0, indentation+INDENT_EXPRESSION));
-                        }
-                        result.append(current);
-                        break;
-                    case '(':
-                        String expression = format(src, indentation+indentStep).trim();
-                        String indentSpacing = "";
-                        if( expression.length() > SHORT_EXPRESSION_LENGTH )
-                            indentSpacing = spacing.substring(0, indentation+indentStep);
-                        result.append(indentSpacing+'('+expression+')');
-                        break;
-                    case ')':
-                        return result.toString();
-                    case '\n':
-                    case '\r':
-                        break;
-                    default:
-                        result.append(current);
-                        break;
-                }
-            if( current == '\"' && previous != '\\')
-                insideQuote = !insideQuote;
+					if (insideQuote) {
+						result.append(current);
+					}
+					else {
+						switch (current)
+						{
+							case ':':
+								if (previous == ' ' || previous == '\n' || previous == '\r')
+								{
+									indentStep = INDENT_EXPRESSION + INDENT_ARGUMENT;
+									result.append(spacing.substring(0, indentation + INDENT_EXPRESSION));
+								}
+								result.append(current);
+								break;
+							case '(':
+								String expression = format(src, indentation + indentStep).trim();
+								String indentSpacing = "";
+								if (expression.length() > SHORT_EXPRESSION_LENGTH) {
+									indentSpacing = spacing.substring(0, indentation + indentStep);
+								}
+								result.append(indentSpacing + '(' + expression + ')');
+								break;
+							case ')':
+								return result.toString();
+							case '\n':
+							case '\r':
+								break;
+							default:
+								result.append(current);
+								break;
+						}
+					}
+					if (current == '\"' && previous != '\\') {
+						insideQuote = !insideQuote;
+					}
             previous=current;
         }
         return result.toString();

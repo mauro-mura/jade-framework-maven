@@ -135,7 +135,7 @@ public class AchieveREInitiator extends Initiator {
 	private static final int ALL_RESULT_NOTIFICATIONS_RECEIVED = 2;
 
 	// If set to true all expected responses have been received
-	private boolean allResponsesReceived = false;
+	private boolean allResponsesReceived;
 
 	/**
 	 * Construct an <code>AchieveREInitiator</code> with an empty DataStore
@@ -351,7 +351,7 @@ public class AchieveREInitiator extends Initiator {
 		return ret;
 	}
 
-	private String[] toBeReset = null;
+	private String[] toBeReset;
 
 	/**
 	 */
@@ -619,7 +619,7 @@ public class AchieveREInitiator extends Initiator {
 		}
 
 		public boolean isCompleted() {
-			return (state == NEGATIVE_RESPONSE_RECEIVED || state == RESULT_NOTIFICATION_RECEIVED);
+			return state == NEGATIVE_RESPONSE_RECEIVED || state == RESULT_NOTIFICATION_RECEIVED;
 		}
 
 	} // End of inner class Session

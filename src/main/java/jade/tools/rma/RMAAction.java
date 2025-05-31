@@ -43,7 +43,7 @@ abstract class RMAAction extends AbstractAction {
   protected ActionProcessor actPro;
   protected AgentTree aTree;
 
-  public RMAAction(String IconKey,String ActionName) {
+  protected RMAAction(String IconKey,String ActionName) {
     this.img = GuiProperties.getIcon("RMAAction."+IconKey);
     this.ActionName = ActionName;
     if(this.img != null)
@@ -54,7 +54,7 @@ abstract class RMAAction extends AbstractAction {
     putValue(Action.NAME,ActionName);
   }
 
-  public RMAAction (String IconPath,String ActionName,ActionProcessor actPro) {
+  protected RMAAction (String IconPath,String ActionName,ActionProcessor actPro) {
     this(IconPath,ActionName);
     this.actPro=actPro;
   }

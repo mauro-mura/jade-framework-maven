@@ -62,7 +62,7 @@ class DFGuiProperties
 	}
 
 	// synchronized to allows several df to use the same gui code. 
-	synchronized public static final Icon getIcon(String key) 
+	public static synchronized Icon getIcon(String key) 
 	{
 		Icon i = MyDefaults.getIcon(key);
 		if (i == null) 
@@ -71,7 +71,9 @@ class DFGuiProperties
 			System.exit(-1);
 			return null;
 		}
-		else return MyDefaults.getIcon(key);
+		else {
+			return MyDefaults.getIcon(key);
+		}
 	}
 }
 

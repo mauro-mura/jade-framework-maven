@@ -37,7 +37,7 @@ import javax.swing.text.*;
  * @author     Chris van Aart - Acklin B.V., the Netherlands & Slava Pestov
  * @created    June 14, 2002
  */
-public class ACLSyntaxUtilities {
+public final class ACLSyntaxUtilities {
 
   // private members
   private ACLSyntaxUtilities() { }

@@ -63,8 +63,9 @@ public class VisualPropertiesList extends VisualStringList
 		Enumeration e = content.propertyNames();
 	
 		ArrayList list = new ArrayList<>();
-		while(e.hasMoreElements())
+		while (e.hasMoreElements()) {
 			list.add(e.nextElement());
+		}
 		
 		resetContent(list.iterator());
 	}
@@ -75,13 +76,15 @@ public class VisualPropertiesList extends VisualStringList
 	{
 		SingleProperty p;
     String out = null;
-    
-		if (el == null)
+
+		if (el == null) {
 			p = new SingleProperty("", "");
-		else 
-			p = new SingleProperty((String)el,userDefinedSlots.getProperty((String)el));
+		}
+		else {
+			p = new SingleProperty((String) el, userDefinedSlots.getProperty((String) el));
+		}
 		UserPropertyGui gui = new UserPropertyGui(owner);
-		p = gui.ShowProperty(p,isEditable);
+		p = gui.showProperty(p,isEditable);
 
 		if(p != null)
 		{

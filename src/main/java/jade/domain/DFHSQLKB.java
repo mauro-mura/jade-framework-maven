@@ -39,10 +39,10 @@ import java.util.Properties;
  */
 public class DFHSQLKB extends DFDBKB {
 
-  private static String db_driver = "org.hsqldb.jdbcDriver";
-  private static String db_url    = "jdbc:hsqldb:file:dfdb";
-  private static String db_user   = "sa";
-  private static String db_passwd = "";
+	private static final String db_driver = "org.hsqldb.jdbcDriver";
+	private static final String db_url = "jdbc:hsqldb:file:dfdb";
+	private static final String db_user = "sa";
+	private static final String db_passwd = "";
   
   protected static final String CACHE_SCALE      = "8"; 
   protected static final String CACHE_SIZE_SCALE = "8";
@@ -80,10 +80,12 @@ public class DFHSQLKB extends DFDBKB {
     String sql = "CREATE CACHED TABLE " + name + " (";
     for (int i = 0; i < entries.length; i++) {
       sql += entries[i];
-      if (i < entries.length - 1)
-        sql += ", ";
-      else
-        sql += ")";
+			if (i < entries.length - 1) {
+				sql += ", ";
+			}
+			else {
+				sql += ")";
+			}
     }
     stmt.executeUpdate(sql);
     getConnectionWrapper().getConnection().commit();

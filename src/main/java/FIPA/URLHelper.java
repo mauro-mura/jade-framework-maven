@@ -6,7 +6,8 @@
  */
 
 package FIPA;
-public class URLHelper {
+
+public final class URLHelper {
      // It is useless to have instances of this class
      private URLHelper() { }
 
@@ -29,9 +30,10 @@ public class URLHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "URL", org.omg.CORBA.ORB.init().get_primitive_tc(org.omg.CORBA.TCKind.tk_string));
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "URL", org.omg.CORBA.ORB.init().get_primitive_tc(org.omg.CORBA.TCKind.tk_string));
+		 }
       return _tc;
    }
    public static String id() {

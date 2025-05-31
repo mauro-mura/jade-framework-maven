@@ -89,8 +89,9 @@ public class MessageTransportProtocol implements MTP {
 				FIPA.Envelope IDLenv = envelopes[e];
 
 				// Read in the 'to' slot
-				if (IDLenv.to.length > 0)
+				if (IDLenv.to.length > 0) {
 					env.clearAllTo();
+				}
 				for (int i = 0; i < IDLenv.to.length; i++) {
 					AID id = unmarshalAID(IDLenv.to[i]);
 					env.addTo(id);
@@ -103,8 +104,9 @@ public class MessageTransportProtocol implements MTP {
 				}
 
 				// Read in the 'intended-receiver' slot
-				if (IDLenv.intendedReceiver.length > 0)
+				if (IDLenv.intendedReceiver.length > 0) {
 					env.clearAllIntendedReceiver();
+				}
 				for (int i = 0; i < IDLenv.intendedReceiver.length; i++) {
 					AID id = unmarshalAID(IDLenv.intendedReceiver[i]);
 					env.addIntendedReceiver(id);
@@ -119,26 +121,32 @@ public class MessageTransportProtocol implements MTP {
 				// }
 
 				// Read in the other slots
-				if (IDLenv.comments.length() > 0)
+				if (IDLenv.comments.length() > 0) {
 					env.setComments(IDLenv.comments);
-				if (IDLenv.aclRepresentation.length() > 0)
+				}
+				if (IDLenv.aclRepresentation.length() > 0) {
 					env.setAclRepresentation(IDLenv.aclRepresentation);
-				if (IDLenv.payloadLength > 0)
+				}
+				if (IDLenv.payloadLength > 0) {
 					env.setPayloadLength(Long.valueOf(IDLenv.payloadLength));
-				if (IDLenv.payloadEncoding.length() > 0)
+				}
+				if (IDLenv.payloadEncoding.length() > 0) {
 					env.setPayloadEncoding(IDLenv.payloadEncoding);
+				}
 				if (IDLenv.date.length > 0) {
 					Date d = unmarshalDateTime(IDLenv.date[0]);
 					env.setDate(d);
 				}
 
 				// Read in the 'received' stamp
-				if (IDLenv.received.length > 0)
+				if (IDLenv.received.length > 0) {
 					env.addStamp(unmarshalReceivedObj(IDLenv.received[0]));
+				}
 
 				// Read in the 'user-defined properties' slot
-				if (IDLenv.userDefinedProperties.length > 0)
+				if (IDLenv.userDefinedProperties.length > 0) {
 					env.clearAllProperties();
+				}
 				for (int i = 0; i < IDLenv.userDefinedProperties.length; i++) {
 					env.addProperties(unmarshalProperty(IDLenv.userDefinedProperties[i]));
 				}
@@ -159,16 +167,17 @@ public class MessageTransportProtocol implements MTP {
 		private AID unmarshalAID(FIPA.AgentID id) {
 			AID result = new AID();
 			result.setName(id.name);
-			for (int i = 0; i < id.addresses.length; i++)
+			for (int i = 0;i < id.addresses.length;i++) {
 				result.addAddresses(id.addresses[i]);
-			for (int i = 0; i < id.resolvers.length; i++)
+			}
+			for (int i = 0;i < id.resolvers.length;i++) {
 				result.addResolvers(unmarshalAID(id.resolvers[i]));
+			}
 			return result;
 		}
 
 		private Date unmarshalDateTime(FIPA.DateTime d) {
-			Date result = new Date();
-			return result;
+			return new Date();
 		}
 
 		private Property unmarshalProperty(FIPA.Property p) {
@@ -201,15 +210,13 @@ public class MessageTransportProtocol implements MTP {
 	public TransportAddress activate(InChannel.Dispatcher disp, Profile p) throws MTPException {
 		server = new MTSImpl(disp);
 		myORB.connect(server);
-		IIOPAddress iiop = new IIOPAddress(myORB, server);
-
 		/*
 		 * //Open log file String fileName =
 		 * "iiop"+iiop.getHost()+iiop.getPort()+".log"; try{ logFile = new
 		 * PrintWriter(new FileWriter(fileName,true)); }catch(java.io.IOException e){e
 		 * .printStackTrace();}
 		 */
-		return iiop;
+		return new IIOPAddress(myORB, server);
 
 	}
 
@@ -239,8 +246,9 @@ public class MessageTransportProtocol implements MTP {
 			// verifies if the server object really exists (useful if the IOR is
 			// valid, i.e corresponds to a good object) (e.g. old IOR)
 			// FIXME. To check if this call slows down performance
-			if (objRef._non_existent())
+			if (objRef._non_existent()) {
 				throw new MTPException("Bad IIOP server object reference:" + objRef.toString());
+			}
 
 			// Fill in the 'to' field of the IDL envelope
 			Iterator<AID> itTo = env.getAllTo();
@@ -251,8 +259,9 @@ public class MessageTransportProtocol implements MTP {
 			}
 
 			FIPA.AgentID[] IDLto = new FIPA.AgentID[to.size()];
-			for (int i = 0; i < to.size(); i++)
+			for (int i = 0;i < to.size();i++) {
 				IDLto[i] = to.get(i);
+			}
 
 			// Fill in the 'from' field of the IDL envelope
 			AID from = env.getFrom();
@@ -267,8 +276,9 @@ public class MessageTransportProtocol implements MTP {
 			}
 
 			FIPA.AgentID[] IDLintendedReceiver = new FIPA.AgentID[intendedReceiver.size()];
-			for (int i = 0; i < intendedReceiver.size(); i++)
+			for (int i = 0;i < intendedReceiver.size();i++) {
 				IDLintendedReceiver[i] = intendedReceiver.get(i);
+			}
 
 			// Fill in the 'encrypted' field of the IDL envelope
 			// Iterator itEncrypted = env.getAllEncrypted();
@@ -285,11 +295,11 @@ public class MessageTransportProtocol implements MTP {
 
 			// Fill in the other fields of the IDL envelope ...
 
-			String IDLcomments = (env.getComments() != null) ? env.getComments() : "";
+			String IDLcomments = env.getComments() != null ? env.getComments() : "";
 			String IDLaclRepresentation = env.getAclRepresentation();
 			Long payloadLength = env.getPayloadLength();
 			int IDLpayloadLength = payloadLength.intValue();
-			String IDLpayloadEncoding = (env.getPayloadEncoding() != null) ? env.getPayloadEncoding() : "";
+			String IDLpayloadEncoding = env.getPayloadEncoding() != null ? env.getPayloadEncoding() : "";
 			FIPA.DateTime[] IDLdate = new FIPA.DateTime[] { marshalDateTime(env.getDate()) };
 			FIPA.Property[][] IDLtransportBehaviour = new FIPA.Property[][] {};
 
@@ -301,8 +311,9 @@ public class MessageTransportProtocol implements MTP {
 				userDefProps.add(marshalProperty(p));
 			}
 			FIPA.Property[] IDLuserDefinedProperties = new FIPA.Property[userDefProps.size()];
-			for (int i = 0; i < userDefProps.size(); i++)
+			for (int i = 0;i < userDefProps.size();i++) {
 				IDLuserDefinedProperties[i] = userDefProps.get(i);
+			}
 
 			// Fill in the list of 'received' stamps
 			/*
@@ -316,10 +327,12 @@ public class MessageTransportProtocol implements MTP {
 			// FIXME: For now, only the current 'received' object is considered...
 			ReceivedObject received = env.getReceived();
 			FIPA.ReceivedObject[] IDLreceived;
-			if (received != null)
-				IDLreceived = new FIPA.ReceivedObject[] { marshalReceivedObj(received) };
-			else
-				IDLreceived = new FIPA.ReceivedObject[] {};
+			if (received != null) {
+				IDLreceived = new FIPA.ReceivedObject[]{marshalReceivedObj(received)};
+			}
+			else {
+				IDLreceived = new FIPA.ReceivedObject[]{};
+			}
 
 			FIPA.Envelope IDLenv = new FIPA.Envelope(IDLto, IDLfrom, IDLcomments, IDLaclRepresentation,
 					IDLpayloadLength, IDLpayloadEncoding, IDLdate, IDLencrypted, IDLintendedReceiver, IDLreceived,
@@ -408,9 +421,8 @@ public class MessageTransportProtocol implements MTP {
 		short milliseconds = 0;
 		// FIXME: Uses local timezone ?
 		char typeDesignator = ' ';
-		FIPA.DateTime result = new FIPA.DateTime(year, month, day, hour, minutes, seconds, milliseconds,
+		return new FIPA.DateTime(year, month, day, hour, minutes, seconds, milliseconds,
 				typeDesignator);
-		return result;
 	}
 
 	private FIPA.ReceivedObject marshalReceivedObj(ReceivedObject ro) {
@@ -475,7 +487,7 @@ class IIOPAddress implements TransportAddress {
 	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
 			'f' };
 
-	private static final byte getASCIIByte(String ch) {
+	private static byte getASCIIByte(String ch) {
 		try {
 			return (ch.getBytes("US-ASCII"))[0];
 		} catch (UnsupportedEncodingException uee) {
@@ -499,14 +511,18 @@ class IIOPAddress implements TransportAddress {
 
 	public IIOPAddress(ORB anOrb, String s) throws MTPException {
 		orb = anOrb;
-		if (s.toLowerCase().startsWith("ior:"))
+		if (s.toLowerCase().startsWith("ior:")) {
 			initFromIOR(s);
-		else if (s.toLowerCase().startsWith("corbaloc:"))
+		}
+		else if (s.toLowerCase().startsWith("corbaloc:")) {
 			initFromURL(s, BIG_ENDIAN);
-		else if (s.toLowerCase().startsWith("corbaname:"))
+		}
+		else if (s.toLowerCase().startsWith("corbaname:")) {
 			initFromNS(s);
-		else
+		}
+		else {
 			throw new MTPException("Invalid string prefix");
+		}
 	}
 
 	void initFromIOR(String s) throws MTPException {
@@ -525,8 +541,10 @@ class IIOPAddress implements TransportAddress {
 		} else if (s.startsWith(":")) {
 			// Remove implicit IIOP specification
 			s = s.substring(1);
-		} else
+		}
+		else {
 			throw new MTPException("Invalid 'corbaloc' URL: neither 'iiop:' nor ':' was specified.");
+		}
 
 		buildIOR(s, FIPA_2000_TYPE_ID, endianness);
 
@@ -554,15 +572,18 @@ class IIOPAddress implements TransportAddress {
 				NameComponent nc = new NameComponent();
 				nc.id = tok;
 				name.add(nc);
-				if (!lexer.hasMoreTokens())
+				if (!lexer.hasMoreTokens()) {
 					break; // Out of the while loop
 
+				}
 				tok = lexer.nextToken();
-				if (tok.equals(".")) { // An (id, kind) pair
+				if (".".equals(tok)) { // An (id, kind) pair
 					tok = lexer.nextToken();
 					nc.kind = tok;
-				} else if (!tok.equals("/")) // No separator other than '.' or '/' is allowed
+				}
+				else if (!"/".equals(tok)) { // No separator other than '.' or '/' is allowed
 					throw new MTPException("Ill-formed path into the Naming Service: Unknown separator.");
+				}
 			}
 
 			// Get the object reference stored into the naming service...
@@ -607,8 +628,9 @@ class IIOPAddress implements TransportAddress {
 			try {
 				// Read 'string type_id' field
 				String typeID = codecStrategy.readString();
-				if (!typeID.equalsIgnoreCase(typeName))
+				if (!typeID.equalsIgnoreCase(typeName)) {
 					throw new MTPException("Invalid type ID" + typeID);
+				}
 			} catch (Exception e) { // all exceptions are converted into MTPException
 				throw new MTPException("Invalid type ID");
 			}
@@ -637,8 +659,9 @@ class IIOPAddress implements TransportAddress {
 					// Read IIOP version
 					byte versionMajor = profileBodyCodec.readOctet();
 					// byte versionMinor = profileBodyCodec.readOctet();
-					if (versionMajor != 1)
+					if (versionMajor != 1) {
 						throw new MTPException("IIOP version not supported");
+					}
 
 					try {
 						// Read 'string host' field
@@ -683,8 +706,9 @@ class IIOPAddress implements TransportAddress {
 		int colonPos = s.indexOf(':');
 		int slashPos = s.indexOf('/');
 		int poundPos = s.indexOf('#');
-		if ((colonPos == -1) || (slashPos == -1))
+		if ((colonPos == -1) || (slashPos == -1)) {
 			throw new MTPException("Invalid URL string");
+		}
 
 		host = s.substring(0, colonPos);
 		port = Short.parseShort(s.substring(colonPos + 1, slashPos));
@@ -737,17 +761,21 @@ class IIOPAddress implements TransportAddress {
 			ByteArrayOutputStream buf = new ByteArrayOutputStream();
 			for (int i = 0; i < objKey.length; i++) {
 				byte b = objKey[i];
-				if (b != ASCII_PERCENT)
+				if (b != ASCII_PERCENT) {
 					buf.write(b);
+				}
 				else {
 					// Get the hex value represented by the two bytes after '%'
 					try {
 						String hexPair = new String(objKey, i + 1, 2, "US-ASCII");
 						short sh = Short.parseShort(hexPair, 16);
-						if (sh > Byte.MAX_VALUE)
-							b = (byte) (sh + 2 * Byte.MIN_VALUE); // Conversion from unsigned to signed
-						else
+						if (sh > Byte.MAX_VALUE) {
+							b = (byte) (sh + 2 * Byte.MIN_VALUE);
+							// Conversion from unsigned to signed
+						}
+						else {
 							b = (byte) sh;
+						}
 					} catch (UnsupportedEncodingException uee) {
 						b = 0;
 					}
@@ -780,18 +808,22 @@ class IIOPAddress implements TransportAddress {
 	// unreserved URI character. See RFC 2396 for details.
 	private boolean isUnreservedURIChar(byte b) {
 		// An upper case letter?
-		if ((ASCII_UPPER_A <= b) && (ASCII_UPPER_Z >= b))
+		if ((ASCII_UPPER_A <= b) && (ASCII_UPPER_Z >= b)) {
 			return true;
+		}
 		// A lower case letter?
-		if ((ASCII_LOWER_A <= b) && (ASCII_LOWER_Z >= b))
+		if ((ASCII_LOWER_A <= b) && (ASCII_LOWER_Z >= b)) {
 			return true;
+		}
 		// A decimal digit?
-		if ((ASCII_ZERO <= b) && (ASCII_NINE >= b))
+		if ((ASCII_ZERO <= b) && (ASCII_NINE >= b)) {
 			return true;
+		}
 		// An unreserved, but not alphanumeric character?
 		if ((b == ASCII_MINUS) || (b == ASCII_UNDERSCORE) || (b == ASCII_DOT) || (b == ASCII_BANG) || (b == ASCII_TILDE)
-				|| (b == ASCII_STAR) || (b == ASCII_QUOTE) || (b == ASCII_OPEN_BRACKET) || (b == ASCII_CLOSED_BRACKET))
+			|| (b == ASCII_STAR) || (b == ASCII_QUOTE) || (b == ASCII_OPEN_BRACKET) || (b == ASCII_CLOSED_BRACKET)) {
 			return true;
+		}
 
 		// Anything else is not allowed
 		return false;
@@ -799,8 +831,9 @@ class IIOPAddress implements TransportAddress {
 
 	public String getURL() {
 		int portNum = port;
-		if (portNum < 0)
+		if (portNum < 0) {
 			portNum += 65536;
+		}
 		return "corbaloc::" + host + ":" + portNum + "/" + objectKey;
 	}
 
@@ -816,8 +849,8 @@ class IIOPAddress implements TransportAddress {
 
 		protected byte[] readBuffer;
 		protected StringBuilder writeBuffer;
-		protected int readIndex = 0;
-		protected int writeIndex = 0;
+		protected int readIndex;
+		protected int writeIndex;
 
 		protected CDRCodec(String hexString) {
 			// Put all Hex digits into a byte array
@@ -881,16 +914,18 @@ class IIOPAddress implements TransportAddress {
 		public void writeOctetSequence(byte[] seq) {
 			int seqLen = seq.length;
 			writeLong(seqLen);
-			for (int i = 0; i < seqLen; i++)
+			for (int i = 0;i < seqLen;i++) {
 				writeOctet(seq[i]);
+			}
 		}
 
 		public void writeString(String s) {
 			int strLen = s.length() + 1; // This includes '\0' terminator
 			writeLong(strLen);
 			byte[] bytes = s.getBytes();
-			for (int i = 0; i < s.length(); i++)
+			for (int i = 0;i < s.length();i++) {
 				writeOctet(bytes[i]);
+			}
 			writeOctet((byte) 0x00);
 		}
 
@@ -902,13 +937,15 @@ class IIOPAddress implements TransportAddress {
 		public abstract void writeLongLong(long l); // 64 bits
 
 		protected void setReadAlignment(int align) {
-			while ((readIndex % align) != 0)
+			while ((readIndex % align) != 0) {
 				readIndex++;
+			}
 		}
 
 		protected void setWriteAlignment(int align) {
-			while (writeIndex % align != 0)
+			while (writeIndex % align != 0) {
 				writeOctet((byte) 0x00);
+			}
 		}
 
 		private byte[] bytesFromHexString(String hexString) {
@@ -940,8 +977,7 @@ class IIOPAddress implements TransportAddress {
 
 		public short readShort() {
 			setReadAlignment(2);
-			short result = (short) ((readBuffer[readIndex++] << 8) + readBuffer[readIndex++]);
-			return result;
+			return (short) ((readBuffer[readIndex++] << 8) + readBuffer[readIndex++]);
 		}
 
 		public int readLong() {
@@ -1002,15 +1038,13 @@ class IIOPAddress implements TransportAddress {
 
 		public short readShort() {
 			setReadAlignment(2);
-			short result = (short) (readBuffer[readIndex++] + (readBuffer[readIndex++] << 8));
-			return result;
+			return (short) (readBuffer[readIndex++] + (readBuffer[readIndex++] << 8));
 		}
 
 		public int readLong() {
 			setReadAlignment(4);
-			int result = readBuffer[readIndex++] + (readBuffer[readIndex++] << 8) + (readBuffer[readIndex++] << 16)
+			return readBuffer[readIndex++] + (readBuffer[readIndex++] << 8) + (readBuffer[readIndex++] << 16)
 					+ (readBuffer[readIndex++] << 24);
-			return result;
 		}
 
 		public long readLongLong() {

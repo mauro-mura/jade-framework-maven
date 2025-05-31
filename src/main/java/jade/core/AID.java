@@ -55,17 +55,19 @@ public class AID implements Comparable<AID>, Serializable {
      * is concatenated to the name, separated by  "@".
      **/
     public AID(String name, boolean isGUID) {
-        if (isGUID)
-            setName(name);
-        else
-            setLocalName(name);
+			if (isGUID) {
+				setName(name);
+			}
+			else {
+				setLocalName(name);
+			}
     }
 
-    public static final String getPlatformID() {
+    public static String getPlatformID() {
         return platformID;
     }
 
-    public static final void setPlatformID(String id) {
+    public static void setPlatformID(String id) {
         platformID = id;
     }
 
@@ -263,18 +265,24 @@ public class AID implements Comparable<AID>, Serializable {
     public String toString() {
     	StringBuilder s = new StringBuilder("( agent-identifier ");
 		StringACLCodec.appendACLExpression(s, ":name", name);
-		if (!addresses.isEmpty())
-			s.append(" :addresses (sequence ");
-		for (int i=0; i<addresses.size(); i++)
-			try {
-				s.append(addresses.get(i));
-				s.append(" ");
-			} 
-		catch (IndexOutOfBoundsException e) {e.printStackTrace();}
-		if (!addresses.isEmpty())
-			s.append(")");
-		if (!resolvers.isEmpty())
-			s.append(" :resolvers (sequence ");
+			if (!addresses.isEmpty()) {
+				s.append(" :addresses (sequence ");
+			}
+			for (int i = 0;i < addresses.size();i++) {
+				try {
+					s.append(addresses.get(i));
+					s.append(" ");
+				}
+				catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+			}
+			if (!addresses.isEmpty()) {
+				s.append(")");
+			}
+			if (!resolvers.isEmpty()) {
+				s.append(" :resolvers (sequence ");
+			}
 		for (int i=0; i<resolvers.size(); i++) { 
 			try {
 				s.append(resolvers.get(i).toString());
@@ -282,8 +290,9 @@ public class AID implements Comparable<AID>, Serializable {
 			catch (IndexOutOfBoundsException e) {e.printStackTrace();}
 			s.append(" ");
 		}
-		if (!resolvers.isEmpty())
-			s.append(")");
+			if (!resolvers.isEmpty()) {
+				s.append(")");
+			}
 		Enumeration<?> e = userDefSlots.propertyNames();
 		String key;
 		String value;
@@ -326,10 +335,12 @@ public class AID implements Comparable<AID>, Serializable {
      */  
     @Override
    	public boolean equals(Object obj) {
-   		if (this == obj)
-   			return true;
-   		if (obj == null)
-   			return false;
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
 //   		if (getClass() != obj.getClass())
 //   			return false;
    		AID other = (AID) obj;
@@ -361,10 +372,12 @@ public class AID implements Comparable<AID>, Serializable {
      */
     public String getLocalName() {
         int atPos = name.lastIndexOf(HAP_SEPARATOR);
-        if (atPos == -1)
-            return name;
-        else
-            return name.substring(0, atPos);
+			if (atPos == -1) {
+				return name;
+			}
+			else {
+				return name.substring(0, atPos);
+			}
     }
 
     /**
@@ -373,10 +386,12 @@ public class AID implements Comparable<AID>, Serializable {
      */
     public String getHap() {
         int atPos = name.lastIndexOf(HAP_SEPARATOR);
-        if (atPos == -1)
-            return null;
-        else
-            return name.substring(atPos + 1);
+			if (atPos == -1) {
+				return null;
+			}
+			else {
+				return name.substring(atPos + 1);
+			}
     }
     
     // For persistence service

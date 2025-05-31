@@ -33,7 +33,7 @@ import java.util.NoSuchElementException;
  * @version $Date: 2003-11-20 17:04:51 +0100 (gio, 20 nov 2003) $ $Revision: 4573 $
  * @author Fabio Bellifemine, TILAB
  */
-public class EmptyIterator implements Iterator {
+public final class EmptyIterator implements Iterator {
 
 	private static final Iterator it = new EmptyIterator();
 

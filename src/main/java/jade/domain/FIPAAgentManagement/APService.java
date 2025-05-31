@@ -56,8 +56,9 @@ public class APService implements Concept {
     public APService(String type, String[] addresses) {
 	name=type;
 	this.type=type;
-	for (int i=0; i<addresses.length; i++)
-	    this.addresses.add(addresses[i]);
+			for (int i = 0;i < addresses.length;i++) {
+				this.addresses.add(addresses[i]);
+			}
     }
 
     /**
@@ -140,10 +141,12 @@ public class APService implements Concept {
      **/
     public String toString() {
 	StringBuffer str = new StringBuffer("( ap-service ");
-        if ((name!=null)&&(name.length()>0))
-	    str.append(" :name " + name);
-        if ((type!=null)&&(type.length()>0))
-	    str.append(" :type " + type);
+			if ((name != null) && (name.length() > 0)) {
+				str.append(" :name " + name);
+			}
+			if ((type != null) && (type.length() > 0)) {
+				str.append(" :type " + type);
+			}
         String s;
         str.append(" :addresses (sequence");
         for (Iterator i=addresses.iterator(); i.hasNext(); ) {

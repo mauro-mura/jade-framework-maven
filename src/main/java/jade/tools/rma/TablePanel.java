@@ -118,11 +118,11 @@ class TablePanel extends JPanel {
     return scrollpane;
   }
 
-  public void setData (TreePath paths[]) {
+  public void setData (TreePath[] paths) {
 
    int numPaths =  paths.length;
    data = new Object[numPaths][names.length];
-   Object relCur[];
+   Object[] relCur;
    AgentTree.AgentNode current;
     for(int i=0;i<numPaths;i++) {
        relCur= paths[i].getPath();

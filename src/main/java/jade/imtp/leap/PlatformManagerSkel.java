@@ -45,8 +45,8 @@ import java.util.Vector;
 */
 class PlatformManagerSkel extends Skeleton {
 
-    private PlatformManager impl;
-    private LEAPIMTPManager manager;
+	private final PlatformManager impl;
+	private final LEAPIMTPManager manager;
 
     public PlatformManagerSkel(PlatformManager pm, LEAPIMTPManager mgr) {
 			impl = pm;

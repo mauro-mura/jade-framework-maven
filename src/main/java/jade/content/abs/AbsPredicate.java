@@ -38,8 +38,8 @@ public class AbsPredicate extends AbsPrimitiveSlotsHolder implements AbsContentE
 
 	@Serial
 	private static final long serialVersionUID = -8655276412543339054L;
-	private boolean isAContentExpression = false;
-	private boolean isMeta = false;
+	private boolean isAContentExpression;
+	private boolean isMeta;
 
 	/**
 	 * Construct an Abstract descriptor to hold a predicate of the proper type (e.g.
@@ -87,7 +87,7 @@ public class AbsPredicate extends AbsPrimitiveSlotsHolder implements AbsContentE
 
 	// Easy way to access the Java class representing AbsPredicate.
 	// Useful in MIDP where XXX.class is not available
-	private static Class<?> absPredicateClass = null;
+	private static Class<?> absPredicateClass;
 
 	public static Class<?> getJavaClass() {
 		if (absPredicateClass == null) {

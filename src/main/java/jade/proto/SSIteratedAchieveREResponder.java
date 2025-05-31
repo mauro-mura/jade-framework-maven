@@ -61,7 +61,7 @@ public class SSIteratedAchieveREResponder extends SSResponder {
 	
 	static final String ACL_USERDEF_TERMINATED_SESSION = "iterated-fipa-request-terminated-session";
 	
-	private boolean sessionClosed = false;
+	private boolean sessionClosed;
 	private int initiationPerformative;
 	
 	/**

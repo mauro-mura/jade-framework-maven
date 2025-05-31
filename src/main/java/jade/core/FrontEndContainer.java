@@ -55,16 +55,16 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 	Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 	// The table of local agents
-	private Map<String, Agent> localAgents = new Hashtable<>(1);
-	
+	private final Map<String, Agent> localAgents = new Hashtable<>(1);
+
 	// Maps local agent names containing wildcards with their actual names
-	private Hashtable<String, String> actualNames = new Hashtable<>(1);
+	private final Hashtable<String, String> actualNames = new Hashtable<>(1);
 
 	// The table of locally installed services
-	private Hashtable<String, FEService> localServices = new Hashtable<>(1);
+	private final Hashtable<String, FEService> localServices = new Hashtable<>(1);
 
 	// The list of FELister
-	private Vector<FEListener> feListeners = new Vector<>();
+	private final Vector<FEListener> feListeners = new Vector<>();
 
 	// The ID of this container
 	private ContainerID myId;
@@ -93,7 +93,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 	private Properties configProperties;
 
 	// Flag indicating that the shutdown procedure is in place
-	private boolean exiting = false;
+	private boolean exiting;
 	// Flag indicating that the startup procedure is in place
 	private boolean starting = true;
 
@@ -134,8 +134,8 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 			try {
 				FEService svc = (FEService) Class.forName(serviceClassName).getDeclaredConstructor().newInstance();
 				localServices.put(svc.getName(), svc);
-				beServices = (beServices != null ? beServices + ';' + svc.getBEServiceClassName()
-						: svc.getBEServiceClassName());
+				beServices = beServices != null ? beServices + ';' + svc.getBEServiceClassName()
+						: svc.getBEServiceClassName();
 			} catch (Throwable t) {
 				logger.log(Logger.SEVERE, "Exception creating service " + t);
 			}
@@ -588,7 +588,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 
 	public String getProperty(String key, String aDefault) {
 		String ret = configProperties.getProperty(key);
-		return (ret != null ? ret : aDefault);
+		return ret != null ? ret : aDefault;
 	}
 
 	
@@ -711,7 +711,7 @@ class FrontEndContainer implements FrontEnd, AgentToolkit, Runnable {
 
 		while (true) {
 			synchronized (pending) {
-				while (pending.size() == 0) {
+				while (pending.isEmpty()) {
 					try {
 						pending.wait();
 					} catch (InterruptedException ie) {

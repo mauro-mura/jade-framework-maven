@@ -75,14 +75,14 @@ public class BootGUI extends JDialog {
 	static String EXTENSION = "conf";
     static String TITLE = "--JADE Properties--";
 
-    Vector propertiesVector = null;
-    File currentDir = null;
+    Vector propertiesVector;
+    File currentDir;
     JTextField statusField = new JTextField();
     JPanel topPanel = new JPanel();
     JPanel propertyPanel = new JPanel();
     JPanel buttonPanel = new JPanel();
-    String propertyFileName = null;
-    ExtendedProperties outProp = null;
+    String propertyFileName;
+    ExtendedProperties outProp;
     BootGUI thisBootGui;
     Boot3 booter;
 
@@ -144,7 +144,7 @@ public class BootGUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String param = (String) e.getActionCommand();
 
-                if (param.equals("Open File")) {
+                if ("Open File".equals(param)) {
                     JFileChooser chooser = new JFileChooser();
 
                     chooser.setFileFilter(new myFileFilter());
@@ -188,7 +188,7 @@ public class BootGUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String param = (String) e.getActionCommand();
 
-                if (param.equals("Save File")) {
+                if ("Save File".equals(param)) {
                     ExtendedProperties propToSave = extractPropertiesFromGui();
 
                     //propToSave.list(System.out);
@@ -215,7 +215,7 @@ public class BootGUI extends JDialog {
                                 chooser.getSelectedFile().getAbsolutePath();
                             boolean ext = hasExtension(fileName);
 
-                            if (ext == false) {
+                            if (!ext) {
                                 fileName = fileName.concat(".conf");
                             }
 
@@ -255,7 +255,7 @@ public class BootGUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String param = (String) e.getActionCommand();
 
-                if (param.equals("Run")) {
+                if ("Run".equals(param)) {
                     ExtendedProperties propToSave = extractPropertiesFromGui();
 
                     try {
@@ -302,7 +302,7 @@ public class BootGUI extends JDialog {
                                             .getAbsolutePath();
                                     boolean ext = hasExtension(fileName);
 
-                                    if (ext == false) {
+                                    if (!ext) {
                                         fileName = fileName.concat(".conf");
                                     }
 
@@ -344,7 +344,7 @@ public class BootGUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String param = (String) e.getActionCommand();
 
-                if (param.equals("Exit")) {
+                if ("Exit".equals(param)) {
                     System.exit(0);
                 }
             }
@@ -357,7 +357,7 @@ public class BootGUI extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String param = (String) e.getActionCommand();
 
-                if (param.equals("Help")) {
+                if ("Help".equals(param)) {
                     TreeHelp help = new TreeHelp(thisBootGui, "Boot Help",
                                                  "help/BOOTGUI.html");
 
@@ -375,7 +375,7 @@ public class BootGUI extends JDialog {
         getContentPane().add(mainPanel, BorderLayout.CENTER);
         setResizable(false);
         setModal(true);
-        ShowCorrect();
+        showCorrect();
     }
 
     /**
@@ -417,7 +417,7 @@ public class BootGUI extends JDialog {
                             (JCheckBox) singlePanel.getComponent(1);
 
                         out.setProperty(name.toLowerCase(),
-                                        (Boolean.valueOf(box.isSelected()))
+                                        Boolean.valueOf(box.isSelected())
                                             .toString());
                     } else {
 
@@ -456,9 +456,9 @@ public class BootGUI extends JDialog {
             String v2 = p2.getProperty(k1);
 
             if (v1 == null) {
-                modified = (v2 != null);
+                modified = v2 != null;
             } else {
-                modified = !(v1.equalsIgnoreCase(v2));
+                modified = !v1.equalsIgnoreCase(v2);
             }
         }
 
@@ -490,7 +490,7 @@ public class BootGUI extends JDialog {
                     if (type.equalsIgnoreCase(PropertyType.BOOLEAN_TYPE)) {
                         //JCheckBox
                         JCheckBox box = (JCheckBox) singlePanel.getComponent(1);
-                        box.setSelected(newValue.equalsIgnoreCase("true"));
+                        box.setSelected("true".equalsIgnoreCase(newValue));
                     } else {
                         //JTextField
                         JTextField textField = (JTextField) singlePanel.getComponent(1);
@@ -504,7 +504,7 @@ public class BootGUI extends JDialog {
     /**
      * Show the gui in the center of the screen
      */
-    void ShowCorrect() {
+    void showCorrect() {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension mySize = getPreferredSize();
@@ -572,7 +572,7 @@ public class BootGUI extends JDialog {
         }
 
         if (ext != null) {
-            if (ext.equalsIgnoreCase("conf")) {
+            if ("conf".equalsIgnoreCase(ext)) {
                 out = true;
             }
         }
@@ -601,14 +601,14 @@ public class BootGUI extends JDialog {
                                         
         pv.add(new PropertyType(BootProfileImpl.GUI_KEY,
                                 PropertyType.BOOLEAN_TYPE,
-                                Boolean.valueOf(theProperties.getBooleanProperty(BootProfileImpl.GUI_KEY, false)).toString(),
+                                Boolean.toString(theProperties.getBooleanProperty(BootProfileImpl.GUI_KEY, false)),
                                 "Select to launch the RMA Gui",
                                 false));
                              
         pv.add(new PropertyType(BootProfileImpl.MAIN_PORT,
                                 PropertyType.STRING_TYPE,
-                                Integer.valueOf(theProperties.getIntProperty(BootProfileImpl.MAIN_PORT,
-																	BootProfileImpl.DEFAULT_PORT)).toString(),
+                                Integer.toString(theProperties.getIntProperty(BootProfileImpl.MAIN_PORT,
+																	BootProfileImpl.DEFAULT_PORT)),
                                 "Port Number of the main-container",
                                 false));
                                         
@@ -620,7 +620,7 @@ public class BootGUI extends JDialog {
                                         
         pv.add(new PropertyType(BootProfileImpl.CONTAINER_KEY,
                                 PropertyType.BOOLEAN_TYPE,
-                                Boolean.valueOf(theProperties.getBooleanProperty(BootProfileImpl.CONTAINER_KEY, false)).toString(),
+                                Boolean.toString(theProperties.getBooleanProperty(BootProfileImpl.CONTAINER_KEY, false)),
                                 "Select to launch an agent-container",
                                 false));
                                              
@@ -632,7 +632,7 @@ public class BootGUI extends JDialog {
                                        
         pv.add(new PropertyType(BootProfileImpl.NOMTP_KEY,
                                 PropertyType.BOOLEAN_TYPE,
-                                Boolean.valueOf(theProperties.getBooleanProperty(BootProfileImpl.NOMTP_KEY, false)).toString(),
+                                Boolean.toString(theProperties.getBooleanProperty(BootProfileImpl.NOMTP_KEY, false)),
                                 "Disable all external MTPs on this container",
                                 false));
                                          
@@ -649,7 +649,7 @@ public class BootGUI extends JDialog {
                                 false));
         pv.add(new PropertyType(BootProfileImpl.NOMOBILITY_KEY,
                                 PropertyType.BOOLEAN_TYPE,
-                                Boolean.valueOf(theProperties.getBooleanProperty(BootProfileImpl.NOMOBILITY_KEY,false)).toString(),
+                                Boolean.toString(theProperties.getBooleanProperty(BootProfileImpl.NOMOBILITY_KEY,false)),
                                 "Disable Mobility",
                                 false));
         return pv;
@@ -695,7 +695,7 @@ public class BootGUI extends JDialog {
                 mainP.add(valueCombo);
             } else if (type.equalsIgnoreCase(PropertyType.BOOLEAN_TYPE)) {
                 valueBox = new JCheckBox();
-                valueBox.setSelected((Boolean.valueOf(value)).booleanValue());
+                valueBox.setSelected(Boolean.valueOf(value).booleanValue());
                 valueBox.setToolTipText(property.getToolTip());
                 mainP.add(valueBox);
             } else {

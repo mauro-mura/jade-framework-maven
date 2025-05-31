@@ -43,11 +43,11 @@ import jade.lang.acl.MessageTemplate;
  * @version $Date: 2010-05-18 14:40:49 +0200 (mar, 18 mag 2010) $ $Revision: 6340 $  
  **/
 public class FIPAService {
-	private static int cnt = 0;
+	private static int cnt;
 	
-	private synchronized static int getNextInt() {
+	private static synchronized int getNextInt() {
 		int ret = cnt;
-		cnt = (cnt < 9999 ? (++cnt) : 0);
+		cnt = cnt < 9999 ? (++cnt) : 0;
 		return ret;
 	}
 	
@@ -149,7 +149,7 @@ public class FIPAService {
 				// a timeout was set and it is expired.
 				if (timeout > 0) {
 					long agreeTime = System.currentTimeMillis();
-					timeout -= (agreeTime - sendTime);
+					timeout -= agreeTime - sendTime;
 					if (timeout <= 0) {
 						return null;
 					}
@@ -191,18 +191,18 @@ public class FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(SL0Vocabulary.AID_NAME)) {
+			if (SL0Vocabulary.AID_NAME.equals(slotName)) {
 				id.setName(parser.getElement());
 			}
 			// Addresses
-			else if (slotName.equals(SL0Vocabulary.AID_ADDRESSES)) {
+			else if (SL0Vocabulary.AID_ADDRESSES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					id.addAddresses((String) it.next());
 				}
 			}
 			// Resolvers
-			else if (slotName.equals(SL0Vocabulary.AID_RESOLVERS)) {
+			else if (SL0Vocabulary.AID_RESOLVERS.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					id.addResolvers((AID) it.next());
@@ -233,7 +233,7 @@ public class FIPAService {
 			else {
 				parser.consumeChar('(');
 				next = parser.nextToken();
-				if (next.equals(SL0Vocabulary.AID)) {
+				if (SL0Vocabulary.AID.equals(next)) {
 					l.add(parseAID(parser));
 				}
 			}

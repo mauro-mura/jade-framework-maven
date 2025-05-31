@@ -43,9 +43,9 @@ public class AbsContentElementList implements AbsContentElement {
 
 	@Serial
 	private static final long serialVersionUID = -242568857041690927L;
-	private List<AbsContentElement> elements = new ArrayList<>();
-	private String typeName = null;
-	private boolean isAContentExpression = false;
+	private final List<AbsContentElement> elements = new ArrayList<>();
+	private final String typeName;
+	private boolean isAContentExpression;
 
 	/**
 	 * Construct an Abstract descriptor to hold a content element list
@@ -145,8 +145,9 @@ public class AbsContentElementList implements AbsContentElement {
 	public AbsContentElement[] toArray() {
 		int size = elements.size();
 		AbsContentElement[] tmp = new AbsContentElement[size];
-		for (int i = 0; i < size; i++)
+		for (int i = 0;i < size;i++) {
 			tmp[i] = elements.get(i);
+		}
 		return tmp;
 	}
 

@@ -23,9 +23,9 @@ class MulticastMainDetectionListener implements Runnable {
 
 	private static final int DGRAM_BUF_LEN = 1024;
 
-	private ProfileImpl profile;
-	private IMTPManager manager;
-	private MulticastParams mcast;
+	private final ProfileImpl profile;
+	private final IMTPManager manager;
+	private final MulticastParams mcast;
 	private InetAddress mcastGroupAddress;
 	private MulticastSocket socket;
 	private boolean active;
@@ -124,7 +124,7 @@ class MulticastMainDetectionListener implements Runnable {
 			}
 		}
 
-		if (responseAddresses.size() < 1) {
+		if (responseAddresses.isEmpty()) {
 			response = errorResponse(MainDetectionManager.PROTO_RESP_NOTFOUND, "Cannot manage protocol " + proto);
 		} else {
 			response = MainDetectionManager.PROTO_RESP_OK;

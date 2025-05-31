@@ -68,11 +68,13 @@ public class KeyStoreKeyManager implements HTTPSKeyManager {
 		String storetype = profile.getParameter(PREFIX + "keyStoreType", "JKS");
 		KeyStore ks = KeyStore.getInstance(storetype);
 		ks.load(new FileInputStream(keyfile),pass.toCharArray());
-		alias = ((String)ks.aliases().nextElement());
+		alias = (String)ks.aliases().nextElement();
 		privateKey = (PrivateKey)ks.getKey(alias, pass.toCharArray());
 		Certificate[] certs = ks.getCertificateChain(alias);
 		cert = new X509Certificate[certs.length];
-		for(int i=0;i<certs.length;i++) cert[i] = (X509Certificate)certs[i];
+		for (int i = 0;i < certs.length;i++) {
+			cert[i] = (X509Certificate) certs[i];
+		}
 	}
 
 	public PrivateKey getPrivateKey(String arg0) {

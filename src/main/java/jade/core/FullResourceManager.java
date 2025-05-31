@@ -41,7 +41,7 @@ class FullResourceManager implements ResourceManager {
 	private ThreadGroup systemAgentThreads;
 	private ThreadGroup criticalThreads;
 	
-	private boolean terminating = false;
+	private boolean terminating;
 
 	private Profile myProfile;
 	private boolean disableThreadGroupInterrupt;

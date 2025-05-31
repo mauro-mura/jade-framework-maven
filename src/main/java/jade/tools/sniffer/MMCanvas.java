@@ -86,46 +86,47 @@ public class MMCanvas
   private static final int H_TOL = 4;
   private static final int timeUnitWidth = 20;
   private static final int xOffset = 38;
-  private int positionAgent=0;
+  private int positionAgent;
 
 
-  private int x1,x2,y;
-  private MainWindow mWnd;
-  private PanelCanvas panCan; /* To resize and modify the scroll bars */
-  private MainPanel mPan;
+		private int x1;
+		private int x2;
+		private int y;
+		private final MainWindow mWnd;
+		private final PanelCanvas panCan; /* To resize and modify the scroll bars */
+		private final MainPanel mPan;
   private int horDim = 400;
   private int vertDim = 200;
-  private boolean typeCanv;
-  private boolean nameShown = false;
-  private List noSniffAgents=new ArrayList<>();
-  //#DOTNET_EXCLUDE_BEGIN
-  private Font font1 = new Font("Helvetica",Font.ITALIC,12);
-  private Font font2 = new Font("SanSerif",Font.BOLD,12);
-  // font3 is used to display the name of the performative above the messages.
-  // Needed something a bit smaller than 1 or 2 above so it isn't too obtrusive.
-  private Font font3 = new Font("SanSerif", Font.PLAIN, 10);
-  //#DOTNET_EXCLUDE_END
-  /*#DOTNET_INCLUDE_BEGIN
-  private Font font1 = new Font("Helvetica", 12, FontStyle.Italic);
-  private Font font2 = new Font("SanSerif",12, FontStyle.Bold);
-  // font3 is used to display the name of the performative above the messages.
-  // Needed something a bit smaller than 1 or 2 above so it isn't too obtrusive.
-  private Font font3 = new Font("SanSerif", 10, FontStyle.Regular);
-  private Font font4 = new Font("Helvetica", 10, FontStyle.Italic);
-  private Panel myPanel;
-  #DOTNET_INCLUDE_END*/
-  private MMCanvas otherCanv;
+		private final boolean typeCanv;
+  private boolean nameShown;
+		private final List noSniffAgents = new ArrayList<>();
+		//#DOTNET_EXCLUDE_BEGIN
+		private final Font font1 = new Font("Helvetica", Font.ITALIC, 12);
+		private final Font font2 = new Font("SanSerif", Font.BOLD, 12);
+		// font3 is used to display the name of the performative above the messages.
+		// Needed something a bit smaller than 1 or 2 above so it isn't too obtrusive.
+		private final Font font3 = new Font("SanSerif", Font.PLAIN, 10);
+		//#DOTNET_EXCLUDE_END
+		/*#DOTNET_INCLUDE_BEGIN
+		 private Font font1 = new Font("Helvetica", 12, FontStyle.Italic);
+		 private Font font2 = new Font("SanSerif",12, FontStyle.Bold);
+		 // font3 is used to display the name of the performative above the messages.
+		 // Needed something a bit smaller than 1 or 2 above so it isn't too obtrusive.
+		 private Font font3 = new Font("SanSerif", 10, FontStyle.Regular);
+		 private Font font4 = new Font("Helvetica", 10, FontStyle.Italic);
+		 private Panel myPanel;
+		 #DOTNET_INCLUDE_END*/
+		private final MMCanvas otherCanv;
   public AgentList al;
   public MessageList ml;
-  
-  // These vars are used to make messages grouped by conversationID appear as the
-  // same color.  It makes it easier to pick out various conversations.
-  private HashMap mapToColor = new HashMap<>();
-  // Removed green, orange, and pink.  They were too hard to see.
-  //#DOTNET_EXCLUDE_BEGIN
-  private Color colorTable[] = {new Color(200, 0, 150), Color.blue, new Color(230, 230, 0), Color.red, Color.black, Color.magenta, Color.cyan, 
-  Color.pink, new Color(0, 200, 150), Color.green};
-  private Color noConversationColor = Color.gray;
+		// These vars are used to make messages grouped by conversationID appear as the
+	// same color.  It makes it easier to pick out various conversations.
+	private final HashMap mapToColor = new HashMap<>();
+		// Removed green, orange, and pink.  They were too hard to see.
+		//#DOTNET_EXCLUDE_BEGIN
+		private final Color[] colorTable = {new Color(200, 0, 150), Color.blue, new Color(230, 230, 0), Color.red, Color.black, Color.magenta, Color.cyan,
+			Color.pink, new Color(0, 200, 150), Color.green};
+		private final Color noConversationColor = Color.gray;
   //#DOTNET_EXCLUDE_END
   /*#DOTNET_INCLUDE_BEGIN
   	private Color colorTable[] = 
@@ -135,7 +136,7 @@ public class MMCanvas
 		};
   private Color noConversationColor = Color.gray;
   #DOTNET_INCLUDE_END*/
-  private int colorCounter = 0;
+  private int colorCounter;
   
   public MMCanvas(boolean type,MainWindow mWnd, PanelCanvas panCan, MainPanel mPan, MMCanvas other ) {
    super();
@@ -152,11 +153,13 @@ public class MMCanvas
    this.mWnd = mWnd;
    this.mPan=mPan;
 
-   //#DOTNET_EXCLUDE_BEGIN
-   if (typeCanv)
-     setPreferredSize( new Dimension(horDim,50));
-   else
-     setPreferredSize( new Dimension(horDim,vertDim));
+		//#DOTNET_EXCLUDE_BEGIN
+		if (typeCanv) {
+			setPreferredSize(new Dimension(horDim, 50));
+		}
+		else {
+			setPreferredSize(new Dimension(horDim, vertDim));
+		}
    //#DOTNET_EXCLUDE_END
    }
 
@@ -198,7 +201,7 @@ public class MMCanvas
    #DOTNET_INCLUDE_END*/
    try 
    {
-     if(typeCanv == true) {
+     if(typeCanv) {
  
        Iterator it = al.getAgents();
        while(it.hasNext()) {
@@ -207,11 +210,17 @@ public class MMCanvas
 
          int x = Agent.yRet+(xCanvDim++)*80;
 
-	     //#DOTNET_EXCLUDE_BEGIN
-         if(agent.onCanv == false) g.setColor(Color.gray);
-         else g.setColor(Color.red);
+				 //#DOTNET_EXCLUDE_BEGIN
+				 if (!agent.onCanv) {
+					 g.setColor(Color.gray);
+				 }
+					else {
+						g.setColor(Color.red);
+					}
 
-         if(checkNoSniffedVector(agent)) g.setColor(Color.yellow);
+				 if (checkNoSniffedVector(agent)) {
+					 g.setColor(Color.yellow);
+				 }
 	     
    	     g.draw3DRect(x,Agent.yRet,Agent.bRet,Agent.hRet,true);
 		 g.fill3DRect(x,Agent.yRet,Agent.bRet,Agent.hRet,true);
@@ -307,11 +316,11 @@ public class MMCanvas
                    part2 = aName.substring(charCount);
                    part3 = "";
                } else {
-                   part2 = aName.substring(charCount, (charCount * 2));
+                   part2 = aName.substring(charCount, charCount * 2);
                    if (charCount * 3 > aName.length()) {
                        part3 = aName.substring(charCount * 2);
                    } else {
-                    part3 = aName.substring(charCount*2, (charCount * 3));
+                    part3 = aName.substring(charCount*2, charCount * 3);
                    }
                }
 			   //#DOTNET_EXCLUDE_BEGIN
@@ -340,14 +349,16 @@ public class MMCanvas
 	 int myOffset = Agent.yRet + Agent.hRet;
      #DOTNET_INCLUDE_END*/
 
-     if((typeCanv == false)) 
+     if(!typeCanv) 
 	 {
 
-       /* This is the Message Canvas: so let's paint all the messages */
+			/* This is the Message Canvas: so let's paint all the messages */
 
-       int x1,x2,y;
-       int xCoords[] = new int[3];
-       int yCoords[] = new int[3];
+			int x1;
+		 int x2;
+		 int y;
+       int[] xCoords = new int[3];
+       int[] yCoords = new int[3];
        xCanvDim = otherCanv.al.size();
 
        Iterator it = ml.getMessages();
@@ -618,7 +629,7 @@ public class MMCanvas
           // Here we update the red numbers of the timeline
           msgNumWrapped = Integer.valueOf(t);
 	      //#DOTNET_EXCLUDE_BEGIN
-          g.drawString(msgNumWrapped.toString(),10,timeUnitWidth*(t)+15);
+          g.drawString(msgNumWrapped.toString(),10,timeUnitWidth*t+15);
 	      //#DOTNET_EXCLUDE_END
 	      /*#DOTNET_INCLUDE_BEGIN
 		  Font f = new Font("Arial", 10);
@@ -671,7 +682,7 @@ public class MMCanvas
    Message mess;
    int numberToShow=5;
 
-    if( ((mess = selMessage(evt)) != null) && (typeCanv == false)) {
+    if( ((mess = selMessage(evt)) != null) && (!typeCanv)) {
        info = "  Message:" + mess.getMessageNumber() + " ";
        //#DOTNET_EXCLUDE_BEGIN
 	   mPan.textArea.setText(" ");
@@ -697,7 +708,7 @@ public class MMCanvas
 	   #DOTNET_INCLUDE_END*/
     } else {
         Agent selectedAgent = selAgent(evt);
-        if ((selectedAgent != null) && (typeCanv == true)) {
+        if ((selectedAgent != null) && typeCanv) {
 			//#DOTNET_EXCLUDE_BEGIN
             mPan.textArea.setText("Agent: ");
             mPan.textArea.setFont(font2);
@@ -730,7 +741,7 @@ public class MMCanvas
     String info;
       if(evt.getClickCount() == 2) {
 
-       if( ((mess = selMessage(evt)) != null) && (typeCanv == false)) {
+       if( ((mess = selMessage(evt)) != null) && (!typeCanv)) {
 			   AclGui.showMsgInDialog(mess,mWnd);
        }
     }
@@ -744,7 +755,7 @@ public class MMCanvas
  
   public void mouseMoved(MouseEvent evt) {
     Agent selectedAgent = selAgent(evt);
-    if ((selectedAgent != null) && (typeCanv == true)) {
+    if ((selectedAgent != null) && typeCanv) {
       if (!nameShown) {
         nameShown = true;
         mPan.textArea.setText("Agent: ");
@@ -764,19 +775,25 @@ public class MMCanvas
   boolean isPresent=false;
   Agent agentToCompare;
 
-  if(noSniffAgents.size()==0) return false;
-   else {
-    for (int i=0; i<noSniffAgents.size();i++) {
-     agentToCompare=(Agent)noSniffAgents.get(i);
-     if(agentToCompare.agentName.equals(agent.agentName)) {
-      isPresent=true;
-      positionAgent=i;
-      break;
-     }
-    }
-    if (isPresent) return true;
-    else return false;
-   }
+	 if (noSniffAgents.isEmpty()) {
+		 return false;
+	 }
+	 else {
+		 for (int i = 0;i < noSniffAgents.size();i++) {
+			 agentToCompare = (Agent) noSniffAgents.get(i);
+			 if (agentToCompare.agentName.equals(agent.agentName)) {
+				 isPresent = true;
+				 positionAgent = i;
+				 break;
+			 }
+		 }
+			if (isPresent) {
+				return true;
+			}
+			else {
+				return false;
+			}
+	 }
  }
 
  //#DOTNET_EXCLUDE_BEGIN
@@ -872,7 +889,7 @@ public class MMCanvas
 	   if((evt.get_X() >= x1) && (evt.get_X() <= x2) &&
 	      (evt.get_Y() >= y1) && (evt.get_Y() <= y2)) {
 	   #DOTNET_INCLUDE_END*/
-	     if (ag.agentName.equals("Other")) 
+	     if ("Other".equals(ag.agentName)) 
 		 {
 	        return null;
 	     } else {
@@ -970,7 +987,9 @@ public class MMCanvas
   // method to repaint the  NoSniffed agent
 
   public void repaintNoSniffedAgent(Agent agent) {
-    if(!checkNoSniffedVector(agent)) noSniffAgents.add(agent);
+		if (!checkNoSniffedVector(agent)) {
+			noSniffAgents.add(agent);
+		}
     repaintBothCanvas();
   }
 

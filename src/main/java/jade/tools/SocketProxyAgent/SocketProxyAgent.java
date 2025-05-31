@@ -55,10 +55,10 @@ import jade.util.Logger;
 public class SocketProxyAgent extends Agent {
 
 	/** the default port to listen on */
-	public final static int DEFAULT_PORT = 6789;
+	public static final int DEFAULT_PORT = 6789;
 
 	/** my logger */
-	private final static Logger logger = Logger.getMyLogger(SocketProxyAgent.class.getName());
+	private static final Logger logger = Logger.getMyLogger(SocketProxyAgent.class.getName());
 	/** reader for parameters */
 	private BufferedReader in;
 	/** the thread doing connection on desired port */
@@ -83,7 +83,7 @@ public class SocketProxyAgent extends Agent {
 			try {
 
 				Reader reader;
-				Object arguments[] = getArguments();
+				Object[] arguments = getArguments();
 				if ( ( null != arguments ) && 
 						( null != arguments[0] ) &&
 						( arguments[0] instanceof String arg0 ) ) { 
@@ -108,7 +108,7 @@ public class SocketProxyAgent extends Agent {
 				//If not add the local hap (of the dfproxy agent).
 				while (st.hasMoreTokens()) {
 					String name = st.nextToken();
-					if (!name.equals("*")) {
+					if (!"*".equals(name)) {
 						int atPos = name.lastIndexOf('@');
 
 						if (atPos == -1) {
@@ -158,7 +158,7 @@ public class SocketProxyAgent extends Agent {
 		return portNumber;
 	}
 
-	private final static int ONE_SEC_AS_MS = 1000;
+	private static final int ONE_SEC_AS_MS = 1000;
 
 	/**
 	 * agent takedown

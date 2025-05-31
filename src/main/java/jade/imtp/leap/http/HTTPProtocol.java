@@ -56,7 +56,7 @@ public class HTTPProtocol extends TransportProtocol {
 	public static final String NAME = "http";
 	public static final int DEFAULT_PORT = 80;
 
-	private static HTTPProtocol theInstance = new HTTPProtocol();
+	private static final HTTPProtocol theInstance = new HTTPProtocol();
 
 	public static HTTPProtocol getInstance() {
 		return theInstance;

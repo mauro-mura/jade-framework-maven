@@ -52,8 +52,8 @@ import jade.util.Logger;
 
 public class DisplayLogFileAction extends FixedAction {
 
- private MainPanel mainPanel;
- private static Logger logger = Logger.getMyLogger(DisplayLogFileAction.class.getName());
+	private final MainPanel mainPanel;
+	private static final Logger logger = Logger.getMyLogger(DisplayLogFileAction.class.getName());
 
   public DisplayLogFileAction(ActionProcessor actPro,MainPanel mainPanel ){
    super ("DisplayLogFileActionIcon","Open Snapshot File",actPro);
@@ -71,12 +71,14 @@ public class DisplayLogFileAction extends FixedAction {
       mainPanel.panelcan.canvAgent.setAgentList((AgentList)p.readObject());
       mainPanel.panelcan.canvMess.setMessageList((MessageList)p.readObject());
       p.close();
-      if(logger.isLoggable(Logger.CONFIG))
-      	logger.log(Logger.CONFIG,"Snapshot File Read.");
+			if (logger.isLoggable(Logger.CONFIG)) {
+				logger.log(Logger.CONFIG, "Snapshot File Read.");
+			}
     }
    } catch (Exception e){
-	     if(logger.isLoggable(Logger.WARNING))
-	     	logger.log(Logger.WARNING,"Error Reading Snapshot File" + e);
+			if (logger.isLoggable(Logger.WARNING)) {
+			 logger.log(Logger.WARNING, "Error Reading Snapshot File" + e);
+		 }
      }
    }
 

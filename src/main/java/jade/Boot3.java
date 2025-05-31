@@ -59,8 +59,8 @@ public class Boot3 {
 
     /** separator between the agent name and the agent class */
     private static final String NAME2CLASS_SEPARATOR = ":";
-    private ExtendedProperties properties = null;
-    private BootProfileImpl profile = null;
+	private final ExtendedProperties properties;
+    private BootProfileImpl profile;
 
     /**
      * Main entry point for invocation.
@@ -194,7 +194,7 @@ public class Boot3 {
             for (int i = 0; i < args.length; i++) {
                 if (args[i].startsWith("import:")) {
                     int j = args[i].indexOf(':');
-                    isNew = ( (j < args[i].length()-1) && (isFileName(args[i].substring(j+1))) );
+                    isNew = (j < args[i].length()-1) && (isFileName(args[i].substring(j+1)));
                     likely = !isNew;  // in case malformed file name
                 } else
                 if (args[i].startsWith("agents:")) {
@@ -218,7 +218,7 @@ public class Boot3 {
         while ((n < args.length) && !endCommand) {
             String theArg = args[n];
 
-            if (theArg.equalsIgnoreCase("-conf")) {
+            if ("-conf".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     // no modifier
                     results.add(theArg);
@@ -234,7 +234,7 @@ public class Boot3 {
                         n--;
                     }
                 }
-            } else if (theArg.equalsIgnoreCase("-host")) {
+            } else if ("-host".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing host name ");
 
@@ -242,7 +242,7 @@ public class Boot3 {
                 } else {
                     results.add("host:" + args[n]);
                 }
-            }else if (theArg.equalsIgnoreCase("-owner")) {
+            }else if ("-owner".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
 
 					// "owner:password" not provided on command line
@@ -251,7 +251,7 @@ public class Boot3 {
                 } else {
                     results.add("owner:" + args[n]);
                 }
-            } else if (theArg.equalsIgnoreCase("-name")) {
+            } else if ("-name".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing platform name");
 
@@ -259,7 +259,7 @@ public class Boot3 {
                 } else {
                     results.add("name:" + args[n]);
                 }
-            } else if (theArg.equalsIgnoreCase("-imtp")) {
+            } else if ("-imtp".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing IMTP class");
 
@@ -267,7 +267,7 @@ public class Boot3 {
                 } else {
                     results.add("imtp:" + args[n]);
                 }
-            } else if (theArg.equalsIgnoreCase("-port")) {
+            } else if ("-port".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing port number");
 
@@ -283,26 +283,25 @@ public class Boot3 {
 
                     results.add("port:" + args[n]);
                 }
-            } else if (theArg.equalsIgnoreCase("-container")) {
+            } else if ("-container".equalsIgnoreCase(theArg)) {
                 results.add(theArg);
-	    } else if (theArg.equalsIgnoreCase("-backupmain")) {
+	    } else if ("-backupmain".equalsIgnoreCase(theArg)) {
 		results.add(theArg);
-            } else if (theArg.equalsIgnoreCase("-gui")) {
+            } else if ("-gui".equalsIgnoreCase(theArg)) {
                 results.add(theArg);
-            } else if (theArg.equalsIgnoreCase("-version")
-                       || theArg.equalsIgnoreCase("-v")) {
+            } else if ("-version".equalsIgnoreCase(theArg)
+                       || "-v".equalsIgnoreCase(theArg)) {
                 results.add("-version");
-            } else if (theArg.equalsIgnoreCase("-help")
-                       || theArg.equalsIgnoreCase("-h")) {
+            } else if ("-help".equalsIgnoreCase(theArg)
+                       || "-h".equalsIgnoreCase(theArg)) {
                 results.add("-help");
-            } else if (theArg.equalsIgnoreCase("-nomtp")) {
+            } else if ("-nomtp".equalsIgnoreCase(theArg)) {
                 results.add(theArg);
-            } else if(theArg.equalsIgnoreCase("-nomobility")){
+            } else if("-nomobility".equalsIgnoreCase(theArg)){
                 results.add(theArg);
-            } else if (theArg.equalsIgnoreCase(
-                    "-dump")) {    // new form but useful for debugging
+            } else if ("-dump".equalsIgnoreCase(theArg)) {    // new form but useful for debugging
                 results.add(theArg);
-            } else if (theArg.equalsIgnoreCase("-mtp")) {
+            } else if ("-mtp".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing mtp specifiers");
 
@@ -310,7 +309,7 @@ public class Boot3 {
                 } else {
                     results.add("mtp:" + args[n]);
                 }
-            } else if (theArg.equalsIgnoreCase("-aclcodec")) {
+            } else if ("-aclcodec".equalsIgnoreCase(theArg)) {
                 if (++n == args.length) {
                     System.err.println("Missing aclcodec specifiers");
 

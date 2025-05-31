@@ -33,10 +33,10 @@ import java.awt.*;
    @author Andrea Squeri, Corti Denis, Ballestracci Paolo -  Universita` di Parma
 */
 public class TablePopupMenu extends JPopupMenu {
-  private TablePopupMenuListener listener;
-  private JMenuItem clearMessages;
-  private JMenuItem removeMessage;
-  private JMenuItem viewMessage;
+	private final TablePopupMenuListener listener;
+	private final JMenuItem clearMessages;
+	private final JMenuItem removeMessage;
+	private final JMenuItem viewMessage;
   private JTable table;
 
   public TablePopupMenu() {

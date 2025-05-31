@@ -72,8 +72,9 @@ public class ACLMessage implements Concept {
        payload.
     */
     public void setAclRepresentation(String r) {
-	if(env != null)
-	    env.setAclRepresentation(r);
+			if (env != null) {
+				env.setAclRepresentation(r);
+			}
     }
 
     /**
@@ -81,10 +82,12 @@ public class ACLMessage implements Concept {
        @return The ACL representation of the message.
     */
     public String getAclRepresentation() {
-	if(env != null)
-	    return env.getAclRepresentation();
-	else
-	    return null;
+			if (env != null) {
+				return env.getAclRepresentation();
+			}
+			else {
+				return null;
+			}
     }
 
     /**

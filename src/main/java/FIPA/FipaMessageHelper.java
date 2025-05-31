@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class FipaMessageHelper {
+public final class FipaMessageHelper {
 	// It is useless to have instances of this class
 	private FipaMessageHelper() {
 	}
@@ -56,7 +56,7 @@ public class FipaMessageHelper {
 	private static org.omg.CORBA.TypeCode _tc;
 
 	@SuppressWarnings("unused")
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		int _memberCount = 2;
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {

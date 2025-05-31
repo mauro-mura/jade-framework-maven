@@ -23,12 +23,12 @@ public class UDPNodeMonitoringProxy extends SliceProxy implements UDPNodeMonitor
 
 		Node n = getNode();
 		Object result = n.accept(cmd);
-		if ((result != null) && (result instanceof Throwable)) {
+		if ((result != null) && (result instanceof Throwable throwable)) {
 			if (result instanceof IMTPException exception) {
 				throw exception;
 			} 
 			else {
-				throw new IMTPException("Unexpected exception in remote site.", (Throwable) result);
+				throw new IMTPException("Unexpected exception in remote site.", throwable);
 			}
 		}
 	}
@@ -44,12 +44,12 @@ public class UDPNodeMonitoringProxy extends SliceProxy implements UDPNodeMonitor
 	
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof IMTPException exception) {
 					throw exception;
 				} 
 				else {
-					throw new IMTPException("Unexpected exception in remote site.", (Throwable) result);
+					throw new IMTPException("Unexpected exception in remote site.", throwable);
 				}
 			}
 		}

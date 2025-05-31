@@ -53,16 +53,18 @@ public class TablePopupMenuListener implements ActionListener {
     model = (MessageTableModel)(tpm.getTable().getModel());
     selectedRow = tpm.getTable().getSelectedRow();
     String name = ((JMenuItem)evt.getSource()).getName();
-    if(name.equals("view")) {
+    if("view".equals(name)) {
       if((selectedRow >= 0) && (selectedRow < model.getRowCount())) {
 	ACLMessage m = (ACLMessage)model.getValueAt(selectedRow, 0);
-        if(m != null) AclGui.showMsgInDialog(m, null);
+				if (m != null) {
+					AclGui.showMsgInDialog(m, null);
+				}
       }
     }
-    else if(name.equals("remove")) {
+    else if("remove".equals(name)) {
       model.removeRow(selectedRow);
     }
-    else if(name.equals("clear")) {
+    else if("clear".equals(name)) {
       model.clearRows();
     }
 

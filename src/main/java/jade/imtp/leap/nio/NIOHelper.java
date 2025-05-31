@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * static helper for ssl/nio related handshaking/input/output
  * @author eduard
  */
-public class NIOHelper {
+public final class NIOHelper {
 	public static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocateDirect(0);
 
 	private NIOHelper() {

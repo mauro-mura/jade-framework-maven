@@ -4,8 +4,8 @@ package jade.imtp.leap.nio;
 
 // Class used for debugging purpose only
 class StuckSimulator {
-	
-	private static Object lock = new Object();
+
+	private static final Object lock = new Object();
 	
 	static void init() {
 		Thread t = new Thread() {

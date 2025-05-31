@@ -101,8 +101,9 @@ public class rma extends ToolAgent {
 
 		@Override
 		protected void handleAgree(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "AGREE received" + reply);
+			}
 		}
 
 		@Override
@@ -112,8 +113,9 @@ public class rma extends ToolAgent {
 
 		@Override
 		protected void handleInform(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "INFORM received" + reply);
+			}
 		}
 
 	} // End of AMSClientBehaviour class
@@ -130,8 +132,9 @@ public class rma extends ToolAgent {
 
 		@Override
 		protected void handleInform(ACLMessage msg) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "arrived a new APDescription");
+			}
 			try {
 				AID sender = msg.getSender();
 				Result r = (Result) getContentManager().extractContent(msg);
@@ -163,8 +166,9 @@ public class rma extends ToolAgent {
 
 		@Override
 		protected void handleInform(ACLMessage msg) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "arrived a new agents from a remote platform");
+			}
 			try {
 				// AID sender = msg.getSender();
 				Result r = (Result) getContentManager().extractContent(msg);
@@ -177,7 +181,7 @@ public class rma extends ToolAgent {
 
 	}// end handleAddRemotePlatformBehaviour
 
-	private SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
+	private final SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
 
 	private transient MainWindow myGUI;
 
@@ -234,8 +238,9 @@ public class rma extends ToolAgent {
 						String container = cid.getName();
 						AID agent = ba.getAgent();
 						myGUI.addAgent(container, agent, ba.getState(), ba.getOwnership());
-						if (agent.equals(getAID()))
+						if (agent.equals(getAID())) {
 							myContainerName = container;
+						}
 					}
 				}
 			});
@@ -483,19 +488,20 @@ public class rma extends ToolAgent {
 	/**
 	 * Callback method for platform management <em>GUI</em>.
 	 */
-	public void newAgent(String agentName, String className, Object arg[], String containerName) {
+	public void newAgent(String agentName, String className, Object[] arg, String containerName) {
 		newAgent(agentName, className, arg, null, containerName);
 	}
 
 	/**
 	 * Callback method for platform management <em>GUI</em>.
 	 */
-	public void newAgent(String agentName, String className, Object arg[], String ownerName, String containerName) {
+	public void newAgent(String agentName, String className, Object[] arg, String ownerName, String containerName) {
 
 		CreateAgent ca = new CreateAgent();
 
-		if (containerName.equals(""))
+		if ("".equals(containerName)) {
 			containerName = AgentContainer.MAIN_CONTAINER_NAME;
+		}
 
 		// fill the create action with the intended agent owner
 		jade.security.JADEPrincipal intendedOwner = null;
@@ -895,8 +901,9 @@ public class rma extends ToolAgent {
 	 * Callback method for platform management <em>GUI</em>.
 	 */
 	public void exit() {
-		if (myGUI.showExitDialog("Exit this container"))
+		if (myGUI.showExitDialog("Exit this container")) {
 			killContainer(myContainerName);
+		}
 	}
 
 	/**
@@ -971,8 +978,9 @@ public class rma extends ToolAgent {
 	// this method sends a request to a remote AMS to know the APDescription of a
 	// remote Platform
 	public void addRemotePlatform(AID remoteAMS) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "AddRemotePlatform" + remoteAMS.toString());
+		}
 		try {
 
 			ACLMessage requestMsg = new ACLMessage(ACLMessage.REQUEST);
@@ -1005,7 +1013,7 @@ public class rma extends ToolAgent {
 			StringBuilder buf = new StringBuilder();
 			String inputLine;
 			while ((inputLine = in.readLine()) != null) {
-				if (!inputLine.equals("")) {
+				if (!"".equals(inputLine)) {
 					buf.append(inputLine);
 					buf.append(" ");
 				}
@@ -1029,15 +1037,17 @@ public class rma extends ToolAgent {
 					String amsName = "ams@" + APDesc.getName();
 
 					if (amsName.equalsIgnoreCase(getAMS().getName())) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "ERROR: Action not allowed.");
+						}
 					} else {
 						// create the proper AID for AMS by adding all available addresses
 						AID ams = new AID(amsName, AID.ISGUID);
 						for (Iterator is = APDesc.getAllAPServices(); is.hasNext();) {
 							APService s = (APService) is.next();
-							for (Iterator js = s.getAllAddresses(); js.hasNext();)
+							for (Iterator js = s.getAllAddresses();js.hasNext();) {
 								ams.addAddresses(js.next().toString());
+							}
 						}
 
 						myGUI.addRemotePlatformFolder();

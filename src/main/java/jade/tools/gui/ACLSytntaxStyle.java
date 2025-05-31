@@ -161,10 +161,10 @@ public class ACLSytntaxStyle {
 
   JComponent theComp;
 
-  // private members
-  private Color color;
-  private boolean italics;
-  private boolean bold;
+	// private members
+	private final Color color;
+	private final boolean italics;
+	private final boolean bold;
   private Font lastFont;
   private Font lastStyledFont;
   private FontMetrics fontMetrics;

@@ -78,8 +78,9 @@ public class PopupMouser extends MouseAdapter {
 			current = (AgentTree.Node) selPath.getLastPathComponent();
 			typeNode = current.getType();
 			TreeSelectionModel model = tree.getSelectionModel();
-			if (!tree.isRowSelected(selRow))
+			if (!tree.isRowSelected(selRow)) {
 				model.setSelectionPath(selPath);
+			}
 			else {
 				model.setSelectionPaths(paths);
 				//sameTypeNode(typeNode, paths, model);

@@ -2,7 +2,7 @@ package jade.core.messaging;
 
 class StuckDeliverer extends RuntimeException {
 
-	private String delivererName;
+	private final String delivererName;
 	
 	public StuckDeliverer(String delivererName) {
 		super();

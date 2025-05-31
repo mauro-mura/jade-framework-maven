@@ -62,10 +62,10 @@ public class PopNoSniffAgent
 
 	@Serial
 	private static final long serialVersionUID = -1456122552834380320L;
-	private PopupAgent popAg;
-	private Sniffer mySniffer;
-	private List<Agent> noSniffAgent = new ArrayList<>();
-	private MMCanvas canvAgent;
+	private final PopupAgent popAg;
+	private final Sniffer mySniffer;
+	private final List<Agent> noSniffAgent = new ArrayList<>();
+	private final MMCanvas canvAgent;
 
 	public PopNoSniffAgent(PopupAgent popAg, Sniffer mySniffer, MMCanvas canvAgent) {
 		super("Do Not Sniff this Agent");

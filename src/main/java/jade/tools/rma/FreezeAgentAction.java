@@ -33,8 +33,8 @@ import jade.gui.AgentTree;
    @author Giovanni Rimassa - FRAMeTech s.r.l.
  */
 class FreezeAgentAction extends AgentAction {
- 
-    private rma myRMA;
+
+	private final rma myRMA;
 
     FreezeAgentAction(rma anRMA, ActionProcessor act)
     {

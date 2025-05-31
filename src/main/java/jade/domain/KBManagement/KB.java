@@ -48,7 +48,7 @@ public abstract class KB {
 	protected Logger logger = Logger.getMyLogger(this.getClass().getName());
 	private int maxResultLimit = -1;
 	
-	public KB(int maxResultLimit) {
+	protected KB(int maxResultLimit) {
 		this.maxResultLimit = maxResultLimit;
 	}
 	
@@ -64,8 +64,9 @@ public abstract class KB {
 		// We don't want to register a fact whose lease time has 
 		// already expired
 		if (lm.isExpired(lm.getLeaseTime(fact))) {
-			if(logger.isLoggable(Logger.WARNING))
-				logger.log(Logger.WARNING,"Fact with lease time already expired");
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "Fact with lease time already expired");
+			}
 			return null;
 		}
 		

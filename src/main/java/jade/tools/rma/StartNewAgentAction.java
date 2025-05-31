@@ -43,8 +43,8 @@ import java.util.ArrayList;
  */
 class StartNewAgentAction extends ContainerAction {
 
-	private rma myRMA;
-	private Frame mainWnd;
+	private final rma myRMA;
+	private final Frame mainWnd;
 
 	public StartNewAgentAction(rma anRMA, Frame f,ActionProcessor actPro) {
 		super ("StartNewAgentActionIcon","Start New Agent",actPro);

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class DeliveryTracing extends HashMap<String, Object> {
 
-	private static final ThreadLocal<DeliveryTracing> tracing = new ThreadLocal<DeliveryTracing>();
+	private static final ThreadLocal<DeliveryTracing> tracing = new ThreadLocal<>();
 	
 	public static void beginTracing() {
 		tracing.set(new DeliveryTracing());

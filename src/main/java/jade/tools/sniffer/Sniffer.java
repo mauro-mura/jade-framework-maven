@@ -149,11 +149,11 @@ public class Sniffer extends ToolAgent {
 	public static final boolean SNIFF_ON = true;
 	public static final boolean SNIFF_OFF = false;
 
-	private Set allAgents = null;
-	private Hashtable preload = null;
-	private ExtendedProperties properties = null;
+	private Set allAgents;
+	private Hashtable preload;
+	private ExtendedProperties properties;
 
-	private ArrayList agentsUnderSniff = new ArrayList<>();
+	private final ArrayList agentsUnderSniff = new ArrayList<>();
 
 	// Sends requests to the AMS
 	private class AMSClientBehaviour extends SimpleAchieveREInitiator {
@@ -174,8 +174,9 @@ public class Sniffer extends ToolAgent {
 		}
 
 		protected void handleAgree(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "AGREE received");
+			}
 		}
 
 		protected void handleFailure(ACLMessage reply) {
@@ -183,8 +184,9 @@ public class Sniffer extends ToolAgent {
 		}
 
 		protected void handleInform(ACLMessage reply) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "INFORM received");
+			}
 		}
 
 	} // End of AMSClientBehaviour class
@@ -247,7 +249,7 @@ public class Sniffer extends ToolAgent {
 					// If the message that we just got is one that should be filtered out
 					// then drop it. WARNING - this means that the log file
 					// that the sniffer might dump does not include the message!!!!
-					boolean filters[];
+					boolean[] filters;
 					String agentName = msg.getSender().getName();
 					String key = preloadContains(agentName);
 					if (key != null) {
@@ -264,13 +266,16 @@ public class Sniffer extends ToolAgent {
 							"""
 							An error occurred parsing the incoming message.
 							          The message was lost.""");
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING,
-								"The sniffer lost the following message because of a parsing error:" + current);
+							"The sniffer lost the following message because of a parsing error:" + current);
+					}
 					e.printStackTrace();
 				}
-			} else
+			}
+			else {
 				block();
+			}
 		}
 
 	} // End of SniffListenerBehaviour
@@ -316,19 +321,23 @@ public class Sniffer extends ToolAgent {
 		int expressionLength = aMatchExpression.length();
 		for (int i = 0; i < expressionLength; i++) {
 			char expChar = aMatchExpression.charAt(i);
-			if (expChar == '*')
+			if (expChar == '*') {
 				return true; // * matches the remainder of anything
-			if (i == aString.length())
+			}
+			if (i == aString.length()) {
 				return false; // if we run out of characters they don't match
-			if (expChar == '?')
+			}
+			if (expChar == '?') {
 				continue; // ? matches any single character so keep going
-			if (expChar != aString.charAt(i))
+			}
+			if (expChar != aString.charAt(i)) {
 				return false; // if non wild then must be exactly equal
+			}
 		}
-		return (expressionLength == aString.length());
+		return expressionLength == aString.length();
 	}
 
-	private SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
+	private final SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
 
 	/**
 	 * @serial
@@ -386,8 +395,9 @@ public class Sniffer extends ToolAgent {
 					AID agent = ba.getAgent();
 					myGUI.addAgent(container, agent);
 					allAgents.add(agent);
-					if (agent.equals(getAID()))
+					if (agent.equals(getAID())) {
 						myContainerName = container;
+					}
 					// Here we check to see if the agent is one that we automatically will
 					// start sniffing. If so, we invoke DoSnifferAction's doSniff and start
 					// the sniffing process.
@@ -550,7 +560,7 @@ public class Sniffer extends ToolAgent {
 			boolean eof = false;
 			while (!eof) {
 				String line = in.readLine();
-				eof = (line == null);
+				eof = line == null;
 				if (!eof) {
 					line = line.trim();
 					if (line.length() > 0) {
@@ -576,7 +586,7 @@ public class Sniffer extends ToolAgent {
 
 	private String locateFile(String aFileName) {
 		try {
-			String path = (new File(".")).getAbsolutePath();
+			String path = new File(".").getAbsolutePath();
 			while (path != null) {
 				path = path.replace('\\', '/');
 				if (path.endsWith(".")) {
@@ -612,7 +622,7 @@ public class Sniffer extends ToolAgent {
 
 		int performativeCount = ACLMessage.getAllPerformativeNames().length;
 		boolean[] filter = new boolean[performativeCount];
-		boolean initVal = (st.hasMoreTokens() ? false : true);
+		boolean initVal = st.hasMoreTokens() ? false : true;
 		for (int i = 0; i < performativeCount; i++) {
 			filter[i] = initVal;
 		}
@@ -639,8 +649,9 @@ public class Sniffer extends ToolAgent {
 		// Start a FIPARequestProtocol to sniffOff all the agents since
 		// the sniffer is shutting down
 		try {
-			if (request != null)
+			if (request != null) {
 				FIPAService.doFipaRequestClient(this, request);
+			}
 		} catch (jade.domain.FIPAException e) {
 			// When the AMS replies the tool notifier is no longer registered.
 			// But we don't care as we are exiting
@@ -662,8 +673,9 @@ public class Sniffer extends ToolAgent {
 	 **/
 	public void sniffMsg(List agents, boolean onFlag) {
 		ACLMessage request = getSniffMsg(agents, onFlag);
-		if (request != null)
+		if (request != null) {
 			addBehaviour(new AMSClientBehaviour((onFlag ? "SniffAgentOn" : "SniffAgentOff"), request));
+		}
 
 	}
 

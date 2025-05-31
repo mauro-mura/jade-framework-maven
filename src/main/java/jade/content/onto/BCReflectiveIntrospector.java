@@ -150,10 +150,12 @@ public class BCReflectiveIntrospector extends ReflectiveIntrospector {
 				// Check for correct set and get methods for the current
 				// slot and retrieve the implementation type for values.
 				Class<?> slotGetSetClass;
-				if (slotSchema instanceof AggregateSchema)
+				if (slotSchema instanceof AggregateSchema) {
 					slotGetSetClass = checkGetAndSet2(mName, javaClass);
-				else
+				}
+				else {
 					slotGetSetClass = checkGetAndSet(mName, javaClass);
+				}
 				// If slotSchema is a complex schema and some class C is registered 
 				// for that schema, then the implementation class must be a supertype 
 				// of C.
@@ -168,12 +170,12 @@ public class BCReflectiveIntrospector extends ReflectiveIntrospector {
 				else {	
 					// The slot has a primitive type
 					String type = slotSchema.getTypeName();
-					if (type.equals(BasicOntology.STRING)) {
+					if (BasicOntology.STRING.equals(type)) {
 						if (!slotGetSetClass.isAssignableFrom(String.class)) { 
 							throw new OntologyException("Wrong class for schema: "+schema.getTypeName()+". Slot "+sName+": expected class="+String.class+", Get/Set method class="+slotGetSetClass);
 						}
 					}
-					else if (type.equals(BasicOntology.INTEGER)) {
+					else if (BasicOntology.INTEGER.equals(type)) {
 						if ((!slotGetSetClass.equals(Integer.TYPE)) &&
 								(!slotGetSetClass.equals(Integer.class)) &&
 								(!slotGetSetClass.equals(Long.TYPE)) &&
@@ -198,18 +200,21 @@ public class BCReflectiveIntrospector extends ReflectiveIntrospector {
 		
 		// Make sure "get" method takes no arguments.
 		Class<?>[] getParams = getMethod.getParameterTypes();
-		if(getParams.length > 0)
-			throw new OntologyException("Wrong class: method " +  getMethod.getName() + "() must take no arguments.");
+		if (getParams.length > 0) {
+			throw new OntologyException("Wrong class: method " + getMethod.getName() + "() must take no arguments.");
+		}
 		
 		// Now find a matching set method.
 		result = getMethod.getReturnType();
 		
 		Class<?>[] setParams = setMethod.getParameterTypes();
-		if((setParams.length != 1) || (!setParams[0].equals(result)))
-			throw new OntologyException("Wrong class: method " +  setMethod.getName() + "() must take a single argument of type " + result.getName() + ".");
+		if ((setParams.length != 1) || (!setParams[0].equals(result))) {
+			throw new OntologyException("Wrong class: method " + setMethod.getName() + "() must take a single argument of type " + result.getName() + ".");
+		}
 		Class<?> setReturn = setMethod.getReturnType();
-		if(!setReturn.equals(Void.TYPE))
-			throw new OntologyException("Wrong class: method " +  setMethod.getName() + "() must return void.");
+		if (!setReturn.equals(Void.TYPE)) {
+			throw new OntologyException("Wrong class: method " + setMethod.getName() + "() must return void.");
+		}
 		
 		return result;
 	}
@@ -219,25 +224,30 @@ public class BCReflectiveIntrospector extends ReflectiveIntrospector {
 	private Class<?> checkGetAndSet2(String name, Class<?> c) throws OntologyException {
 		Method getMethod = findMethodCaseInsensitive("getAll" + name, c);
 		Method addMethod = findMethodCaseInsensitive("add" + name, c);
-		Class<?> result = getArgumentType(addMethod,0);  
-		
+		Class<?> result = getArgumentType(addMethod,0);
+
 		// check "get" method 
-		if (getArgumentLength(getMethod) != 0)
-			throw new OntologyException("Wrong class: method " +  getMethod.getName() + "() must take no arguments.");
+		if (getArgumentLength(getMethod) != 0) {
+			throw new OntologyException("Wrong class: method " + getMethod.getName() + "() must take no arguments.");
+		}
 		// MODIFIED by GC
 		// The return value of the getAllXXX() method of the user defined class 
 		// must be a java.util.Iterator or a super-class/interface of it -->
 		// OK if it is a java.util.Iterator.
-		if (!(getReturnType(getMethod)).isAssignableFrom(java.util.Iterator.class))
-			throw new OntologyException("Wrong class: method " +  getMethod.getName() + "() must return a java.util.Iterator." + getReturnType(getMethod).toString());
-		
+		if (!getReturnType(getMethod).isAssignableFrom(java.util.Iterator.class)) {
+			throw new OntologyException("Wrong class: method " + getMethod.getName() + "() must return a java.util.Iterator." + getReturnType(getMethod).toString());
+		}
+
 		// check 'add' method 
-		if (getArgumentLength(addMethod) != 1)
-			throw new OntologyException("Wrong class: method " +  addMethod.getName() + "() must take one argument.");
-		if (!getArgumentType(addMethod,0).equals(result))
-			throw new OntologyException("Wrong class: method " +  addMethod.getName() + "() has the wrong argument type.");
-		if (!getReturnType(addMethod).equals(Void.TYPE))
-			throw new OntologyException("Wrong class: method " +  addMethod.getName() + "() must return a void.");
+		if (getArgumentLength(addMethod) != 1) {
+			throw new OntologyException("Wrong class: method " + addMethod.getName() + "() must take one argument.");
+		}
+		if (!getArgumentType(addMethod, 0).equals(result)) {
+			throw new OntologyException("Wrong class: method " + addMethod.getName() + "() has the wrong argument type.");
+		}
+		if (!getReturnType(addMethod).equals(Void.TYPE)) {
+			throw new OntologyException("Wrong class: method " + addMethod.getName() + "() must return a void.");
+		}
 		
 		return result;
 	}
@@ -281,8 +291,9 @@ public class BCReflectiveIntrospector extends ReflectiveIntrospector {
 			String slotSchemaTypeName = schema.getSchema(slotName).getTypeName();
 			absAggregateValue = new AbsAggregate(slotSchemaTypeName);
 			try {
-				while(it.hasNext())
-					absAggregateValue.add((AbsTerm)Ontology.externalizeSlotValue(it.next(), this, referenceOnto));
+				while (it.hasNext()) {
+					absAggregateValue.add((AbsTerm) Ontology.externalizeSlotValue(it.next(), this, referenceOnto));
+				}
 			}
 			catch (ClassCastException cce) {
 				throw new OntologyException("Non term object in aggregate");

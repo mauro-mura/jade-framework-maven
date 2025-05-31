@@ -52,16 +52,16 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 
 	private APDescriptionPanel APDescription_panel;
 	AgentTree treeAgent;       // FIXME: It should be private
-	private TablePanel table;
+	private final TablePanel table;
 	private JScrollPane scroll;
-	private JSplitPane pan;
+	private final JSplitPane pan;
 	private JSplitPane pane;
-	private MainWindow mainWnd;
+	private final MainWindow mainWnd;
 	private PopupMouser popM;
-	private rma myRma = null;
+	private final rma myRma;
 
 	//logging
-	private static Logger logger = Logger.getMyLogger(MainPanel.class.getName());
+	private static final Logger logger = Logger.getMyLogger(MainPanel.class.getName());
 
 
 	public MainPanel(rma anRMA, MainWindow mainWnd)
@@ -95,13 +95,15 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 	}
 
 	public void dragOver(java.awt.dnd.DropTargetDragEvent p1) {
-		if(logger.isLoggable(Logger.FINEST))
-			logger.log(Logger.FINEST,"dragOver");
+		if (logger.isLoggable(Logger.FINEST)) {
+			logger.log(Logger.FINEST, "dragOver");
+		}
 	}    
 
 	public void dropActionChanged(java.awt.dnd.DropTargetDragEvent p1) {
-		if(logger.isLoggable(Logger.FINEST))
-			logger.log(Logger.FINEST,"dropActionChanged");
+		if (logger.isLoggable(Logger.FINEST)) {
+			logger.log(Logger.FINEST, "dropActionChanged");
+		}
 	}
 
 	public void dragEnter(java.awt.dnd.DropTargetDragEvent dragEvent)
@@ -109,15 +111,17 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 		if (treeAgent.tree.getSelectionCount() < 1) {
 			// FIXME: This output should probably be put in a message dialog
 			// or something.
-			if(logger.isLoggable(Logger.FINEST))
-				logger.log(Logger.FINEST,"No agents selected!");
+			if (logger.isLoggable(Logger.FINEST)) {
+				logger.log(Logger.FINEST, "No agents selected!");
+			}
 			dragEvent.rejectDrag();
 		}
 	}
 
 	public void dragExit(java.awt.dnd.DropTargetEvent p1) {
-		if(logger.isLoggable(Logger.FINEST))
-			logger.log(Logger.FINEST,"dragExit");
+		if (logger.isLoggable(Logger.FINEST)) {
+			logger.log(Logger.FINEST, "dragExit");
+		}
 	}
 
 	public void drop(java.awt.dnd.DropTargetDropEvent dropEvent)
@@ -131,8 +135,9 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 			if (selectedItems == null) {
 				// FIXME: This output should probably be put in a message dialog
 				// or something.
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"No agents selected!");
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "No agents selected!");
+				}
 				dropEvent.rejectDrop();
 				dropEvent.dropComplete(completionStatus);
 				return;
@@ -151,8 +156,9 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 		catch (IOException exc) {
 			// FIXME: This output should probably be put in a message dialog
 			// or something.
-			if(logger.isLoggable(Logger.WARNING))
-				logger.log(Logger.WARNING,"DragAndDrop operation failed: " + exc);
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "DragAndDrop operation failed: " + exc);
+			}
 
 			completionStatus = false;
 		}
@@ -190,32 +196,37 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 				catch (IOException exc) {
 					// FIXME: This output should probably be put in a message dialog
 					// or something.
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Unable to send message: " + exc);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Unable to send message: " + exc);
+					}
 				}
 				catch (ParseException exc) {
 					// FIXME: This output should probably be put in a message dialog
 					// or something.
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Unable to send message: " + exc);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Unable to send message: " + exc);
+					}
 				}
 				catch (Exception exc) {
 					// FIXME: This output should probably be put in a message dialog
 					// or something.
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Unable to send message: " + exc);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Unable to send message: " + exc);
+					}
 				}
 				catch (Error exc) {
 					// FIXME: This output should probably be put in a message dialog
 					// or something.
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Unable to send message: " + exc);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Unable to send message: " + exc);
+					}
 				}
 				catch (Throwable exc) {
 					// FIXME: This output should probably be put in a message dialog
 					// or something.
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Unable to send message: " + exc);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Unable to send message: " + exc);
+					}
 				}
 			} //~ while (fileItor.hasNext())
 		} //~ if (selectedItems != null)
@@ -223,7 +234,7 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 	} //END drop(dropEvent)
 
 	public void  valueChanged(TreeSelectionEvent e) {
-		TreePath paths[] = treeAgent.tree.getSelectionPaths();
+		TreePath[] paths = treeAgent.tree.getSelectionPaths();
 		Object[] relCur;
 
 		if (paths!=null) {
@@ -234,9 +245,10 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 				relCur = paths[i].getPath();
 				for(int j=0;j<relCur.length;j++)
 				{
-					if (relCur[j] instanceof AgentTree.AgentNode)
+					if (relCur[j] instanceof AgentTree.AgentNode) {
 						//to display in the table only the agent.
-						agentPaths.add(paths[i]);       
+						agentPaths.add(paths[i]);
+					}
 					else
 						if (relCur[j] instanceof AgentTree.SuperContainer)
 						{//show the APDescription in the TextArea
@@ -246,8 +258,9 @@ class MainPanel extends JPanel implements DropTargetListener, TreeSelectionListe
 
 			//table.setData(paths);
 			TreePath[] agents = new TreePath [agentPaths.size()];
-			for(int i= 0;i<agentPaths.size(); i++)
-				agents[i]=(TreePath)agentPaths.get(i);
+			for (int i = 0;i < agentPaths.size();i++) {
+				agents[i] = (TreePath) agentPaths.get(i);
+			}
 			table.setData(agents);
 		}
 	}

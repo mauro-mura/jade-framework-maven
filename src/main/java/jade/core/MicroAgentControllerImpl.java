@@ -33,8 +33,8 @@ import jade.wrapper.*;
  */
 class MicroAgentControllerImpl implements AgentController {
 
-	private String agentName;
-	private FrontEndContainer myFrontEnd;
+	private final String agentName;
+	private final FrontEndContainer myFrontEnd;
 
 	/**
 	     This constructor should not be called by applications.
@@ -122,8 +122,9 @@ class MicroAgentControllerImpl implements AgentController {
 		}
 
 		T o2aInterfaceImpl = adaptee.getO2AInterface(theInterface);
-		if (o2aInterfaceImpl == null)
+		if (o2aInterfaceImpl == null) {
 			return null;
+		}
 
 		ClassLoader classLoader = o2aInterfaceImpl.getClass().getClassLoader();
 

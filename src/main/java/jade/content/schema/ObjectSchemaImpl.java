@@ -41,12 +41,12 @@ import jade.util.Logger;
 class ObjectSchemaImpl extends ObjectSchema {
 	private Logger logger = Logger.getMyLogger(this.getClass().getName());
 
-    static final String RESULT_SLOT_NAME = "__Result_SLOT_123"; 
-    
-	private class SlotDescriptor implements Serializable {
-		private String       name = null;
-		private ObjectSchema schema = null;
-		private int          optionality = 0;
+    static final String RESULT_SLOT_NAME = "__Result_SLOT_123";
+
+	private final class SlotDescriptor implements Serializable {
+		private String       name;
+		private ObjectSchema schema;
+		private int          optionality;
 		/**
 		 Construct a SlotDescriptor
 		 */
@@ -59,7 +59,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 	}
 
 
-	private String          typeName = null;
+	private String          typeName;
 	private Hashtable       slots;
 	private Vector       	slotNames;
 	private Vector          superSchemas;
@@ -111,7 +111,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 		if (slots.put(ciName, new SlotDescriptor(name, slotSchema, optionality)) == null) {
 			// We treat Action results as if they were slots. However we don't want the special
 			// RESULT_SLOT_NAME to be included among slot names
-			if (!name.equals(RESULT_SLOT_NAME)) {
+			if (!RESULT_SLOT_NAME.equals(name)) {
 				slotNames.addElement(ciName);
 			}
 		}
@@ -161,7 +161,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 	 * @see #add(String, ObjectSchema, int, int)
 	 */
 	protected void add(String name, ObjectSchema elementsSchema, int cardMin, int cardMax, String aggType) {
-		int optionality = (cardMin == 0 ? OPTIONAL : MANDATORY);
+		int optionality = cardMin == 0 ? OPTIONAL : MANDATORY;
 		add(name, elementsSchema, cardMin, cardMax, aggType, optionality);
 	}
 
@@ -245,8 +245,9 @@ class ObjectSchemaImpl extends ObjectSchema {
 				v = new Vector<>();
 				facets.put(ciName, v);
 				//DEBUG
-				if(logger.isLoggable(Logger.CONFIG))
-					logger.log(Logger.CONFIG,"Added facet "+f+" to slot "+slotName);
+				if (logger.isLoggable(Logger.CONFIG)) {
+					logger.log(Logger.CONFIG, "Added facet " + f + " to slot " + slotName);
+				}
 			}
 			v.addElement(f);
 		}
@@ -329,7 +330,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 	 */
 	public boolean containsSlot(String name) {
 		SlotDescriptor slot = getSlot(new CaseInsensitiveString(name));
-		return (slot != null);
+		return slot != null;
 	}
 
 	/**
@@ -342,7 +343,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 	 */
 	public boolean isOwnSlot(String name) {
 		SlotDescriptor slot = getOwnSlot(new CaseInsensitiveString(name));
-		return (slot != null);
+		return slot != null;
 	}
 	
 	/**
@@ -429,8 +430,9 @@ class ObjectSchemaImpl extends ObjectSchema {
 	 */
 	private boolean validate(CaseInsensitiveString slotName, AbsObject value, Ontology onto) throws OntologyException {
 		// DEBUG
-		if(logger.isLoggable(Logger.FINE))
-			logger.log(Logger.FINE,"Validating "+(value != null ? value.toString() : "null")+" as a value for slot "+slotName);
+		if (logger.isLoggable(Logger.FINE)) {
+			logger.log(Logger.FINE, "Validating " + (value != null ? value.toString() : "null") + " as a value for slot " + slotName);
+		}
 		// NOTE: for performance reasons we don't want to scan the schema
 		// to check if slotValue is a valid slot and THEN to scan again
 		// the schema to validate value. This is the reason for the
@@ -443,8 +445,9 @@ class ObjectSchemaImpl extends ObjectSchema {
 		SlotDescriptor dsc = getOwnSlot(slotName);
 		if (dsc != null) {
 			// DEBUG
-			if(logger.isLoggable(Logger.CONFIG))
-				logger.log(Logger.CONFIG,"Slot "+slotName+" is defined in schema "+this);
+			if (logger.isLoggable(Logger.CONFIG)) {
+				logger.log(Logger.CONFIG, "Slot " + slotName + " is defined in schema " + this);
+			}
 			if (value == null) {
 				// Check optionality
 				if (dsc.optionality == MANDATORY) {
@@ -461,8 +464,9 @@ class ObjectSchemaImpl extends ObjectSchema {
 				// - Finally check value against s
 				ObjectSchema s = onto.getSchema(value.getTypeName());
 				//DEBUG
-				if(logger.isLoggable(Logger.CONFIG))
-					logger.log(Logger.CONFIG,"Actual schema for "+value+" is "+s);
+				if (logger.isLoggable(Logger.CONFIG)) {
+					logger.log(Logger.CONFIG, "Actual schema for " + value + " is " + s);
+				}
 				if (s == null) {
 					throw new OntologyException("No schema found for type "+value.getTypeName()+". Ontology is "+onto.getName());
 				}
@@ -470,8 +474,9 @@ class ObjectSchemaImpl extends ObjectSchema {
 					throw new OntologyException("Schema "+s+" for element "+value+" is not compatible with schema "+dsc.schema+" for slot "+slotName);
 				}
 				//DEBUG
-				if(logger.isLoggable(Logger.CONFIG))
-					logger.log(Logger.CONFIG,"Schema "+s+" for type "+value+" is compatible with schema "+dsc.schema+" for slot "+slotName);
+				if (logger.isLoggable(Logger.CONFIG)) {
+					logger.log(Logger.CONFIG, "Schema " + s + " for type " + value + " is compatible with schema " + dsc.schema + " for slot " + slotName);
+				}
 				s.validate(value, onto);
 			}
 			slotFound = true;
@@ -499,15 +504,17 @@ class ObjectSchemaImpl extends ObjectSchema {
 				while (e.hasMoreElements()) {
 					Facet f = (Facet) e.nextElement();
 					//DEBUG
-					if(logger.isLoggable(Logger.CONFIG))
-						logger.log(Logger.CONFIG,"Checking facet "+f+" defined on slot "+slotName);
+					if (logger.isLoggable(Logger.CONFIG)) {
+						logger.log(Logger.CONFIG, "Checking facet " + f + " defined on slot " + slotName);
+					}
 					f.validate(value, onto);
 				}
 			}
 			else {
 				//DEBUG
-				if(logger.isLoggable(Logger.CONFIG))
-					logger.log(Logger.CONFIG,"No facets for slot "+slotName);
+				if (logger.isLoggable(Logger.CONFIG)) {
+					logger.log(Logger.CONFIG, "No facets for slot " + slotName);
+				}
 			}
 		}
 
@@ -534,10 +541,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 		if (isSubSchemaOf(s)) {
 			return true;
 		}
-		if (descendsFrom(s)) {
-			return true;
-		}
-		return false;
+		return descendsFrom(s);
 	}
 
 	/**
@@ -654,7 +658,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 			found = true;
 		}
 		
-		return (found ? allFacets : null);
+		return found ? allFacets : null;
 	}
 
 	private final void addAll(Vector v1, Vector v2) {
@@ -664,7 +668,7 @@ class ObjectSchemaImpl extends ObjectSchema {
 	}
 	
 	private final SlotDescriptor getOwnSlot(CaseInsensitiveString ciName) {
-		return (slots != null ? (SlotDescriptor) slots.get(ciName) : null);
+		return slots != null ? (SlotDescriptor) slots.get(ciName) : null;
 	}
 
 	private final SlotDescriptor getSlot(CaseInsensitiveString ciName) {

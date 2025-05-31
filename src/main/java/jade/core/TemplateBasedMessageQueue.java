@@ -46,7 +46,7 @@ public class TemplateBasedMessageQueue extends ExtendedMessageQueue {
 	public synchronized void registerTemplate(MessageTemplate tpl) {
 		// This method is executed in mutual exclusion with receive() and addLast()/addFirst() that 
 		// are ALWAYS invoked inside code blocks synchronized on the MessageQueue object
-		LinkedList<ACLMessage> l = new LinkedList<ACLMessage>();
+		LinkedList<ACLMessage> l = new LinkedList<>();
 		// If there are messages in the default list matching this template, move them into the 
 		// per-template list we are creating
 		List<ACLMessage> mm = super.receive(tpl, -1);
@@ -95,10 +95,12 @@ public class TemplateBasedMessageQueue extends ExtendedMessageQueue {
 	@Override
 	public void copyTo(List messages) {
 		// Copy all messages from default list
-		for (Iterator<ACLMessage> i = list.iterator(); i.hasNext(); messages.add(i.next()));
+		for (Iterator<ACLMessage> i = list.iterator();i.hasNext();messages.add(i.next())) {
+		}
 		// Copy all messages from per-template lists
 		for (LinkedList<ACLMessage> l : ((PerTemplateList) list).tplListMap.values()) {
-			for (Iterator<ACLMessage> i = l.iterator(); i.hasNext(); messages.add(i.next()));
+			for (Iterator<ACLMessage> i = l.iterator();i.hasNext();messages.add(i.next())) {
+			}
 		}
 	}
 
@@ -107,7 +109,7 @@ public class TemplateBasedMessageQueue extends ExtendedMessageQueue {
 		StringBuilder sb = new StringBuilder("Default queue:\n");
 		sb.append(super.dump(limit));
 		for (Map.Entry<MessageTemplate, LinkedList<ACLMessage>> e : ((PerTemplateList) list).tplListMap.entrySet()) {
-			sb.append("--------------------------------------\nQueue for Template "+e.getKey()+":\n");
+			sb.append("--------------------------------------\nQueue for Template ").append(e.getKey()).append(":\n");
 			LinkedList<ACLMessage> tmp = list;
 			list = e.getValue();
 			sb.append(super.dump(limit));
@@ -121,8 +123,8 @@ public class TemplateBasedMessageQueue extends ExtendedMessageQueue {
 	 * Inner class PerTemplateList
 	 */
 	class PerTemplateList extends LinkedList<ACLMessage> {
-		int currentSize = 0;
-		Map<MessageTemplate, LinkedList<ACLMessage>> tplListMap = new HashMap<MessageTemplate, LinkedList<ACLMessage>>();
+		int currentSize;
+		Map<MessageTemplate, LinkedList<ACLMessage>> tplListMap = new HashMap<>();
 
 		@Override
 		public int size() {

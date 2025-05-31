@@ -36,9 +36,9 @@ import jade.gui.AgentTree;
 	/**
    * Progressive Number to give always a new name to DummyAgent
    */
-  private int progressiveNumber = 0;
+  private int progressiveNumber;
 
-  private rma myRMA;
+		private final rma myRMA;
 
    public DummyAgentAction(rma anRMA,ActionProcessor actPro) {
       super ("DummyAgentActionIcon","Start DummyAgent",actPro);
@@ -49,8 +49,9 @@ import jade.gui.AgentTree;
    public void doAction(AgentTree.ContainerNode node) {
    	 
    	String containerName = "";
-   	if(node != null)
-   	  	containerName = node.getName();
+		 if (node != null) {
+			 containerName = node.getName();
+		 }
       myRMA.newAgent("da"+progressiveNumber, "jade.tools.DummyAgent.DummyAgent", new Object[0], containerName);
       progressiveNumber++;
      }

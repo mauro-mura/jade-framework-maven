@@ -34,9 +34,9 @@ import jade.util.Logger;
  * AgentReplicationService.
  */
 public class AgentReplicationHandle {
-	static ThreadLocal<Boolean> replicatedCalls = new ThreadLocal<Boolean>();
-	
-	private static Logger myLogger = Logger.getJADELogger(AgentReplicationHandle.class.getName());
+	static ThreadLocal<Boolean> replicatedCalls = new ThreadLocal<>();
+
+	private static final Logger myLogger = Logger.getJADELogger(AgentReplicationHandle.class.getName());
 	
 	/**
 	 * Utility method to be called at the beginning of each replicated method as 
@@ -80,14 +80,16 @@ public class AgentReplicationHandle {
 	}
 	
 	static void enterReplicatedCall() {
-		if (myLogger.isLoggable(Logger.FINER))
+		if (myLogger.isLoggable(Logger.FINER)) {
 			myLogger.log(Logger.FINER, "Entering replicated call...");
+		}
 		replicatedCalls.set(true);
 	}
 	
 	static void exitReplicatedCall() {
 		replicatedCalls.remove();
-		if (myLogger.isLoggable(Logger.FINER))
+		if (myLogger.isLoggable(Logger.FINER)) {
 			myLogger.log(Logger.FINER, "Exited from replicated call...");
+		}
 	}
 }

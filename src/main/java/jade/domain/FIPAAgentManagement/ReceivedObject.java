@@ -161,16 +161,21 @@ public class ReceivedObject implements Concept, Serializable {
      **/
     public String toString() {
 	String s = "(ReceivedObject ";
-	if (date != null)
-	    s = s + " :date "+date.toString();
-	if ((by != null) && (by.trim().length()>0))
-	    s = s + " :by "+by;
-	if ((from != null) && (from.trim().length()>0))
-	    s = s + " :from "+from;
-	if ((id != null) && (id.trim().length()>0))
-	    s = s + " :id "+id;
-	if ((via != null) && (via.trim().length()>0))
-	    s = s + " :via "+via;
+			if (date != null) {
+				s = s + " :date " + date.toString();
+			}
+			if ((by != null) && (by.trim().length() > 0)) {
+				s = s + " :by " + by;
+			}
+			if ((from != null) && (from.trim().length() > 0)) {
+				s = s + " :from " + from;
+			}
+			if ((id != null) && (id.trim().length() > 0)) {
+				s = s + " :id " + id;
+			}
+			if ((via != null) && (via.trim().length() > 0)) {
+				s = s + " :via " + via;
+			}
 	return s;
     }
 

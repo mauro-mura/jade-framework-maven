@@ -36,8 +36,8 @@ import java.util.Iterator;
  * @author Giovanni Caire - TILAB
  */
 public class CardinalityFacet implements Facet {
-	private int cardMin;
-	private int cardMax;
+	private final int cardMin;
+	private final int cardMax;
 	
 	/**
 	   Construct a <code>CardinalityFacet</code> that forces

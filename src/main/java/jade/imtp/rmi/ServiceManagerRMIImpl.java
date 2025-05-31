@@ -46,8 +46,8 @@ class ServiceManagerRMIImpl extends UnicastRemoteObject implements ServiceManage
 
 	@Serial
 	private static final long serialVersionUID = -211994942542987649L;
-	
-	private PlatformManager impl;
+
+	private final PlatformManager impl;
 
 	/** Creates new ServiceManagerRMIImpl */
 	public ServiceManagerRMIImpl(PlatformManager pm, RMIIMTPManager mgr, int port) throws RemoteException {

@@ -47,7 +47,7 @@ public class MainBar extends JMenuBar {
   private JMenuItem slowItem;
   private JMenuItem goItem;
 
-  private MainBarListener listener;
+	private final MainBarListener listener;
 
 
   public MainBar(MainBarListener list) {

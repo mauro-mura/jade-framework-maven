@@ -58,7 +58,7 @@ import java.util.HashMap;
  */
 public class KeepAlive {
 
-	private static Logger logger = Logger.getMyLogger(KeepAlive.class.getName());
+	private static final Logger logger = Logger.getMyLogger(KeepAlive.class.getName());
 
 	/*
 	 * Inner structure to contain all connection information
@@ -122,8 +122,9 @@ public class KeepAlive {
 					in.close();
 					out.close();
 				} catch (IOException ioe) {
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING, "Exception while closing KA connection: " + ioe);
+					}
 				}
 				in = null;
 				out = null;
@@ -136,21 +137,24 @@ public class KeepAlive {
 
 		void send(byte[] req) throws MTPException {
 			try {
-				if (logger.isLoggable(Logger.FINER))
+				if (logger.isLoggable(Logger.FINER)) {
 					logger.log(Logger.FINER, "Sending HTTP message to: " + address);
+				}
 				HTTPIO.writeAll(out, req);
 				// Capture the HTTPresponse
 				StringBuffer typeConnection = new StringBuffer();
 				int code = HTTPIO.getResponseCode(in, typeConnection);
 				if (!HTTPIO.KA.equals(typeConnection.toString())) {
 					// Close the connection
-					if (logger.isLoggable(Logger.FINER))
+					if (logger.isLoggable(Logger.FINER)) {
 						logger.log(Logger.FINER, "Closing " + typeConnection + " connection to " + address);
+					}
 					close();
 				}
 				if (code != 200) {
-					if (logger.isLoggable(Logger.FINER))
+					if (logger.isLoggable(Logger.FINER)) {
 						logger.log(Logger.FINER, "Not OK: " + code + ", Closing connection to " + address);
+					}
 					close();
 					throw new MTPException("Description: ResponseMessage is not OK");
 				}
@@ -187,8 +191,9 @@ public class KeepAlive {
 			// System.out.println("DEBUG: Added Ka conn: "+connections.size()+"/"+dim+" with
 			// "+c.getAddress().getPortNo());
 		} catch (Exception ioe) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, ioe.getMessage());
+			}
 		}
 	}
 
@@ -199,8 +204,9 @@ public class KeepAlive {
 			connections.removeElementAt(pos);
 			old.close();
 		} catch (Exception ioe) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, ioe.getMessage());
+			}
 		}
 	}
 
@@ -222,7 +228,7 @@ public class KeepAlive {
 	private KAConnection search(HTTPAddress addr) {
 		if (addr != null) {
 			KAConnection c;
-			for (int i = (connections.size() - 1); i >= 0; i--) {
+			for (int i = connections.size() - 1; i >= 0; i--) {
 				if ((c = (KAConnection) getConnection(i)).equals(addr)) {
 					return c;
 				}
@@ -259,21 +265,22 @@ public class KeepAlive {
 	/** get the capacity of Vectors */
 	public int capacity() {
 		// System.out.println("DIMENSION: "+dim+" "+"TAMVECT: "+addresses.size());
-		return (dim - connections.size());
+		return dim - connections.size();
 	}
 
 	public synchronized void swap(KAConnection c) {
 		try {
 			// if only have 1 socket isn't necessary make swap function
-			if ((dim > 1) && (!(connections.indexOf(c) == (connections.size() - 1)))) {
+			if ((dim > 1) && (connections.indexOf(c) != (connections.size() - 1))) {
 				// remove the elements at former position
 				connections.removeElement(c);
 				// put the elements at the end
 				connections.addElement(c);
 			}
 		} catch (Exception ioe) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, ioe.getMessage());
+			}
 		}
 	}
 
@@ -287,8 +294,9 @@ public class KeepAlive {
 				kac = getConnection(url);
 				if (kac != null) {
 					try {
-						if (logger.isLoggable(Logger.FINER))
+						if (logger.isLoggable(Logger.FINER)) {
 							logger.log(Logger.FINER, "Reusing keepAlive for " + url);
+						}
 						kac.send(request);
 						if (kac.isOpen()) {
 							// change the priority of socket & another components of keep-alive object
@@ -298,13 +306,15 @@ public class KeepAlive {
 								swap(kac);
 							}
 						} else {
-							if (logger.isLoggable(Logger.FINER))
+							if (logger.isLoggable(Logger.FINER)) {
 								logger.log(Logger.FINER, "Removing keepAlive for " + url);
+							}
 							remove(kac);
 						}
 					} catch (MTPException e) {
-						if (logger.isLoggable(Logger.FINER))
+						if (logger.isLoggable(Logger.FINER)) {
 							logger.log(Logger.FINER, "Removing keepAlive for " + url);
+						}
 						remove(kac);
 						// retry with new connection
 						kac = null;
@@ -312,20 +322,23 @@ public class KeepAlive {
 				}
 			}
 			if (kac == null) {
-				if (logger.isLoggable(Logger.FINER))
+				if (logger.isLoggable(Logger.FINER)) {
 					logger.log(Logger.FINER, "Creating connection to " + url);
+				}
 				kac = createConnection(url);
 				// Send out and check response code
 				kac.send(request);
 				if (kac.isOpen()) {
 					if (dim > 0) {
 						// Store the new connection
-						if (logger.isLoggable(Logger.FINER))
+						if (logger.isLoggable(Logger.FINER)) {
 							logger.log(Logger.FINER, "Adding keepAlive for " + url);
+						}
 						add(kac);
 					} else {
-						if (logger.isLoggable(Logger.FINER))
+						if (logger.isLoggable(Logger.FINER)) {
 							logger.log(Logger.FINER, "Closing open connection for " + url);
+						}
 						kac.close();
 					}
 				}

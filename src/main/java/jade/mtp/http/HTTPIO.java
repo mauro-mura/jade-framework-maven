@@ -121,7 +121,7 @@ public class HTTPIO {
 			(byte) '/', (byte) 'b', (byte) 'o', (byte) 'd', (byte) 'y', (byte) '>', (byte) '<', (byte) '/', (byte) 'h',
 			(byte) 't', (byte) 'm', (byte) 'l', (byte) '>' };
 
-	private static Logger logger = Logger.getMyLogger(HTTPIO.class.getName());
+	private static final Logger logger = Logger.getMyLogger(HTTPIO.class.getName());
 
 	/*
 	 * *********************************************** WRITE METHODS
@@ -316,30 +316,34 @@ public class HTTPIO {
 		 */
 		// try {
 		String line;
-		while (BLK.equals(line = readLineFromInputStream(input)))
-			; // skip empty lines
-		if (line == null)
+		while (BLK.equals(line = readLineFromInputStream(input))) { // skip empty lines
+		}
+		if (line == null) {
 			throw new IOException();
+		}
 		StringTokenizer st = new StringTokenizer(line);
 		try {
 
-			if (!(st.nextToken()).equalsIgnoreCase(POST_STR)) {
-				if (logger.isLoggable(Logger.WARNING))
+			if (!st.nextToken().equalsIgnoreCase(POST_STR)) {
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Malformed POST");
+				}
 
 				type.append(CLOSE);
 				return ERROR;
 			}
 			st.nextToken(); // Consumme a token
-			if (!(st.nextToken().toUpperCase().startsWith("HTTP/1."))) {
-				if (logger.isLoggable(Logger.WARNING))
+			if (!st.nextToken().toUpperCase().startsWith("HTTP/1.")) {
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Malformed HTTP/1.1 ");
+				}
 				type.append(CLOSE);
 				return ERROR;
 			}
 		} catch (NoSuchElementException nsee) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Malformed start line !: " + line);
+			}
 			type.append(CLOSE);
 			return ERROR;
 		}
@@ -359,9 +363,10 @@ public class HTTPIO {
 			if (lowerCaseLine.startsWith(CONTENT_STR.toLowerCase())) {
 				// Process the left part
 
-				if (!(processLine(line).toLowerCase().startsWith(MM_STR))) {
-					if (logger.isLoggable(Logger.WARNING))
+				if (!processLine(line).toLowerCase().startsWith(MM_STR)) {
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING, "MULTIPART/MIXED");
+					}
 
 					type.append(CLOSE);
 					return ERROR;
@@ -373,8 +378,9 @@ public class HTTPIO {
 					line = readLineFromInputStream(input);
 					if ((pos = line.indexOf(BND_STR)) == -1) {
 						// Bounday not found
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING, "MIME boundary not found");
+						}
 						type.append(CLOSE);
 						return ERROR;
 					}
@@ -385,29 +391,31 @@ public class HTTPIO {
 				foundBoundary = true;
 			}
 		} // end while
-			// if( !foundBoundary || !foundMime) {
+		// if( !foundBoundary || !foundMime) {
 		if (!foundBoundary) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Mime header error");
+			}
 			type.append(CLOSE);
 			return ERROR;
 		}
 		if (typeConnection == null) {
 			type.append(KA); // Default Connection
-		} else {
+		}
+		else {
 			type.append(typeConnection); // Connection of request
 		}
 		// jump to first "--Boundary"
-		while (BLK.equals(line = readLineFromInputStream(input)))
-			; // skip empty lines
+		while (BLK.equals(line = readLineFromInputStream(input))) { // skip empty lines
+		}
 		do {
 			if (line.startsWith(boundary)) {
 				break;
 			}
 		} while (!BLK.equals(line = readLineFromInputStream(input)));
-		while (BLK.equals(line = readLineFromInputStream(input)))
-			; // skip empty lines
-		// Skip content-type
+		while (BLK.equals(line = readLineFromInputStream(input))) { // skip empty lines
+			// Skip content-type
+		}
 		do {
 			if (line.toLowerCase().startsWith(CONTENT_STR.toLowerCase())) {
 				break;
@@ -416,15 +424,15 @@ public class HTTPIO {
 		// Capture the XML part
 		// Capture the message envelope
 		while (!boundary.equals(line = readLineFromInputStream(input))) {
-			if (!line.equals(BLK)) {
+			if (!BLK.equals(line)) {
 				xml.append(line);
 			}
 		}
 		// Capture the ACL part
 		// JMP to ACLMessage
-		while (BLK.equals(line = readLineFromInputStream(input)))
-			; // skip empty lines
-		// Skip content-type
+		while (BLK.equals(line = readLineFromInputStream(input))) { // skip empty lines
+			// Skip content-type
+		}
 		do {
 			if (line.toLowerCase().startsWith(CONTENT_STR.toLowerCase())) {
 				break;
@@ -438,8 +446,9 @@ public class HTTPIO {
 		// Capture the acl part.
 		int character = -1;
 		while (((character = input.read()) == CR) || (character == LF)) {
+			continue;
 		}
-		; // Dirty hack: Skip leading blank lines.
+		// Dirty hack: Skip leading blank lines.
 		if (character >= 0) {
 			acl.write(character);
 			readBytesUpTo(input, acl, boundaryPattern.toByteArray());
@@ -461,12 +470,12 @@ public class HTTPIO {
 		try {
 			String line = null;
 			// Capture and process the response message
-			while (!(line = readLineFromInputStream(input)).startsWith(HTTP1))
-				;
+			while (!(line = readLineFromInputStream(input)).startsWith(HTTP1)) {
+			}
 			// capture the response code
 			responseCode = Integer.parseInt(processLine(line));
 			// Read all message
-			while (((line = readLineFromInputStream(input)) != null) && (!line.equals(BLK))) {
+			while (((line = readLineFromInputStream(input)) != null) && (!BLK.equals(line))) {
 				if (line.toLowerCase().startsWith(CONN_STR.toLowerCase())) {
 					type.append(processLine(line));
 				} else if (line.toLowerCase().startsWith(PROXY_STR.toLowerCase())) {
@@ -593,7 +602,7 @@ public class HTTPIO {
 		if (!entered) {
 			return null;
 		}
-		if ((!terminated) && (justBeforeCR)) {
+		if ((!terminated) && justBeforeCR) {
 			buffer.append((char) CR);
 		}
 		return buffer.toString();

@@ -39,7 +39,7 @@ import javax.swing.border.*;
  */
  
 class CloseRMAAction extends FixedAction {
-  private rma myRMA;
+	private final rma myRMA;
 
   public CloseRMAAction (rma anRMA,ActionProcessor actPro) {
     super ("CloseRMAIcon","Close RMA Agent",actPro);

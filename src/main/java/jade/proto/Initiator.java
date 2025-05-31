@@ -67,9 +67,9 @@ abstract class Initiator extends FSMBehaviour {
 	// is concerned. Sessions are protocol-specific
 	protected Map sessions = new HashMap<>();	
 	// The MsgReceiver behaviour used to receive replies 
-	protected MsgReceiver replyReceiver = null;
+	protected MsgReceiver replyReceiver;
 	// The MessageTemplate used by the replyReceiver
-	protected MessageTemplate replyTemplate = null; 
+	protected MessageTemplate replyTemplate; 
 	
 	private ACLMessage initiation;
 	
@@ -119,7 +119,7 @@ abstract class Initiator extends FSMBehaviour {
 			public void action() {
 				DataStore ds = getDataStore();
 				Vector allInitiations = (Vector) ds.get(ALL_INITIATIONS_K);
-				if (allInitiations == null || allInitiations.size() == 0) {
+				if (allInitiations == null || allInitiations.isEmpty()) {
 					allInitiations = prepareInitiations((ACLMessage) ds.get(INITIATION_K));
 					ds.put(ALL_INITIATIONS_K, allInitiations);
 				}
@@ -496,7 +496,7 @@ abstract class Initiator extends FSMBehaviour {
 		// If the conversation-id of the first message is set --> 
 		// use it. Otherwise create a default one
 		String convId = null;
-		if (msgs.size() > 0) {
+		if (!msgs.isEmpty()) {
 			ACLMessage msg = (ACLMessage) msgs.elementAt(0);
 			if ((msg == null) || (msg.getConversationId() == null)) {
 				convId = "C"+hashCode()+"_"+myAgent.getLocalName()+"_"+System.currentTimeMillis()+"_"+getCnt();
@@ -508,8 +508,8 @@ abstract class Initiator extends FSMBehaviour {
 		return convId;
 	}
 	
-	private static int cnt = 0;
-	private synchronized static int getCnt() {
+	private static int cnt;
+	private static synchronized int getCnt() {
 		int k = cnt;
 		cnt++;
 		return k;

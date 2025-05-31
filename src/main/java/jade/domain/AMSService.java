@@ -78,11 +78,11 @@ import jade.core.Agent;
  @version $Date: 2012-09-10 10:53:21 +0200 (lun, 10 set 2012) $ $Revision: 6588 $ 
  **/
 public class AMSService extends FIPAService {
-	
-	
-	private static Codec c = new SLCodec();
-	private static Ontology o = FIPAManagementOntology.getInstance();
-	private static ContentManager cm = new ContentManager();
+
+
+	private static final Codec c = new SLCodec();
+	private static final Ontology o = FIPAManagementOntology.getInstance();
+	private static final ContentManager cm = new ContentManager();
 	static {
 		cm.registerLanguage(c, FIPANames.ContentLanguage.FIPA_SL0);
 		cm.registerOntology(o);
@@ -95,10 +95,12 @@ public class AMSService extends FIPAService {
 	 */
 	static void checkIsValid(AMSAgentDescription amsd) throws MissingParameter {
 		// FIXME: use FIPAManagementOntology constants instead of Strings  
-		if (amsd.getName()==null) 
+		if (amsd.getName() == null) {
 			throw new MissingParameter(FIPAManagementOntology.AMSAGENTDESCRIPTION, "name");
-		if (amsd.getState()==null) 
+		}
+		if (amsd.getState() == null) {
 			throw new MissingParameter(FIPAManagementOntology.AMSAGENTDESCRIPTION, "state");
+		}
 	}
 	
 	/**
@@ -120,11 +122,13 @@ public class AMSService extends FIPAService {
 	 */
 	public static void register(Agent a, AID AMSName, AMSAgentDescription amsd) throws FIPAException {
 		ACLMessage request = createRequestMessage(a, AMSName);
-		
-		if (amsd.getName() == null)
+
+		if (amsd.getName() == null) {
 			amsd.setName(a.getAID());
-		if (amsd.getState() == null)
+		}
+		if (amsd.getState() == null) {
 			amsd.setState(AMSAgentDescription.ACTIVE);
+		}
 		checkIsValid(amsd);
 		
 		// Build a AMS action object for the request
@@ -173,11 +177,13 @@ public class AMSService extends FIPAService {
 	public static void deregister(Agent a, AID AMSName, AMSAgentDescription amsd) throws FIPAException {
 		
 		ACLMessage request = createRequestMessage(a, AMSName);
-		
-		if (amsd.getName() == null)
+
+		if (amsd.getName() == null) {
 			amsd.setName(a.getAID());
-		if (amsd.getState() == null)
+		}
+		if (amsd.getState() == null) {
 			amsd.setState(AMSAgentDescription.ACTIVE);
+		}
 		// Build a AMS action object for the request
 		Deregister d = new Deregister();
 		d.setDescription(amsd);
@@ -245,9 +251,10 @@ public class AMSService extends FIPAService {
 	 */
 	public static void modify(Agent a, AID AMSName, AMSAgentDescription amsd) throws FIPAException {
 		ACLMessage request = createRequestMessage(a, AMSName);
-		
-		if (amsd.getName() == null)
+
+		if (amsd.getName() == null) {
 			amsd.setName(a.getAID());
+		}
 		checkIsValid(amsd);
 		// Build a AMS action object for the request
 		Modify m = new Modify();

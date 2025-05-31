@@ -66,7 +66,7 @@ import java.util.Map.Entry;
 
 class BeanOntologyBuilder {
 
-	private final static Logger logger = Logger.getMyLogger(BeanOntologyBuilder.class.getName());
+	private static final Logger logger = Logger.getMyLogger(BeanOntologyBuilder.class.getName());
 
 	public static final String ENUM_SLOT_NAME = "name";
 	private static final String GETTER_PREFIX = "get";
@@ -74,8 +74,8 @@ class BeanOntologyBuilder {
 	private static final String SETTER_PREFIX = "set";
 	private static final Object GET_CLASS_METHOD = "getClass";
 
-	private Ontology ontology;
-	private BeanIntrospector introspector;
+	private final Ontology ontology;
+	private final BeanIntrospector introspector;
 
 	BeanOntologyBuilder(Ontology ontology) {
 		this.ontology = ontology;
@@ -128,7 +128,7 @@ class BeanOntologyBuilder {
 			// it takes some parameters
 			return false;
 		}
-		if (methodName.equals(GET_CLASS_METHOD)) {
+		if (GET_CLASS_METHOD.equals(methodName)) {
 			// it is "getClass", to be discarded
 			return false;
 		}
@@ -212,9 +212,9 @@ class BeanOntologyBuilder {
 	}
 
 	private static Map<SlotKey, SlotAccessData> buildAccessorsMap(String schemaName, Class<?> clazz, Method[] methodsArray) throws BeanOntologyException {
-		Map<SlotKey, SlotAccessData> result = new TreeMap<SlotKey, SlotAccessData>();
-		List<Method> getters = new ArrayList<Method>();
-		Map<String, Method> setters = new HashMap<String, Method>();
+		Map<SlotKey, SlotAccessData> result = new TreeMap<>();
+		List<Method> getters = new ArrayList<>();
+		Map<String, Method> setters = new HashMap<>();
 		for (Method method: methodsArray) {
 			if (method.getAnnotation(SuppressSlot.class) == null) {
 				if (isGetter(method)) {
@@ -230,7 +230,8 @@ class BeanOntologyBuilder {
 		 * searching for the matching setter; when we find it, we store the couple in a SlotAccessData
 		 */
 		Iterator<Method> gettersIter = getters.iterator();
-		Method getter, setter;
+		Method getter;
+		Method setter;
 		String setterName;
 		Class<?> slotClazz;
 		SlotAccessData sad;
@@ -364,7 +365,7 @@ class BeanOntologyBuilder {
 		if (orderByPosition) {
 			
 			SlotKey[] positionedSK = new SlotKey[result.size()];
-			List<SlotKey> nonPositionedSAD = new ArrayList<SlotKey>();  
+			List<SlotKey> nonPositionedSAD = new ArrayList<>();  
 			for (SlotKey key : result.keySet()) {
 				position = key.position;
 				if (position != -1) {
@@ -386,7 +387,7 @@ class BeanOntologyBuilder {
 			}
 			
 			int nonPositionedSADIndex = 0;
-			Map<SlotKey, SlotAccessData> orderedMap = new LinkedHashMap<SlotKey, SlotAccessData>();
+			Map<SlotKey, SlotAccessData> orderedMap = new LinkedHashMap<>();
 			for (int i=0; i<result.size(); i++) {
 				
 				SlotKey key;
@@ -582,7 +583,7 @@ class BeanOntologyBuilder {
 	
 	private void manageSlots(Class<?> clazz, ObjectSchema schema, boolean buildHierarchy) throws OntologyException {
 		Method[] methods = clazz.getMethods();
-		List<Method> concreteMethodsList = new ArrayList<Method>();
+		List<Method> concreteMethodsList = new ArrayList<>();
 		int modifiers;
 		for (Method m: methods) {
 			modifiers = m.getModifiers();
@@ -723,7 +724,7 @@ class BeanOntologyBuilder {
 	void addSchemas(String pkgname, boolean buildHierarchy) throws BeanOntologyException {
 		try {
 			List<Class<?>> classesForPackage = ClassDiscover.getClassesForPackage(pkgname);
-			if (classesForPackage.size() < 1) {
+			if (classesForPackage.isEmpty()) {
 				throw new BeanOntologyException("no suitable classes found");
 			}
 			for (Class<?> clazz: classesForPackage) {

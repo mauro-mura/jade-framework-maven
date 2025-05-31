@@ -35,7 +35,8 @@ import java.io.*;
    @author Giovanni Caire - TILab 
  */
 public class PrintStreamSplitter extends PrintStream {
-	private PrintStream s1, s2;
+	private final PrintStream s1;
+	private final PrintStream s2;
 	
     /**
        Create a new stream that feeds the output to the two given

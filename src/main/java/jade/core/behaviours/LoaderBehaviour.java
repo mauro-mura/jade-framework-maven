@@ -81,7 +81,7 @@ public class LoaderBehaviour extends Behaviour {
 			MessageTemplate.and(MessageTemplate.MatchLanguage(codec.getName()),
 					MessageTemplate.MatchOntology(onto.getName())));
 
-	private boolean finished = false;
+	private boolean finished;
 
 	/**
 	 * Construct a LoaderBehaviour.

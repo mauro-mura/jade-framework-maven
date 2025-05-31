@@ -54,8 +54,8 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
     protected static final byte OUT = (byte) 0;
     private static final int RESPONSE_TIMEOUT = 30000;
     protected String myMediatorClass = "jade.imtp.leap.JICP.BIBEDispatcher";
-    private MicroSkeleton mySkel = null;
-    private BackEndStub myStub = null;
+    private MicroSkeleton mySkel;
+    private BackEndStub myStub;
     // Variables related to the connection with the Mediator
     protected TransportAddress mediatorTA;
     private String myMediatorID;
@@ -70,16 +70,16 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
     protected InputManager myInputManager;
     private ConnectionListener myConnectionListener;
     private boolean active = true;
-    private boolean connectionDropped = false;
-    private boolean waitingForFlush = false;
-    protected boolean refreshingInput = false;
-    protected boolean refreshingOutput = false;
+    private boolean connectionDropped;
+    private boolean waitingForFlush;
+    protected boolean refreshingInput;
+    protected boolean refreshingOutput;
     private byte lastSid = 0x0f;
-    private int outCnt = 0;
+    private int outCnt;
     private Thread terminator;
     private String beAddrsText;
     private String[] backEndAddresses;
-    private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
     //////////////////////////////////////////////
     // FEConnectionManager interface implementation
@@ -360,8 +360,8 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
     // These variables are only used within the InputManager class,
     // but are declared externally since they must "survive" when
     // an InputManager is replaced
-    private JICPPacket lastResponse = null;
-    private int cnt = 0;
+    private JICPPacket lastResponse;
+    private int cnt;
 
     /**
     Inner class InputManager.
@@ -370,7 +370,7 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
     private class InputManager extends Thread {
 
         private int myId;
-        private Connection myConnection = null;
+        private Connection myConnection;
 
         public void run() {
             myId = cnt++;
@@ -655,7 +655,7 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
                         String errorMsg = new String(pkt.getData());
                         myLogger.log(Logger.WARNING, "JICP Error (OUT). " + errorMsg);
                         c.close();
-                        if (errorMsg.equals(JICPProtocol.NOT_FOUND_ERROR)) {
+                        if (JICPProtocol.NOT_FOUND_ERROR.equals(errorMsg)) {
                             // The JICPMediatorManager didn't find my Mediator anymore. Either
                             // there was a fault our max disconnection time expired.
                             // Try to recreate the BackEnd
@@ -764,7 +764,7 @@ public class BIFEDispatcher implements FEConnectionManager, Dispatcher, TimerLis
     }*/
     private void handleError() {
         myLogger.log(Logger.SEVERE, "Can't reconnect (" + System.currentTimeMillis() + ")");
-        (new Exception("Dummy")).printStackTrace();
+        new Exception("Dummy").printStackTrace();
 
         if (myConnectionListener != null) {
             myConnectionListener.handleConnectionEvent(ConnectionListener.RECONNECTION_FAILURE, null);

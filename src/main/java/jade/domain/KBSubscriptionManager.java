@@ -58,10 +58,10 @@ import jade.proto.SubscriptionResponder;
  *
  */
 class KBSubscriptionManager implements SubscriptionResponder.SubscriptionManager {
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	private Map subscriptionsCache = new HashMap<>();
-	private SubscriptionInfo[] subscriptions = null;
+	private SubscriptionInfo[] subscriptions;
 	
 	KB kBase;
 	ContentManager cm;
@@ -119,7 +119,7 @@ class KBSubscriptionManager implements SubscriptionResponder.SubscriptionManager
 		List results = kBase.search(dfdTemplate, -1); 
 		
 		// If some DFD matches the template, notify the subscribed agent 
-		if(results.size() > 0){
+		if(!results.isEmpty()){
 			notify(sub, results, absIota);
 			return true;
 		}
@@ -217,7 +217,7 @@ class KBSubscriptionManager implements SubscriptionResponder.SubscriptionManager
 		}
 	}
 	
-	private static final SubscriptionInfo[] toArray(Map m) {
+	private static SubscriptionInfo[] toArray(Map m) {
 		Collection c = m.values();
 		SubscriptionInfo[] result = new SubscriptionInfo[c.size()];
 		Iterator it = c.iterator();
@@ -228,13 +228,13 @@ class KBSubscriptionManager implements SubscriptionResponder.SubscriptionManager
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Inner class SubscriptionInfo
 	 * This class associates a Subscription object with the DFAgentDescription that acts as
 	 * template for that Subscription object
 	 */
-	private class SubscriptionInfo {
+	private final class SubscriptionInfo {
 		private SubscriptionResponder.Subscription subscription;
 		private DFAgentDescription template;
 		private AbsIRE absIota;

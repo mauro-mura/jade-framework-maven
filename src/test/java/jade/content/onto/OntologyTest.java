@@ -8,7 +8,7 @@ import jade.content.schema.*;
 import java.util.List;
 
 public class OntologyTest {
-	private Ontology basic = BasicOntology.getInstance();
+	private final Ontology basic = BasicOntology.getInstance();
 	
 	private static final String C1 = "C1";
 	private static final String C2 = "C2";

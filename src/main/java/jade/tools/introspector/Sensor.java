@@ -32,14 +32,14 @@ import jade.util.Event;
  * @author Giovanni Caire - TILab 
  */
 public class Sensor {
-	private Vector eventQueue = new Vector<>();
+	private final Vector eventQueue = new Vector<>();
 	private Behaviour myManager;
 	
 	public synchronized void setManager(Behaviour b) {
 		myManager = b;
 		// If there were events already sensed --> restart the manager 
 		// so that it can manages them
-		if (myManager != null && eventQueue.size() > 0) {
+		if (myManager != null && !eventQueue.isEmpty()) {
 			myManager.restart();
 		}
 	}
@@ -57,7 +57,7 @@ public class Sensor {
 	
 	public synchronized Event get() {
 		Event ev = null;
-		if (eventQueue.size() > 0) {
+		if (!eventQueue.isEmpty()) {
 			ev = (Event) eventQueue.elementAt(0);
 			eventQueue.removeElementAt(0);
 		}

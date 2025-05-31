@@ -64,9 +64,9 @@ public abstract class Codec implements Serializable {
 	}
 
 	/** This string is the prefix of all the unnamed slots of a Frame **/
-	public static String UNNAMEDPREFIX = "_JADE.UNNAMED"; 
+	public static String UNNAMEDPREFIX = "_JADE.UNNAMED";
 
-	private String name = null;
+	private final String name;
 
 	/**
 	 * Construct a Codec object with the given name

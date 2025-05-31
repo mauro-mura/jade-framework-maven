@@ -26,9 +26,9 @@ public class JICPCompressor3 {
 	// internal fields
 	private static final int RLE_FLUSH = 0x100;
 	private int rleOldValue = RLE_FLUSH;
-	private int rleOccurrence = 0;
+	private int rleOccurrence;
 	@SuppressWarnings("unused")
-	private int count = 0;
+	private int count;
 	private byte[] ba;
 
 	private static boolean isSep(int value) {
@@ -120,7 +120,7 @@ public class JICPCompressor3 {
 
 	private byte[] compressHelper(byte[] uba) {
 
-		int wordIndexes[] = new int[MAX_WORDS];
+		int[] wordIndexes = new int[MAX_WORDS];
 //        int                   beginIndex    = 0;
 		int wordIndex = 0;
 		int lastWordIndex = 0;
@@ -218,7 +218,7 @@ public class JICPCompressor3 {
 	}
 
 	private byte[] decompressHelper(byte[] cba) {
-		int wordIndexes[] = new int[MAX_WORDS];
+		int[] wordIndexes = new int[MAX_WORDS];
 		int wordIndex = 0;
 		int currentIndex = 0;
 //        int                  beginIndex    = 0;

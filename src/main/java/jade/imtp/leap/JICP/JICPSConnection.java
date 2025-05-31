@@ -56,7 +56,7 @@ import jade.util.Logger;
  */
 public class JICPSConnection extends JICPConnection {
 
-	private static SSLSocketFactory scsf = null;
+	private static SSLSocketFactory scsf;
 	protected static Logger myLogger = Logger.getMyLogger(JICPSConnection.class.getName());
 
 	protected JICPSConnection() {

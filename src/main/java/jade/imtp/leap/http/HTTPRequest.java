@@ -43,8 +43,8 @@ import java.util.StringTokenizer;
  */
 public class HTTPRequest extends HTTPPacket {
 
-    protected String method = null;
-    protected String file = null;
+    protected String method;
+    protected String file;
 
     /**
      * Constructor declaration

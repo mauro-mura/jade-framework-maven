@@ -86,7 +86,7 @@ public class SubscriptionResponder extends FSMBehaviour implements FIPANames.Int
 	private static final String SEND_NOTIFICATIONS = "Send-notifications";
 
 	// The MsgReceiver behaviour used to receive subscription messages
-	private MsgReceiver msgRecBehaviour = null;
+	private MsgReceiver msgRecBehaviour;
 
 	private Hashtable subscriptions = new Hashtable();
 	private List notifications = new ArrayList<>();
@@ -95,7 +95,7 @@ public class SubscriptionResponder extends FSMBehaviour implements FIPANames.Int
 	 * The <code>SubscriptionManager</code> used by this
 	 * <code>SubscriptionResponder</code> to register subscriptions
 	 */
-	protected SubscriptionManager mySubscriptionManager = null;
+	protected SubscriptionManager mySubscriptionManager;
 
 	private Logger myLogger = Logger.getJADELogger(getClass().getName());
 
@@ -537,7 +537,7 @@ public class SubscriptionResponder extends FSMBehaviour implements FIPANames.Int
 	 * protocol fields appropriately. <code>Subscription</code> objects must be
 	 * created by means of the <code>createSubscription()</code> method.
 	 */
-	public static class Subscription {
+	public static final class Subscription {
 
 		private ACLMessage subscription;
 		private SubscriptionResponder myResponder;

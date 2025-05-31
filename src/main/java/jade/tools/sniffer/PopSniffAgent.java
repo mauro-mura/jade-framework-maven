@@ -62,10 +62,10 @@ public class PopSniffAgent
 
 	@Serial
 	private static final long serialVersionUID = 2967516981445469445L;
-	private PopupAgent popAg;
-	private Sniffer mySniffer;
-	private List<Agent> sniffedAgent = new ArrayList<>();
-	private MMCanvas canvAgent;
+	private final PopupAgent popAg;
+	private final Sniffer mySniffer;
+	private final List<Agent> sniffedAgent = new ArrayList<>();
+	private final MMCanvas canvAgent;
 
 	public PopSniffAgent(PopupAgent popAg, Sniffer mySniffer, MMCanvas canvAgent) {
 		super("Do Sniff this Agent");
@@ -81,8 +81,9 @@ public class PopSniffAgent
 		 * #DOTNET_INCLUDE_BEGIN public void OnClick(System.EventArgs e) {
 		 * #DOTNET_INCLUDE_END
 		 */
-		if (!canvAgent.isPresent(popAg.agent.agentName))
+		if (!canvAgent.isPresent(popAg.agent.agentName)) {
 			canvAgent.addAgent(popAg.agent); // add Agent in the Canvas
+		}
 		canvAgent.rAgfromNoSniffVector(popAg.agent);
 		sniffedAgent.add(popAg.agent);
 		mySniffer.sniffMsg(sniffedAgent, Sniffer.SNIFF_ON); // Sniff the Agents

@@ -38,11 +38,9 @@ import jade.core.CaseInsensitiveString;
  */
 class SL1Ontology extends SL0Ontology implements SL1Vocabulary {
 	// NAME
-  public static final String ONTOLOGY_NAME = jade.domain.FIPANames.Ontology.SL1_ONTOLOGY;;
-	
-  // The singleton instance of this ontology
-  // Note that the SL0Ontology does not add any schema to the BasicOntology
-	private static Ontology theInstance = new SL1Ontology(ONTOLOGY_NAME, BasicOntology.getInstance(), null);
+  public static final String ONTOLOGY_NAME = jade.domain.FIPANames.Ontology.SL1_ONTOLOGY;// The singleton instance of this ontology
+	// Note that the SL0Ontology does not add any schema to the BasicOntology
+	private static final Ontology theInstance = new SL1Ontology(ONTOLOGY_NAME, BasicOntology.getInstance(), null);
 	
 	public static Ontology getInstance() {
 		return theInstance;
@@ -77,12 +75,12 @@ class SL1Ontology extends SL0Ontology implements SL1Vocabulary {
 	}
 
 	boolean isUnaryLogicalOp(String symbol) {
-		return (CaseInsensitiveString.equalsIgnoreCase(NOT, symbol));
+		return CaseInsensitiveString.equalsIgnoreCase(NOT, symbol);
 	}
 	
 	boolean isBinaryLogicalOp(String symbol) {
-		return (CaseInsensitiveString.equalsIgnoreCase(AND, symbol) || 
-			CaseInsensitiveString.equalsIgnoreCase(OR, symbol));
+		return CaseInsensitiveString.equalsIgnoreCase(AND, symbol) || 
+			CaseInsensitiveString.equalsIgnoreCase(OR, symbol);
 	}
 	
 }

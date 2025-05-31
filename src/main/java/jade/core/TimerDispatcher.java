@@ -45,14 +45,14 @@ public class TimerDispatcher implements Runnable {
 	// The singleton TimerDispatcher
 	private static TimerDispatcher theDispatcher;
 
-	private Thread myThread = null;
+	private Thread myThread;
 
 	// In J2ME we use a Vector to keep timers to minimize the number of classes.
 	// In J2SE, where we can have thousands of timers, using a Vector can be highly
 	// inefficient -->
 	// We use a TreeSet wrapped into a class that mimic the methods of a Vector.
 	
-	private TimersList timers = new TimersList();
+	private final TimersList timers = new TimersList();
 	
 	/*
 	 * #J2ME_INCLUDE_BEGIN private Vector timers = new Vector<>(); #J2ME_INCLUDE_END

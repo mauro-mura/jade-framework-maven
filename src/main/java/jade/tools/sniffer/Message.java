@@ -45,19 +45,21 @@ import jade.util.leap.Properties;
 
 public class Message extends jade.lang.acl.ACLMessage implements Serializable {
 
-	private AID unicastReceiver;
-	
-  private int x1,x2,y;
-  private int xCoords[] = new int[3];
-  private int yCoords[] = new int[3];
+	private final AID unicastReceiver;
+
+	private int x1;
+	private int x2;
+	private int y;
+	private final int[] xCoords = new int[3];
+	private final int[] yCoords = new int[3];
 
   public static final int step = 80;
   public static final int offset = 45;
   public static final int r = 8;
-  private int yDim = 0;
-  private int xS = 0;
-  private int xD = 0;
-  private int messageNumber=0;
+  private int yDim;
+  private int xS;
+  private int xD;
+  private int messageNumber;
 
   /* TO BE REMOVED
   public Message(AID s, AID r){
@@ -76,22 +78,24 @@ public class Message extends jade.lang.acl.ACLMessage implements Serializable {
     unicastReceiver = r;
     
     this.clearAllReceiver();
-    //#DOTNET_EXCLUDE_BEGIN
-    for (Iterator i=msg.getAllReceiver(); i.hasNext(); )
-	//#DOTNET_EXCLUDE_END
-	/*#DOTNET_INCLUDE_BEGIN
-    for (java.util.Iterator i=msg.getAllReceiver(); i.hasNext(); )
-	#DOTNET_INCLUDE_END*/
-      this.addReceiver((AID)i.next());
+		//#DOTNET_EXCLUDE_BEGIN
+		for (Iterator i = msg.getAllReceiver();i.hasNext();) {
+			//#DOTNET_EXCLUDE_END
+			/*#DOTNET_INCLUDE_BEGIN
+				r (java.util.Iterator i=msg.getAllReceiver(); i.hasNext(); )
+			#DOTNET_INCLUDE_END*/
+			this.addReceiver((AID) i.next());
+		}
 
     this.clearAllReplyTo();
-    //#DOTNET_EXCLUDE_BEGIN
-    for (Iterator i=msg.getAllReplyTo(); i.hasNext(); )
-	//#DOTNET_EXCLUDE_END
-	/*#DOTNET_INCLUDE_BEGIN
-    for (java.util.Iterator i=msg.getAllReplyTo(); i.hasNext(); )
-	#DOTNET_INCLUDE_END*/
-      this.addReplyTo((AID)i.next());
+		//#DOTNET_EXCLUDE_BEGIN
+		for (Iterator i = msg.getAllReplyTo();i.hasNext();) {
+			//#DOTNET_EXCLUDE_END
+			/*#DOTNET_INCLUDE_BEGIN
+				r (java.util.Iterator i=msg.getAllReplyTo(); i.hasNext(); )
+			#DOTNET_INCLUDE_END*/
+			this.addReplyTo((AID) i.next());
+		}
 
     this.setSender(msg.getSender());
     this.setContent(msg.getContent());

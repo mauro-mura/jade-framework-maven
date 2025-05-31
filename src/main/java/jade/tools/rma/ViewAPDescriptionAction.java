@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class ViewAPDescriptionAction extends PlatformAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public ViewAPDescriptionAction(rma anRMA, ActionProcessor actPro) {
     super ("ViewAPDescriptionIcon", "View AP Description", actPro);
@@ -40,13 +40,14 @@ class ViewAPDescriptionAction extends PlatformAction {
   }
 
   public void doAction(AgentTree.Node node ) {
-    //String containerName = node.getName();
-  	if(node instanceof AgentTree.LocalPlatformFolderNode)
-    	myRMA.viewAPDescription("Local Agent Platform Description");
-    	else
-    	if(node instanceof AgentTree.RemotePlatformNode ams){
-    		myRMA.viewAPDescription(ams.getAPDescription(),"Remote Agent Platform Description");
-    	}
+		//String containerName = node.getName();
+		if (node instanceof AgentTree.LocalPlatformFolderNode) {
+			myRMA.viewAPDescription("Local Agent Platform Description");
+		}
+		else
+			if (node instanceof AgentTree.RemotePlatformNode ams) {
+				myRMA.viewAPDescription(ams.getAPDescription(), "Remote Agent Platform Description");
+			}
   }
 
 } 

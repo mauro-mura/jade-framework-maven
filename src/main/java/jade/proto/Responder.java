@@ -193,7 +193,7 @@ abstract class Responder extends FSMBehaviour {
 	* Constructor of the behaviour that creates a new empty DataStore
 	* @see #Responder(Agent a, MessageTemplate mt, DataStore store)
 	**/
-	public Responder(Agent a, MessageTemplate mt) {
+	protected Responder(Agent a, MessageTemplate mt) {
 	     this(a, mt, new DataStore());
 	}
 
@@ -205,7 +205,7 @@ abstract class Responder extends FSMBehaviour {
 	 * consumed by this protocol.
 	 * @param store the DataStore for this protocol behaviour
 	 **/
-	public Responder(Agent a, MessageTemplate mt, DataStore store) {
+	protected Responder(Agent a, MessageTemplate mt, DataStore store) {
 		super(a);
 		setDataStore(store);
 		

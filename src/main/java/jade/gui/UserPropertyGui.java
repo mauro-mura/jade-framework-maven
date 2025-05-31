@@ -76,15 +76,16 @@ public class UserPropertyGui extends JDialog
  		* If editable the method returns a property or null (if the Cancel button is pressed). 
  		* If not editable returns null.
  		*/
- 		SingleProperty ShowProperty(SingleProperty p, boolean e)
+ 		SingleProperty showProperty(SingleProperty p, boolean e)
  		{
       JLabel l;
       JPanel tmpPanel;
  			out = null;
  			editable = e;
- 			
- 			if(p == null)
- 				p = new SingleProperty("", "");
+
+			 if (p == null) {
+				 p = new SingleProperty("", "");
+			 }
  				
  			setTitle("Property");
  			JPanel uPane = new JPanel();
@@ -129,18 +130,19 @@ public class UserPropertyGui extends JDialog
 					public void actionPerformed(ActionEvent e)
 					{
 						String param = (String)e.getActionCommand();
-						if(param.equals("OK"))
+						if("OK".equals(param))
 						{
 						  if(editable)
 						  {
-						  	String name = (nameValue.getText()).trim();
-							  String value = (valueValue.getText()).trim();
-							
-							  if(name.length() >0 && value.length() >0)
-								  out = new SingleProperty(name,value);
-								else 
+						  	String name = nameValue.getText().trim();
+							  String value = valueValue.getText().trim();
+
+								if (name.length() > 0 && value.length() > 0) {
+									out = new SingleProperty(name, value);
+								}
+								else
 								{
-									JOptionPane.showMessageDialog(thisGui,"Must have non-empty fields !","Error Message",JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(thisGui, "Must have non-empty fields !", "Error Message", JOptionPane.ERROR_MESSAGE);
 									return;
 								}
 							}	
@@ -159,7 +161,7 @@ public class UserPropertyGui extends JDialog
 					public void actionPerformed(ActionEvent e)
 					{
 						String param = (String)e.getActionCommand();
-						if(param.equals("Cancel"))
+						if("Cancel".equals(param))
 						{
 				      dispose();			
 						}
@@ -178,11 +180,11 @@ public class UserPropertyGui extends JDialog
       setResizable(false);
       setModal(true);
      
-      ShowCorrect();
+      showCorrect();
       return out;
  		}
  		
- 		private void ShowCorrect() 
+ 		private void showCorrect() 
  		{
  			pack();
       setLocation(parentGUI.getX() + (parentGUI.getWidth() - getWidth()) / 2, parentGUI.getY() + (parentGUI.getHeight() - getHeight()) / 2);    

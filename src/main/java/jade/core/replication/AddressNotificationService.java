@@ -118,7 +118,7 @@ public class AddressNotificationService extends BaseService {
 
 			try {
 				String name = cmd.getName();
-				if (name.equals(Service.NEW_REPLICA)) {
+				if (Service.NEW_REPLICA.equals(name)) {
 					handleAddressAdded(cmd);
 				}
 			} catch (IMTPException imtpe) {
@@ -173,10 +173,10 @@ public class AddressNotificationService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(AddressNotificationSlice.H_ADDSERVICEMANAGERADDRESS)) {
+				if (AddressNotificationSlice.H_ADDSERVICEMANAGERADDRESS.equals(cmdName)) {
 					String addr = (String) params[0];
 					addServiceManagerAddress(addr);
-				} else if (cmdName.equals(AddressNotificationSlice.H_GETSERVICEMANAGERADDRESS)) {
+				} else if (AddressNotificationSlice.H_GETSERVICEMANAGERADDRESS.equals(cmdName)) {
 					cmd.setReturnValue(getServiceManagerAddress());
 				}
 			} catch (Throwable t) {
@@ -228,8 +228,9 @@ public class AddressNotificationService extends BaseService {
 	}
 
 	private void addAddress(String addr) throws IMTPException {
-		if (myLogger.isLoggable(Logger.CONFIG))
+		if (myLogger.isLoggable(Logger.CONFIG)) {
 			myLogger.log(Logger.CONFIG, "Adding PlatformManager address " + addr);
+		}
 		myServiceManager.addAddress(addr);
 	}
 

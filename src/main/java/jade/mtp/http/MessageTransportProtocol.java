@@ -73,12 +73,12 @@ public class MessageTransportProtocol implements MTP {
 	private int timeout;
 	// private int proxyKATimeout;
 	private boolean policy;
-	private boolean keepAlive = false;
-	private boolean useProxy = false;
+	private boolean keepAlive;
+	private boolean useProxy;
 
 	private String[] protocols = {};
-	private String FIPA_NAME = "fipa.mts.mtp.http.std";
-	private Hashtable addr2srv = new Hashtable<>();
+	private final String FIPA_NAME = "fipa.mts.mtp.http.std";
+	private final Hashtable addr2srv = new Hashtable<>();
 
 	// Object Keep-Alive connections
 	private KeepAlive ka;
@@ -208,7 +208,7 @@ public class MessageTransportProtocol implements MTP {
 
 			// Parse other profile parameters
 			numKA = Integer.parseInt(p.getParameter(PREFIX + "numKeepAlive", MAX_KA));
-			policy = (p.getParameter(PREFIX + "policy", POLICY).equals("aggressive")) ? true : false;
+			policy = "aggressive".equals(p.getParameter(PREFIX + "policy", POLICY)) ? true : false;
 			int outPort = Integer.parseInt(p.getParameter(PREFIX + "outPort", OUT_PORT));
 			ka = new KeepAlive(numKA, outPort, policy);
 			keepAlive = numKA > 0;
@@ -278,8 +278,10 @@ public class MessageTransportProtocol implements MTP {
 			addr2srv.remove(ta.toString());
 			srv.desactivate();
 			// srv.interrupt();
-		} else
+		}
+		else {
 			throw new MTPException("No server on address " + ta);
+		}
 	}
 
 	public void deactivate() throws MTPException {
@@ -306,7 +308,7 @@ public class MessageTransportProtocol implements MTP {
 			} else {
 				url = host;
 			}
-			String connPol = (keepAlive) ? HTTPIO.KA : HTTPIO.CLOSE;
+			String connPol = keepAlive ? HTTPIO.KA : HTTPIO.CLOSE;
 
 			// Prepare the HTTP request
 			// ------------------------

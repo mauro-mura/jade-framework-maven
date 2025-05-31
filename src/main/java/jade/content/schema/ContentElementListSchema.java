@@ -33,9 +33,9 @@ import java.util.Iterator;
 /**
  * @author Federico Bergenti - Universita` di Parma
  */
-public class ContentElementListSchema extends ContentElementSchema {
+public final class ContentElementListSchema extends ContentElementSchema {
     public static final String BASE_NAME = "ContentElementList";
-    private static ContentElementListSchema baseSchema = new ContentElementListSchema();
+	private static final ContentElementListSchema baseSchema = new ContentElementListSchema();
 
     /**
      * Construct a schema that vinculates an entity to be a content element 

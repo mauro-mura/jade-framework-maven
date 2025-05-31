@@ -35,8 +35,8 @@ import jade.gui.AIDGui;
 class AddRemotePlatformAction extends FixedAction
 {
 
-  private rma myRMA;
-  private MainWindow main;
+	private final rma myRMA;
+	private final MainWindow main;
   
   AddRemotePlatformAction(rma anRMA,ActionProcessor actPro,MainWindow mW) {
   	
@@ -52,8 +52,9 @@ class AddRemotePlatformAction extends FixedAction
    	 gui.setTitle("Insert the remote AMS AID");
    	 AID remoteAMS = gui.ShowAIDGui(null,true,true);
    	 try{
-   	 	if (remoteAMS != null)
-		    myRMA.addRemotePlatform(remoteAMS);
+				if (remoteAMS != null) {
+					myRMA.addRemotePlatform(remoteAMS);
+				}
    	 			
    	    	 }catch(Exception e){e.printStackTrace();}
   }

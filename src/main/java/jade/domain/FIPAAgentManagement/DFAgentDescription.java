@@ -47,10 +47,10 @@ public class DFAgentDescription implements Concept {
 	@Serial
 	private static final long serialVersionUID = -4767764835844620803L;
 	private AID name;
-	private List<ServiceDescription> services = new ArrayList<>();
-	private List<String> interactionProtocols = new ArrayList<>();
-	private List<String> ontology = new ArrayList<>();
-	private List<String> language = new ArrayList<>();
+	private final List<ServiceDescription> services = new ArrayList<>();
+	private final List<String> interactionProtocols = new ArrayList<>();
+	private final List<String> ontology = new ArrayList<>();
+	private final List<String> language = new ArrayList<>();
 
 	// Added lease default value -1
 	// private Date leaseTime = new Date(-1);
@@ -127,7 +127,7 @@ public class DFAgentDescription implements Concept {
 		if (leaseTime == null) {
 			return false;
 		} else {
-			return (System.currentTimeMillis() > leaseTime.getTime());
+			return System.currentTimeMillis() > leaseTime.getTime();
 		}
 	}
 

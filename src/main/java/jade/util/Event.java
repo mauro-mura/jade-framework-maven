@@ -52,9 +52,9 @@ public class Event extends EventObject {
 	 */
 	protected int type;
 
-	private List<Object> param = null;
-	private boolean processed = false;
-	private Object processingResult = null;
+	private List<Object> param;
+	private boolean processed;
+	private Object processingResult;
 
 	/**
 	 * Construct an <code>Event</code> of a given type produced by the indicated

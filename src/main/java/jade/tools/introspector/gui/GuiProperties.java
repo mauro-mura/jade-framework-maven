@@ -49,8 +49,8 @@ public class GuiProperties{
   protected static UIDefaults MyDefaults;
   protected static GuiProperties foo = new GuiProperties();
   public static final String ImagePath = "";
-  //loging
-  private static Logger logger = Logger.getMyLogger(GuiProperties.class.getName());
+	//loging
+	private static final Logger logger = Logger.getMyLogger(GuiProperties.class.getName());
   
    static{
     Object[] icons = {
@@ -61,16 +61,18 @@ public class GuiProperties{
     MyDefaults = new UIDefaults (icons);
 	}
 
-   public static final Icon getIcon(String key){
+   public static Icon getIcon(String key){
     Icon i = MyDefaults.getIcon(key);
         if (i == null){
-	  	if(logger.isLoggable(Logger.WARNING))
-	  		logger.log(Logger.WARNING,"Mistake with Icon");
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Mistake with Icon");
+					}
 		// System.exit(-1);
 		  return null;
 		}
-	  else
-	  	return MyDefaults.getIcon(key);
+				else {
+					return MyDefaults.getIcon(key);
+				}
 	}
 
 }  // End of GuiProperties

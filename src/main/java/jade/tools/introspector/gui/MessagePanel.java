@@ -43,18 +43,21 @@ import jade.lang.acl.ACLMessage;
  @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
  */
 public class MessagePanel extends JPanel {
-	private JTabbedPane incoming = new JTabbedPane();
-	private JTabbedPane outgoing = new JTabbedPane();
-	private JScrollPane inScrollPending = new JScrollPane();
-	private JScrollPane inScrollDone = new JScrollPane();
-	private JScrollPane outScrollPending = new JScrollPane();
-	private JScrollPane outScrollDone = new JScrollPane();
-	private JTable inMessagesPending;
-	private JTable inMessagesDone;
-	private JTable outMessagesPending;
-	private JTable outMessagesDone;
-	private MessageTableModel inPending, inDone, outPending, outDone;
-	private TableMouseListener listener;
+	private final JTabbedPane incoming = new JTabbedPane();
+	private final JTabbedPane outgoing = new JTabbedPane();
+	private final JScrollPane inScrollPending = new JScrollPane();
+	private final JScrollPane inScrollDone = new JScrollPane();
+	private final JScrollPane outScrollPending = new JScrollPane();
+	private final JScrollPane outScrollDone = new JScrollPane();
+	private final JTable inMessagesPending;
+	private final JTable inMessagesDone;
+	private final JTable outMessagesPending;
+	private final JTable outMessagesDone;
+	private final MessageTableModel inPending;
+	private final MessageTableModel inDone;
+	private final MessageTableModel outPending;
+	private final MessageTableModel outDone;
+	private final TableMouseListener listener;
 	
 	public MessagePanel(MessageTableModel in1, MessageTableModel in2, MessageTableModel out1, MessageTableModel out2) {
 		super();
@@ -143,8 +146,9 @@ public class MessagePanel extends JPanel {
 		
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			int height = myIcon.getIconHeight();
-			if(table.getRowHeight() != height)
+			if (table.getRowHeight() != height) {
 				table.setRowHeight(height);
+			}
 			ACLMessage msg = (ACLMessage)value;
 			setText(ACLMessage.getPerformative(msg.getPerformative()));
 			setBackground(isSelected ? Color.cyan : Color.white);

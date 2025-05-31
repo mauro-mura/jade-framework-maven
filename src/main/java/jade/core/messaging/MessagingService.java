@@ -125,7 +125,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 	protected Profile myProfile;
 
 	// A flag indicating whether or not we must accept foreign agents
-	private boolean acceptForeignAgents = false;
+	private boolean acceptForeignAgents;
 
 	// The ID of the Platform this service belongs to
 	private String platformID;
@@ -157,7 +157,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 	protected int maxDeliveryRetryAttempts;
 
 	// The map of local and global (used in the Main Container) aliases
-	private Hashtable<AID, AID> localAliases = new Hashtable<>();
+	private final Hashtable<AID, AID> localAliases = new Hashtable<>();
 	private Hashtable globalAliases;
 	private List aliasListeners;
 
@@ -177,7 +177,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 	
 	// SAM related variables
 	private boolean samActive;
-	private int msgCounter = 0;
+	private int msgCounter;
 	private int deliveryTimeMeasurementRate;
 	private AverageMeasureProviderImpl deliveryTimeMeasureProvider;
 	private long postedMessageCounter;
@@ -289,9 +289,10 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					Class<?> c = Class.forName(className);
 					ACLCodec codec = (ACLCodec) c.newInstance();
 					messageEncodings.put(codec.getName().toLowerCase(), codec);
-					if (myLogger.isLoggable(Logger.CONFIG))
+					if (myLogger.isLoggable(Logger.CONFIG)) {
 						myLogger.log(Logger.CONFIG,
-								"Installed " + codec.getName() + " ACLCodec implemented by " + className + "\n");
+							"Installed " + codec.getName() + " ACLCodec implemented by " + className + "\n");
+					}
 
 					// FIXME: notify the AMS of the new Codec to update the APDescritption.
 				} catch (ClassNotFoundException cnfe) {
@@ -319,7 +320,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 				Object[] args = spec.getArgs();
 				if (args != null && args.length > 0) {
 					addressURL = args[0].toString();
-					if (addressURL.equals("")) {
+					if ("".equals(addressURL)) {
 						addressURL = null;
 					}
 				}
@@ -702,7 +703,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 		myLogger.log(Logger.FINE,
 				"Transferring all local alias entries for agent " + agent.getLocalName() + " to " + dest.getName());
 		List aliases = removeLocalAliases(agent);
-		if (aliases.size() > 0) {
+		if (!aliases.isEmpty()) {
 			try {
 				MessagingSlice destSlice = (MessagingSlice) getSlice(dest.getName());
 				destSlice.transferLocalAliases(agent, aliases);
@@ -857,20 +858,20 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 			try {
 				String name = cmd.getName();
 
-				if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+				if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 					handleSendMessage(cmd);
-				} else if (name.equals(MessagingSlice.NOTIFY_FAILURE)) {
+				} else if (MessagingSlice.NOTIFY_FAILURE.equals(name)) {
 					handleNotifyFailure(cmd);
-				} else if (name.equals(MessagingSlice.INSTALL_MTP)) {
+				} else if (MessagingSlice.INSTALL_MTP.equals(name)) {
 					Object result = handleInstallMTP(cmd);
 					cmd.setReturnValue(result);
-				} else if (name.equals(MessagingSlice.UNINSTALL_MTP)) {
+				} else if (MessagingSlice.UNINSTALL_MTP.equals(name)) {
 					handleUninstallMTP(cmd);
-				} else if (name.equals(MessagingSlice.NEW_MTP)) {
+				} else if (MessagingSlice.NEW_MTP.equals(name)) {
 					handleNewMTP(cmd);
-				} else if (name.equals(MessagingSlice.DEAD_MTP)) {
+				} else if (MessagingSlice.DEAD_MTP.equals(name)) {
 					handleDeadMTP(cmd);
-				} else if (name.equals(MessagingSlice.SET_PLATFORM_ADDRESSES)) {
+				} else if (MessagingSlice.SET_PLATFORM_ADDRESSES.equals(name)) {
 					handleSetPlatformAddresses(cmd);
 				}
 			} catch (IMTPException imtpe) {
@@ -1041,20 +1042,20 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 
 			try {
 				String name = cmd.getName();
-				if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+				if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 					handleSendMessage(cmd);
-				} else if (name.equals(MessagingSlice.INSTALL_MTP)) {
+				} else if (MessagingSlice.INSTALL_MTP.equals(name)) {
 					Object result = handleInstallMTP(cmd);
 					cmd.setReturnValue(result);
-				} else if (name.equals(MessagingSlice.UNINSTALL_MTP)) {
+				} else if (MessagingSlice.UNINSTALL_MTP.equals(name)) {
 					handleUninstallMTP(cmd);
-				} else if (name.equals(MessagingSlice.NEW_MTP)) {
+				} else if (MessagingSlice.NEW_MTP.equals(name)) {
 					handleNewMTP(cmd);
-				} else if (name.equals(MessagingSlice.DEAD_MTP)) {
+				} else if (MessagingSlice.DEAD_MTP.equals(name)) {
 					handleDeadMTP(cmd);
-				} else if (name.equals(MessagingSlice.SET_PLATFORM_ADDRESSES)) {
+				} else if (MessagingSlice.SET_PLATFORM_ADDRESSES.equals(name)) {
 					handleSetPlatformAddresses(cmd);
-				} else if (name.equals(Service.NEW_SLICE)) {
+				} else if (Service.NEW_SLICE.equals(name)) {
 					handleNewSlice(cmd);
 				}
 			} catch (IMTPException imtpe) {
@@ -1233,8 +1234,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					public void dispatchMessage(Envelope env, byte[] payload) {
 						// log("Message from remote platform received", 2);
 
-						if (myLogger.isLoggable(Logger.FINE))
+						if (myLogger.isLoggable(Logger.FINE)) {
 							myLogger.log(Logger.FINE, "Message from remote platform received");
+						}
 
 						// To avoid message loops, make sure that the ID of this ACC does
 						// not appear in a previous 'received' stamp
@@ -1245,8 +1247,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 							if (CaseInsensitiveString.equalsIgnoreCase(id, accID)) {
 								System.err.println("ERROR: Message loop detected !!!");
 								System.err.println("Route is: ");
-								for (int j = 0; j < stamps.length; j++)
+								for (int j = 0;j < stamps.length;j++) {
 									System.err.println("[" + j + "]" + stamps[j].getBy());
+								}
 								System.err.println("Message dispatch aborted.");
 								return;
 							}
@@ -1292,8 +1295,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 				String[] pp = result.getSupportedProtocols();
 				for (int i = 0; i < pp.length; ++i) {
 					// log("Added Route-Via-MTP for protocol "+pp[i], 1);
-					if (myLogger.isLoggable(Logger.CONFIG))
+					if (myLogger.isLoggable(Logger.CONFIG)) {
 						myLogger.log(Logger.CONFIG, "Added Route-Via-MTP for protocol " + pp[i]);
+					}
 
 				}
 
@@ -1452,7 +1456,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(MessagingSlice.H_DISPATCHLOCALLY)) {
+				if (MessagingSlice.H_DISPATCHLOCALLY.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(MessagingSlice.SEND_MESSAGE, MessagingSlice.NAME, null);
 					AID senderAID = (AID) params[0];
 					GenericMessage msg = (GenericMessage) params[1];
@@ -1470,18 +1474,18 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					gCmd.addParam(msg);
 					gCmd.addParam(receiverID);
 					result = gCmd;
-				} else if (cmdName.equals(MessagingSlice.H_GETAGENTLOCATION)) {
+				} else if (MessagingSlice.H_GETAGENTLOCATION.equals(cmdName)) {
 					AID agentID = (AID) params[0];
 
 					cmd.setReturnValue(getAgentLocation(agentID));
-				} else if (cmdName.equals(MessagingSlice.H_ROUTEOUT)) {
+				} else if (MessagingSlice.H_ROUTEOUT.equals(cmdName)) {
 					Envelope env = (Envelope) params[0];
 					byte[] payload = (byte[]) params[1];
 					AID receiverID = (AID) params[2];
 					String address = (String) params[3];
 
 					routeOut(env, payload, receiverID, address);
-				} else if (cmdName.equals(MessagingSlice.H_INSTALLMTP)) {
+				} else if (MessagingSlice.H_INSTALLMTP.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(MessagingSlice.INSTALL_MTP, MessagingSlice.NAME, null);
 					String address = (String) params[0];
 					String className = (String) params[1];
@@ -1489,13 +1493,13 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					gCmd.addParam(className);
 
 					result = gCmd;
-				} else if (cmdName.equals(MessagingSlice.H_UNINSTALLMTP)) {
+				} else if (MessagingSlice.H_UNINSTALLMTP.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(MessagingSlice.UNINSTALL_MTP, MessagingSlice.NAME, null);
 					String address = (String) params[0];
 					gCmd.addParam(address);
 
 					result = gCmd;
-				} else if (cmdName.equals(MessagingSlice.H_NEWMTP)) {
+				} else if (MessagingSlice.H_NEWMTP.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					ContainerID cid = (ContainerID) params[1];
 
@@ -1504,7 +1508,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					gCmd.addParam(cid);
 
 					result = gCmd;
-				} else if (cmdName.equals(MessagingSlice.H_DEADMTP)) {
+				} else if (MessagingSlice.H_DEADMTP.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					ContainerID cid = (ContainerID) params[1];
 
@@ -1513,30 +1517,30 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					gCmd.addParam(cid);
 
 					result = gCmd;
-				} else if (cmdName.equals(MessagingSlice.H_ADDROUTE)) {
+				} else if (MessagingSlice.H_ADDROUTE.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					String sliceName = (String) params[1];
 
 					addRoute(mtp, sliceName);
-				} else if (cmdName.equals(MessagingSlice.H_REMOVEROUTE)) {
+				} else if (MessagingSlice.H_REMOVEROUTE.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					String sliceName = (String) params[1];
 
 					removeRoute(mtp, sliceName);
-				} else if (cmdName.equals(MessagingSlice.H_NEWALIAS)) {
+				} else if (MessagingSlice.H_NEWALIAS.equals(cmdName)) {
 					AID alias = (AID) params[0];
 					AID name = (AID) params[1];
 
 					newAlias(alias, name);
 					replicationHandle.invokeReplicatedMethod("newAlias", params);
-				} else if (cmdName.equals(MessagingSlice.H_DEADALIAS)) {
+				} else if (MessagingSlice.H_DEADALIAS.equals(cmdName)) {
 					AID alias = (AID) params[0];
 
 					deadAlias(alias);
 					replicationHandle.invokeReplicatedMethod("deadAlias", params);
-				} else if (cmdName.equals(MessagingSlice.H_CURRENTALIASES)) {
+				} else if (MessagingSlice.H_CURRENTALIASES.equals(cmdName)) {
 					globalAliases = (Hashtable) params[0];
-				} else if (cmdName.equals(MessagingSlice.H_TRANSFERLOCALALIASES)) {
+				} else if (MessagingSlice.H_TRANSFERLOCALALIASES.equals(cmdName)) {
 					AID agent = (AID) params[0];
 					List aliases = (List) params[1];
 					Iterator it = aliases.iterator();
@@ -1555,13 +1559,16 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 				throws IMTPException, MTPException {
 			RoutingTable.OutPort out = routes.lookup(address);
 			// log("Routing message to "+receiverID.getName()+" towards port "+out, 2);
-			if (myLogger.isLoggable(Logger.FINE))
+			if (myLogger.isLoggable(Logger.FINE)) {
 				myLogger.log(Logger.FINE, "Routing message to " + receiverID.getName() + " towards port " + out);
+			}
 
-			if (out != null)
+			if (out != null) {
 				out.route(env, payload, receiverID, address);
-			else
+			}
+			else {
 				throw new MTPException("No suitable route found for address " + address + ".");
+			}
 		}
 
 		private void addRoute(MTPDescriptor mtp, String sliceName) throws IMTPException, ServiceException {
@@ -1573,8 +1580,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 				// case of fault and successive recovery of the Main Container
 				String[] pp = mtp.getSupportedProtocols();
 				for (int i = 0; i < pp.length; ++i) {
-					if (myLogger.isLoggable(Logger.CONFIG))
+					if (myLogger.isLoggable(Logger.CONFIG)) {
 						myLogger.log(Logger.CONFIG, "Added Route-Via-Slice(" + sliceName + ") for protocol " + pp[i]);
+					}
 				}
 
 				String[] addresses = mtp.getAddresses();
@@ -1591,8 +1599,9 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 
 			String[] pp = mtp.getSupportedProtocols();
 			for (int i = 0; i < pp.length; ++i) {
-				if (myLogger.isLoggable(Logger.CONFIG))
+				if (myLogger.isLoggable(Logger.CONFIG)) {
 					myLogger.log(Logger.CONFIG, "Removed Route-Via-Slice(" + sliceName + ") for protocol " + pp[i]);
+				}
 
 			}
 
@@ -1658,9 +1667,10 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 							forwardMessage(msg, receiverID, address);
 							return;
 						} catch (MTPException mtpe) {
-							if (myLogger.isLoggable(Logger.WARNING) && !isPersistentDeliveryRetry(msg))
+							if (myLogger.isLoggable(Logger.WARNING) && !isPersistentDeliveryRetry(msg)) {
 								myLogger.log(Logger.WARNING, "Cannot deliver message to address: " + address + " ["
-										+ mtpe.toString() + "]. Trying the next one...");
+									+ mtpe.toString() + "]. Trying the next one...");
+							}
 						}
 					}
 					notifyFailureToSender(msg, receiverID,
@@ -1681,13 +1691,13 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 					new InternalError(ACLMessage.AMS_FAILURE_AGENT_NOT_FOUND + ": " + nfe.getMessage()));
 		} catch (IMTPException imtpe) {
 			// Can't reach the destination container --> Send a FAILURE message
-			String id = (msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg));
+			String id = msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg);
 			myLogger.log(Logger.WARNING, id + " - Receiver " + receiverID.getLocalName() + " unreachable.", imtpe);
 			notifyFailureToSender(msg, receiverID,
 					new InternalError(ACLMessage.AMS_FAILURE_AGENT_UNREACHABLE + ": " + imtpe.getMessage()));
 		} catch (ServiceException se) {
 			// Service error during delivery --> Send a FAILURE message
-			String id = (msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg));
+			String id = msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg);
 			myLogger.log(Logger.WARNING, id + " - Service error delivering message.", se);
 			notifyFailureToSender(msg, receiverID,
 					new InternalError(ACLMessage.AMS_FAILURE_SERVICE_ERROR + ": " + se.getMessage()));
@@ -1899,15 +1909,17 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 		if (aid == null) {
 			// System.err.println("ERROR: null message sender. Aborting message
 			// dispatch...");
-			if (myLogger.isLoggable(Logger.SEVERE))
+			if (myLogger.isLoggable(Logger.SEVERE)) {
 				myLogger.log(Logger.SEVERE, "ERROR: null message sender. Aborting message dispatch...");
+			}
 			return;
 		}
 
 		// FIXME The message can no longer be updated
 		// if has no address set, then adds the addresses of this platform
-		if (!aid.getAllAddresses().hasNext())
+		if (!aid.getAllAddresses().hasNext()) {
 			addPlatformAddresses(aid);
+		}
 
 		try {
 			if (msg.getTraceID() != null) {
@@ -2066,7 +2078,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 	}
 
 	// Only for debugging:
-	private volatile int traceCnt = 0;
+	private volatile int traceCnt;
 
 	protected void checkTracing(GenericMessage msg) {
 		ACLMessage acl = msg.getACLMessage();
@@ -2083,7 +2095,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 		Iterator it = env.getAllProperties();
 		while (it.hasNext()) {
 			Property p = (Property) it.next();
-			if (p.getName().equals(ACLMessage.TRACE)) {
+			if (ACLMessage.TRACE.equals(p.getName())) {
 				return (String) p.getValue();
 			}
 		}
@@ -2143,7 +2155,7 @@ public class MessagingService extends BaseService implements MessageManager.Chan
 		while (it.hasNext()) {
 			AID alias = (AID) it.next();
 			AID agent = (AID) aliases.get(alias);
-			sb.append("- " + alias.getLocalName() + " --> " + agent.getLocalName() + "\n");
+			sb.append("- ").append(alias.getLocalName()).append(" --> ").append(agent.getLocalName()).append("\n");
 		}
 		return sb.toString();
 	}

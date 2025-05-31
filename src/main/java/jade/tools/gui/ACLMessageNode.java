@@ -175,7 +175,7 @@ public class ACLMessageNode extends DefaultMutableTreeNode {
   }
 
 
-  private static DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+	private static final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
   private Date theDate = new Date();
   private ACLMessage theMessage;
   private String direction;

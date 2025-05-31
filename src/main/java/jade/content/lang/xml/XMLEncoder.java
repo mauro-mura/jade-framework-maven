@@ -23,8 +23,8 @@ class XMLEncoder {
 	
 	private Ontology ontology;
 	private StringBuffer buffer;
-	private boolean indentEnabled = false;
-	private int tabs = 0;
+	private boolean indentEnabled;
+	private int tabs;
 	private boolean preserveJavaTypes;
 	
 	public void init(Ontology onto, StringBuffer sb, boolean preserveJavaTypes) {
@@ -131,7 +131,7 @@ class XMLEncoder {
 
 									// Furthermore if the aggregate type is different than SEQUENCE, insert 
 									// an indication to allow reconstructing it in the decoding phase
-									if (!slot.getTypeName().equals(SL0Vocabulary.SEQUENCE)) {
+									if (!SL0Vocabulary.SEQUENCE.equals(slot.getTypeName())) {
 										aggregateModifyingAttributes.put(XMLCodec.AGGREGATE_TYPE_ATTR, slot.getTypeName());
 									}
 								}

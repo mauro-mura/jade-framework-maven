@@ -134,7 +134,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 	private boolean joined;
 	private boolean verboseShutdown;
-	private boolean securityOn = false; // Only used for performance optimization when security is not active
+	private boolean securityOn; // Only used for performance optimization when security is not active
 
 	// Default constructor
 	public AgentContainerImpl() {}
@@ -401,7 +401,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		initAdditionalServices(l.iterator(), services);
 
 		// Register with the platform (pass only global services to the Main)
-		List<ServiceDescriptor> descriptors = new ArrayList<ServiceDescriptor>(services.size());
+		List<ServiceDescriptor> descriptors = new ArrayList<>(services.size());
 		descriptors.addAll(services);
 		// This call performs the real connection to the platform and can modify the
 		// name of this container
@@ -474,7 +474,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			ServiceDescriptor dsc = it.next();
 			try {
 				dsc.getService().boot(myProfile);
-				if (dsc.getName().equals("jade.core.security.Security")) {
+				if ("jade.core.security.Security".equals(dsc.getName())) {
 					// Security active. This is just for performance optimization when security is
 					// not active
 					securityOn = true;
@@ -547,7 +547,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 	private void checkLocalHostAddress() {
 		String address = Profile.getDefaultNetworkName();
-		if (address.equals(Profile.LOCALHOST_CONSTANT) || address.equals(Profile.LOOPBACK_ADDRESS_CONSTANT)) {
+		if (Profile.LOCALHOST_CONSTANT.equals(address) || Profile.LOOPBACK_ADDRESS_CONSTANT.equals(address)) {
 			myLogger.log(Logger.WARNING,
 					"\n***************************************************************\nJAVA is not able to detect the local host address.\nIf this container is part of a distributed platform, use the\n-local-host option to explicitly specify it\n***************************************************************\n");
 		}
@@ -633,8 +633,9 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 			// Skip the Default DF and the AMS
 			AID id = a.getAID();
-			if (id.equals(getAMS()) || id.equals(getDefaultDF()))
+			if (id.equals(getAMS()) || id.equals(getDefaultDF())) {
 				continue;
+			}
 
 			if (verboseShutdown) {
 				myLogger.log(Logger.INFO, "*** --- Killing agent " + a.getLocalName());
@@ -987,8 +988,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		if (instance == null) {
 			throw new NotFoundException("powerUpLocalAgent() failed to find agent " + agentID.getName());
 		}
-		int type = (agentID.equals(theAMS) || agentID.equals(theDefaultDF) ? ResourceManager.SYSTEM_AGENTS
-				: ResourceManager.USER_AGENTS);
+		int type = agentID.equals(theAMS) || agentID.equals(theDefaultDF) ? ResourceManager.SYSTEM_AGENTS
+				: ResourceManager.USER_AGENTS;
 		Thread t = myResourceManager.getThread(type, agentID.getLocalName(), instance);
 		instance.powerUp(agentID, t);
 		localAgents.release(agentID);

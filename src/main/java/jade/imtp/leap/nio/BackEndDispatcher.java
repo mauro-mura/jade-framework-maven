@@ -40,26 +40,26 @@ public class BackEndDispatcher implements NIOMediator, BEConnectionManager, Disp
 	private long lastReceivedTime;
 	private boolean active = true;
 	private boolean peerActive = true;
-	private boolean connectionDropped = false;
+	private boolean connectionDropped;
 	private long dropTimeStamp = -1;
 
 	private JICPMediatorManager myMediatorManager;
 	private String myID;
 	private Properties myProperties;
-	private BackEndContainer myContainer = null;
+	private BackEndContainer myContainer;
 
-	private Connection myConnection = null;
-	private Object writeLock = new Object();
+	private Connection myConnection;
+	private final Object writeLock = new Object();
 	protected InputManager inpManager;
 	protected OutputManager outManager;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	/**
 	 * Retrieve the ID of this mediator. Returns null if this mediator is not active
 	 */
 	public String getID() {
-		return (active ? myID : null);
+		return active ? myID : null;
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class BackEndDispatcher implements NIOMediator, BEConnectionManager, Disp
 	}
 
 	// Local variable only used in the kill() method
-	private Object shutdownLock = new Object();
+	private final Object shutdownLock = new Object();
 
 	/**
 	 * Kill the above container. This may be called by the JICPMediatorManager or
@@ -509,7 +509,7 @@ public class BackEndDispatcher implements NIOMediator, BEConnectionManager, Disp
 	}
 
 	private void updateConnectedState() {
-		myProperties.put(BEManagementHelper.CONNECTED, (isConnected() ? "true" : "false"));
+		myProperties.put(BEManagementHelper.CONNECTED, isConnected() ? "true" : "false");
 	}
 
 	/**
@@ -517,7 +517,7 @@ public class BackEndDispatcher implements NIOMediator, BEConnectionManager, Disp
 	 * FrontEnd
 	 */
 	protected class InputManager {
-		private boolean dispatching = false;
+		private boolean dispatching;
 		private boolean waitingForFlush;
 		private JICPPacket lastIncomingResponse;
 
@@ -706,11 +706,11 @@ public class BackEndDispatcher implements NIOMediator, BEConnectionManager, Disp
 		}
 	} // END of inner class OutputManager
 
-	private synchronized final void setExpirationDeadline() {
+	private final synchronized void setExpirationDeadline() {
 		expirationDeadline = System.currentTimeMillis() + maxDisconnectionTime;
 	}
 
-	private synchronized final boolean checkMaxDisconnectionTime(long currentTime) {
+	private final synchronized boolean checkMaxDisconnectionTime(long currentTime) {
 		return (!isConnected()) && (currentTime > expirationDeadline);
 	}
 

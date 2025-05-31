@@ -45,9 +45,9 @@ public class Specifier {
 	public static final String ESCAPE_CHAR = "\\";
 	public static final String NULL_SPECIFIER_LIST = "null";
 
-	private String name = null;
-	private String className = null;
-	private Object[] args = null;
+	private String name;
+	private String className;
+	private Object[] args;
 
 	/**
 	 * Set the name for this specifier object.
@@ -193,7 +193,7 @@ public class Specifier {
 		return encodeList(v, SPECIFIER_SEPARATOR);
 	}
 
-	public static final Vector<String> parseList(String list, char delimiter) {
+	public static Vector<String> parseList(String list, char delimiter) {
 
 		Vector<String> v = new Vector<>();
 		boolean escaping = false;
@@ -203,7 +203,7 @@ public class Specifier {
 			escaping = true;
 			escapeChar = escapeCharacter.charValue();
 		}
-		if (list != null && !list.equals("") && !list.equals(NULL_SPECIFIER_LIST)) {
+		if (list != null && !"".equals(list) && !NULL_SPECIFIER_LIST.equals(list)) {
 			// Copy the string with the specifiers into an array of char
 			char[] specsChars = new char[list.length()];
 
@@ -329,10 +329,10 @@ public class Specifier {
 		Vector argList = parseList(args, argsDelimiter);
 
 		// Convert the List into an Array
-		String arguments[] = new String[argList.size()];
+		String[] arguments = new String[argList.size()];
 		int i = 0;
-		for (Enumeration e = argList.elements(); e.hasMoreElements(); arguments[i++] = (String) e.nextElement())
-			;
+		for (Enumeration e = argList.elements();e.hasMoreElements();arguments[i++] = (String) e.nextElement()) {
+		}
 		return arguments;
 	}
 

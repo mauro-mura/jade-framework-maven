@@ -38,7 +38,7 @@ import jade.gui.AgentTreeModel;
  */
   class ResumeAction extends AgentAction {
 
-  private rma myRMA;
+		private final rma myRMA;
 
   public ResumeAction(rma anRMA,ActionProcessor actPro) {
     super ("ResumeActionIcon","Resume",actPro);

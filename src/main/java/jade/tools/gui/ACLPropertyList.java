@@ -130,7 +130,7 @@ public class ACLPropertyList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void deleteButton_actionPerformed(ActionEvent e) {
+  void deleteButtonActionPerformed(ActionEvent e) {
     doDelete();
   }
 
@@ -154,7 +154,7 @@ public class ACLPropertyList extends JPanel {
    * @param  e  The feature to be added to the Button_actionPerformed
    *      attribute
    */
-  void addButton_actionPerformed(ActionEvent e) {
+  void addButtonActionPerformed(ActionEvent e) {
     doAdd();
   }
 
@@ -180,7 +180,7 @@ public class ACLPropertyList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void viewButton_actionPerformed(ActionEvent e) {
+  void viewButtonActionPerformed(ActionEvent e) {
     doView();
   }
 
@@ -190,7 +190,7 @@ public class ACLPropertyList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void contentList_mouseClicked(MouseEvent e) {
+  void contentListMouseClicked(MouseEvent e) {
     if (e.getClickCount() > 1) {
       doView();
     }
@@ -222,7 +222,7 @@ public class ACLPropertyList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void contentList_keyPressed(KeyEvent e) {
+  void contentListKeyPressed(KeyEvent e) {
     if (e.getKeyCode() == e.VK_ENTER) {
       doView();
     }
@@ -259,7 +259,7 @@ public class ACLPropertyList extends JPanel {
     viewButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          viewButton_actionPerformed(e);
+          viewButtonActionPerformed(e);
         }
       });
     addButton.setBackground(Color.white);
@@ -273,7 +273,7 @@ public class ACLPropertyList extends JPanel {
     addButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          addButton_actionPerformed(e);
+          addButtonActionPerformed(e);
         }
       });
     deleteButton.setBackground(Color.white);
@@ -287,20 +287,20 @@ public class ACLPropertyList extends JPanel {
     deleteButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          deleteButton_actionPerformed(e);
+          deleteButtonActionPerformed(e);
         }
       });
     contentList.setCellRenderer(aclPropertyListCellRenderer);
     contentList.addKeyListener(
       new java.awt.event.KeyAdapter() {
         public void keyPressed(KeyEvent e) {
-          contentList_keyPressed(e);
+          contentListKeyPressed(e);
         }
       });
     contentList.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          contentList_mouseClicked(e);
+          contentListMouseClicked(e);
         }
       });
     contentScrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -490,7 +490,7 @@ public class ACLPropertyList extends JPanel {
       okButton.addActionListener(
         new java.awt.event.ActionListener() {
           public void actionPerformed(ActionEvent e) {
-            okButton_actionPerformed(e);
+            okButtonActionPerformed(e);
           }
         });
       cancelButton.setBackground(Color.white);
@@ -499,7 +499,7 @@ public class ACLPropertyList extends JPanel {
       cancelButton.addActionListener(
         new java.awt.event.ActionListener() {
           public void actionPerformed(ActionEvent e) {
-            cancelButton_actionPerformed(e);
+            cancelButtonActionPerformed(e);
           }
         });
       jLabel2.setFont(new java.awt.Font("Dialog", 0, 12));
@@ -524,7 +524,7 @@ public class ACLPropertyList extends JPanel {
      *
      * @param  e  Description of Parameter
      */
-    void cancelButton_actionPerformed(ActionEvent e) {
+    void cancelButtonActionPerformed(ActionEvent e) {
       setUserAction(CANCELLED);
       setVisible(false);
     }
@@ -535,7 +535,7 @@ public class ACLPropertyList extends JPanel {
      *
      * @param  e  Description of Parameter
      */
-    void okButton_actionPerformed(ActionEvent e) {
+    void okButtonActionPerformed(ActionEvent e) {
       setItskey(keyTextField.getText());
       setItsvalue(valueTextField.getText());
       setUserAction(OK);
@@ -643,23 +643,25 @@ public class ACLPropertyList extends JPanel {
 
 
     private String fieldName = "";
-    private String theRemovedKey, theChangedKey, theChangedValue;
+		private String theRemovedKey;
+		private String theChangedKey;
+		private String theChangedValue;
     private ACLMessage itsMsg;
   }
 
 
   private boolean editable = true;
 
-  private GridBagLayout gridBagLayout1 = new GridBagLayout();
-  private JList contentList = new JList();
-  private JButton viewButton = new JButton();
-  private JButton addButton = new JButton();
-  private JButton deleteButton = new JButton();
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final JList contentList = new JList();
+	private final JButton viewButton = new JButton();
+	private final JButton addButton = new JButton();
+	private final JButton deleteButton = new JButton();
 
   private DefaultListModel listModel = new DefaultListModel();
-  private ACLPropertyListCellRenderer aclPropertyListCellRenderer = new ACLPropertyListCellRenderer();
-  private ACLPropertyListener theDataListener = new ACLPropertyListener();
-  private JScrollPane contentScrollPane = new JScrollPane();
+	private final ACLPropertyListCellRenderer aclPropertyListCellRenderer = new ACLPropertyListCellRenderer();
+	private final ACLPropertyListener theDataListener = new ACLPropertyListener();
+	private final JScrollPane contentScrollPane = new JScrollPane();
 
   private String fieldName = "";
   private ACLMessage msg;

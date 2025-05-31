@@ -56,15 +56,15 @@ import jade.util.TransportAddressWrapper;
  */
 public class PlatformManagerImpl implements PlatformManager {
 
-	private IMTPManager myIMTPManager;
-	private CommandProcessor myCommandProcessor;
+	private final IMTPManager myIMTPManager;
+	private final CommandProcessor myCommandProcessor;
 
 	// FIXME: The association between MainContainer and PlatformManagerImpl need be clarified...
-	private MainContainerImpl myMain;
-	private Map<String, NodeDescriptor> nodes;
-	private Map<String, ServiceEntry> services;
-	private Map<TransportAddressWrapper, PlatformManager> replicas;
-	private Map<String, NodeFailureMonitor> monitors;
+	private final MainContainerImpl myMain;
+	private final Map<String, NodeDescriptor> nodes;
+	private final Map<String, ServiceEntry> services;
+	private final Map<TransportAddressWrapper, PlatformManager> replicas;
+	private final Map<String, NodeFailureMonitor> monitors;
 	private String localAddr;
 	private String platformID;
 
@@ -74,10 +74,10 @@ public class PlatformManagerImpl implements PlatformManager {
 	// called Container-<M>.
 	// Nodes not hosting containers are called Aux-Node-<K>
 	private int containerNo = 1;
-	private int mainContainerNo = 0;
+	private int mainContainerNo;
 	private int nodeNo = 1;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	/**
 	   Inner class ServiceEntry (package scoped for debugging purpose)
@@ -209,7 +209,7 @@ public class PlatformManagerImpl implements PlatformManager {
 		monitors = new HashMap<>();
 
 		platformID = p.getParameter(Profile.PLATFORM_ID, null);
-		if (platformID == null || platformID.equals("")) {
+		if (platformID == null || "".equals(platformID)) {
 			try {
 				// Build the PlatformID using the local host and port
 				List<TransportAddress> tal = myIMTPManager.getLocalAddresses();
@@ -605,7 +605,7 @@ public class PlatformManagerImpl implements PlatformManager {
 				Iterator<TransportAddressWrapper> it = replicas.keySet().iterator();
 				while (it.hasNext()) {
 					TransportAddressWrapper taw = it.next();
-					sb.append("" + taw.hashCode() + ", " + taw.getAddress());
+					sb.append("").append(taw.hashCode()).append(", ").append(taw.getAddress());
 					if (it.hasNext()) {
 						sb.append("; ");
 					}
@@ -880,7 +880,7 @@ public class PlatformManagerImpl implements PlatformManager {
 			dsc.setName(cid.getName());
 		} else {
 			// Otherwise use the node naming convention unless a custom name is specified
-			if (node.getName() == null || node.getName().equals(NO_NAME)) {
+			if (node.getName() == null || NO_NAME.equals(node.getName())) {
 				String name = null;
 				NodeDescriptor old = null;
 				do {
@@ -903,7 +903,7 @@ public class PlatformManagerImpl implements PlatformManager {
 			cid.setMain(Boolean.valueOf(false));
 		}
 		
-		if (cid.getName() == null || cid.getName().equals(NO_NAME)) {
+		if (cid.getName() == null || NO_NAME.equals(cid.getName())) {
 			if (n.hasPlatformManager()) {
 				// Use the Main-Container-<N> name schema
 				do {
@@ -1028,7 +1028,7 @@ public class PlatformManagerImpl implements PlatformManager {
 	 Embeds the node descriptor and the services currently installed
 	 on the node
 	 */
-	private class NodeInfo {
+	private final class NodeInfo {
 		private NodeDescriptor nodeDsc;
 
 		private List<ServiceDescriptor> services;

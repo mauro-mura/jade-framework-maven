@@ -150,9 +150,9 @@ public class JICPProtocol extends TransportProtocol {
 	
 	// Error messages 
 	public static final String NOT_FOUND_ERROR = "Not-found";	
-	public static final String NOT_AUTHORIZED_ERROR = "Not-authorized";	
+	public static final String NOT_AUTHORIZED_ERROR = "Not-authorized";
 
-	private static JICPProtocol theInstance = new JICPProtocol();
+	private static final JICPProtocol theInstance = new JICPProtocol();
 
 	public static JICPProtocol getInstance() {
 		return theInstance;
@@ -215,7 +215,7 @@ public class JICPProtocol extends TransportProtocol {
 		return NAME;
 	} 
 	
-	public static final long computeTimeout(long timeoutOffset, double factor, int packetLength) {
+	public static long computeTimeout(long timeoutOffset, double factor, int packetLength) {
 		// factor < 0 means "use default"
 		if (factor < 0) {
 			factor = DEFAULT_RESPONSE_TIMEOUT_MULTIPLICATIVE_FACTOR;

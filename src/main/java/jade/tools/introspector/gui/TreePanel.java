@@ -42,8 +42,8 @@ class TreePanel extends JPanel implements TreeSelectionListener {
   AgentTree treeAgent; // FIXME: It should be private
   private JScrollPane scroll;
   private JSplitPane pan;
-  private JSplitPane pane;
-  private IntrospectorGUI mainWnd;
+	private final JSplitPane pane;
+	private final IntrospectorGUI mainWnd;
   private PopUpMouser popM;
 
   public TreePanel(IntrospectorGUI  mainWnd) {
@@ -69,7 +69,7 @@ class TreePanel extends JPanel implements TreeSelectionListener {
  public void  valueChanged(TreeSelectionEvent e) {
    String wholePath;
    String typeNode;
-   TreePath paths[] = treeAgent.tree.getSelectionPaths();
+   TreePath[] paths = treeAgent.tree.getSelectionPaths();
    AgentTree.Node current;
    AgentTree.ContainerNode currentC;
    Object[] relCur;

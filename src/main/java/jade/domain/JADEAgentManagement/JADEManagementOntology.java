@@ -41,15 +41,15 @@ import jade.domain.FIPAAgentManagement.AlreadyRegistered;
    The actual <code>Ontology</code> object representing the 
    JADE-Agent-Management-ontology is a singleton and is accessible through 
    the static method <code>getInstance()</code>
-   @author Giovanni Caire -  TILAB
+	@author Giovanni Caire -  TILAB
  */
-public class JADEManagementOntology extends Ontology implements JADEManagementVocabulary {
+public final class JADEManagementOntology extends Ontology implements JADEManagementVocabulary {
  
 	
 	private static final String[] WILDCARDS = new String[]{CONTAINER_WILDCARD, AGENT_TAG_WILDCARD};
-	
-  // The singleton instance of this ontology
-	private static Ontology theInstance = new JADEManagementOntology();
+
+	// The singleton instance of this ontology
+	private static final Ontology theInstance = new JADEManagementOntology();
 	
   /**
      This method returns the unique instance (according to the singleton 

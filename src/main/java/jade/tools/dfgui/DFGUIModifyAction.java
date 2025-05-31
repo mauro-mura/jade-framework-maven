@@ -47,10 +47,10 @@ import jade.util.Logger;
 
 class DFGUIModifyAction extends AbstractAction
 {
-	private DFGUI gui;
-	
+	private final DFGUI gui;
+
 	//logging
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 	public DFGUIModifyAction(DFGUI gui)
 	{
@@ -64,26 +64,28 @@ class DFGUIModifyAction extends AbstractAction
 		
 	  AID name = gui.getSelectedAgentInTable();
 	  DFAgentDescription dfd = null;
-	  AID df = gui.myAgent.getDescriptionOfThisDF().getName();;
+	  AID df = gui.myAgent.getDescriptionOfThisDF().getName();
 
     if (name != null) //something was selected
     {
-    		if ( kind == DFGUI.AGENT_VIEW)
-    		try{
-    			dfd = gui.myAgent.getDFAgentDsc(name); //agent registered
+			if (kind == DFGUI.AGENT_VIEW) {
+				try {
+					dfd = gui.myAgent.getDFAgentDsc(name); //agent registered
 
-    		}catch(FIPAException fe){
-    			if(logger.isLoggable(Logger.WARNING))
-    				logger.log(Logger.WARNING, "No agent called " + name + " is currently registered with this DF");
-				  return;
+				} catch (FIPAException fe) {
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "No agent called " + name + " is currently registered with this DF");
+					}
+					return;
 
-    		}
-    		else
-    		if(kind == DFGUI.LASTSEARCH_VIEW)
-    		{
-    			dfd = gui.getDFAgentSearchDsc(name); // the dsc is maintained in a variable of the gui
-    			df = gui.getLastDF();
-    		}
+				}
+			}
+			else
+				if (kind == DFGUI.LASTSEARCH_VIEW)
+				{
+					dfd = gui.getDFAgentSearchDsc(name); // the dsc is maintained in a variable of the gui
+					df = gui.getLastDF();
+				}
     	
 
     		DFAgentDscDlg dlg = new DFAgentDscDlg((Frame) gui);

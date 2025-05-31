@@ -75,7 +75,7 @@ public class TestAgent extends Agent {
 	@Serial
 	private static final long serialVersionUID = -2827413741648882725L;
 
-	private static Logger logger = Logger.getMyLogger(TestAgent.class.getName());
+	private static final Logger logger = Logger.getMyLogger(TestAgent.class.getName());
 
 	/**
 	 * Constructor for the TestAgent
@@ -107,8 +107,8 @@ public class TestAgent extends Agent {
 		msg.setLanguage(FIPANames.ContentLanguage.FIPA_SL0);
 		msg.setOntology(FIPAManagementVocabulary.NAME);
 		msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
-		msg.setReplyWith("Req" + (new Date()).getTime());
-		msg.setConversationId("Req" + (new Date()).getTime());
+		msg.setReplyWith("Req" + new Date().getTime());
+		msg.setConversationId("Req" + new Date().getTime());
 		return msg;
 	}
 
@@ -208,8 +208,8 @@ public class TestAgent extends Agent {
 		aclPing.setName("acl_ping@beta.lausanne.agentcities.net");
 		aclPing.addAddresses("http://srv02.lausanne.agentcities.net:8080/acc");
 		msg.addReceiver(aclPing);
-		msg.setReplyWith("Req" + (new Date()).getTime());
-		msg.setConversationId("Req" + (new Date()).getTime());
+		msg.setReplyWith("Req" + new Date().getTime());
+		msg.setConversationId("Req" + new Date().getTime());
 
 		msg.setContent("ping");
 		itsFrame.setItsMsg(msg);
@@ -219,8 +219,8 @@ public class TestAgent extends Agent {
 		ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
 		msg.setSender(getAID());
 		msg.addReceiver(getAID());
-		msg.setReplyWith("Req" + (new Date()).getTime());
-		msg.setConversationId("Req" + (new Date()).getTime());
+		msg.setReplyWith("Req" + new Date().getTime());
+		msg.setConversationId("Req" + new Date().getTime());
 
 		msg.setContent("ping");
 		itsFrame.setItsMsg(msg);
@@ -289,7 +289,7 @@ public class TestAgent extends Agent {
 			}
 
 			if ((msg.getPerformative() == ACLMessage.QUERY_REF)
-					&& (msg.getContent().equalsIgnoreCase("ping") || (msg.getContent().equalsIgnoreCase("(ping)")))) {
+					&& ("ping".equalsIgnoreCase(msg.getContent()) || ("(ping)".equalsIgnoreCase(msg.getContent())))) {
 				ACLMessage alive = msg.createReply();
 				alive.setPerformative(ACLMessage.INFORM);
 				alive.setSender(this.getAID());
@@ -319,8 +319,9 @@ public class TestAgent extends Agent {
 		splash = new SplashScreen();
 		splash.setVisible(true);
 		splash.setProgress(25);
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "starting up: " + this.getAID().toString());
+		}
 
 		try {
 			getContentManager().registerLanguage(new SLCodec(), FIPANames.ContentLanguage.FIPA_SL0);
@@ -346,8 +347,8 @@ public class TestAgent extends Agent {
 		request.setLanguage(FIPANames.ContentLanguage.FIPA_SL0);
 		request.setEncoding("String");
 		request.setOntology(FIPAManagementVocabulary.NAME);
-		request.setReplyWith("rw" + sender.getName() + (new Date()).getTime());
-		request.setConversationId("conv" + sender.getName() + (new Date()).getTime());
+		request.setReplyWith("rw" + sender.getName() + new Date().getTime());
+		request.setConversationId("conv" + sender.getName() + new Date().getTime());
 
 		jade.content.onto.basic.Action act = new jade.content.onto.basic.Action();
 		act.setActor(receiver);

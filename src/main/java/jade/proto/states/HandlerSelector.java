@@ -40,8 +40,8 @@ import java.util.HashMap;
  * @version $Date: 2005-09-16 15:54:46 +0200 (ven, 16 set 2005) $ $Revision: 5780 $
  **/
 public abstract class HandlerSelector extends FSMBehaviour {
-	private Map handlers = new HashMap<>();
-        private Object accesKey;
+	private final Map handlers = new HashMap<>();
+	private final Object accesKey;
 	
         // FSM states names
 	private static final String SELECT = "Select";
@@ -68,7 +68,7 @@ public abstract class HandlerSelector extends FSMBehaviour {
      * method <code>getSelectionKey</code>
      * @see #getSelectionKey(Object)
      **/
-	public HandlerSelector(Agent a, DataStore s, Object accessKey) {
+	protected HandlerSelector(Agent a, DataStore s, Object accessKey) {
 		super(a);
 		
 		setDataStore(s);

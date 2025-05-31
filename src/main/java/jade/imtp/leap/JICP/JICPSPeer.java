@@ -61,7 +61,7 @@ import javax.net.ssl.*;
 public class JICPSPeer extends JICPPeer {
 
 	protected static Logger myLogger = Logger.getMyLogger(JICPSPeer.class.getName());
-	private SSLContext ctx = null;
+	private SSLContext ctx;
 
 	@Override
 	public TransportAddress activate(ICP.Listener l, String peerID, Profile p) throws ICPException {
@@ -159,16 +159,19 @@ public class JICPSPeer extends JICPPeer {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\n--EnabledProtocols:\n");
 		String[] prot = sss.getEnabledProtocols();
-		for (int i = 0; i < prot.length; i++)
+		for (int i = 0;i < prot.length;i++) {
 			sb.append("  " + prot[i]);
+		}
 		sb.append("\n--EnabledCipherSuites:\n");
 		String[] suite = sss.getEnabledCipherSuites();
-		for (int i = 0; i < suite.length; i++)
+		for (int i = 0;i < suite.length;i++) {
 			sb.append("  " + suite[i]);
+		}
 		sb.append("\n--SupportedCipherSuites\n");
 		String[] supportedSuite = sss.getSupportedCipherSuites();
-		for (int i = 0; i < supportedSuite.length; i++)
+		for (int i = 0;i < supportedSuite.length;i++) {
 			sb.append("  " + supportedSuite[i]);
+		}
 		sb.append("\n--\n");
 		return sb.toString();
 	}
@@ -217,7 +220,7 @@ public class JICPSPeer extends JICPPeer {
 		return sss;
 	} // end getServerSocketNoAuth(..)
 
-	private boolean useSSLAuth = false;
+	private boolean useSSLAuth;
 
 	private boolean getUseSSLAuth() { // if needed, may become public
 		return useSSLAuth;

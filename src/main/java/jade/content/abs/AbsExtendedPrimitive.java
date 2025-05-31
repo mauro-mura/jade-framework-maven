@@ -37,8 +37,8 @@ public class AbsExtendedPrimitive implements AbsTerm {
 
 	public static final int ABS_EXTENDED_PRIMITIVE = 10;
 	
-	private Object value = null;
-	private String typeName = null;
+	private Object value;
+	private String typeName;
 
 	/**
 	 * Construct an extended abstract descriptor to hold a primitive of
@@ -80,8 +80,9 @@ public class AbsExtendedPrimitive implements AbsTerm {
 	 * is not correct.
 	 */
 	public void set(Object value) {
-		if (!getTypeName().equals(value.getClass().getName()))
+		if (!getTypeName().equals(value.getClass().getName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = value;
 	} 
 
@@ -137,10 +138,12 @@ public class AbsExtendedPrimitive implements AbsTerm {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof AbsExtendedPrimitive primitive)
+		if (obj instanceof AbsExtendedPrimitive primitive) {
 			return get().equals(primitive.get());
-		else
+		}
+		else {
 			return false;
+		}
 	}
 
 	public int hashCode() {

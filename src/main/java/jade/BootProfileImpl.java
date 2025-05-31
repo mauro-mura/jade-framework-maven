@@ -67,7 +67,7 @@ public class BootProfileImpl extends ProfileImpl {
 	public static final String VERSION_KEY = "version";
 	public static final String NOMOBILITY_KEY = "nomobility";
 
-	ExtendedProperties argProp = null;
+	ExtendedProperties argProp;
 	BootHelper helper = new BootHelper();
 
 	/**
@@ -296,8 +296,9 @@ public class BootProfileImpl extends ProfileImpl {
 		// of properties that were set in the code above
 		for (Enumeration<Object> e = argProp.keys(); e.hasMoreElements();) {
 			String key = (String) e.nextElement();
-			if (getParameter(key, null) == null)
+			if (getParameter(key, null) == null) {
 				setParameter(key, argProp.get(key).toString());
+			}
 		}
 
 		// The following is for debugging only. Probably should not document the
@@ -347,10 +348,10 @@ public class BootProfileImpl extends ProfileImpl {
 	protected boolean fetchAndVerifyBoolean(String aKey) throws PropertiesException {
 		String value = argProp.getProperty(aKey);
 		if (value != null) {
-			if (value.equalsIgnoreCase("true")) {
+			if ("true".equalsIgnoreCase(value)) {
 				return true;
 			}
-			if (value.equalsIgnoreCase("false")) {
+			if ("false".equalsIgnoreCase(value)) {
 				return false;
 			}
 			throw new PropertiesException("The value of the attribute " + aKey + " must be either true or false.");
@@ -400,7 +401,7 @@ public class BootProfileImpl extends ProfileImpl {
 				if ((openBracketPos != -1) && (closedBracketPos != -1) && (openBracketPos < closedBracketPos)) {
 					s.setClassName(arg.substring(0, openBracketPos));
 
-					Object a[] = new Object[1];
+					Object[] a = new Object[1];
 
 					a[0] = arg.substring(openBracketPos + 1, closedBracketPos);
 

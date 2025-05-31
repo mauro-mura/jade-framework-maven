@@ -64,7 +64,9 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 	/**
 	 * @serial
 	 */
-	private long wakeupTime, blockTime, timeout;
+	private long wakeupTime;
+	private long blockTime;
+	private long timeout;
 	/**
 	 * @serial
 	 */
@@ -80,7 +82,7 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 	 * @param a          is the pointer to the agent
 	 * @param wakeupDate is the date when the task must be executed
 	 */
-	public WakerBehaviour(Agent a, Date wakeupDate) {
+	protected WakerBehaviour(Agent a, Date wakeupDate) {
 		super(a);
 		timeout = 0;
 		wakeupTime = wakeupDate.getTime();
@@ -95,7 +97,7 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 	 * @param timeout indicates the number of milliseconds after which the task must
 	 *                be executed
 	 */
-	public WakerBehaviour(Agent a, long timeout) {
+	protected WakerBehaviour(Agent a, long timeout) {
 		super(a);
 		wakeupTime = -1;
 		this.timeout = timeout;
@@ -113,9 +115,10 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 				}
 				// in this state the behaviour blocks itself
 				blockTime = wakeupTime - System.currentTimeMillis();
-				if (blockTime > 0) // MINIMUM_TIMEOUT)
+				if (blockTime > 0) { // MINIMUM_TIMEOUT)
 					// blockTime = MINIMUM_TIMEOUT;
 					block(blockTime);
+				}
 				state++;
 				break;
 			}
@@ -130,8 +133,10 @@ public abstract class WakerBehaviour extends SimpleBehaviour {
 					// timeout is expired
 					finished = true;
 					onWake();
-				} else
+				}
+				else {
 					block(blockTime);
+				}
 				break;
 			}
 			default: {

@@ -142,7 +142,7 @@ public class ACLAIDDialog extends JDialog {
 	 *
 	 * @param e ActionEvent of the OK button
 	 */
-	void okButton_actionPerformed(ActionEvent e) {
+	void okButtonActionPerformed(ActionEvent e) {
 		setUserAction(OK);
 		this.setVisible(false);
 	}
@@ -152,7 +152,7 @@ public class ACLAIDDialog extends JDialog {
 	 *
 	 * @param e ActionEvent of the cancel button
 	 */
-	void cancelButton_actionPerformed(ActionEvent e) {
+	void cancelButtonActionPerformed(ActionEvent e) {
 		setUserAction(CANCELLED);
 		this.setVisible(false);
 	}
@@ -162,7 +162,7 @@ public class ACLAIDDialog extends JDialog {
 	 *
 	 * @param e FocusEvent of FocusLoust
 	 */
-	void nameTextField_focusLost(FocusEvent e) {
+	void nameTextFieldFocusLost(FocusEvent e) {
 		updateSenderName();
 	}
 
@@ -186,7 +186,7 @@ public class ACLAIDDialog extends JDialog {
 	 *
 	 * @param e ItemEvent belonging to itemStateChanged
 	 */
-	void localCheckBox_itemStateChanged(ItemEvent e) {
+	void localCheckBoxItemStateChanged(ItemEvent e) {
 		updateSenderName();
 	}
 
@@ -204,7 +204,7 @@ public class ACLAIDDialog extends JDialog {
 		nameTextField.setText("someagent");
 		nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusLost(FocusEvent e) {
-				nameTextField_focusLost(e);
+				nameTextFieldFocusLost(e);
 			}
 		});
 		this.getContentPane().setBackground(Color.white);
@@ -217,7 +217,7 @@ public class ACLAIDDialog extends JDialog {
 		localCheckBox.setFont(new java.awt.Font("Dialog", 0, 11));
 		localCheckBox.addItemListener(new java.awt.event.ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				localCheckBox_itemStateChanged(e);
+				localCheckBoxItemStateChanged(e);
 			}
 		});
 		okButton.setBackground(Color.white);
@@ -225,7 +225,7 @@ public class ACLAIDDialog extends JDialog {
 		okButton.setText("ok");
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				okButton_actionPerformed(e);
+				okButtonActionPerformed(e);
 			}
 		});
 		cancelButton.setBackground(Color.white);
@@ -233,7 +233,7 @@ public class ACLAIDDialog extends JDialog {
 		cancelButton.setText("cancel");
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cancelButton_actionPerformed(e);
+				cancelButtonActionPerformed(e);
 			}
 		});
 		buttonPanel.setBackground(Color.white);
@@ -259,22 +259,22 @@ public class ACLAIDDialog extends JDialog {
 
 	public JCheckBox localCheckBox = new JCheckBox();
 
-	private GridBagLayout gridBagLayout1 = new GridBagLayout();
-	private JLabel jLabel1 = new JLabel();
-	private JTextField nameTextField = new JTextField();
-	private JLabel jLabel2 = new JLabel();
-	private JLabel jLabel3 = new JLabel();
-	private JPanel buttonPanel = new JPanel();
-	private JButton okButton = new JButton();
-	private JButton cancelButton = new JButton();
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final JLabel jLabel1 = new JLabel();
+	private final JTextField nameTextField = new JTextField();
+	private final JLabel jLabel2 = new JLabel();
+	private final JLabel jLabel3 = new JLabel();
+	private final JPanel buttonPanel = new JPanel();
+	private final JButton okButton = new JButton();
+	private final JButton cancelButton = new JButton();
 
 	private String OK = "ok";
-	private String CANCELLED = "cancelled";
-	private AIDAddressList addressesList = new AIDAddressList();
+	private final String CANCELLED = "cancelled";
+	private final AIDAddressList addressesList = new AIDAddressList();
 	private String userAction = CANCELLED;
 	private ACLAIDList resolverList;
 
-	private Agent agent;
+	private final Agent agent;
 	private jade.core.AID itsAID;
 }
 //  ***EOF***

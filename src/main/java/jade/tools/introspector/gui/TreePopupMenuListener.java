@@ -42,15 +42,19 @@ import jade.core.behaviours.*;
 */
 public class TreePopupMenuListener implements ActionListener {
   private boolean addBehaviour;
-  private JTree myTree;
+	private final JTree myTree;
 
   public TreePopupMenuListener(JTree tree){
     myTree=tree;
   }
   public void actionPerformed(ActionEvent e){
     JMenuItem act=(JMenuItem) e.getSource();
-    if (act.getName().equals("add")) addBehaviour=true;
-    else addBehaviour=false;
+		if ("add".equals(act.getName())) {
+			addBehaviour = true;
+		}
+		else {
+			addBehaviour = false;
+		}
   }
 
     /*

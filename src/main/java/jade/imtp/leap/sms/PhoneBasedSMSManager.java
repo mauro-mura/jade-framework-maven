@@ -51,8 +51,8 @@ public class PhoneBasedSMSManager extends SMSManager {
 	private int status = IDLE;
 	
 	private Connection myConnection;
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	protected void init(Properties pp) throws ICPException {
 		super.init(pp);

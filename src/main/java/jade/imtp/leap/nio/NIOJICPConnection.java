@@ -28,15 +28,15 @@ public class NIOJICPConnection extends Connection {
 	private SocketChannel myChannel;
 	private ByteBuffer socketData; 
 	private ByteBuffer payloadBuf;
-	private ByteBuffer unmanagedJicpData = null;
+	private ByteBuffer unmanagedJicpData;
 
 	private byte type;
 	private byte info;
 	private byte sessionID;
 	private String recipientID;
 
-	private boolean headerReceived = false;
-	private boolean closed = false; 
+	private boolean headerReceived;
+	private boolean closed; 
 
 	private List<BufferTransformerInfo> transformers;
 
@@ -45,7 +45,7 @@ public class NIOJICPConnection extends Connection {
 	public NIOJICPConnection() {
 		socketData = ByteBuffer.allocateDirect(INITIAL_BUFFER_SIZE); 
 		payloadBuf = ByteBuffer.allocateDirect(INITIAL_BUFFER_SIZE);
-		transformers = new LinkedList<BufferTransformerInfo>();
+		transformers = new LinkedList<>();
 	}
 	
 	// This constructor is only used by the NIOJICPConnectionWrapper that,
@@ -192,8 +192,9 @@ public class NIOJICPConnection extends Connection {
 			}
 		}
 		socketData.flip();
-		if (log.isLoggable(Level.FINE)) 
-			log.fine("------- READ "+socketData.remaining()+" bytes from the network");
+		if (log.isLoggable(Level.FINE)) {
+			log.fine("------- READ " + socketData.remaining() + " bytes from the network");
+		}
 	}
 
 	
@@ -222,11 +223,13 @@ public class NIOJICPConnection extends Connection {
 			// In case there were unprocessed data at previous round, append them before the data to be processed at this round 
 			transformationInput = info.attachUnprocessedData(transformationInput);
 
-			if (log.isLoggable(Level.FINER)) 
-				log.finer("--------- Passing "+transformationInput.remaining()+" bytes to Transformer "+btf.getClass().getName());
+			if (log.isLoggable(Level.FINER)) {
+				log.finer("--------- Passing " + transformationInput.remaining() + " bytes to Transformer " + btf.getClass().getName());
+			}
 			transformationOutput = btf.postprocessBufferRead(transformationInput);
-			if (log.isLoggable(Level.FINER))
-				log.finer("--------- Transformer "+btf.getClass().getName()+" did not transform " +transformationInput.remaining()+" bytes");
+			if (log.isLoggable(Level.FINER)) {
+				log.finer("--------- Transformer " + btf.getClass().getName() + " did not transform " + transformationInput.remaining() + " bytes");
+			}
 
 			// In case the transformer did not process all input data, store unprocessed data for next round
 			info.storeUnprocessedData(transformationInput);
@@ -288,7 +291,7 @@ public class NIOJICPConnection extends Connection {
 		}
 		ByteBuffer toSend = ByteBuffer.wrap(os.toByteArray());
 		bb = transformBeforeWrite(toSend);
-		if (toSend.hasRemaining() && transformers.size() > 0) {
+		if (toSend.hasRemaining() && !transformers.isEmpty()) {
 			// for direct JICPConnections the data from the packet are used directly
 			// for subclasses the subsequent transformers must transform all data from the packet before sending
 			throw new IOException("still need to transform: " + toSend.remaining());

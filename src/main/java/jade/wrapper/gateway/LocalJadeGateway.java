@@ -24,8 +24,9 @@ public class LocalJadeGateway extends DynamicJadeGateway {
 	
 	public final void shutdown() {
 		try {
-			if (myAgent != null)
+			if (myAgent != null) {
 				myAgent.kill();
+			}
 		} catch (Exception e) {
 		}
 		myAgent = null;

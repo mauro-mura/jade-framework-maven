@@ -35,7 +35,7 @@ import java.awt.event.*;
 */
 class TableMouseListener implements MouseListener {
   private MessagePanel parent;
-  private TablePopupMenu popMenu;
+	private final TablePopupMenu popMenu;
 
   TableMouseListener() {
     popMenu= new TablePopupMenu();
@@ -44,7 +44,7 @@ class TableMouseListener implements MouseListener {
   // interface MouseListener
   public void mouseClicked(MouseEvent evt) {
     int button=evt.getModifiers();
-    if(!(button==evt.BUTTON1_MASK)){
+    if(button!=evt.BUTTON1_MASK){
       popMenu.setTable((JTable)evt.getSource());
       popMenu.show(evt.getComponent(),evt.getX(),evt.getY());
     }

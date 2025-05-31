@@ -78,12 +78,12 @@ public class MainWindow
 
   protected MainPanel mainPanel;
   protected ActionProcessor actPro; // Making this public allows us to get directly to the sniff agent action.
-  //#DOTNET_EXCLUDE_BEGIN
-  private PopupMenuAgent popA;
-  //#DOTNET_EXCLUDE_END
-  private Sniffer mySniffer;
-  private ExtendedProperties myProperties;
-  private String snifferLogo = "images/sniffer.gif";
+	//#DOTNET_EXCLUDE_BEGIN
+	private final PopupMenuAgent popA;
+	//#DOTNET_EXCLUDE_END
+	private final Sniffer mySniffer;
+	private final ExtendedProperties myProperties;
+	private final String snifferLogo = "images/sniffer.gif";
   /*#DOTNET_INCLUDE_BEGIN
   private System.Windows.Forms.Panel MainPanelW;
   private System.Windows.Forms.Splitter splitter2;
@@ -484,7 +484,7 @@ public class MainWindow
   public void disposeAsync() {
 	//#DOTNET_EXCLUDE_BEGIN
     class disposeIt implements Runnable {
-      private Window toDispose;
+			private final Window toDispose;
 
       public disposeIt(Window w) {
 			toDispose = w;

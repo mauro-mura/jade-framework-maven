@@ -17,7 +17,7 @@ public class HTTPSAddress extends HTTPAddress {
    * @param anchor
    */
   public HTTPSAddress(String host, String port, String file, String anchor) {
-      super(host,(port != null ? port : String.valueOf(HTTPSProtocol.DEFAULT_PORT)),file,anchor);
+      super(host,port != null ? port : String.valueOf(HTTPSProtocol.DEFAULT_PORT),file,anchor);
   }
 
   /**

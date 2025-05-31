@@ -178,7 +178,7 @@ public class FrontEndStub extends MicroStub implements FrontEnd {
 		}
 	}
 
-	public static final String encodeCreateMediatorResponse(Properties pp) {
+	public static String encodeCreateMediatorResponse(Properties pp) {
 		StringBuilder sb = new StringBuilder();
 		appendProp(sb, Profile.PLATFORM_ID, pp);
 		appendProp(sb, MicroRuntime.PLATFORM_ADDRESSES_KEY, pp);
@@ -188,7 +188,7 @@ public class FrontEndStub extends MicroStub implements FrontEnd {
 		return sb.toString();
 	}
 
-	public static final String encodeProperties(Properties pp) {
+	public static String encodeProperties(Properties pp) {
 		StringBuilder sb = new StringBuilder();
 		Enumeration<Object> en = pp.keys();
 		while (en.hasMoreElements()) {
@@ -198,11 +198,11 @@ public class FrontEndStub extends MicroStub implements FrontEnd {
 		return sb.toString();
 	}
 	
-	private static final void appendProp(StringBuilder sb, String key, Properties pp) {
+	private static void appendProp(StringBuilder sb, String key, Properties pp) {
 		appendProp(sb, key, pp, true);
 	}
 
-	private static final void appendProp(StringBuilder sb, String key, Properties pp, boolean appendHash) {
+	private static void appendProp(StringBuilder sb, String key, Properties pp, boolean appendHash) {
 		Object val = pp.get(key);
 		if (val != null) {
 			String strVal = val.toString();
@@ -217,7 +217,7 @@ public class FrontEndStub extends MicroStub implements FrontEnd {
 		}
 	}
 
-	public static final Properties parseCreateMediatorRequest(String s) throws ICPException {
+	public static Properties parseCreateMediatorRequest(String s) throws ICPException {
 		StringTokenizer st = new StringTokenizer(s, "=#");
 		Properties p = new Properties();
 		while (st.hasMoreTokens()) {

@@ -6,7 +6,8 @@
  */
 
 package FIPA;
-public class MTSHelper {
+
+public final class MTSHelper {
      // It is useless to have instances of this class
      private MTSHelper() { }
 
@@ -26,9 +27,10 @@ public class MTSHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_interface_tc(id(), "MTS");
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_interface_tc(id(), "MTS");
+		 }
       return _tc;
    }
    public static String id() {
@@ -36,15 +38,16 @@ public class MTSHelper {
    }
    public static FIPA.MTS narrow(org.omg.CORBA.Object that)
 	    throws org.omg.CORBA.BAD_PARAM {
-        if (that == null)
-            return null;
-        if (that instanceof FIPA.MTS tS)
-            return tS;
+			if (that == null) {
+				return null;
+		 }
+			if (that instanceof FIPA.MTS tS) {
+				return tS;
+		 }
 	if (!that._is_a(id())) {
 	    throw new org.omg.CORBA.BAD_PARAM();
 	}
         org.omg.CORBA.portable.Delegate dup = ((org.omg.CORBA.portable.ObjectImpl)that)._get_delegate();
-        FIPA.MTS result = new FIPA._MTSStub(dup);
-        return result;
+        return new FIPA._MTSStub(dup);
    }
 }

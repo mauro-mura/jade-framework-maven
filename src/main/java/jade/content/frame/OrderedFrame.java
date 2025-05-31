@@ -38,7 +38,7 @@ public class OrderedFrame extends Vector implements Frame {
 
 	@Serial
 	private static final long serialVersionUID = -5323790975629585524L;
-	private String typeName;
+	private final String typeName;
 
 	/**
 	 * Create an OrderedFrame with a given type-name.

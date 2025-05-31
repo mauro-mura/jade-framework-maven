@@ -8,7 +8,7 @@ import jade.util.Logger;
 
 public class VersionManager {
 
-	private static Logger logger = Logger.getMyLogger(VersionManager.class.getName());
+	private static final Logger logger = Logger.getMyLogger(VersionManager.class.getName());
 
 	private static final String GROUP = "Jade Informations";
 	private static final String WCVER = "Specification-Version";

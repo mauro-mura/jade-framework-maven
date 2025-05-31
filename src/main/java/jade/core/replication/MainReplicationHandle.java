@@ -34,11 +34,11 @@ import jade.util.Logger;
  * local information in synch among slices on replicated Main Containers 
  */
 public class MainReplicationHandle {
-	
-	private String myService;
+
+	private final String myService;
 	private MainReplicationService replicationService;
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	
 	public MainReplicationHandle(Service svc, ServiceFinder sf) {

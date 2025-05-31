@@ -56,7 +56,7 @@ public class ActionExecutor<ActionT extends AgentAction, ResultT> extends BaseIn
 	protected String language = FIPANames.ContentLanguage.FIPA_SL;
 	protected Ontology ontology;
 	protected long timeout = 30000; // Default 30 sec
-	protected String conversationId = null;
+	protected String conversationId;
 		
 	public ActionExecutor(ActionT action, Ontology ontology, AID actor) {
 		this.action = action;
@@ -90,7 +90,7 @@ public class ActionExecutor<ActionT extends AgentAction, ResultT> extends BaseIn
 		AID actualActor = null;
 		ACLMessage reply = (ACLMessage) getDataStore().get(REPLY_K);
 		if (reply != null) {
-			if (reply.getPerformative() != ACLMessage.FAILURE && !reply.getSender().getLocalName().equalsIgnoreCase("AMS")) {
+			if (reply.getPerformative() != ACLMessage.FAILURE && !"AMS".equalsIgnoreCase(reply.getSender().getLocalName())) {
 				actualActor = reply.getSender();
 			}
 		}

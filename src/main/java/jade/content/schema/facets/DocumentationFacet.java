@@ -30,7 +30,7 @@ import jade.content.onto.exception.OntologyException;
 import jade.content.schema.Facet;
 
 public class DocumentationFacet implements Facet {
-	private String documentation;
+	private final String documentation;
 
 	/**
 	   Construct a <code>DocumentationFacet</code> that 

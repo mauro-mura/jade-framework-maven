@@ -33,9 +33,9 @@ import java.awt.*;
    @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
 */
 public class TreePopupMenu extends JPopupMenu{
-  private TreePopupMenuListener listener;
-  private JMenuItem addBehaviour;
-  private JMenuItem removeBehaviour;
+	private final TreePopupMenuListener listener;
+	private final JMenuItem addBehaviour;
+	private final JMenuItem removeBehaviour;
 
   public TreePopupMenu(JTree tree){
     super();

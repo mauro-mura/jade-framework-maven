@@ -12,14 +12,14 @@ import jade.core.Agent;
    conversations. 
  */
 public class ConversationList implements Serializable{
-	private HashSet conversations = new HashSet();
-	protected Agent myAgent = null;
-	protected int cnt = 0;
-	
-	private MessageTemplate myTemplate = new MessageTemplate(new MessageTemplate.MatchExpression() {
+	private final HashSet conversations = new HashSet();
+	protected Agent myAgent;
+	protected int cnt;
+
+	private final MessageTemplate myTemplate = new MessageTemplate(new MessageTemplate.MatchExpression() {
 		public boolean match(ACLMessage msg) {
 			String convId = msg.getConversationId();
-			return (convId == null || (!conversations.contains(convId)));
+			return convId == null || (!conversations.contains(convId));
 		}
 	} );
 	

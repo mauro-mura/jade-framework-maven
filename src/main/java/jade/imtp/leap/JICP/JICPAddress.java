@@ -69,7 +69,7 @@ public class JICPAddress implements TransportAddress {
 	 */
 	public JICPAddress(String host, String port, String file, String anchor) {
 		this.host = host;
-		this.port = (port != null ? port : String.valueOf(JICPProtocol.DEFAULT_PORT));
+		this.port = port != null ? port : String.valueOf(JICPProtocol.DEFAULT_PORT);
 		this.file = file;
 		this.anchor = anchor;
 	}

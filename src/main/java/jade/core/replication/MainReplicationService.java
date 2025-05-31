@@ -217,13 +217,13 @@ public class MainReplicationService extends BaseService {
 			try {
 				String name = cmd.getName();
 
-				if (name.equals(jade.core.management.AgentManagementSlice.ADD_TOOL)) {
+				if (jade.core.management.AgentManagementSlice.ADD_TOOL.equals(name)) {
 					handleNewTool(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.REMOVE_TOOL)) {
+				} else if (jade.core.management.AgentManagementSlice.REMOVE_TOOL.equals(name)) {
 					handleDeadTool(cmd);
 				}
 				// #PJAVA_EXCLUDE_BEGIN
-				else if (name.equals(jade.core.nodeMonitoring.UDPNodeMonitoringService.ORPHAN_NODE)) {
+				else if (jade.core.nodeMonitoring.UDPNodeMonitoringService.ORPHAN_NODE.equals(name)) {
 					handleOrphanNode(cmd);
 				}
 				// #PJAVA_EXCLUDE_END
@@ -273,15 +273,15 @@ public class MainReplicationService extends BaseService {
 			try {
 				String name = cmd.getName();
 
-				if (name.equals(jade.core.management.AgentManagementSlice.INFORM_CREATED)) {
+				if (jade.core.management.AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.INFORM_KILLED)) {
+				} else if (jade.core.management.AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					handleInformKilled(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				} else if (jade.core.management.AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
-				} else if (name.equals(jade.core.messaging.MessagingSlice.NEW_MTP)) {
+				} else if (jade.core.messaging.MessagingSlice.NEW_MTP.equals(name)) {
 					handleNewMTP(cmd);
-				} else if (name.equals(jade.core.messaging.MessagingSlice.DEAD_MTP)) {
+				} else if (jade.core.messaging.MessagingSlice.DEAD_MTP.equals(name)) {
 					handleDeadMTP(cmd);
 				}
 			} catch (Throwable t) {
@@ -327,13 +327,13 @@ public class MainReplicationService extends BaseService {
 			AID agentID = (AID) params[0];
 			String newState = (String) params[1];
 
-			if (newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED)) {
+			if (jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED.equals(newState)) {
 				GenericCommand hCmd = new GenericCommand(MainReplicationSlice.H_SUSPENDEDAGENT,
 						MainReplicationSlice.NAME, null);
 				hCmd.addParam(agentID);
 
 				broadcastToReplicas(hCmd, EXCLUDE_MYSELF);
-			} else if (newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE)) {
+			} else if (jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE.equals(newState)) {
 				GenericCommand hCmd = new GenericCommand(MainReplicationSlice.H_RESUMEDAGENT, MainReplicationSlice.NAME,
 						null);
 				hCmd.addParam(agentID);
@@ -380,8 +380,9 @@ public class MainReplicationService extends BaseService {
 
 		public void stopMonitoring() {
 			if (nodeMonitor != null) {
-				if (myLogger.isLoggable(Logger.CONFIG))
+				if (myLogger.isLoggable(Logger.CONFIG)) {
 					myLogger.log(Logger.CONFIG, "Stop monitoring node <" + nodeMonitor.getNode().getName() + ">");
+				}
 				nodeMonitor.stop();
 			}
 		}
@@ -425,56 +426,56 @@ public class MainReplicationService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(MainReplicationSlice.H_GETLABEL)) {
+				if (MainReplicationSlice.H_GETLABEL.equals(cmdName)) {
 					Integer i = Integer.valueOf(getLabel());
 					cmd.setReturnValue(i);
-				} else if (cmdName.equals(MainReplicationSlice.H_INVOKESERVICEMETHOD)) {
+				} else if (MainReplicationSlice.H_INVOKESERVICEMETHOD.equals(cmdName)) {
 					String serviceName = (String) params[0];
 					String methodName = (String) params[1];
 					Object[] methodParams = (Object[]) params[2];
 					invokeServiceMethod(serviceName, methodName, methodParams);
-				} else if (cmdName.equals(MainReplicationSlice.H_GETPLATFORMMANAGERADDRESS)) {
+				} else if (MainReplicationSlice.H_GETPLATFORMMANAGERADDRESS.equals(cmdName)) {
 					cmd.setReturnValue(getPlatformManagerAddress());
-				} else if (cmdName.equals(MainReplicationSlice.H_ADDREPLICA)) {
+				} else if (MainReplicationSlice.H_ADDREPLICA.equals(cmdName)) {
 					String sliceName = (String) params[0];
 					String smAddr = (String) params[1];
 					int sliceIndex = ((Integer) params[2]).intValue();
 					NodeDescriptor dsc = (NodeDescriptor) params[3];
 					Vector services = (Vector) params[4];
 					addReplica(sliceName, smAddr, sliceIndex, dsc, services);
-				} else if (cmdName.equals(MainReplicationSlice.H_REMOVEREPLICA)) {
+				} else if (MainReplicationSlice.H_REMOVEREPLICA.equals(cmdName)) {
 					String smAddr = (String) params[0];
 					int sliceIndex = ((Integer) params[1]).intValue();
 					removeReplica(smAddr, sliceIndex);
-				} else if (cmdName.equals(MainReplicationSlice.H_FILLGADT)) {
+				} else if (MainReplicationSlice.H_FILLGADT.equals(cmdName)) {
 					AID[] agents = (AID[]) params[0];
 					ContainerID[] containers = (ContainerID[]) params[1];
 					fillGADT(agents, containers);
-				} else if (cmdName.equals(MainReplicationSlice.H_BORNAGENT)) {
+				} else if (MainReplicationSlice.H_BORNAGENT.equals(cmdName)) {
 					AID name = (AID) params[0];
 					ContainerID cid = (ContainerID) params[1];
 					bornAgent(name, cid, cmd.getPrincipal(), cmd.getCredentials());
-				} else if (cmdName.equals(MainReplicationSlice.H_DEADAGENT)) {
+				} else if (MainReplicationSlice.H_DEADAGENT.equals(cmdName)) {
 					AID name = (AID) params[0];
 					deadAgent(name);
-				} else if (cmdName.equals(MainReplicationSlice.H_SUSPENDEDAGENT)) {
+				} else if (MainReplicationSlice.H_SUSPENDEDAGENT.equals(cmdName)) {
 					AID name = (AID) params[0];
 					suspendedAgent(name);
-				} else if (cmdName.equals(MainReplicationSlice.H_RESUMEDAGENT)) {
+				} else if (MainReplicationSlice.H_RESUMEDAGENT.equals(cmdName)) {
 					AID name = (AID) params[0];
 					resumedAgent(name);
-				} else if (cmdName.equals(MainReplicationSlice.H_NEWMTP)) {
+				} else if (MainReplicationSlice.H_NEWMTP.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					ContainerID cid = (ContainerID) params[1];
 					newMTP(mtp, cid);
-				} else if (cmdName.equals(MainReplicationSlice.H_DEADMTP)) {
+				} else if (MainReplicationSlice.H_DEADMTP.equals(cmdName)) {
 					MTPDescriptor mtp = (MTPDescriptor) params[0];
 					ContainerID cid = (ContainerID) params[1];
 					deadMTP(mtp, cid);
-				} else if (cmdName.equals(MainReplicationSlice.H_NEWTOOL)) {
+				} else if (MainReplicationSlice.H_NEWTOOL.equals(cmdName)) {
 					AID tool = (AID) params[0];
 					newTool(tool);
-				} else if (cmdName.equals(MainReplicationSlice.H_DEADTOOL)) {
+				} else if (MainReplicationSlice.H_DEADTOOL.equals(cmdName)) {
 					AID tool = (AID) params[0];
 					deadTool(tool);
 				}
@@ -614,8 +615,9 @@ public class MainReplicationService extends BaseService {
 					// FIXME: What about principal and ownership?
 					myMain.bornAgent(agents[i], containers[i], null, null, true);
 					// log("Agent "+agents[i].getName()+" inserted into GADT", 2);
-					if (myLogger.isLoggable(Logger.CONFIG))
+					if (myLogger.isLoggable(Logger.CONFIG)) {
 						myLogger.log(Logger.CONFIG, "Agent " + agents[i].getName() + " inserted into GADT");
+					}
 
 				} catch (NotFoundException nfe) {
 					// It should never happen...
@@ -642,8 +644,9 @@ public class MainReplicationService extends BaseService {
 				// If the name is already in the GADT, throws NameClashException
 				myMain.bornAgent(name, cid, principal, ownership, false);
 				// log("Agent "+name.getName()+" inserted into GADT", 2);
-				if (myLogger.isLoggable(Logger.CONFIG))
+				if (myLogger.isLoggable(Logger.CONFIG)) {
 					myLogger.log(Logger.CONFIG, "Agent " + name.getName() + " inserted into GADT");
+				}
 
 			} catch (NameClashException nce) {
 				try {
@@ -661,8 +664,9 @@ public class MainReplicationService extends BaseService {
 					// Ping failed: forcibly replace the dead agent...
 					myMain.bornAgent(name, cid, principal, ownership, true);
 					// log("Agent "+name.getName()+" inserted into GADT", 2);
-					if (myLogger.isLoggable(Logger.CONFIG))
+					if (myLogger.isLoggable(Logger.CONFIG)) {
 						myLogger.log(Logger.CONFIG, "Agent " + name.getName() + " inserted into GADT");
+					}
 
 				}
 			}
@@ -850,7 +854,7 @@ public class MainReplicationService extends BaseService {
 
 		String monitoredSvcMgr;
 		private Node toBeMonitored;
-		private boolean monitoredNodeUnreachable = false;
+		private boolean monitoredNodeUnreachable;
 
 	} // End of ServiceComponent class
 
@@ -863,13 +867,13 @@ public class MainReplicationService extends BaseService {
 
 	private int myLabel = -1;
 	private final List replicas = new LinkedList<>();
-	private boolean snapshotOnFailure = false;
+	private boolean snapshotOnFailure;
 
 	// Owned copies of Main Container and Service Manager
 	private MainContainerImpl myMain;
 	private PlatformManagerImpl myPlatformManager;
 
-	private Map cachedServiceMethods = new HashMap<>();
+	private final Map cachedServiceMethods = new HashMap<>();
 
 	void broadcastToReplicas(HorizontalCommand cmd, boolean includeSelf) throws IMTPException, ServiceException {
 		Object[] slices = replicas.toArray();
@@ -906,23 +910,23 @@ public class MainReplicationService extends BaseService {
 				MainReplicationSlice slice = (MainReplicationSlice) slices[i];
 				String sliceName = slice.getNode().getName();
 				if (!sliceName.equals(localNodeName)) {
-					sb.append("  - " + sliceName + "\n");
+					sb.append("  - ").append(sliceName).append("\n");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			sb.append(e.toString());
 		}
-		sb.append("- Label = " + myLabel + "\n");
+		sb.append("- Label = ").append(myLabel).append("\n");
 		sb.append("- Monitored Label = ").append(localSlice.monitoredLabel).append("\n");
 		sb.append("- Monitored PlatformManager replica = ").append(localSlice.monitoredSvcMgr).append("\n");
 		String monitoredNodeStr = "UNKNOWN(Monitor null)";
 		if (localSlice.nodeMonitor != null) {
 			Node n = localSlice.nodeMonitor.getNode();
-			monitoredNodeStr = (n != null ? n.getName() : "null");
+			monitoredNodeStr = n != null ? n.getName() : "null";
 		}
 		sb.append("- Monitored Node = ").append(monitoredNodeStr).append("\n");
 		sb.append(super.dump(key));
-		return (sb.toString());
+		return sb.toString();
 	}
 }

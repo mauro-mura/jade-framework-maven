@@ -53,7 +53,7 @@ public abstract class AMSSubscriber extends SimpleBehaviour {
 	public static final String AMS_CANCELLATION = "tool-cancellation";
 	public static final String PLATFORM_EVENTS = "platform-events";
 	
-	private AID ams = null;
+	private AID ams;
 	private ACLMessage AMSSubscription = new ACLMessage(ACLMessage.SUBSCRIBE);
 	private ACLMessage AMSCancellation = new ACLMessage(ACLMessage.CANCEL);
 	
@@ -81,7 +81,7 @@ public abstract class AMSSubscriber extends SimpleBehaviour {
 	 * Construct an AMSSubscriber behaviour to receive notifications about platform events
 	 * from the local AMS
 	 */
-	public AMSSubscriber() {
+	protected AMSSubscriber() {
 		super();
 		
 		// Prepare the template to receive AMS notification
@@ -103,7 +103,7 @@ public abstract class AMSSubscriber extends SimpleBehaviour {
 	 * from the AMS of a remote platform.
 	 * @param ams The AID of the remote platform AMS
 	 */
-	public AMSSubscriber(AID ams) {
+	protected AMSSubscriber(AID ams) {
 		this();
 		this.ams = ams;
 	}

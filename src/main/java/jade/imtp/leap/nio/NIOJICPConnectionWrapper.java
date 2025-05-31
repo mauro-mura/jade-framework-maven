@@ -34,7 +34,7 @@ import java.nio.channels.SocketChannel;
  */
 class NIOJICPConnectionWrapper extends NIOJICPConnection {
 
-	private NIOJICPConnection realConnection;
+	private final NIOJICPConnection realConnection;
 	private Thread ownerThread;
 	
 	NIOJICPConnectionWrapper(NIOJICPConnection c) {

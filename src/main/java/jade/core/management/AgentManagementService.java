@@ -171,23 +171,23 @@ public class AgentManagementService extends BaseService {
 		public void consume(VerticalCommand cmd) {
 			String name = cmd.getName();
 			try {
-				if (name.equals(AgentManagementSlice.REQUEST_CREATE)) {
+				if (AgentManagementSlice.REQUEST_CREATE.equals(name)) {
 					handleRequestCreate(cmd);
-				} else if (name.equals(AgentManagementSlice.REQUEST_KILL)) {
+				} else if (AgentManagementSlice.REQUEST_KILL.equals(name)) {
 					handleRequestKill(cmd);
-				} else if (name.equals(AgentManagementSlice.REQUEST_STATE_CHANGE)) {
+				} else if (AgentManagementSlice.REQUEST_STATE_CHANGE.equals(name)) {
 					handleRequestStateChange(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_CREATED)) {
+				} else if (AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+				} else if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					handleInformKilled(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				} else if (AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
-				} else if (name.equals(AgentManagementSlice.KILL_CONTAINER)) {
+				} else if (AgentManagementSlice.KILL_CONTAINER.equals(name)) {
 					handleKillContainer(cmd);
-				} else if (name.equals(AgentManagementSlice.ADD_TOOL)) {
+				} else if (AgentManagementSlice.ADD_TOOL.equals(name)) {
 					handleAddTool(cmd);
-				} else if (name.equals(AgentManagementSlice.REMOVE_TOOL)) {
+				} else if (AgentManagementSlice.REMOVE_TOOL.equals(name)) {
 					handleRemoveTool(cmd);
 				}
 			} catch (Throwable t) {
@@ -208,8 +208,9 @@ public class AgentManagementService extends BaseService {
 			JADEPrincipal owner = (JADEPrincipal) params[4];
 			Credentials initialCredentials = (Credentials) params[5];
 
-			if (myLogger.isLoggable(Logger.CONFIG))
+			if (myLogger.isLoggable(Logger.CONFIG)) {
 				myLogger.log(Logger.CONFIG, "Source Sink consuming command REQUEST_CREATE. Name is " + name);
+			}
 			MainContainer impl = myContainer.getMain();
 			if (impl != null) {
 
@@ -242,8 +243,9 @@ public class AgentManagementService extends BaseService {
 
 			// log("Source Sink consuming command REQUEST_KILL. Name is "+agentID.getName(),
 			// 3);
-			if (myLogger.isLoggable(Logger.CONFIG))
+			if (myLogger.isLoggable(Logger.CONFIG)) {
 				myLogger.log(Logger.CONFIG, "Source Sink consuming command REQUEST_KILL. Name is " + agentID.getName());
+			}
 
 			MainContainer impl = myContainer.getMain();
 			if (impl != null) {
@@ -319,8 +321,9 @@ public class AgentManagementService extends BaseService {
 
 			// log("Source Sink consuming command INFORM_KILLED. Name is "+target.getName(),
 			// 3);
-			if (myLogger.isLoggable(Logger.CONFIG))
+			if (myLogger.isLoggable(Logger.CONFIG)) {
 				myLogger.log(Logger.CONFIG, "Source Sink consuming command INFORM_KILLED. Name is " + target.getName());
+			}
 
 			// Remove CodeLocator entry.
 			
@@ -449,19 +452,19 @@ public class AgentManagementService extends BaseService {
 		public void consume(VerticalCommand cmd) {
 			String name = cmd.getName();
 			try {
-				if (name.equals(AgentManagementSlice.REQUEST_CREATE)) {
+				if (AgentManagementSlice.REQUEST_CREATE.equals(name)) {
 					handleRequestCreate(cmd);
-				} else if (name.equals(AgentManagementSlice.REQUEST_KILL)) {
+				} else if (AgentManagementSlice.REQUEST_KILL.equals(name)) {
 					handleRequestKill(cmd);
-				} else if (name.equals(AgentManagementSlice.REQUEST_STATE_CHANGE)) {
+				} else if (AgentManagementSlice.REQUEST_STATE_CHANGE.equals(name)) {
 					handleRequestStateChange(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+				} else if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					handleInformKilled(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				} else if (AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
-				} else if (name.equals(AgentManagementSlice.INFORM_CREATED)) {
+				} else if (AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
-				} else if (name.equals(AgentManagementSlice.KILL_CONTAINER)) {
+				} else if (AgentManagementSlice.KILL_CONTAINER.equals(name)) {
 					handleKillContainer(cmd);
 				}
 			} catch (Throwable t) {
@@ -501,8 +504,9 @@ public class AgentManagementService extends BaseService {
 
 			// log("Target sink consuming command REQUEST_KILL: Name is "+agentID.getName(),
 			// 2);
-			if (myLogger.isLoggable(Logger.FINE))
+			if (myLogger.isLoggable(Logger.FINE)) {
 				myLogger.log(Logger.FINE, "Target sink consuming command REQUEST_KILL: Name is " + agentID.getName());
+			}
 
 			killAgent(agentID);
 		}
@@ -537,8 +541,9 @@ public class AgentManagementService extends BaseService {
 
 			// log("Target sink consuming command INFORM_KILLED: Name is
 			// "+agentID.getName(), 2);
-			if (myLogger.isLoggable(Logger.FINE))
+			if (myLogger.isLoggable(Logger.FINE)) {
 				myLogger.log(Logger.FINE, "Target sink consuming command INFORM_KILLED: Name is " + agentID.getName());
+			}
 
 			deadAgent(agentID);
 		}
@@ -550,9 +555,9 @@ public class AgentManagementService extends BaseService {
 			String newState = (String) params[1];
 			// String oldState = (String) params[2];
 
-			if (newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED)) {
+			if (jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED.equals(newState)) {
 				suspendedAgent(agentID);
-			} else if (newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE)) {
+			} else if (jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE.equals(newState)) {
 				resumedAgent(agentID);
 			}
 		}
@@ -564,7 +569,7 @@ public class AgentManagementService extends BaseService {
 			exitContainer();
 		}
 
-		private void createAgent(AID agentID, String className, Object arguments[], JADEPrincipal owner,
+		private void createAgent(AID agentID, String className, Object[] arguments, JADEPrincipal owner,
 				Credentials initialCredentials, boolean startIt)
 				throws IMTPException, NotFoundException, NameClashException, JADESecurityException {
 			Agent agent = null;
@@ -595,8 +600,9 @@ public class AgentManagementService extends BaseService {
 
 			Agent a = myContainer.acquireLocalAgent(agentID);
 
-			if (a == null)
+			if (a == null) {
 				throw new NotFoundException("Kill-Agent failed to find " + agentID);
+			}
 			a.doDelete();
 
 			myContainer.releaseLocalAgent(agentID);
@@ -605,8 +611,9 @@ public class AgentManagementService extends BaseService {
 		private void changeAgentState(AID agentID, int newState) throws IMTPException, NotFoundException {
 			Agent a = myContainer.acquireLocalAgent(agentID);
 
-			if (a == null)
+			if (a == null) {
 				throw new NotFoundException("Change-Agent-State failed to find " + agentID);
+			}
 
 			if (newState == Agent.AP_SUSPENDED) {
 				a.doSuspend();
@@ -722,7 +729,7 @@ public class AgentManagementService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(AgentManagementSlice.H_CREATEAGENT)) {
+				if (AgentManagementSlice.H_CREATEAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_CREATE,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
@@ -739,14 +746,14 @@ public class AgentManagementService extends BaseService {
 					gCmd.addParam(startIt);
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_KILLAGENT)) {
+				} else if (AgentManagementSlice.H_KILLAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_KILL,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
 					gCmd.addParam(agentID);
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_CHANGEAGENTSTATE)) {
+				} else if (AgentManagementSlice.H_CHANGEAGENTSTATE.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_STATE_CHANGE,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
@@ -755,7 +762,7 @@ public class AgentManagementService extends BaseService {
 					gCmd.addParam(newState);
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_BORNAGENT)) {
+				} else if (AgentManagementSlice.H_BORNAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_CREATED,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
@@ -771,14 +778,14 @@ public class AgentManagementService extends BaseService {
 					}
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_DEADAGENT)) {
+				} else if (AgentManagementSlice.H_DEADAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_KILLED,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
 					gCmd.addParam(agentID);
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_SUSPENDEDAGENT)) {
+				} else if (AgentManagementSlice.H_SUSPENDEDAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_STATE_CHANGED,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
@@ -787,7 +794,7 @@ public class AgentManagementService extends BaseService {
 					gCmd.addParam("*");
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_RESUMEDAGENT)) {
+				} else if (AgentManagementSlice.H_RESUMEDAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_STATE_CHANGED,
 							AgentManagementSlice.NAME, null);
 					AID agentID = (AID) params[0];
@@ -796,7 +803,7 @@ public class AgentManagementService extends BaseService {
 					gCmd.addParam(jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED);
 
 					result = gCmd;
-				} else if (cmdName.equals(AgentManagementSlice.H_EXITCONTAINER)) {
+				} else if (AgentManagementSlice.H_EXITCONTAINER.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.KILL_CONTAINER,
 							AgentManagementSlice.NAME, null);
 
@@ -898,7 +905,7 @@ public class AgentManagementService extends BaseService {
 	private final CommandTargetSink receiverSink = new CommandTargetSink();
 
 	
-	private String agentsPath = null;
+	private String agentsPath;
 	private CodeLocator codeLocator;
 	
 

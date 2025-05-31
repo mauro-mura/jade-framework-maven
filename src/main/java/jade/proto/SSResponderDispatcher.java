@@ -18,10 +18,10 @@ import jade.lang.acl.*;
  * @see SSIteratedAchieveREtResponder
  */
 public abstract class SSResponderDispatcher extends CyclicBehaviour {
-	private ConversationList activeConversations;
-	private MessageTemplate template;
+	private final ConversationList activeConversations;
+	private final MessageTemplate template;
 	
-	public SSResponderDispatcher(Agent a, MessageTemplate tpl) {
+	protected SSResponderDispatcher(Agent a, MessageTemplate tpl) {
 		super(a);
 		activeConversations = new ConversationList(a);
 		template = MessageTemplate.and(
@@ -71,8 +71,8 @@ public abstract class SSResponderDispatcher extends CyclicBehaviour {
 		myAgent.addBehaviour(b);
 	}
 	
-	private static long cnt = 0;
-	private synchronized static String createConversationId(String name) {
+	private static long cnt;
+	private static synchronized String createConversationId(String name) {
 		return "C-"+name+'-'+System.currentTimeMillis()+'-'+(cnt++);
 	}
 }

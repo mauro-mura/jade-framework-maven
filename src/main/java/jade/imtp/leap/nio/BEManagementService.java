@@ -139,7 +139,7 @@ public class BEManagementService extends BaseService {
 		protocolManagers.put(MicroRuntime.HTTPS_PROTOCOL, NIOHTTPSPeer.class);
 	}
 
-	private Map<String, IOEventServer> servers = new Hashtable<>(2);
+	private final Map<String, IOEventServer> servers = new Hashtable<>(2);
 	private Ticker myTicker;
 	private ServiceHelper myHelper;
 	private String platformName;
@@ -147,27 +147,27 @@ public class BEManagementService extends BaseService {
 	// these addresses will be rejected.
 	// FIXME: The mechanism for filling/clearing this list is not yet
 	// defined/implemented
-	private Vector maliciousAddresses = new Vector<>();
+	private final Vector maliciousAddresses = new Vector<>();
 
-	private String configOptionsFileName = "feOptions.properties";
+	private final String configOptionsFileName = "feOptions.properties";
 
 	private AgentContainer myContainer;
 
 	// SAM related variables
-	private long createMediatorCounter = 0;
-	private long connectMediatorCounter = 0;
-	private long mediatorNotFoundCounter = 0;
-	private long incomingCommandCounter = 0;
-	private long keepAliveCounter = 0;
-	private long dropDownCounter = 0;
-	private long processingTimeGT1SecCounter = 0;
-	private long processingTimeGT10SecCounter = 0;
-	private long incomingPacketServingErrorCounter = 0;
-	private long incomingPacketReadingErrorCounter = 0;
-	private AverageMeasureProviderImpl dataProcessingTimeProvider = null;
-	private AverageMeasureProviderImpl waitForDataTimeProvider = null;
+	private long createMediatorCounter;
+	private long connectMediatorCounter;
+	private long mediatorNotFoundCounter;
+	private long incomingCommandCounter;
+	private long keepAliveCounter;
+	private long dropDownCounter;
+	private long processingTimeGT1SecCounter;
+	private long processingTimeGT10SecCounter;
+	private long incomingPacketServingErrorCounter;
+	private long incomingPacketReadingErrorCounter;
+	private AverageMeasureProviderImpl dataProcessingTimeProvider;
+	private AverageMeasureProviderImpl waitForDataTimeProvider;
 
-	private Logger myLogger = Logger.getJADELogger(getClass().getName());
+	private final Logger myLogger = Logger.getJADELogger(getClass().getName());
 
 	/**
 	 * @return The name of this service.
@@ -177,7 +177,7 @@ public class BEManagementService extends BaseService {
 		return className.substring(0, className.indexOf("Service"));
 	}
 
-	public static final int getBufferIncreaseSize() {
+	public static int getBufferIncreaseSize() {
 		return bufferIncreaseSize;
 	}
 
@@ -212,15 +212,15 @@ public class BEManagementService extends BaseService {
 			List acceptedProtocols = p.getSpecifiers(ACCEPT);
 			// Do not overwrite explicitly specified servers if any
 			String serverIDs = p.getParameter(SERVERS, null);
-			serverIDs = (serverIDs != null ? serverIDs += ';' : "");
+			serverIDs = serverIDs != null ? serverIDs += ';' : "";
 			for (int i = 0; i < acceptedProtocols.size(); ++i) {
 				Specifier s = (Specifier) acceptedProtocols.get(i);
 				String proto = s.getClassName();
-				if (proto.equalsIgnoreCase(MicroRuntime.SOCKET_PROTOCOL)
-						|| proto.equalsIgnoreCase(MicroRuntime.SSL_PROTOCOL)
-						|| proto.equalsIgnoreCase(MicroRuntime.HTTP_PROTOCOL)
-						|| proto.equalsIgnoreCase(MicroRuntime.HTTPS_PROTOCOL)) {
-					String semicolon = ((i + 1) == acceptedProtocols.size() ? "" : ";");
+				if (MicroRuntime.SOCKET_PROTOCOL.equalsIgnoreCase(proto)
+						|| MicroRuntime.SSL_PROTOCOL.equalsIgnoreCase(proto)
+						|| MicroRuntime.HTTP_PROTOCOL.equalsIgnoreCase(proto)
+						|| MicroRuntime.HTTPS_PROTOCOL.equalsIgnoreCase(proto)) {
+					String semicolon = (i + 1) == acceptedProtocols.size() ? "" : ";";
 					serverIDs = serverIDs + manageAcceptedProtocol(s, proto.toLowerCase(), p) + semicolon;
 				} else {
 					myLogger.log(Logger.WARNING,
@@ -510,8 +510,8 @@ public class BEManagementService extends BaseService {
 		private int state = INIT_STATE;
 		private ServerSocketChannel mySSChannel;
 		private long mediatorCnt = 1;
-		private Hashtable<String, NIOMediator> mediators = new Hashtable<String, NIOMediator>();
-		private Vector<String> deregisteredMediators = new Vector<String>();
+		private Hashtable<String, NIOMediator> mediators = new Hashtable<>();
+		private Vector<String> deregisteredMediators = new Vector<>();
 		private String host;
 		private int port;
 		private Properties leapProps = new Properties();
@@ -525,7 +525,7 @@ public class BEManagementService extends BaseService {
 		 */
 		public void init(String id, Profile p) {
 			myID = id;
-			myLogPrefix = (PREFIX.startsWith(myID) ? "" : "Server " + myID + ": ");
+			myLogPrefix = PREFIX.startsWith(myID) ? "" : "Server " + myID + ": ";
 
 			// Local host
 			host = p.getParameter(id + '_' + JICPProtocol.LOCAL_HOST_KEY, null);
@@ -659,7 +659,7 @@ public class BEManagementService extends BaseService {
 
 		void replaceLoopManager(int index, LoopManager newLoopManager) {
 			LoopManager oldLoopManager = loopers[index];
-			Map<SelectableChannel, KeyManager> managers = new HashMap<SelectableChannel, KeyManager>();
+			Map<SelectableChannel, KeyManager> managers = new HashMap<>();
 			Iterator<SelectionKey> it = oldLoopManager.getSelector().keys().iterator();
 			while (it.hasNext()) {
 				SelectionKey selectionKey = it.next();
@@ -812,7 +812,7 @@ public class BEManagementService extends BaseService {
 			JICPPacket reply = null;
 			// If there is no mediator associated to this key prepare to close
 			// the connection when the packet will have been processed
-			boolean closeConnection = (mediator == null);
+			boolean closeConnection = mediator == null;
 			// If the connection will be locked (see NIOJICPConnectionWrapper) prepare
 			// to unlock it on completion
 			boolean keepLock = false;
@@ -1093,7 +1093,7 @@ public class BEManagementService extends BaseService {
 		}
 
 		private String stringify(NIOMediator mediator) {
-			return (mediator != null ? mediator.getID() + " - " : "null");
+			return mediator != null ? mediator.getID() + " - " : "null";
 		}
 
 		private void configureBlocking(JICPPacket pkt, SelectionKey key) {
@@ -1391,11 +1391,11 @@ public class BEManagementService extends BaseService {
 		private Selector mySelector;
 		private Thread myThread;
 		private IOEventServer myServer;
-		private boolean pendingChannelPresent = false;
+		private boolean pendingChannelPresent;
 		private List<SocketChannel> pendingChannels = new ArrayList<>();
 
 		private long readStartTime = -1;
-		private boolean stuck = false;
+		private boolean stuck;
 
 		public LoopManager(IOEventServer server, int index) {
 			myServer = server;
@@ -1612,13 +1612,13 @@ public class BEManagementService extends BaseService {
 		}
 
 		// This is called by LM-0 following an ACCEPT-OP
-		private synchronized final void register(SocketChannel sc) {
+		private final synchronized void register(SocketChannel sc) {
 			pendingChannels.add(sc);
 			pendingChannelPresent = true;
 			mySelector.wakeup();
 		}
 
-		private synchronized final void handlePendingChannels(String prefix) {
+		private final synchronized void handlePendingChannels(String prefix) {
 			if (pendingChannelPresent) {
 				for (int i = 0; i < pendingChannels.size(); ++i) {
 					SocketChannel sc = (SocketChannel) pendingChannels.get(i);
@@ -1666,10 +1666,10 @@ public class BEManagementService extends BaseService {
 	/**
 	 * Inner class Ticker
 	 */
-	private class Ticker extends Thread {
+	private final class Ticker extends Thread {
 
 		private long period;
-		private boolean active = false;
+		private boolean active;
 
 		private Ticker(long period) {
 			super();

@@ -71,9 +71,9 @@ public class ThreadedBehaviourFactory {
 	private static final String INTERRUPTED_STATE = "INTERRUPTED";
 	private static final String ERROR_STATE = "ERROR";
 
-	private Vector<ThreadedBehaviourWrapper> threadedBehaviours = new Vector<>();
+	private final Vector<ThreadedBehaviourWrapper> threadedBehaviours = new Vector<>();
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	/**
 	 * Wraps a normal JADE Behaviour <code>b</code> into a "threaded behaviour".
@@ -216,14 +216,14 @@ public class ThreadedBehaviourFactory {
 	 * Inner class ThreadedBehaviourWrapper This class is declared public for
 	 * debugging purpose only
 	 */
-	public class ThreadedBehaviourWrapper extends Behaviour implements Runnable {
+	public final class ThreadedBehaviourWrapper extends Behaviour implements Runnable {
 
 		private static final long serialVersionUID = -2036292545686269187L;
 		private Thread myThread;
 		private Behaviour myBehaviour;
-		private volatile boolean restarted = false;
-		private boolean finished = false;
-		private volatile boolean suspended = false;
+		private volatile boolean restarted;
+		private boolean finished;
+		private volatile boolean suspended;
 		private int exitValue;
 		// Only for debugging purpose
 		private volatile String threadState = CREATED_STATE;
@@ -513,7 +513,7 @@ public class ThreadedBehaviourFactory {
 	 * propagating restart events in the actual wrapped behaviour to the
 	 * ThreadedBehaviourWrapper.
 	 */
-	private class DummyParentBehaviour extends CompositeBehaviour {
+	private final class DummyParentBehaviour extends CompositeBehaviour {
 
 		private static final long serialVersionUID = -1753049241246532027L;
 		private ThreadedBehaviourWrapper myChild;

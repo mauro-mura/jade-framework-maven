@@ -55,7 +55,7 @@ public class AboutJadeAction extends AbstractAction
 	/**
 	@serial
 	*/
-	private JFrame gui;
+	private final JFrame gui;
 	
 	/**
 	@serial

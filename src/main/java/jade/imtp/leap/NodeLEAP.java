@@ -42,10 +42,10 @@ import jade.util.Logger;
 class NodeLEAP extends BaseNode {
 	// This monitor is used to hang a remote ping() call in order to
 	// detect node failures.
-	private Object terminationLock = new Object();
-	private boolean terminating = false;
-	private CommandDispatcher myDispatcher;
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Object terminationLock = new Object();
+	private boolean terminating;
+	private final CommandDispatcher myDispatcher;
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public NodeLEAP(String name, boolean hasPM, CommandDispatcher dispatcher) {
 		super(name, hasPM);

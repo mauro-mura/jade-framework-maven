@@ -41,16 +41,16 @@ import java.util.Enumeration;
    @see java.util.HashMap
  */
 public class HashMap implements Map, Serializable {
-    private transient java.util.Map realHiddenMap = null;
+    private transient java.util.Map realHiddenMap;
     /**
      * Proxy to the realHiddenMap keys Set
      */
-    private transient Set               keySet = null;
+    private transient Set               keySet;
 
     /**
      * Proxy to the realHiddenMap values Collection
      */
-    private transient Collection        values = null;
+    private transient Collection        values;
 
 	/**
    	   The following elements are required to ensure compatibility with 
@@ -309,8 +309,8 @@ public class HashMap implements Map, Serializable {
         while (it.hasNext()) {
             Object key = it.next();
             Object value = realHiddenMap.get(key);
-            key = (key != null ? key : nullValue);
-            value = (value != null ? value : nullValue);
+            key = key != null ? key : nullValue;
+            value = value != null ? value : nullValue;
 
             hiddenMap.put(key, value);
         } 
@@ -334,8 +334,8 @@ public class HashMap implements Map, Serializable {
         while (e.hasMoreElements()) {
             Object key = e.nextElement();
             Object value = hiddenMap.get(key);
-            key = (nullValue.equals(key) ? null : key);
-            value = (nullValue.equals(value) ? null : value);
+            key = nullValue.equals(key) ? null : key;
+            value = nullValue.equals(value) ? null : value;
 
             realHiddenMap.put(key, value);
         } 

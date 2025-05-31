@@ -23,18 +23,18 @@ import jade.util.leap.RoundList;
 class OutBox {
 	private static final int PENDING_MSG_PER_RECEIVER_THR = -1;
 	
-	private int size = 0; // Approximated size in bytes
-	private int pendingCnt = 0;   
-	private int warningSize; 
-	private int maxSize;
-	private int sleepTimeFactor;
-	private boolean enableMultipleDelivery;
-	private boolean overWarningSize = false;
-	
-	private MessageManager manager;
+	private int size; // Approximated size in bytes
+	private int pendingCnt;
+	private final int warningSize;
+	private final int maxSize;
+	private final int sleepTimeFactor;
+	private final boolean enableMultipleDelivery;
+	private boolean overWarningSize;
+
+	private final MessageManager manager;
 	
 	private long lastDiscardedLogTime = -1;
-	private long discardedSinceLastLogCnt = 0;
+	private long discardedSinceLastLogCnt;
 	private long servedSinceLastDiscardedLogCnt = -1;
 
 	// The messages to be delivered organized as an hashtable that maps
@@ -44,7 +44,7 @@ class OutBox {
 	// messages for the currently addressed receivers 
 	private final RoundList messagesByOrder = new RoundList();
 
-	private Logger myLogger;
+	private final Logger myLogger;
 
 	OutBox(int warningSize, int maxSize, int sleepTimeFactor, boolean enableMultipleDelivery, MessageManager manager) {
 		this.warningSize = warningSize;
@@ -71,7 +71,7 @@ class OutBox {
 			synchronized (this) {
 				if ((time - lastDiscardedLogTime) > 1000) {
 					String servedWhileDiscardingStr = servedSinceLastDiscardedLogCnt >= 0 ? " ("+servedSinceLastDiscardedLogCnt+" messages served since last discard-log)" : "";
-					myLogger.log(Logger.SEVERE, String.valueOf(discardedSinceLastLogCnt+1)+" message(s) discarded by MessageManager! Current-queue-size = "+size+", max-size = "+maxSize+", number of pending messages = "+pendingCnt+", size of last message = "+msg.length()+servedWhileDiscardingStr);
+					myLogger.log(Logger.SEVERE, discardedSinceLastLogCnt+1+" message(s) discarded by MessageManager! Current-queue-size = "+size+", max-size = "+maxSize+", number of pending messages = "+pendingCnt+", size of last message = "+msg.length()+servedWhileDiscardingStr);
 					lastDiscardedLogTime = time;
 					discardedSinceLastLogCnt = 0;
 					servedSinceLastDiscardedLogCnt = 0;
@@ -84,8 +84,9 @@ class OutBox {
 		}
 		
 		boolean logActivated = myLogger.isLoggable(Logger.FINER);
-		if (logActivated)
-			myLogger.log(Logger.FINER,"Entering addLast for receiver "+receiverID.getName());
+		if (logActivated) {
+			myLogger.log(Logger.FINER, "Entering addLast for receiver " + receiverID.getName());
+		}
 		if (msg.getPayload() != null && msg.isModifiable()) {
 			ACLMessage acl = msg.getACLMessage();
 			if (acl != null) {
@@ -100,7 +101,7 @@ class OutBox {
 		synchronized (this) {
 			Box b = (Box) messagesByReceiver.get(receiverID);
 			if (logActivated) {
-				String msgDebug = (b==null)? "No box for receiver "+receiverID.getName():"Box for receiver "+receiverID.getName()+" busy ?  "+b.isBusy();
+				String msgDebug = b==null? "No box for receiver "+receiverID.getName():"Box for receiver "+receiverID.getName()+" busy ?  "+b.isBusy();
 				myLogger.log(Logger.FINER,msgDebug);
 			}
 			if (b == null){
@@ -108,8 +109,9 @@ class OutBox {
 				b = new Box(receiverID);
 				messagesByReceiver.put(receiverID, b);
 				messagesByOrder.add(b);
-				if (logActivated)
-					myLogger.log(Logger.FINER,"Box created for receiver "+receiverID.getName());
+				if (logActivated) {
+					myLogger.log(Logger.FINER, "Box created for receiver " + receiverID.getName());
+				}
 			}
 						
 			if (b.size() > PENDING_MSG_PER_RECEIVER_THR) {
@@ -120,15 +122,17 @@ class OutBox {
 					throw new StuckDeliverer(owner);
 				}
 			}
-			
-			if (logActivated)
-				myLogger.log(Logger.FINER,"Message entered in box for receiver "+receiverID.getName());
+
+			if (logActivated) {
+				myLogger.log(Logger.FINER, "Message entered in box for receiver " + receiverID.getName());
+			}
 			b.addLast(new PendingMsg(msg, receiverID, ch, -1));
 			// Wakes up all deliverers
 			notifyAll();
 		}
-		if (logActivated)
-			myLogger.log(Logger.FINER,"Exiting addLast for receiver "+receiverID.getName());
+		if (logActivated) {
+			myLogger.log(Logger.FINER, "Exiting addLast for receiver " + receiverID.getName());
+		}
 	}
 
 	/**
@@ -154,7 +158,7 @@ class OutBox {
 	 * This is executed by a Deliverer thread just before delivering 
 	 * a message.
 	 */
-	synchronized final PendingMsg get(){
+	final synchronized PendingMsg get(){
 		Box b = null;
 		// Wait until an idle (i.e. not busy) receiver is found
 		while( (b = getNextIdle()) == null ){
@@ -182,7 +186,7 @@ class OutBox {
 			java.util.List<GenericMessage> mm = null;
 			while (!b.isEmpty() && (mulMessageSize < 100000)) { // Max 100 Kbyte
 				if (mm == null) {
-					mm = new java.util.ArrayList<GenericMessage>();
+					mm = new java.util.ArrayList<>();
 					mm.add(pm.getMessage());
 				}
 				PendingMsg next = b.removeFirst();
@@ -215,8 +219,9 @@ class OutBox {
 			Box b = (Box) messagesByOrder.get();
 			if (!b.isBusy()) {
 				b.setBusy(true);
-				if( myLogger.isLoggable(Logger.FINER) )
-					myLogger.log(Logger.FINER,"Setting box busy for receiver "+b.getReceiver().getName());
+				if (myLogger.isLoggable(Logger.FINER)) {
+					myLogger.log(Logger.FINER, "Setting box busy for receiver " + b.getReceiver().getName());
+				}
 				return b;
 			}
 		}
@@ -228,27 +233,31 @@ class OutBox {
 	 * If the Box of messages for that receiver is now empty --> remove it.
 	 * Otherwise just mark it as idle (not busy).
 	 */
-	synchronized final void handleServed(AID receiverID, int n) {
+	final synchronized void handleServed(AID receiverID, int n) {
 		if (servedSinceLastDiscardedLogCnt >= 0) {
 			servedSinceLastDiscardedLogCnt += n;
 		}
 		boolean logActivated = myLogger.isLoggable(Logger.FINER);
-		if (logActivated)
-			myLogger.log(Logger.FINER,"Entering handleServed for "+receiverID.getName());
+		if (logActivated) {
+			myLogger.log(Logger.FINER, "Entering handleServed for " + receiverID.getName());
+		}
 		Box b = (Box) messagesByReceiver.get(receiverID);
 		if (b.isEmpty()) {
 			messagesByReceiver.remove(receiverID);
 			messagesByOrder.remove(b);
-			if (logActivated)
-				myLogger.log(Logger.FINER,"Removed box for receiver "+receiverID.getName());
+			if (logActivated) {
+				myLogger.log(Logger.FINER, "Removed box for receiver " + receiverID.getName());
+			}
 		}
 		else {
 			b.setBusy(false);
-			if (logActivated)
-				myLogger.log(Logger.FINER,"Freeing box for receiver "+receiverID.getName());
+			if (logActivated) {
+				myLogger.log(Logger.FINER, "Freeing box for receiver " + receiverID.getName());
+			}
 		}
-		if (logActivated)
-			myLogger.log(Logger.FINER,"Exiting handleServed for "+receiverID.getName());
+		if (logActivated) {
+			myLogger.log(Logger.FINER, "Exiting handleServed for " + receiverID.getName());
+		}
 	}
 
 	private void increaseSize(int lastMessageSize) {
@@ -318,7 +327,7 @@ class OutBox {
 		private void setBusy(boolean b){
 			busy = b;
 			
-			owner = (busy ? Thread.currentThread().getName() : null);
+			owner = busy ? Thread.currentThread().getName() : null;
 			
 		}
 

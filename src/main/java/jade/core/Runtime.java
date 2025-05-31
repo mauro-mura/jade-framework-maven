@@ -55,7 +55,7 @@ import jade.util.Logger;
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
  */
-public class Runtime {
+public final class Runtime {
 	// JADE runtime execution modes:
 	// MULTIPLE --> Several containers can be activated in a JVM
 	private static final int MULTIPLE_MODE = 0;
@@ -64,7 +64,7 @@ public class Runtime {
 	// UNKNOWN --> Mode not yet set
 	private static final int UNKNOWN_MODE = 2;
 
-	private static Runtime theInstance;
+	private static final Runtime theInstance;
 
 	static {
 		theInstance = new Runtime();
@@ -77,12 +77,12 @@ public class Runtime {
 	private String revision = "UNKNOWN";
 	private String date = "UNKNOWN";
 
-	private int activeContainers = 0;
-	private LinkedList<Runnable> terminators = new LinkedList<>();
-	private AgentContainerImpl theContainer = null;
+	private int activeContainers;
+	private final LinkedList<Runnable> terminators = new LinkedList<>();
+	private AgentContainerImpl theContainer;
 	private int mode = UNKNOWN_MODE;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	// Private constructor to forbid instantiation outside the class.
 	private Runtime() {
@@ -305,8 +305,8 @@ public class Runtime {
 	 * JADE
 	 */
 	public static String getCopyrightNotice() {
-		return ("    This is " + getVersionInfo()
-				+ "\n    downloaded in Open Source, under LGPL restrictions,\n    at http://jade.tilab.com/\n");
+		return "    This is " + getVersionInfo()
+				+ "\n    downloaded in Open Source, under LGPL restrictions,\n    at http://jade.tilab.com/\n";
 	}
 	// #APIDOC_EXCLUDE_END
 

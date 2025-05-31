@@ -49,9 +49,9 @@ public abstract class BaseNode implements Node, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -1877731581378006536L;
-	private transient Logger myLogger;
+	private final transient Logger myLogger;
 
-	public BaseNode(String name, boolean hasPM) {
+	protected BaseNode(String name, boolean hasPM) {
 		myName = name;
 		hasLocalPM = hasPM;
 		localSlices = new HashMap<>(5);
@@ -178,12 +178,12 @@ public abstract class BaseNode implements Node, Serializable {
 	private String myName;
 
 	// True if a local copy of the Platform Manager is deployed at this Node
-	private boolean hasLocalPM = false;
+	private final boolean hasLocalPM;
 
 	// A map, indexed by service name, of all the local slices of this
 	// node. This map is used to dispatch incoming commands to the
 	// service they belong to.
-	private transient Map<String, Service.Slice> localSlices;
+	private final transient Map<String, Service.Slice> localSlices;
 
 	public String toString() {
 		return myName;

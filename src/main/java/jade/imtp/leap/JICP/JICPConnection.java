@@ -154,7 +154,7 @@ public class JICPConnection extends Connection {
 
 	protected OutputStream getOutputStream() throws IOException {
 		return new ByteArrayOutputStream() {
-			private OutputStream realOs = null;
+			private OutputStream realOs;
 
 			@Override
 			public void flush() throws IOException {
@@ -191,7 +191,7 @@ public class JICPConnection extends Connection {
 			try {
 				os.close();
 			} catch (IOException e) {
-				firstExc = (firstExc != null ? firstExc : e);
+				firstExc = firstExc != null ? firstExc : e;
 			}
 			os = null;
 		}
@@ -200,7 +200,7 @@ public class JICPConnection extends Connection {
 				sc.close();
 				socketCnt--;
 			} catch (IOException e) {
-				firstExc = (firstExc != null ? firstExc : e);
+				firstExc = firstExc != null ? firstExc : e;
 			}
 			sc = null;
 		}

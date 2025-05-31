@@ -54,9 +54,9 @@ abstract class AppletRequestProto
     boolean notYetReady;
     PrintStream myOut;
     ACLParser myParser;
-    
-    //logging
-    private Logger logger = Logger.getMyLogger(this.getClass().getName());
+
+	//logging
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
         /**
          * Constructor of the class.
@@ -91,37 +91,46 @@ abstract class AppletRequestProto
 
         try{
             ACLMessage reply = receiveMessage();
-            if(logger.isLoggable(Logger.INFO))
-            	logger.log(Logger.INFO,"Received Message:" + reply.toString());
+					if (logger.isLoggable(Logger.INFO)) {
+						logger.log(Logger.INFO, "Received Message:" + reply.toString());
+					}
             if(ACLMessage.AGREE == (reply.getPerformative()))
             {
 
                 handleAgree(reply);
 
                 ACLMessage inform = receiveMessage();
-				if(logger.isLoggable(Logger.INFO))
-                	logger.log(Logger.INFO,inform.toString());
+							if (logger.isLoggable(Logger.INFO)) {
+								logger.log(Logger.INFO, inform.toString());
+							}
 
-                if(ACLMessage.INFORM == inform.getPerformative())
-                    handleInform(inform);
-                else
-                    if(ACLMessage.FAILURE == inform.getPerformative())
-                        handleFailure(inform);
-                    else
-                        handleOtherMessage(inform);
+							if (ACLMessage.INFORM == inform.getPerformative()) {
+								handleInform(inform);
+							}
+							else
+								if (ACLMessage.FAILURE == inform.getPerformative()) {
+									handleFailure(inform);
+								}
+								else {
+									handleOtherMessage(inform);
+								}
             }
             else
-                if(ACLMessage.INFORM == reply.getPerformative())
-                    handleInform(reply);
-                else if(ACLMessage.REFUSE == reply.getPerformative())
-                    handleRefuse(reply);
-                else if(ACLMessage.NOT_UNDERSTOOD == reply.getPerformative())
-                    handleNotUnderstood(reply);
-                else handleOtherMessage(reply);
+							if (ACLMessage.INFORM == reply.getPerformative()) {
+								handleInform(reply);
+							}
+							else if (ACLMessage.REFUSE == reply.getPerformative()) {
+								handleRefuse(reply);
+							}
+							else if (ACLMessage.NOT_UNDERSTOOD == reply.getPerformative()) {
+								handleNotUnderstood(reply);
+							}
+							else {
+								handleOtherMessage(reply);
+							}
         }catch(ParseException e){
 	    e.printStackTrace();
 	}
-        return;
     }
 
         /**

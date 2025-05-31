@@ -47,7 +47,7 @@ public abstract class OneShotBehaviour extends SimpleBehaviour {
 	/**
 	 * Default constructor. It does not set the owner agent.
 	 */
-	public OneShotBehaviour() {
+	protected OneShotBehaviour() {
 		super();
 	}
 
@@ -56,7 +56,7 @@ public abstract class OneShotBehaviour extends SimpleBehaviour {
 	 * 
 	 * @param a The agent this behaviour belongs to.
 	 */
-	public OneShotBehaviour(Agent a) {
+	protected OneShotBehaviour(Agent a) {
 		super(a);
 	}
 

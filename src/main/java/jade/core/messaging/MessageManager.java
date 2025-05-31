@@ -51,7 +51,7 @@ import jade.core.sam.AverageMeasureProviderImpl;
  * @author Moreno LAGO
  * @version $Date: 2018-09-11 12:35:04 +0200 (mar, 11 set 2018) $ $Revision: 6837 $
  */
-class MessageManager {
+final class MessageManager {
 
 	public interface Channel {
 		void deliverNow(GenericMessage msg, AID receiverID) throws UnreachableException, NotFoundException;
@@ -88,18 +88,18 @@ class MessageManager {
 	private long deliveryTimeThreshold2;
 	private long deliveryStuckTime;
 
-	private long totSubmittedCnt = 0;
-	private long totServedCnt = 0;
-	private long totDiscardedCnt = 0;
-	private long totSlowDeliveryCnt = 0;
-	private long totVerySlowDeliveryCnt = 0;
+	private long totSubmittedCnt;
+	private long totServedCnt;
+	private long totDiscardedCnt;
+	private long totSlowDeliveryCnt;
+	private long totVerySlowDeliveryCnt;
 
 	// How many times multiple-message-delivery was triggered
-	private long totMultipleDeliveryCnt = 0;
+	private long totMultipleDeliveryCnt;
 	// Average number of messages delivered in multiple-message-delivery
-	private AverageMeasureProviderImpl avgMsgCountPerMultipleDelivery = new AverageMeasureProviderImpl();
+	private final AverageMeasureProviderImpl avgMsgCountPerMultipleDelivery = new AverageMeasureProviderImpl();
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	private MessageManager() {
 	}
@@ -315,9 +315,9 @@ class MessageManager {
 		private String name;
 		private long lastDeliveryStartTime = -1;
 		private long lastDeliveryEndTime = -1;
-		private boolean delivering = false;
+		private boolean delivering;
 		// For debugging purpose
-		private long servedCnt = 0;
+		private long servedCnt;
 
 		Deliverer(String name) {
 			this.name = name;
@@ -475,7 +475,7 @@ class MessageManager {
 
 	/**
 	 */
-	public static final String stringify(GenericMessage m) {
+	public static String stringify(GenericMessage m) {
 
 		if (m instanceof MultipleGenericMessage mm) {
 			// MULTIPLE message
@@ -488,7 +488,7 @@ class MessageManager {
 				// Avoid stringifying to many messages
 				cnt++;
 				if (cnt > 10 && cnt < l.size()) {
-					sb.append("..." + l.size() + " messages in total");
+					sb.append("...").append(l.size()).append(" messages in total");
 					break;
 				}
 			}
@@ -501,7 +501,7 @@ class MessageManager {
 			if (msg != null) {
 				return msg.shortToString();
 			} else {
-				return ("\"Unavailable\"");
+				return "\"Unavailable\"";
 			}
 
 		}
@@ -517,7 +517,7 @@ class MessageManager {
 		System.out.println(stringify(gm));
 
 		MultipleGenericMessage mgm = new MultipleGenericMessage(200);
-		List<GenericMessage> l = new ArrayList<GenericMessage>();
+		List<GenericMessage> l = new ArrayList<>();
 		l.add(gm);
 		l.add(gm);
 		mgm.setMessages(l);
@@ -573,7 +573,7 @@ class MessageManager {
 				+ ", Multiple-delivery-occurrences = " + totMultipleDeliveryCnt;
 	}
 
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	// For debugging purpose
 	String[] getThreadPoolStatus() {

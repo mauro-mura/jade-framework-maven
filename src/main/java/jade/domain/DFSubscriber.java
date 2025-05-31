@@ -19,9 +19,9 @@ public abstract class DFSubscriber extends SubscriptionInitiator {
 
 	private static final Logger logger = Logger.getJADELogger(DFSubscriber.class.getName());
 
-	private boolean firstNotificationReceived = false;
+	private boolean firstNotificationReceived;
 
-	public DFSubscriber(Agent a, DFAgentDescription template) {
+	protected DFSubscriber(Agent a, DFAgentDescription template) {
 		super(a, DFService.createSubscriptionMessage(a, a.getDefaultDF(), template, null));
 	}
 

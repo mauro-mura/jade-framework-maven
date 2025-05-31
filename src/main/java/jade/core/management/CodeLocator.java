@@ -147,12 +147,18 @@ public class CodeLocator {
 			Enumeration subs = _subscriptions.elements();
 			while (subs.hasMoreElements()) {
 				clNewTemp = ((CodeLocatorListener) subs.nextElement()).handleCloneAgent(oldName, newName, cl);
-				if (clNewTemp != null) clNew = clNewTemp;
+				if (clNewTemp != null) {
+					clNew = clNewTemp;
+				}
 			}
-			
+
 			// Assign the new classloader if returned.
-			if (clNew == null) _agents.put(newName, cl);
-			else _agents.put(newName, clNew);
+			if (clNew == null) {
+				_agents.put(newName, cl);
+			}
+			else {
+				_agents.put(newName, clNew);
+			}
 		}
 
 	}
@@ -189,7 +195,9 @@ public class CodeLocator {
 	public synchronized void changeAgentName(AID oldName, AID newName) {
 
 		ClassLoader cl = (ClassLoader) _agents.remove(oldName);
-		if (cl != null) _agents.put(newName, cl);
+		if (cl != null) {
+			_agents.put(newName, cl);
+		}
 	}
 	
 	/**
@@ -211,9 +219,9 @@ public class CodeLocator {
 	public synchronized boolean unSubscribeToEvents(CodeLocatorListener cle) {
 		return _subscriptions.remove(cle);
 	}
-	
-	private HashMap _agents;
-	private Vector _subscriptions;
+
+	private final HashMap _agents;
+	private final Vector _subscriptions;
 	
 
 }

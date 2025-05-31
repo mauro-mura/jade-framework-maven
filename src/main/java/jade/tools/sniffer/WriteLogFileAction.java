@@ -50,8 +50,8 @@ import jade.util.Logger;
 
 public class WriteLogFileAction extends FixedAction implements Serializable{
 
- private MainPanel mainPanel;
- private static Logger logger = Logger.getMyLogger(WriteLogFileAction.class.getName());
+	private final MainPanel mainPanel;
+	private static final Logger logger = Logger.getMyLogger(WriteLogFileAction.class.getName());
 
   public WriteLogFileAction(ActionProcessor actPro,MainPanel mainPanel){
    super ("WriteLogFileActionIcon","Save Snapshot File",actPro);
@@ -69,12 +69,14 @@ public class WriteLogFileAction extends FixedAction implements Serializable{
        p.writeObject(mainPanel.panelcan.canvAgent.getAgentList());
        p.writeObject(mainPanel.panelcan.canvMess.getMessageList());
        p.close();
-       if(logger.isLoggable(Logger.INFO))
-       	logger.log(Logger.INFO,"Serialized Snapshot File Written.");
+				if (logger.isLoggable(Logger.INFO)) {
+					logger.log(Logger.INFO, "Serialized Snapshot File Written.");
+				}
      }
    } catch (Exception e){
-       if(logger.isLoggable(Logger.WARNING))
-       	logger.log(Logger.WARNING,"Error Writing Snapshot File:" + e);
+		 if (logger.isLoggable(Logger.WARNING)) {
+			 logger.log(Logger.WARNING, "Error Writing Snapshot File:" + e);
+		 }
      }
   }
 

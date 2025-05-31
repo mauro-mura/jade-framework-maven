@@ -56,7 +56,7 @@ import java.util.Set;
  * @author Federico Bergenti - Universita` di Parma
  * @author Giovanni Caire - TILAB
  */
-public class BasicOntology extends Ontology implements SL0Vocabulary {
+public final class BasicOntology extends Ontology implements SL0Vocabulary {
 
 	// The singleton instance of this ontology
 	private static final BasicOntology theInstance = new BasicOntology();
@@ -279,13 +279,11 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 			
 			// TRUE_PROPOSITION
 			if (CaseInsensitiveString.equalsIgnoreCase(abs.getTypeName(), BasicOntology.TRUE_PROPOSITION)) { 
-				TrueProposition t = new TrueProposition();
-				return t;
+				return new TrueProposition();
 			}
 			// FALSE_PROPOSITION
 			if (CaseInsensitiveString.equalsIgnoreCase(abs.getTypeName(), BasicOntology.FALSE_PROPOSITION)) { 
-				FalseProposition t = new FalseProposition();
-				return t;
+				return new FalseProposition();
 			}
 			// DONE
 			if (CaseInsensitiveString.equalsIgnoreCase(abs.getTypeName(), BasicOntology.DONE)) { 
@@ -396,13 +394,11 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 			} 
 
 			if(obj instanceof TrueProposition) {
-				AbsPredicate absTrueProp = new AbsPredicate(BasicOntology.TRUE_PROPOSITION);
-				return absTrueProp;
+				return new AbsPredicate(BasicOntology.TRUE_PROPOSITION);
 			}
 
 			if(obj instanceof FalseProposition) {
-				AbsPredicate absTrueProp = new AbsPredicate(BasicOntology.FALSE_PROPOSITION);
-				return absTrueProp;
+				return new AbsPredicate(BasicOntology.FALSE_PROPOSITION);
 			}
 
 			if(obj instanceof Done done) {
@@ -573,10 +569,10 @@ public class BasicOntology extends Ontology implements SL0Vocabulary {
 						 destClass == boolean.class) {
 					if (srcClass == String.class) {
 						String s = (String) srcValue;
-						if (s.equalsIgnoreCase("true")) {
+						if ("true".equalsIgnoreCase(s)) {
 							destValue = Boolean.valueOf(true);
 						}
-						else if (s.equalsIgnoreCase("false")) {
+						else if ("false".equalsIgnoreCase(s)) {
 							destValue = Boolean.valueOf(false);
 						}
 					}

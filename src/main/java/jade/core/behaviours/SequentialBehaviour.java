@@ -48,7 +48,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 	@Serial
 	private static final long serialVersionUID = 3993687548347742580L;
 	private List<Behaviour> subBehaviours = new ArrayList<>();
-	int current = 0;
+	int current;
 
 	/**
 	 * Default constructor. It does not set the owner agent for this behaviour.
@@ -95,7 +95,7 @@ public class SequentialBehaviour extends SerialBehaviour {
 	 * @see jade.core.behaviours.CompositeBehaviour#checkTermination
 	 */
 	protected boolean checkTermination(boolean currentDone, int currentResult) {
-		return (currentDone && current >= (subBehaviours.size() - 1));
+		return currentDone && current >= (subBehaviours.size() - 1);
 	}
 
 	/**

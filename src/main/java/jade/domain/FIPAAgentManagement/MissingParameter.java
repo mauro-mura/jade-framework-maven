@@ -46,10 +46,11 @@ public MissingParameter(String objectName, String parameterName) {
 }
 
 
-/**
-  @serial
-  */
-String s1,s2;
+	/**
+	  @serial
+	  */
+	String s1;
+	String s2;
 public void setObjectName(String a){s1=a; setMessage("(missing-parameter "+s1+" "+s2+")");}
 public String getObjectName() {return s1;}
 public void setParameterName(String a){s2=a; setMessage("(missing-parameter "+s1+" "+s2+")");}

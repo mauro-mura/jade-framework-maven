@@ -100,9 +100,9 @@ public class AgentTree extends JPanel {
 		protected String name;
 		protected String state;
 		protected String ownership;
-		protected boolean greyOut = false;
+		protected boolean greyOut;
 
-		public Node(String name) {
+		protected Node(String name) {
 			this.name = name;
 		}
 
@@ -112,8 +112,10 @@ public class AgentTree extends JPanel {
 				ImageFilter colorfilter = new MyFilterImage();
 				Image imageFiltered = createImage(new FilteredImageSource(image.getSource(), colorfilter));
 				return new ImageIcon(imageFiltered);
-			} else
+			}
+			else {
 				return new ImageIcon(image);
+			}
 		}
 
 		public String getName() {
@@ -141,13 +143,13 @@ public class AgentTree extends JPanel {
 		}
 
 		public void changeIcon(String agentState) {
-			if (agentState.equalsIgnoreCase("suspended")) {
+			if ("suspended".equalsIgnoreCase(agentState)) {
 				greyOut = true;
 				setType(AGENT_TYPE);
-			} else if (agentState.equalsIgnoreCase("active")) {
+			} else if ("active".equalsIgnoreCase(agentState)) {
 				greyOut = false;
 				setType(AGENT_TYPE);
-			} else if (agentState.equalsIgnoreCase("frozen")) {
+			} else if ("frozen".equalsIgnoreCase(agentState)) {
 				greyOut = false;
 				setType(FROZEN_AGENT_TYPE);
 			}
@@ -160,7 +162,7 @@ public class AgentTree extends JPanel {
 		public abstract String getToolTipText();
 
 		public String toString() {
-			return (getType() != null ? getType() + "-" + name : name);
+			return getType() != null ? getType() + "-" + name : name;
 		}
 
 		public int compareTo(Node n) {
@@ -200,7 +202,7 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("Local Agent");
+			return "Local Agent";
 		}
 	} // END of inner class AgentNode
 
@@ -232,10 +234,12 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			if (addressmachine != null)
+			if (addressmachine != null) {
 				return name + " " + "[" + addressmachine.getHostAddress() + "]";
-			else
+			}
+			else {
 				return name + " " + "[???:???:???:???]";
+			}
 		}
 	} // END of inner class ContainerNode
 
@@ -252,7 +256,7 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("Java Agent DEvelopment Framework");
+			return "Java Agent DEvelopment Framework";
 		}
 
 		public String getType() {
@@ -276,14 +280,14 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("List of RemotePlatforms");
+			return "List of RemotePlatforms";
 		}
 
 		public void setType(String noType) {
 		}
 
 		public String getType() {
-			return (REMOTE_PLATFORMS_FOLDER_TYPE);
+			return REMOTE_PLATFORMS_FOLDER_TYPE;
 		}
 	} // END of inner class RemotePlatformsFolderNode
 
@@ -300,7 +304,7 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("Local JADE Platform");
+			return "Local JADE Platform";
 		}
 
 		public void setType(String noType) {
@@ -326,7 +330,7 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("Remote Platform");
+			return "Remote Platform";
 		}
 
 		public void setType(String noType) {
@@ -367,14 +371,14 @@ public class AgentTree extends JPanel {
 		}
 
 		public String getToolTipText() {
-			return ("Remote Agent");
+			return "Remote Agent";
 		}
 
 		public void setType(String noType) {
 		}
 
 		public String getType() {
-			return ("REMOTEAGENT");
+			return "REMOTEAGENT";
 		}
 
 		public void setAMSDescription(AMSAgentDescription id) {
@@ -442,10 +446,10 @@ public class AgentTree extends JPanel {
 	 * @deprecated Use createAgentNode() and createContainerNode() instead
 	 */
 	public AgentTree.Node createNewNode(String name, int i) {
-		switch (i) {
-		case 0:
+		if (i == 0) {
 			return new AgentTree.ContainerNode(name);
-		case 1:
+		}
+		else if (i == 1) {
 			return new AgentTree.AgentNode(name);
 		}
 		return null;
@@ -558,16 +562,15 @@ public class AgentTree extends JPanel {
 		while (children.hasMoreElements() & (!existing)) {
 			AgentTree.Node node = (AgentTree.Node) children.nextElement();
 			String nodeName = node.getName();
-			if (nodeName.equalsIgnoreCase(REMOTE_PLATFORMS_FOLDER_NAME))
+			if (REMOTE_PLATFORMS_FOLDER_NAME.equalsIgnoreCase(nodeName)) {
 				existing = true;
+			}
 		}
 
 		if (!existing) {
 			RemotePlatformsFolderNode rpn = new RemotePlatformsFolderNode(REMOTE_PLATFORMS_FOLDER_NAME);
 			model.insertNodeInto(rpn, root, root.getChildCount());
 		}
-
-		return;
 	}
 
 	public void addAgentNode(String agentName, String agentAddress, String containerName) {
@@ -698,10 +701,12 @@ public class AgentTree extends JPanel {
 							AgentTree.Node agent = (AgentTree.Node) agents.nextElement();
 
 							if (agent.getName().equalsIgnoreCase(agentName)) {
-								if (state != null)
+								if (state != null) {
 									agent.setState(state);
-								if (ownership != null)
+								}
+								if (ownership != null) {
 									agent.setOwnership(ownership);
+								}
 								agent.changeIcon(state);
 								model.nodeChanged(agent);
 								return;
@@ -807,7 +812,7 @@ public class AgentTree extends JPanel {
 		while (containers.hasMoreElements()) {// 1
 			AgentTree.Node container = (AgentTree.Node) containers.nextElement();
 			String contName = container.getName();
-			if (contName.equalsIgnoreCase(REMOTE_PLATFORMS_FOLDER_NAME)) {// 2
+			if (REMOTE_PLATFORMS_FOLDER_NAME.equalsIgnoreCase(contName)) {// 2
 				boolean found = false;
 				Enumeration<?> agents = container.children();
 				while (agents.hasMoreElements() && !found) {// 3
@@ -839,7 +844,7 @@ public class AgentTree extends JPanel {
 		while (containers.hasMoreElements()) {
 			AgentTree.Node container = (AgentTree.Node) containers.nextElement();
 			String contName = container.getName();
-			if (contName.equalsIgnoreCase(REMOTE_PLATFORMS_FOLDER_NAME)) {
+			if (REMOTE_PLATFORMS_FOLDER_NAME.equalsIgnoreCase(contName)) {
 				// Search for the ams
 				Enumeration<?> agents = container.children();
 				while (agents.hasMoreElements()) {
@@ -848,8 +853,9 @@ public class AgentTree extends JPanel {
 					if (agName.equalsIgnoreCase(name)) {
 						model.removeNodeFromParent(agent);
 						// if it's the last child remove the folder REMOTEPLATFORMS
-						if (container.getChildCount() == 0)
+						if (container.getChildCount() == 0) {
 							model.removeNodeFromParent(container);
+						}
 						return;
 					}
 				}
@@ -870,7 +876,7 @@ public class AgentTree extends JPanel {
 			AgentTree.Node container = (AgentTree.Node) containers.nextElement();
 			String contName = container.getName();
 
-			if (contName.equalsIgnoreCase(REMOTE_PLATFORMS_FOLDER_NAME)) {
+			if (REMOTE_PLATFORMS_FOLDER_NAME.equalsIgnoreCase(contName)) {
 				// search the remotePlatform
 				Enumeration<?> plat_Enum = container.children();
 
@@ -916,7 +922,7 @@ public class AgentTree extends JPanel {
 			AgentTree.Node container = (AgentTree.Node) containers.nextElement();
 			String contName = container.getName();
 
-			if (contName.equalsIgnoreCase(REMOTE_PLATFORMS_FOLDER_NAME)) {
+			if (REMOTE_PLATFORMS_FOLDER_NAME.equalsIgnoreCase(contName)) {
 				// search the remotePlatform
 				Enumeration<?> plat_Enum = container.children();
 
@@ -950,8 +956,9 @@ public class AgentTree extends JPanel {
 	}
 
 	public AgentTreeModel getModel() {
-		if (tree.getModel() instanceof AgentTreeModel)
+		if (tree.getModel() instanceof AgentTreeModel) {
 			return (AgentTreeModel) tree.getModel();
+		}
 		else {
 			System.out.println(tree.getModel());
 			return null;
@@ -1022,7 +1029,7 @@ public class AgentTree extends JPanel {
 		Enumeration<?> agents = container.children();
 		while (agents.hasMoreElements()) {
 			AgentTree.Node child = (AgentTree.Node) agents.nextElement();
-			if (child.getName().equalsIgnoreCase(name) && child.getType().equalsIgnoreCase(FROZEN_CONTAINER_TYPE)) {
+			if (child.getName().equalsIgnoreCase(name) && FROZEN_CONTAINER_TYPE.equalsIgnoreCase(child.getType())) {
 				return child;
 			}
 		}

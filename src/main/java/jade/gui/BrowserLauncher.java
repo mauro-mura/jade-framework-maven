@@ -50,7 +50,7 @@ import java.lang.reflect.Method;
  * @author Eric Albert (<a href="mailto:ejalbert@cs.stanford.edu">ejalbert@cs.stanford.edu</a>)
  * @version 1.2 (Released July 28, 1999)
  */
-public class BrowserLauncher {
+public final class BrowserLauncher {
 
 	/**
 	 * The Java virtual machine that we are running on.  Actually, in most cases we only care
@@ -236,69 +236,67 @@ public class BrowserLauncher {
 	 *			<code>false</code> if any portion of the initialization failed
 	 */
 	private static boolean loadClasses() {
-		switch (jvm) {
-			case MRJ_2_0:
-				try {
-					Class<?> aeTargetClass = Class.forName("com.apple.MacOS.AETarget");
-					macOSErrorClass = Class.forName("com.apple.MacOS.MacOSError");
-					Class<?> osUtilsClass = Class.forName("com.apple.MacOS.OSUtils");
-					Class<?> appleEventClass = Class.forName("com.apple.MacOS.AppleEvent");
-					Class<?> aeClass = Class.forName("com.apple.MacOS.ae");
-					aeDescClass = Class.forName("com.apple.MacOS.AEDesc");
+		if (jvm == MRJ_2_0) {
+			try {
+				Class<?> aeTargetClass = Class.forName("com.apple.MacOS.AETarget");
+				macOSErrorClass = Class.forName("com.apple.MacOS.MacOSError");
+				Class<?> osUtilsClass = Class.forName("com.apple.MacOS.OSUtils");
+				Class<?> appleEventClass = Class.forName("com.apple.MacOS.AppleEvent");
+				Class<?> aeClass = Class.forName("com.apple.MacOS.ae");
+				aeDescClass = Class.forName("com.apple.MacOS.AEDesc");
 
-					aeTargetConstructor = aeTargetClass.getDeclaredConstructor(new Class [] { int.class });
-					appleEventConstructor = appleEventClass.getDeclaredConstructor(new Class[] { int.class, int.class, aeTargetClass, int.class, int.class });
-					aeDescConstructor = aeDescClass.getDeclaredConstructor(new Class[] { String.class });
+				aeTargetConstructor = aeTargetClass.getDeclaredConstructor(new Class []{int.class});
+				appleEventConstructor = appleEventClass.getDeclaredConstructor(new Class[]{int.class, int.class, aeTargetClass, int.class, int.class});
+				aeDescConstructor = aeDescClass.getDeclaredConstructor(new Class[]{String.class});
 
-					makeOSType = osUtilsClass.getDeclaredMethod("makeOSType", new Class [] { String.class });
-					putParameter = appleEventClass.getDeclaredMethod("putParameter", new Class[] { int.class, aeDescClass });
-					sendNoReply = appleEventClass.getDeclaredMethod("sendNoReply", new Class[] { });
+				makeOSType = osUtilsClass.getDeclaredMethod("makeOSType", new Class []{String.class});
+				putParameter = appleEventClass.getDeclaredMethod("putParameter", new Class[]{int.class, aeDescClass});
+				sendNoReply = appleEventClass.getDeclaredMethod("sendNoReply", new Class[]{});
 
-					Field keyDirectObjectField = aeClass.getDeclaredField("keyDirectObject");
-					keyDirectObject = (Integer) keyDirectObjectField.get(null);
-					Field autoGenerateReturnIDField = appleEventClass.getDeclaredField("kAutoGenerateReturnID");
-					kAutoGenerateReturnID = (Integer) autoGenerateReturnIDField.get(null);
-					Field anyTransactionIDField = appleEventClass.getDeclaredField("kAnyTransactionID");
-					kAnyTransactionID = (Integer) anyTransactionIDField.get(null);
-				} catch (ClassNotFoundException cnfe) {
-					errorMessage = cnfe.getMessage();
-					return false;
-				} catch (NoSuchMethodException nsme) {
-					errorMessage = nsme.getMessage();
-					return false;
-				} catch (NoSuchFieldException nsfe) {
-					errorMessage = nsfe.getMessage();
-					return false;
-				} catch (IllegalAccessException iae) {
-					errorMessage = iae.getMessage();
-					return false;
-				}
-				break;
-			case MRJ_2_1:
-				try {
-					mrjFileUtilsClass = Class.forName("com.apple.mrj.MRJFileUtils");
-					mrjOSTypeClass = Class.forName("com.apple.mrj.MRJOSType");
-					Field systemFolderField = mrjFileUtilsClass.getDeclaredField("kSystemFolderType");
-					kSystemFolderType = systemFolderField.get(null);
-					findFolder = mrjFileUtilsClass.getDeclaredMethod("findFolder", new Class[] { mrjOSTypeClass });
-					getFileType = mrjFileUtilsClass.getDeclaredMethod("getFileType", new Class[] { File.class });
-				} catch (ClassNotFoundException cnfe) {
-					errorMessage = cnfe.getMessage();
-					return false;
-				} catch (NoSuchFieldException nsfe) {
-					errorMessage = nsfe.getMessage();
-					return false;
-				} catch (NoSuchMethodException nsme) {
-					errorMessage = nsme.getMessage();
-					return false;
-				} catch (SecurityException se) {
-					errorMessage = se.getMessage();
-					return false;
-				} catch (IllegalAccessException iae) {
-					errorMessage = iae.getMessage();
-					return false;
-				}
-				break;
+				Field keyDirectObjectField = aeClass.getDeclaredField("keyDirectObject");
+				keyDirectObject = (Integer) keyDirectObjectField.get(null);
+				Field autoGenerateReturnIDField = appleEventClass.getDeclaredField("kAutoGenerateReturnID");
+				kAutoGenerateReturnID = (Integer) autoGenerateReturnIDField.get(null);
+				Field anyTransactionIDField = appleEventClass.getDeclaredField("kAnyTransactionID");
+				kAnyTransactionID = (Integer) anyTransactionIDField.get(null);
+			} catch (ClassNotFoundException cnfe) {
+				errorMessage = cnfe.getMessage();
+				return false;
+			} catch (NoSuchMethodException nsme) {
+				errorMessage = nsme.getMessage();
+				return false;
+			} catch (NoSuchFieldException nsfe) {
+				errorMessage = nsfe.getMessage();
+				return false;
+			} catch (IllegalAccessException iae) {
+				errorMessage = iae.getMessage();
+				return false;
+			}
+		}
+		else if (jvm == MRJ_2_1) {
+			try {
+				mrjFileUtilsClass = Class.forName("com.apple.mrj.MRJFileUtils");
+				mrjOSTypeClass = Class.forName("com.apple.mrj.MRJOSType");
+				Field systemFolderField = mrjFileUtilsClass.getDeclaredField("kSystemFolderType");
+				kSystemFolderType = systemFolderField.get(null);
+				findFolder = mrjFileUtilsClass.getDeclaredMethod("findFolder", new Class[]{mrjOSTypeClass});
+				getFileType = mrjFileUtilsClass.getDeclaredMethod("getFileType", new Class[]{File.class});
+			} catch (ClassNotFoundException cnfe) {
+				errorMessage = cnfe.getMessage();
+				return false;
+			} catch (NoSuchFieldException nsfe) {
+				errorMessage = nsfe.getMessage();
+				return false;
+			} catch (NoSuchMethodException nsme) {
+				errorMessage = nsme.getMessage();
+				return false;
+			} catch (SecurityException se) {
+				errorMessage = se.getMessage();
+				return false;
+			} catch (IllegalAccessException iae) {
+				errorMessage = iae.getMessage();
+				return false;
+			}
 		}
 		return true;
 	}
@@ -321,13 +319,12 @@ public class BrowserLauncher {
 					Integer finderCreatorCode = (Integer) makeOSType.invoke(null, new Object[] { FINDER_CREATOR });
 					Object aeTarget = aeTargetConstructor.newInstance(new Object[] { finderCreatorCode });
 					Integer gurlType = (Integer) makeOSType.invoke(null, new Object[] { GURL_EVENT });
-					Object appleEvent = appleEventConstructor.newInstance(new Object[] { gurlType, gurlType, aeTarget, kAutoGenerateReturnID, kAnyTransactionID });
 					// Don't set browser = appleEvent because then the next time we call
 					// locateBrowser(), we'll get the same AppleEvent, to which we'll already have
 					// added the relevant parameter. Instead, regenerate the AppleEvent every time.
 					// There's probably a way to do this better; if any has any ideas, please let
 					// me know.
-					return appleEvent;
+					return appleEventConstructor.newInstance(new Object[] { gurlType, gurlType, aeTarget, kAutoGenerateReturnID, kAnyTransactionID });
 				} catch (IllegalAccessException iae) {
 					browser = null;
 					errorMessage = iae.getMessage();

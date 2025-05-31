@@ -13,7 +13,7 @@ import jade.mtp.TransportAddress;
  *
  */
 public class TransportAddressWrapper {
-	private TransportAddress myTA;
+	private final TransportAddress myTA;
 	private int hashCode;
 	
 	public TransportAddressWrapper(TransportAddress t) {
@@ -33,8 +33,8 @@ public class TransportAddressWrapper {
 				hashCode = 0;
 			}
 		}
-		hashCode += (myTA.getProto() != null ? myTA.getProto().hashCode() : 0);
-		hashCode += (myTA.getPort() != null ? myTA.getPort().hashCode() : 0);
+		hashCode += myTA.getProto() != null ? myTA.getProto().hashCode() : 0;
+		hashCode += myTA.getPort() != null ? myTA.getPort().hashCode() : 0;
 	}
 	
 	public static TransportAddressWrapper getWrapper(String stringifiedTransportAddress, IMTPManager imtpManager) throws IMTPException {

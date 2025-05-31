@@ -65,7 +65,7 @@ public class TreeHelp extends JDialog {
     /**
     @serial
 	  */
-    private boolean playWithLineStyle = false;
+    private boolean playWithLineStyle;
     /**
     @serial
 	  */

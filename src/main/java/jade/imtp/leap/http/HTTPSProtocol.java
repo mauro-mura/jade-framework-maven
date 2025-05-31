@@ -17,7 +17,7 @@ public class HTTPSProtocol extends HTTPProtocol {
   public static final String NAME = "https";
   public static final int    DEFAULT_PORT = 443;
 
-  private static HTTPSProtocol theInstance = new HTTPSProtocol();
+	private static final HTTPSProtocol theInstance = new HTTPSProtocol();
 
   public static HTTPSProtocol getInstance() {
   	return theInstance;

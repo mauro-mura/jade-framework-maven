@@ -62,9 +62,9 @@ public class ExtendedProperties extends Properties {
 
 	public static final String IMPORT_KEY="import";
 
-	boolean CRState = false;
+	boolean CRState;
 	Hashtable keyNames = new Hashtable();  // for detecting circular definitions
-	Vector sortVector = null;   // only used by sortedKeys
+	Vector sortVector;   // only used by sortedKeys
 
 	private Logger logger = Logger.getMyLogger(getClass().getName());
 	
@@ -230,14 +230,18 @@ public class ExtendedProperties extends Properties {
 		int idxA = propStr.indexOf('=');
 		int idxB = propStr.indexOf(':');
 
-		if (idxA == -1)  // key:value 
+		if (idxA == -1) {  // key:value 
 			return idxB;
-		if (idxB == -1)  // key=value
+		}
+		if (idxB == -1) {  // key=value
 			return idxA;
-		if (idxA < idxB) // key=value with :
+		}
+		if (idxA < idxB) { // key=value with :
 			return idxA;
-		else             // key:value with =
-			return idxB;   
+		}
+		else {             // key:value with =
+			return idxB;
+		}   
 	}
 
 	/**
@@ -282,7 +286,7 @@ public class ExtendedProperties extends Properties {
 	public Object get(Object aKey) {
 		Object value = null;
 		if (aKey instanceof String strKey) {
-			String testKey = (strKey.endsWith("!")) ? strKey.substring(0, strKey.length()) : strKey;
+			String testKey = strKey.endsWith("!") ? strKey.substring(0, strKey.length()) : strKey;
 			// Try WITHOUT the '!' for sure
 			value = super.get(testKey);
 			if (value == null) {
@@ -325,14 +329,14 @@ public class ExtendedProperties extends Properties {
 			String actualKey = doSubstitutions(string);
 	
 			// aKey may have the form kkk or kkk!. In both cases if a property with key = kkk! exists throws an exception
-			String testKey = (actualKey.endsWith("!")) ? actualKey.substring(0, actualKey.length()) : actualKey;
+			String testKey = actualKey.endsWith("!") ? actualKey.substring(0, actualKey.length()) : actualKey;
 			if (super.containsKey(testKey + "!")) {
 				throw new PropertiesException("Attempt to alter read only property:" + testKey);
 			}
 			
 			// If the key to be inserted is the "import" key, do not insert it, but add all properties 
 			// defined in the indicated import file
-			if (actualKey.equals(IMPORT_KEY) && aValue != null) {
+			if (IMPORT_KEY.equals(actualKey) && aValue != null) {
 				String importFile = doSubstitutions(aValue.toString());
 				try {
 					// Try in the classpath first
@@ -432,7 +436,7 @@ public class ExtendedProperties extends Properties {
 	 */
 	public String getRawProperty(String aKey) {
 		Object data = super.get(aKey);
-		return (data != null) ? data.toString() : null;
+		return data != null ? data.toString() : null;
 	}
 
 	/**
@@ -466,10 +470,10 @@ public class ExtendedProperties extends Properties {
 	 * @return String New potentially altered value. 
 	 */
 	protected String valueFilter(String key, String value) {
-		if (key.toLowerCase().indexOf("path") >= 0) {    // convert separators to be correct for this system
+		if (key.toLowerCase().contains("path")) {    // convert separators to be correct for this system
 			String correctSeparator = System.getProperty("path.separator");
 
-			if (correctSeparator.equals(";")) {
+			if (";".equals(correctSeparator)) {
 				value = value.replace('|', ';');
 			} else {
 				value = value.replace('|', ':');
@@ -520,7 +524,7 @@ public class ExtendedProperties extends Properties {
 		try {
 			String value = getProperty(aKey);
 
-			result = value.equalsIgnoreCase("true");
+			result = "true".equalsIgnoreCase(value);
 		} catch (Exception e) {}
 
 		return result;
@@ -532,7 +536,7 @@ public class ExtendedProperties extends Properties {
 	 * @param aValue The boolean value.
 	 */
 	public void setBooleanProperty(String aKey, boolean aValue) {
-		setProperty(aKey, (aValue) ? "true" : "false");
+		setProperty(aKey, aValue ? "true" : "false");
 	}
 
 	/**
@@ -595,7 +599,7 @@ public class ExtendedProperties extends Properties {
 				// Try as another property first (this allows the user to override system or environment setting)
 				String value = getProperty(key, null);
 
-				if ((value == null)) {
+				if (value == null) {
 					// Not found --> Try as a System property (java -D....) 
 					value = System.getProperty(key);
 
@@ -709,7 +713,7 @@ public class ExtendedProperties extends Properties {
 			}
 		} while (continued);
 
-		return (sb == null) ? null : sb.toString();
+		return sb == null ? null : sb.toString();
 	}
 
 	/**

@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class RefreshAPDescriptionAction extends PlatformAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public RefreshAPDescriptionAction(rma anRMA, ActionProcessor actPro) {
     super ("RefreshAPDescriptionIcon", "Refresh AP Description", actPro);

@@ -151,7 +151,9 @@ public class XMLManager {
 		}
 		finally {
 			//flush and close both "output" and its underlying FileWriter
-			if (output != null) output.close();
+			if (output != null) {
+				output.close();
+			}
 		}
 	}
 }

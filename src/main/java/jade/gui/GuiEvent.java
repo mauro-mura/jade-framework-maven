@@ -49,7 +49,7 @@ public class GuiEvent {
 	protected int type;
 	// #APIDOC_EXCLUDE_END
 
-	private List parameters;
+	private final List parameters;
 
 	/**
 	 * Create a GUI event.
@@ -69,7 +69,7 @@ public class GuiEvent {
 	 * @return The kind of this event.
 	 */
 	public int getType() {
-		return (type);
+		return type;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class GuiEvent {
 	 * @return The event source, or <code>null</code> if no source was set.
 	 */
 	public Object getSource() {
-		return (source);
+		return source;
 	}
 
 	/**

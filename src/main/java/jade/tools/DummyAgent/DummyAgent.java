@@ -40,7 +40,7 @@ public class DummyAgent extends Agent
 {
 	private transient DummyAgentGui myGui;
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		DummyAgent d = new DummyAgent();
 		d.setup();
 	}

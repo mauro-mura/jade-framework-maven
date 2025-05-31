@@ -196,29 +196,29 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	@Serial
 	private static final long serialVersionUID = 792052289213315239L;
 	// FIXME The size of the cache must be read from the Profile
-	private final static int SEARCH_ID_CACHE_SIZE = 16;
-	private jade.util.HashCache searchIdCache = new jade.util.HashCache(SEARCH_ID_CACHE_SIZE);
-	private int searchIdCnt = 0;
+	private static final int SEARCH_ID_CACHE_SIZE = 16;
+	private final jade.util.HashCache searchIdCache = new jade.util.HashCache(SEARCH_ID_CACHE_SIZE);
+	private int searchIdCnt;
 
 	// The DF federated with this DF
-	private List children = new ArrayList<>();
+	private final List children = new ArrayList<>();
 	// The DF this DF is federated with
-	private List parents = new ArrayList<>();
+	private final List parents = new ArrayList<>();
 	// Maps a parent DF to the description used by this DF to federate with that
 	// parent
-	private HashMap dscDFParentMap = new HashMap<>();
+	private final HashMap dscDFParentMap = new HashMap<>();
 	// Maps an action that is being serviced by a Behaviour to the
 	// request message that activated the Behaviour and the notification message
 	// to be sent back (as soon as the Behaviour will complete) to the requester
-	private HashMap pendingRequests = new HashMap<>();
+	private final HashMap pendingRequests = new HashMap<>();
 
 	// The GUI of this DF
 	private DFGUIInterface gui;
 
 	// Current description of this df
-	private DFAgentDescription myDescription = null;
+	private DFAgentDescription myDescription;
 
-	private Codec codec = new SLCodec();
+	private final Codec codec = new SLCodec();
 
 	// #PJAVA_EXCLUDE_BEGIN
 	// This is used in case a pool-size != 0 is specified to serve FIPA requests
@@ -255,10 +255,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 * if no value is set in the Profile, then DEFAULT_MAX_RESULTS is used instead.
 	 */
 	private int maxResultLimit = Integer.parseInt(DEFAULT_MAX_RESULTS);
-	private Date maxLeaseTime = null;
+	private Date maxLeaseTime;
 
-	private KB agentDescriptions = null;
-	private KBSubscriptionManager subManager = null;
+	private KB agentDescriptions;
+	private KBSubscriptionManager subManager;
 	private SubscriptionResponder dfSubscriptionResponder;
 
 	private Logger logger;
@@ -360,7 +360,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 				Object o = Class.forName(kbFactClass).getDeclaredConstructor().newInstance();
 				if (o instanceof DFKBFactory factory) {
 					kbFactory = factory;
-					sb.append("- Factory class = " + kbFactClass);
+					sb.append("- Factory class = ").append(kbFactClass);
 					sb.append('\n');
 				} else {
 					logger.log(Logger.SEVERE, "Agent " + getLocalName() + " - The class " + kbFactClass
@@ -402,13 +402,13 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		if (agentDescriptions == null && dbUrl != null) {
 			if (logger.isLoggable(Logger.CONFIG)) {
 				sb.append("- Type = persistent\n");
-				sb.append("- DB url = " + dbUrl);
+				sb.append("- DB url = ").append(dbUrl);
 				sb.append('\n');
-				sb.append("- DB driver = " + dbDriver);
+				sb.append("- DB driver = ").append(dbDriver);
 				sb.append('\n');
-				sb.append("- DB username = " + dbUsername);
+				sb.append("- DB username = ").append(dbUsername);
 				sb.append('\n');
-				sb.append("- DB password = " + dbPassword);
+				sb.append("- DB password = ").append(dbPassword);
 				sb.append('\n');
 			}
 			try {
@@ -533,9 +533,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 						s.close();
 					}
 				} catch (Exception e) {
-					if (logger.isLoggable(Logger.CONFIG))
+					if (logger.isLoggable(Logger.CONFIG)) {
 						logger.log(Logger.CONFIG,
-								"Agent " + getLocalName() + " - Unknown CANCEL content. Use default handler");
+							"Agent " + getLocalName() + " - Unknown CANCEL content. Use default handler");
+					}
 					super.handleCancel(cancel);
 				}
 				return null;
@@ -579,7 +580,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 			}
 
 			public boolean isExpired(Date lease) {
-				return (lease != null && (lease.getTime() <= System.currentTimeMillis()));
+				return lease != null && (lease.getTime() <= System.currentTimeMillis());
 			}
 		});
 
@@ -620,7 +621,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 						try {
 							DFAgentDescription dfd = new DFAgentDescription();
 							dfd.setName(id);
-							DFDeregister(dfd);
+							dFDeregister(dfd);
 						} catch (Exception e) {
 							// Just do nothing
 						}
@@ -675,7 +676,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	}
 
 	private String getValue(String s) {
-		return (s != null ? s : "null");
+		return s != null ? s : "null";
 	}
 
 	/**
@@ -733,7 +734,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		// New globally unique search-id unless already present
 		String searchId = constraints.getSearchId();
 		if (searchId == null) {
-			searchId = getName() + String.valueOf(searchIdCnt++) + System.currentTimeMillis();
+			searchId = getName() + searchIdCnt++ + System.currentTimeMillis();
 			if (searchIdCnt >= SEARCH_ID_CACHE_SIZE) {
 				searchIdCnt = 0;
 			}
@@ -741,10 +742,11 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		}
 		newConstr.setSearchId(searchId);
 
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Activating recursive search: "
-					+ localResults.size() + " item(s) found locally. " + maxRes + " expected. Search depth is " + maxDep
-					+ ". Search ID is " + searchId + ". Propagating search to " + children.size() + " federated DF(s)");
+				+ localResults.size() + " item(s) found locally. " + maxRes + " expected. Search depth is " + maxDep
+				+ ". Search ID is " + searchId + ". Propagating search to " + children.size() + " federated DF(s)");
+		}
 
 		// Add the behaviour handling the search on federated DFs
 		addBehaviour(new RecursiveSearchHandler(localResults, dfd, newConstr, action));
@@ -754,7 +756,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 * Inner class RecursiveSearchHandler. This is a behaviour handling recursive
 	 * searches i.e. searches that must be propagated to children (federated) DFs.
 	 */
-	private class RecursiveSearchHandler extends AchieveREInitiator {
+	private final class RecursiveSearchHandler extends AchieveREInitiator {
 		private static final long DEFAULTTIMEOUT = 300000; // 5 minutes
 
 		private List results;
@@ -817,9 +819,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		 * successive replies.
 		 */
 		protected void handleInform(ACLMessage inform) {
-			if (logger.isLoggable(Logger.CONFIG))
+			if (logger.isLoggable(Logger.CONFIG)) {
 				logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Recursive search result received from "
-						+ inform.getSender().getName() + ".");
+					+ inform.getSender().getName() + ".");
+			}
 			int cnt = 0;
 			if (receivedResults < maxExpectedResults) {
 				try {
@@ -835,45 +838,51 @@ public class df extends GuiAgent implements DFGUIAdapter {
 						}
 					}
 				} catch (Exception e) {
-					if (logger.isLoggable(Logger.SEVERE))
+					if (logger.isLoggable(Logger.SEVERE)) {
 						logger.log(Logger.SEVERE,
-								"Agent " + getLocalName() + " - Error decoding reply from federated DF "
-										+ inform.getSender().getName() + " during recursive search [" + e.toString()
-										+ "].");
+							"Agent " + getLocalName() + " - Error decoding reply from federated DF "
+								+ inform.getSender().getName() + " during recursive search [" + e.toString()
+								+ "].");
+					}
 				}
 			}
-			if (logger.isLoggable(Logger.CONFIG))
+			if (logger.isLoggable(Logger.CONFIG)) {
 				logger.log(Logger.CONFIG,
-						"Agent " + getLocalName() + " - " + cnt + " new items found in recursive search.");
+					"Agent " + getLocalName() + " - " + cnt + " new items found in recursive search.");
+			}
 		}
 
 		protected void handleRefuse(ACLMessage refuse) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Agent " + getLocalName() + " - REFUSE received from federated DF "
-						+ refuse.getSender().getName() + " during recursive search.");
+					+ refuse.getSender().getName() + " during recursive search.");
+			}
 		}
 
 		protected void handleFailure(ACLMessage failure) {
 			// FIXME: In general this is due to a federation loop (search-id already used)
 			// In this case no warning must be printed --> We should use FINE log level in
 			// that case
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Agent " + getLocalName() + " - FAILURE received from federated DF "
-						+ failure.getSender().getName() + " during recursive search.");
+					+ failure.getSender().getName() + " during recursive search.");
+			}
 		}
 
 		protected void handleNotUnderstood(ACLMessage notUnderstood) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Agent " + getLocalName() + " - NOT_UNDERSTOOD received from federated DF "
-						+ notUnderstood.getSender().getName() + " during recursive search.");
+					+ notUnderstood.getSender().getName() + " during recursive search.");
+			}
 		}
 
 		protected void handleOutOfSequence(ACLMessage msg) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING,
-						"Agent " + getLocalName() + " - Out of sequence message "
-								+ ACLMessage.getPerformative(msg.getPerformative()) + " received from "
-								+ msg.getSender().getName() + " during recursive search.");
+					"Agent " + getLocalName() + " - Out of sequence message "
+						+ ACLMessage.getPerformative(msg.getPerformative()) + " received from "
+						+ msg.getSender().getName() + " during recursive search.");
+			}
 		}
 
 		public int onEnd() {
@@ -902,17 +911,19 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	// Methods actually accessing the DF Knowledge base
 	//////////////////////////////////////////////////////
 
-	protected void DFRegister(DFAgentDescription dfd) throws AlreadyRegistered {
+	protected void dFRegister(DFAgentDescription dfd) throws AlreadyRegistered {
 
 		// checkMandatorySlots(FIPAAgentManagementOntology.REGISTER, dfd);
 		Object old = agentDescriptions.register(dfd.getName(), dfd);
-		if (old != null)
+		if (old != null) {
 			throw new AlreadyRegistered();
+		}
 
 		if (isADF(dfd)) {
-			if (logger.isLoggable(Logger.INFO))
+			if (logger.isLoggable(Logger.INFO)) {
 				logger.log(Logger.INFO, "Agent " + getLocalName() + " - Added federation " + dfd.getName().getName()
-						+ " --> " + getName());
+					+ " --> " + getName());
+			}
 			children.add(dfd.getName());
 			try {
 				gui.addChildren(dfd.getName());
@@ -932,12 +943,13 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 	// this method is called into the prepareResponse of the
 	// DFFipaAgentManagementBehaviour to perform a Deregister action
-	protected void DFDeregister(DFAgentDescription dfd) throws NotRegistered {
+	protected void dFDeregister(DFAgentDescription dfd) throws NotRegistered {
 		// checkMandatorySlots(FIPAAgentManagementOntology.DEREGISTER, dfd);
 		Object old = agentDescriptions.deregister(dfd.getName());
 
-		if (old == null)
+		if (old == null) {
 			throw new NotRegistered();
+		}
 
 		if (children.remove(dfd.getName())) {
 			try {
@@ -959,7 +971,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		}
 	}
 
-	protected void DFModify(DFAgentDescription dfd) throws NotRegistered {
+	protected void dFModify(DFAgentDescription dfd) throws NotRegistered {
 		// checkMandatorySlots(FIPAAgentManagementOntology.MODIFY, dfd);
 		Object old = agentDescriptions.register(dfd.getName(), dfd);
 		if (old == null) {
@@ -978,11 +990,11 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 	}
 
-	protected List DFSearch(DFAgentDescription dfd, int maxResults) {
+	protected List dFSearch(DFAgentDescription dfd, int maxResults) {
 		return agentDescriptions.search(dfd, maxResults);
 	}
 
-	protected KBIterator DFIteratedSearch(DFAgentDescription dfd) {
+	protected KBIterator dFIteratedSearch(DFAgentDescription dfd) {
 		return agentDescriptions.iterator(dfd);
 	}
 
@@ -998,9 +1010,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 		// Check mandatory slots
 		DFService.checkIsValid(dfd, true);
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester.getName()
-					+ " requesting action Register for " + dfd.getName());
+				+ " requesting action Register for " + dfd.getName());
+		}
 
 		// Avoid autoregistration
 		if (dfd.getName().equals(getAID())) {
@@ -1008,7 +1021,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		}
 
 		// Do it
-		DFRegister(dfd);
+		dFRegister(dfd);
 	}
 
 	/**
@@ -1019,12 +1032,13 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 		// Check mandatory slots
 		DFService.checkIsValid(dfd, false);
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester.getName()
-					+ " requesting action Deregister for " + dfd.getName());
+				+ " requesting action Deregister for " + dfd.getName());
+		}
 
 		// Do it
-		DFDeregister(dfd);
+		dFDeregister(dfd);
 	}
 
 	/**
@@ -1035,12 +1049,13 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 		// Check mandatory slots
 		DFService.checkIsValid(dfd, true);
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester.getName()
-					+ " requesting action Modify for " + dfd.getName());
+				+ " requesting action Modify for " + dfd.getName());
+		}
 
 		// Do it
-		DFModify(dfd);
+		dFModify(dfd);
 	}
 
 	/**
@@ -1056,9 +1071,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		SearchConstraints constraints = s.getConstraints();
 		List result = null;
 
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG,
-					"Agent " + getLocalName() + " - Agent " + requester.getName() + " requesting action Search");
+				"Agent " + getLocalName() + " - Agent " + requester.getName() + " requesting action Search");
+		}
 
 		// Avoid loops in searching on federated DFs
 		checkSearchId(constraints.getSearchId());
@@ -1066,7 +1082,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		int maxResult = getActualMaxResults(constraints);
 
 		// Search locally
-		result = DFSearch(dfd, maxResult);
+		result = dFSearch(dfd, maxResult);
 
 		// Note that if the local search produced more results than
 		// required, we don't even consider the recursive search
@@ -1075,7 +1091,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 			// Check if the search has to be propagated
 			Long maxDepth = constraints.getMaxDepth();
-			if ((children.size() > 0) && (maxDepth != null) && (maxDepth.intValue() > 0)) {
+			if ((!children.isEmpty()) && (maxDepth != null) && (maxDepth.intValue() > 0)) {
 				// Start a recursive search.
 				performRecursiveSearch(result, dfd, constraints, s);
 				// The final result will be available at a later time.
@@ -1095,11 +1111,12 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	protected KBIterator iteratedSearchAction(Search s, AID requester) throws FIPAException {
 		DFAgentDescription dfd = (DFAgentDescription) s.getDescription();
 
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester.getName()
-					+ " requesting action Iterated-Search");
+				+ " requesting action Iterated-Search");
+		}
 
-		return DFIteratedSearch(dfd);
+		return dFIteratedSearch(dfd);
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -1114,9 +1131,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 *                             occurs creating the GUI.
 	 */
 	void showGuiAction(ShowGui sg, AID requester) throws FailureException {
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG,
-					"Agent " + getLocalName() + " - Agent " + requester.getName() + " requesting action ShowGui");
+				"Agent " + getLocalName() + " - Agent " + requester.getName() + " requesting action ShowGui");
+		}
 		if (!showGui()) {
 			throw new FailureException("Gui_is_being_shown_already");
 		}
@@ -1131,9 +1149,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 * is called by DFAppletManagementBehaviour.
 	 */
 	List getParentsAction(GetParents action, AID requester) {
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG,
-					"Agent " + getLocalName() + " - Agent " + requester + " requesting action GetParents.");
+				"Agent " + getLocalName() + " - Agent " + requester + " requesting action GetParents.");
+		}
 		return parents;
 	}
 
@@ -1142,9 +1161,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 * since it is called by DFAppletManagementBehaviour.
 	 */
 	List getDescriptionAction(GetDescription action, AID requester) {
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG,
-					"Agent " + getLocalName() + " - Agent " + requester + " requesting action GetDescription.");
+				"Agent " + getLocalName() + " - Agent " + requester + " requesting action GetDescription.");
+		}
 		// FIXME: This embeds the description into a list since the Applet still expects
 		// a List
 		List tmp = new ArrayList<>();
@@ -1158,9 +1178,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	List getDescriptionUsedAction(GetDescriptionUsed action, AID requester) {
 		AID parent = action.getParentDF();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action GetDescriptionUsed to federate with " + parent.getName());
+				+ " requesting action GetDescriptionUsed to federate with " + parent.getName());
+		}
 		// FIXME: This embeds the description into a list since the Applet still expects
 		// a List
 		List tmp = new ArrayList<>();
@@ -1174,12 +1195,13 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	void federateAction(final Federate action, AID requester) {
 		AID remoteDF = action.getDf();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action Federate with DF " + remoteDF.getName());
+				+ " requesting action Federate with DF " + remoteDF.getName());
+		}
 		Register r = new Register();
 		DFAgentDescription tmp = action.getDescription();
-		final DFAgentDescription dfd = (tmp != null ? tmp : getDescriptionOfThisDF());
+		final DFAgentDescription dfd = tmp != null ? tmp : getDescriptionOfThisDF();
 		r.setDescription(dfd);
 		Behaviour b = new RemoteDFRequester(remoteDF, r) {
 			public int onEnd() {
@@ -1200,9 +1222,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	void registerWithAction(final RegisterWith action, AID requester) {
 		AID remoteDF = action.getDf();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action RegisterWith on DF " + remoteDF.getName());
+				+ " requesting action RegisterWith on DF " + remoteDF.getName());
+		}
 		Register r = new Register();
 		final DFAgentDescription dfd = action.getDescription();
 		r.setDescription(dfd);
@@ -1228,9 +1251,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	void deregisterFromAction(final DeregisterFrom action, AID requester) {
 		AID remoteDF = action.getDf();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action DeregisterFrom on DF " + remoteDF.getName());
+				+ " requesting action DeregisterFrom on DF " + remoteDF.getName());
+		}
 		Deregister d = new Deregister();
 		final DFAgentDescription dfd = action.getDescription();
 		d.setDescription(dfd);
@@ -1256,9 +1280,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	void modifyOnAction(final ModifyOn action, AID requester) {
 		AID remoteDF = action.getDf();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action ModifyOn on DF " + remoteDF.getName());
+				+ " requesting action ModifyOn on DF " + remoteDF.getName());
+		}
 		Modify m = new Modify();
 		m.setDescription(action.getDescription());
 		Behaviour b = new RemoteDFRequester(remoteDF, m) {
@@ -1276,9 +1301,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	void searchOnAction(final SearchOn action, AID requester) {
 		AID remoteDF = action.getDf();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + getLocalName() + " - Agent " + requester
-					+ " requesting action SearchOn on DF " + remoteDF.getName());
+				+ " requesting action SearchOn on DF " + remoteDF.getName());
+		}
 		Search s = new Search();
 		s.setDescription(action.getDescription());
 		s.setConstraints(action.getConstraints());
@@ -1318,7 +1344,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 				if (getAID().equals(df)) {
 					// Register an agent with this DF
-					DFRegister(dfd);
+					dFRegister(dfd);
 				} else {
 					// Register an agent with another DF.
 					gui.showStatusMsg("Processing your request & waiting for result...");
@@ -1350,7 +1376,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 				if (getAID().equals(df)) {
 					// Deregister an agent with this DF
-					DFDeregister(dfd);
+					dFDeregister(dfd);
 				} else {
 					// Deregister an agent with another DF.
 					gui.showStatusMsg("Processing your request & waiting for result...");
@@ -1384,7 +1410,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 				if (getAID().equals(df)) {
 					// Modify the description of an agent with this DF
-					DFModify(dfd);
+					dFModify(dfd);
 				} else {
 					// Modify the description of an agent with another DF
 					gui.showStatusMsg("Processing your request & waiting for result...");
@@ -1471,10 +1497,12 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		DFAgentDescription template = new DFAgentDescription();
 		template.setName(name);
 		List l = agentDescriptions.search(template, 1);
-		if (l.isEmpty())
+		if (l.isEmpty()) {
 			return null;
-		else
+		}
+		else {
 			return (DFAgentDescription) l.get(0);
+		}
 	}
 
 	/**
@@ -1514,8 +1542,9 @@ public class df extends GuiAgent implements DFGUIAdapter {
 				List agents = agentDescriptions.search(matchEverything, -1);
 				List AIDList = new ArrayList<>();
 				Iterator it = agents.iterator();
-				while (it.hasNext())
+				while (it.hasNext()) {
 					AIDList.add(((DFAgentDescription) it.next()).getName());
+				}
 
 				gui.refresh(AIDList.iterator(), parents.iterator(), children.iterator());
 				gui.setVisible(true);
@@ -1568,9 +1597,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 		myDescription = dfd;
 		myDescription.setName(getAID());
 		if (!isADF(myDescription)) {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Agent " + getLocalName()
-						+ " - The description set for this DF does not include a \"fipa-df\" service.");
+					+ " - The description set for this DF does not include a \"fipa-df\" service.");
+			}
 		}
 	}
 
@@ -1582,9 +1612,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	protected void addParent(AID dfName, DFAgentDescription dfd) {
 		parents.add(dfName);
-		if (gui != null) // the gui can be null if this method is called in order to manage a request
-							// made by the df-applet.
+		if (gui != null) { // the gui can be null if this method is called in order to manage a request
+			// made by the df-applet.
 			gui.addParent(dfName);
+		}
 		dscDFParentMap.put(dfName, dfd); // update the table of corrispondence between parents and description of this
 											// df used to federate.
 
@@ -1596,9 +1627,10 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 */
 	protected void removeParent(AID dfName) {
 		parents.remove(dfName);
-		if (gui != null) // the gui can be null is this method is called in order to manage a request
-							// from the df applet
+		if (gui != null) { // the gui can be null is this method is called in order to manage a request
+			// from the df applet
 			gui.removeParent(dfName);
+		}
 		dscDFParentMap.remove(dfName);
 	}
 
@@ -1645,19 +1677,22 @@ public class df extends GuiAgent implements DFGUIAdapter {
 				getContentManager().fillContent(notification, ce);
 				send(notification);
 				AID receiver = (AID) notification.getAllReceiver().next();
-				if (logger.isLoggable(Logger.FINE))
+				if (logger.isLoggable(Logger.FINE)) {
 					logger.log(Logger.FINE,
-							"Agent " + getLocalName() + " - Notification sent back to " + receiver.getName());
+						"Agent " + getLocalName() + " - Notification sent back to " + receiver.getName());
+				}
 			} catch (Exception e) {
 				// Should never happen
-				if (logger.isLoggable(Logger.SEVERE))
+				if (logger.isLoggable(Logger.SEVERE)) {
 					logger.log(Logger.SEVERE,
-							"Agent " + getLocalName() + " - Error encoding pending notification content.");
+						"Agent " + getLocalName() + " - Error encoding pending notification content.");
+				}
 				e.printStackTrace();
 			}
 		} else {
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Agent " + getLocalName() + " - Processed action request not found.");
+			}
 		}
 	}
 
@@ -1673,8 +1708,8 @@ public class df extends GuiAgent implements DFGUIAdapter {
 	 *         DFIteratedSearchManagementBehaviour
 	 **/
 	int getActualMaxResults(SearchConstraints constraints) {
-		int maxResult = (constraints.getMaxResults() == null ? 1 : constraints.getMaxResults().intValue());
-		maxResult = ((maxResult < 0 || maxResult > maxResultLimit) ? maxResultLimit : maxResult); // limit the max num
+		int maxResult = constraints.getMaxResults() == null ? 1 : constraints.getMaxResults().intValue();
+		maxResult = maxResult < 0 || maxResult > maxResultLimit ? maxResultLimit : maxResult; // limit the max num
 																									// of results
 		return maxResult;
 	}
@@ -1699,7 +1734,7 @@ public class df extends GuiAgent implements DFGUIAdapter {
 
 	private boolean isADF(DFAgentDescription dfd) {
 		try {
-			return ((ServiceDescription) dfd.getAllServices().next()).getType().equalsIgnoreCase("fipa-df");
+			return "fipa-df".equalsIgnoreCase(((ServiceDescription) dfd.getAllServices().next()).getType());
 		} catch (Exception e) {
 			return false;
 		}

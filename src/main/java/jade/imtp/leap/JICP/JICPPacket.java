@@ -164,7 +164,7 @@ public class JICPPacket {
 			info |= JICPProtocol.SESSION_ID_PRESENT_INFO;
 		}
 		else {
-			info &= (~JICPProtocol.SESSION_ID_PRESENT_INFO);
+			info &= ~JICPProtocol.SESSION_ID_PRESENT_INFO;
 		}
 	} 
 
@@ -186,7 +186,7 @@ public class JICPPacket {
 			info |= JICPProtocol.RECIPIENT_ID_PRESENT_INFO;
 		}
 		else {
-			info &= (~JICPProtocol.RECIPIENT_ID_PRESENT_INFO);
+			info &= ~JICPProtocol.RECIPIENT_ID_PRESENT_INFO;
 		}
 	} 
 
@@ -198,7 +198,7 @@ public class JICPPacket {
 			info |= JICPProtocol.TERMINATED_INFO;
 		}
 		else {
-			info &= (~JICPProtocol.TERMINATED_INFO);
+			info &= ~JICPProtocol.TERMINATED_INFO;
 		}
 	} 
 
@@ -243,7 +243,7 @@ public class JICPPacket {
 		if ((info & JICPProtocol.RECIPIENT_ID_PRESENT_INFO) != 0) {
 			out.write(recipientID.length());
 			out.write(recipientID.getBytes());
-			cnt += (1 + recipientID.length());
+			cnt += 1 + recipientID.length();
 		} 
 
 		// Write data only if != null
@@ -292,7 +292,7 @@ public class JICPPacket {
 
 		// Read recipient ID if present
 		if ((p.info & JICPProtocol.RECIPIENT_ID_PRESENT_INFO) != 0) {
-			int size = (read(in) & 0x000000ff);
+			int size = read(in) & 0x000000ff;
 			byte[] bb = new byte[size];
 			in.read(bb, 0, size);
 			p.recipientID = new String(bb);
@@ -337,7 +337,7 @@ public class JICPPacket {
 		return p;
 	} 
 
-	private static final byte read(InputStream in) throws IOException {
+	private static byte read(InputStream in) throws IOException {
 		int i = in.read();
 		if (i == -1) {
 			throw new EOFException("EOF reading packet header");
@@ -351,10 +351,10 @@ public class JICPPacket {
 			cnt++;
 		}
 		if ((info & JICPProtocol.RECIPIENT_ID_PRESENT_INFO) != 0) {
-			cnt += (1 + recipientID.getBytes().length);
+			cnt += 1 + recipientID.getBytes().length;
 		}
 		if ((info & JICPProtocol.DATA_PRESENT_INFO) != 0) {
-			cnt += (4 + data.length);
+			cnt += 4 + data.length;
 		}
 		return cnt;
 	}

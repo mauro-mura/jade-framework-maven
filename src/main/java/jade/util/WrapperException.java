@@ -40,7 +40,7 @@ public abstract class WrapperException extends Exception {
 
 	@Serial
 	private static final long serialVersionUID = -5846338432615109597L;
-	private Throwable nested = null;
+	private Throwable nested;
 
 	/**
        Create a wrapper exception with the given message and nested
@@ -67,7 +67,7 @@ public abstract class WrapperException extends Exception {
        text if present.
 	 */
 	public String getMessage() {
-		if((nested != null)) {
+		if(nested != null) {
 			return super.getMessage() + " - Caused by:  "+(nested.getMessage() != null ? nested.getMessage() : nested.toString());
 		}
 		return super.getMessage();

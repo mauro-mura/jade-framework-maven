@@ -115,12 +115,14 @@ public class ParseException extends Exception {
     String retval = "Encountered \"";
     Token tok = currentToken.next;
     for (int i = 0; i < maxSize; i++) {
-      if (i != 0) retval += " ";
+			if (i != 0) {
+				retval += " ";
+			}
       if (tok.kind == 0) {
         retval += tokenImage[0];
         break;
       }
-      retval += add_escapes(tok.image);
+      retval += addEscapes(tok.image);
       tok = tok.next; 
     }
     retval += "\" at line " + currentToken.next.beginLine + ", column " + currentToken.next.beginColumn;
@@ -144,7 +146,7 @@ public class ParseException extends Exception {
    * when these raw version cannot be used as part of an ASCII
    * string literal.
    */
-  protected String add_escapes(String str) {
+  protected String addEscapes(String str) {
 	  StringBuilder retval = new StringBuilder();
       char ch;
       for (int i = 0; i < str.length(); i++) {
@@ -179,7 +181,7 @@ public class ParseException extends Exception {
            default:
               if ((ch = str.charAt(i)) < 0x20 || ch > 0x7e) {
                  String s = "0000" + Integer.toString(ch, 16);
-                 retval.append("\\u" + s.substring(s.length() - 4, s.length()));
+                 retval.append("\\u").append(s.substring(s.length() - 4, s.length()));
               } else {
                  retval.append(ch);
               }

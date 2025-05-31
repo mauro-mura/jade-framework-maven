@@ -54,14 +54,14 @@ public class AgentEvent extends JADEEvent {
 	public static final int CHANGED_AGENT_PRINCIPAL = 5;
 
 	private AID agent;
-	private BehaviourID behaviour = null;
-	private AgentState from = null;
-	private AgentState to = null;
-	private String behaviourFrom = null;
-	private String behaviourTo = null;
+	private BehaviourID behaviour;
+	private AgentState from;
+	private AgentState to;
+	private String behaviourFrom;
+	private String behaviourTo;
 //__SECURITY__BEGIN
-	private JADEPrincipal oldPrincipal = null;
-	private JADEPrincipal newPrincipal = null;
+	private JADEPrincipal oldPrincipal;
+	private JADEPrincipal newPrincipal;
 //__SECURITY__END
 
 	public AgentEvent(int id, AID aid, AgentState f, AgentState t, ContainerID cid) {

@@ -98,7 +98,7 @@ import java.util.regex.PatternSyntaxException;
 public class AccessControlList {
 
 
-	private static Logger logger = Logger.getMyLogger(AccessControlList.class.getName());
+	private static final Logger logger = Logger.getMyLogger(AccessControlList.class.getName());
 
 	// constructor
 	public AccessControlList(){
@@ -106,15 +106,15 @@ public class AccessControlList {
 
 
 	// Set black and white list
-	private String blackFileName=null;
-	private String whiteFileName=null;
+	private String blackFileName;
+	private String whiteFileName;
 	public void setBlack( String blackFileName ){
 		this.blackFileName=blackFileName;
-		refresh_black();
+		refreshBlack();
 	}
 	public void setWhite( String whiteFileName ){
 		this.whiteFileName=whiteFileName;
-		refresh_white();
+		refreshWhite();
 	}
 
 	// internal representation (optimized for speed)
@@ -145,17 +145,19 @@ public class AccessControlList {
 		boolean isInBlack=false;
 		boolean isInWhite=false;
 
-		if (black_iacl!=null) // if loaded, check
-			isInBlack = isInList( black_iacl, section, value);
-		if (white_iacl!=null) 
-			isInWhite = isInList( white_iacl, section, value);
+		if (black_iacl != null) { // if loaded, check
+			isInBlack = isInList(black_iacl, section, value);
+		}
+		if (white_iacl != null) {
+			isInWhite = isInList(white_iacl, section, value);
+		}
 
 		if(logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, 
 					" isInBlack="+isInBlack+ 
 					" isInWhite="+isInWhite
 			);}
-		retVal = (!isInBlack) && (isInWhite);
+		retVal = (!isInBlack) && isInWhite;
 		return retVal;
 	}
 
@@ -173,35 +175,38 @@ public class AccessControlList {
 
 				// if encountered a section header
 				// change the current section 
-				if ( iacl.sectionName[pos]!=null) {
+				if (iacl.sectionName[pos] != null) {
 					currSection = iacl.sectionName[pos];
-					logger.log(Logger.FINER, "Encountered section named: '"+currSection +"'");
+					logger.log(Logger.FINER, "Encountered section named: '" + currSection + "'");
 					continue;
 				}
 
 				// is currSection the same as passed 'section' 
 				// that we are searching for into?
 				// If not, skip this line, looking for a new section
-				if (! currSection.equals( section ) ) {
+				if (!currSection.equals(section)) {
 					continue;
 				}
 
-				if (iacl.pat[pos]==null) continue; // should not happen in healty acl;
+				if (iacl.pat[pos] == null) {
+					continue; // should not happen in healty acl;
 
-				// prapare matcher (from the passed value)
+					// prapare matcher (from the passed value)
+				}
 				Matcher m = null;  // matcher is created from the pattern
-				m = iacl.pat[pos].matcher( value );
-				if(logger.isLoggable(Logger.FINER)) {
-					logger.log(Logger.FINER, 
-							"("+iacl.fileName+")  "+
-							"  pattern="+iacl.pat[pos].pattern()+ 
-							"  matcher="+value+ 
-					"\n"); 
+				m = iacl.pat[pos].matcher(value);
+				if (logger.isLoggable(Logger.FINER)) {
+					logger.log(Logger.FINER,
+						"(" + iacl.fileName + ")  " +
+							"  pattern=" + iacl.pat[pos].pattern() +
+							"  matcher=" + value +
+							"\n");
 				}
 				// check the matching
 				boolean b = m.matches();
-				if(logger.isLoggable(Logger.FINER)) 
-					logger.log(Logger.FINER, "     " + value + "->" + b +"\n" );
+				if (logger.isLoggable(Logger.FINER)) {
+					logger.log(Logger.FINER, "     " + value + "->" + b + "\n");
+				}
 
 				if (b) {
 					retVal = true;
@@ -223,18 +228,18 @@ public class AccessControlList {
 	 *   reading again the white and black files.
 	 */
 	public void refresh() {
-		refresh_black();
-		refresh_white();
+		refreshBlack();
+		refreshWhite();
 	} // end refresh()
 
-	private void refresh_black(){
+	private void refreshBlack(){
 		try {
 			black_iacl = file2iacl( blackFileName );
 		} catch (IOException e) { 
 			logger.log(Logger.WARNING, "Exception while checking: "+blackFileName, e );
 		}
 	}
-	private void refresh_white(){
+	private void refreshWhite(){
 		try {
 			white_iacl = file2iacl( whiteFileName );
 		} catch (IOException e) { 

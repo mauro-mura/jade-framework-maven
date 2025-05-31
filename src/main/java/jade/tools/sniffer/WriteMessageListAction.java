@@ -51,8 +51,8 @@ import jade.util.Logger;
  public class WriteMessageListAction extends FixedAction implements Serializable {
 
 private PrintWriter out;
-private MainPanel mainPanel;
- private static Logger logger = Logger.getMyLogger(WriteMessageListAction.class.getName());
+	 private final MainPanel mainPanel;
+	 private static final Logger logger = Logger.getMyLogger(WriteMessageListAction.class.getName());
 
 
  public WriteMessageListAction(ActionProcessor actPro,MainPanel mainPanel){
@@ -74,12 +74,14 @@ private MainPanel mainPanel;
 	 out.println(curMsg.toString());
        }
       out.close();
-      if(logger.isLoggable(Logger.INFO))
-      	logger.log(Logger.INFO,"Message List File Written.");
+			 if (logger.isLoggable(Logger.INFO)) {
+				 logger.log(Logger.INFO, "Message List File Written.");
+			 }
    }
    } catch (Exception e){
-        if(logger.isLoggable(Logger.INFO))
-        	logger.log(Logger.WARNING,"Error Writing List File:" + e);
+			if (logger.isLoggable(Logger.INFO)) {
+			 logger.log(Logger.WARNING, "Error Writing List File:" + e);
+		 }
      }
  }
 

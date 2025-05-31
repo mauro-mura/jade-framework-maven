@@ -163,7 +163,7 @@ public class Logger extends java.util.logging.Logger implements Serializable {
 	public static final Level OFF = Level.OFF;
 
 	// #ANDROID_EXCLUDE_BEGIN
-	private static Map<String, Logger> wrappers = new HashMap<>();
+	private static final Map<String, Logger> wrappers = new HashMap<>();
 
 	/**
 	 * Private method to construct a logger for a named subsystem.
@@ -235,7 +235,7 @@ public class Logger extends java.util.logging.Logger implements Serializable {
 	/**
 	 * Inner class LoggerWrapper
 	 */
-	private static class LoggerWrapper extends Logger {
+	private static final class LoggerWrapper extends Logger {
 		private java.util.logging.Logger realLogger;
 
 		private LoggerWrapper(java.util.logging.Logger lg) {
@@ -260,7 +260,7 @@ public class Logger extends java.util.logging.Logger implements Serializable {
 		return getJADELogger(name);
 	}
 
-	private static PrintStream logStream = System.out;
+	private static final PrintStream logStream = System.out;
 
 	public static void println(String log) {
 		logStream.println(log);

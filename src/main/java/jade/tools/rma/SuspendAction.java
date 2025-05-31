@@ -37,7 +37,7 @@ class SuspendAction extends AgentAction {
 
 	@Serial
 	private static final long serialVersionUID = -311708535687194240L;
-	private rma myRMA;
+	private final rma myRMA;
 
 	public SuspendAction(rma anRMA, ActionProcessor actPro) {
 		super("SuspendActionIcon", "Suspend", actPro);

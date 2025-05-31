@@ -35,7 +35,7 @@ import java.io.IOException;
  */
 public class MicroBoot {
 
-	private static Logger logger = Logger.getMyLogger("jade.MicroBoot");
+	private static final Logger logger = Logger.getMyLogger("jade.MicroBoot");
 
 	/**
 	 * Default constructor.
@@ -99,25 +99,29 @@ public class MicroBoot {
 			} else {
 				// Get agents at the end of command line
 				if (props.getProperty(MicroRuntime.AGENTS_KEY) != null) {
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING,
-								"WARNING: overriding agents specification set with the \"-agents\" option");
+							"WARNING: overriding agents specification set with the \"-agents\" option");
+					}
 				}
 				String agents = args[i];
 				props.setProperty(MicroRuntime.AGENTS_KEY, args[i]);
 				if (++i < args.length) {
-					if (logger.isLoggable(Logger.WARNING))
+					if (logger.isLoggable(Logger.WARNING)) {
 						logger.log(Logger.WARNING, "WARNING: ignoring command line argument " + args[i]
-								+ " occurring after agents specification");
+							+ " occurring after agents specification");
+					}
 					if (agents != null && agents.indexOf('(') != -1 && !agents.endsWith(")")) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING,
-									"Note that agent arguments specifications must not contain spaces");
+								"Note that agent arguments specifications must not contain spaces");
+						}
 					}
 					if (args[i].indexOf(':') != -1) {
-						if (logger.isLoggable(Logger.WARNING))
+						if (logger.isLoggable(Logger.WARNING)) {
 							logger.log(Logger.WARNING,
-									"Note that agent specifications must be separated by a semicolon character \";\" without spaces");
+								"Note that agent specifications must be separated by a semicolon character \";\" without spaces");
+						}
 					}
 				}
 				break;

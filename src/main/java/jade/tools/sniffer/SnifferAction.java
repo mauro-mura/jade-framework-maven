@@ -46,11 +46,11 @@ import java.awt.event.ActionEvent;
 
 public abstract class SnifferAction extends AbstractAction{
 
- private ActionProcessor actPro;
+	private final ActionProcessor actPro;
  private Icon img;
- private String ActionName;
+	private final String ActionName;
 
- public SnifferAction(String IconKey,String ActionName,ActionProcessor actPro) {
+ protected SnifferAction(String IconKey,String ActionName,ActionProcessor actPro) {
     //#DOTNET_EXCLUDE_BEGIN
 	this.img = GuiProperties.getIcon("SnifferAction."+IconKey);
     putValue(Action.SMALL_ICON,img);

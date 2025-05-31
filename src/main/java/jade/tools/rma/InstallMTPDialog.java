@@ -43,25 +43,30 @@ class InstallMTPDialog extends javax.swing.JDialog {
     classField.setText(null);
     addressField.setText(null);
     containerList.removeAllElements();
-    for(int i = 0; i < containers.length; i++)
-      containerList.addElement(containers[i]);
+		for (int i = 0;i < containers.length;i++) {
+			containerList.addElement(containers[i]);
+		}
     containerList.setSelectedItem(defaultContainer);
   }
 
   public String getAddress() {
     String s = addressField.getText();
-    if(s.length() == 0)
-      return null;
-    else
-      return s;
+		if (s.length() == 0) {
+			return null;
+		}
+		else {
+			return s;
+		}
   }
 
   public String getClassName() {
     String s = classField.getText();
-    if(s.length() == 0)
-      return null;
-    else
-      return s;
+		if (s.length() == 0) {
+			return null;
+		}
+		else {
+			return s;
+		}
   }
 
   public String getContainer() {
@@ -184,10 +189,12 @@ class InstallMTPDialog extends javax.swing.JDialog {
 // Add your handling code here:
     confirmed = true;
     String cls = classField.getText();
-    if(cls.length() == 0)
-	javax.swing.JOptionPane.showMessageDialog(getParent(), "The class name for the MTP must be present", "Error during MTP installation.", javax.swing.JOptionPane.ERROR_MESSAGE);
-    else
-      destroy();
+		if (cls.length() == 0) {
+			javax.swing.JOptionPane.showMessageDialog(getParent(), "The class name for the MTP must be present", "Error during MTP installation.", javax.swing.JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			destroy();
+		}
   }//GEN-LAST:event_buttonOKActionPerformed
 
   /** Closes the dialog */
@@ -215,6 +222,6 @@ class InstallMTPDialog extends javax.swing.JDialog {
   private javax.swing.JButton buttonCancel;
   // End of variables declaration//GEN-END:variables
 
-  private boolean confirmed = false;
+  private boolean confirmed;
 
 }

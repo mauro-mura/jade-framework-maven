@@ -135,10 +135,12 @@ public final class ReceiverBehaviour extends Behaviour {
 
 		public void setMessage(ACLMessage msg) {
 			message = msg;
-			if (message != null)
+			if (message != null) {
 				state = OK;
-			else
+			}
+			else {
 				state = TIMED_OUT;
+			}
 		}
 
 		public ACLMessage getMessage() throws TimedOut, NotYetReady {
@@ -194,7 +196,7 @@ public final class ReceiverBehaviour extends Behaviour {
 	/**
 	 * @serial
 	 */
-	private long blockingTime = 0;
+	private long blockingTime;
 	/**
 	 * @serial
 	 */
@@ -288,28 +290,30 @@ public final class ReceiverBehaviour extends Behaviour {
 	 */
 	public void action() {
 		ACLMessage msg = null;
-		if (template == null)
+		if (template == null) {
 			msg = myAgent.receive();
-		else
+		}
+		else {
 			msg = myAgent.receive(template);
+		}
 
 		if (msg == null) {
 			if (timeOut < 0) {
 				block();
 				finished = false;
-				return;
 			} else {
 				long elapsedTime = 0;
-				if (blockingTime != 0)
+				if (blockingTime != 0) {
 					elapsedTime = System.currentTimeMillis() - blockingTime;
-				else
+				}
+				else {
 					elapsedTime = 0;
+				}
 				timeToWait -= elapsedTime;
 				if (timeToWait > 0) {
 					blockingTime = System.currentTimeMillis();
 					// System.out.println("Waiting for " + timeToWait + " ms.");
 					block(timeToWait);
-					return;
 				} else {
 					future.setMessage(msg);
 					finished = true;

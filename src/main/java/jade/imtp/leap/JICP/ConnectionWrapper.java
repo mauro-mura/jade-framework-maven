@@ -41,8 +41,8 @@ import jade.mtp.TransportAddress;
  * @author Giovanni Caire - TILAB
  */
 class ConnectionWrapper {
-	private Connection myConnection;
-	private TransportAddress destAddr;
+	private final Connection myConnection;
+	private final TransportAddress destAddr;
 	private boolean oneShot;
 	private boolean locked;
 	private boolean closed;

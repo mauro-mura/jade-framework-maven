@@ -38,10 +38,8 @@ import jade.core.CaseInsensitiveString;
  */
 class SL2Ontology extends SL1Ontology implements SL2Vocabulary {
 	// NAME
-	public static final String ONTOLOGY_NAME = jade.domain.FIPANames.Ontology.SL2_ONTOLOGY;;
-
-	// The singleton instance of this ontology
-	private static Ontology theInstance = new SL2Ontology(ONTOLOGY_NAME, SL1Ontology.getInstance(), null);
+	public static final String ONTOLOGY_NAME = jade.domain.FIPANames.Ontology.SL2_ONTOLOGY;// The singleton instance of this ontology
+	private static final Ontology theInstance = new SL2Ontology(ONTOLOGY_NAME, SL1Ontology.getInstance(), null);
 
 	public static Ontology getInstance() {
 		return theInstance;
@@ -129,8 +127,8 @@ class SL2Ontology extends SL1Ontology implements SL2Vocabulary {
 	}
 
 	boolean isQuantifier(String symbol) {
-		return (CaseInsensitiveString.equalsIgnoreCase(EXISTS, symbol) || 
-				CaseInsensitiveString.equalsIgnoreCase(FORALL, symbol));
+		return CaseInsensitiveString.equalsIgnoreCase(EXISTS, symbol) || 
+				CaseInsensitiveString.equalsIgnoreCase(FORALL, symbol);
 	}
 
 	boolean isConditionedQuantifier(String symbol) {
@@ -138,26 +136,26 @@ class SL2Ontology extends SL1Ontology implements SL2Vocabulary {
 	}
 
 	boolean isModalOp(String symbol) {
-		return (CaseInsensitiveString.equalsIgnoreCase(BELIEF, symbol) || 
+		return CaseInsensitiveString.equalsIgnoreCase(BELIEF, symbol) || 
 				CaseInsensitiveString.equalsIgnoreCase(UNCERTAINTY, symbol) ||
 				CaseInsensitiveString.equalsIgnoreCase(PERSISTENT_GOAL, symbol) ||
-				CaseInsensitiveString.equalsIgnoreCase(INTENTION, symbol));
+				CaseInsensitiveString.equalsIgnoreCase(INTENTION, symbol);
 	}
 
 	boolean isActionOp(String symbol) {
-		return (super.isActionOp(symbol) ||
-				CaseInsensitiveString.equalsIgnoreCase(FEASIBLE, symbol));
+		return super.isActionOp(symbol) ||
+				CaseInsensitiveString.equalsIgnoreCase(FEASIBLE, symbol);
 	}
 
 	boolean isSLFunctionWithoutSlotNames(String symbol) {
-		return (super.isSLFunctionWithoutSlotNames(symbol) || 
+		return super.isSLFunctionWithoutSlotNames(symbol) || 
 				CaseInsensitiveString.equalsIgnoreCase(ACTION_SEQUENCE, symbol) ||
-				CaseInsensitiveString.equalsIgnoreCase(ACTION_ALTERNATIVE, symbol));
+				CaseInsensitiveString.equalsIgnoreCase(ACTION_ALTERNATIVE, symbol);
 	}
 
 	boolean isBinaryLogicalOp(String symbol) {
-		return (super.isBinaryLogicalOp(symbol) || 
+		return super.isBinaryLogicalOp(symbol) || 
 				CaseInsensitiveString.equalsIgnoreCase(IMPLIES, symbol) || 
-				CaseInsensitiveString.equalsIgnoreCase(EQUIV, symbol));
+				CaseInsensitiveString.equalsIgnoreCase(EQUIV, symbol);
 	}
 }

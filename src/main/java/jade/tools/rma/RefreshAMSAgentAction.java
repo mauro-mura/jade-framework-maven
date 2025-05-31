@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class RefreshAMSAgentAction extends PlatformAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public RefreshAMSAgentAction(rma anRMA, ActionProcessor actPro) {
     super ("RefreshAMSAgentIcon", "Refresh Agent List", actPro);

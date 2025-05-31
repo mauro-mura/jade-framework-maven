@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class DateTimeHelper {
+public final class DateTimeHelper {
 	// It is useless to have instances of this class
 	private DateTimeHelper() {
 	}
@@ -49,7 +49,7 @@ public class DateTimeHelper {
 
 	private static org.omg.CORBA.TypeCode _tc;
 
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {
 			_members = new org.omg.CORBA.StructMember[8];

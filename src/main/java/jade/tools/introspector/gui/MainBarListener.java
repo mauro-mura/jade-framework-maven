@@ -39,10 +39,9 @@ import jade.util.Logger;
    @version $Date: 2004-07-19 17:54:06 +0200 (lun, 19 lug 2004) $ $Revision: 5217 $
 */
 public class MainBarListener implements ActionListener{
-  private MainWindow mainWnd;
-  private Sensor introspectorSensor;
-  
-  private static Logger logger = Logger.getMyLogger(MainBarListener.class.getName());
+	private final MainWindow mainWnd;
+	private final Sensor introspectorSensor;
+	private static final Logger logger = Logger.getMyLogger(MainBarListener.class.getName());
 
   public MainBarListener(MainWindow main, Sensor s){
     mainWnd=main;
@@ -57,36 +56,48 @@ public class MainBarListener implements ActionListener{
 
       case 2: //view message+state
         JCheckBoxMenuItem item=(JCheckBoxMenuItem) source;
-        if (item.isSelected()) mainWnd.setMessagePanelVisible(true);
-        else mainWnd.setMessagePanelVisible(false);
+				if (item.isSelected()) {
+					mainWnd.setMessagePanelVisible(true);
+				}
+				else {
+					mainWnd.setMessagePanelVisible(false);
+				}
         break;
       case 3://view Behaviour
         JCheckBoxMenuItem item1=(JCheckBoxMenuItem) source;
-        if (item1.isSelected()) mainWnd.setBehaviourPanelVisible(true);
-        else mainWnd.setBehaviourPanelVisible(false);
+				if (item1.isSelected()) {
+					mainWnd.setBehaviourPanelVisible(true);
+				}
+				else {
+					mainWnd.setBehaviourPanelVisible(false);
+				}
         break;
          case 4://kil
          {
-        if(logger.isLoggable(Logger.INFO))
-        	logger.log(Logger.INFO,"kill agent: Not yet implemented");
+					 if (logger.isLoggable(Logger.INFO)) {
+						 logger.log(Logger.INFO, "kill agent: Not yet implemented");
+					 }
         }
         break;
       case 5://suspend
       {
-        if(logger.isLoggable(Logger.INFO))
-        	logger.log(Logger.INFO,"suspend agent: Not yet implemented");
+				if (logger.isLoggable(Logger.INFO)) {
+					logger.log(Logger.INFO, "suspend agent: Not yet implemented");
+				}
         }
         break;
       case 6://wakeup
       {
-        if(logger.isLoggable(Logger.INFO))
-        	logger.log(Logger.INFO,"WakeUp agent: Not yet implemented");
+				if (logger.isLoggable(Logger.INFO)) {
+					logger.log(Logger.INFO, "WakeUp agent: Not yet implemented");
+				}
         }
         break;
       case 7://wait
       {
-     	if(logger.isLoggable(Logger.INFO))
-        	logger.log(Logger.INFO,"wait agent: Not yet implemented");
+				if (logger.isLoggable(Logger.INFO)) {
+					logger.log(Logger.INFO, "wait agent: Not yet implemented");
+				}
     }
         break;
       case 8://Step

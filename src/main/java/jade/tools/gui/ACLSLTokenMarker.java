@@ -167,7 +167,7 @@ public class ACLSLTokenMarker {
         duplicate it.
       */
     if (!(lastLine == lineIndex && nextLineRequested)) {
-      nextLineRequested = (oldToken != token);
+      nextLineRequested = oldToken != token;
     }
 
     lastLine = lineIndex;
@@ -266,7 +266,7 @@ public class ACLSLTokenMarker {
     boolean backslash = false;
     loop :
     for (int i = offset; i < length; i++) {
-      int i1 = (i + 1);
+      int i1 = i + 1;
 
       char c = array[i];
       if (c == '\\') {
@@ -1025,9 +1025,9 @@ public class ACLSLTokenMarker {
 
 
   // public members
-  public final static byte S_ONE = ACLToken.INTERNAL_FIRST;
-  public final static byte S_TWO = (byte)(ACLToken.INTERNAL_FIRST + 1);
-  public final static byte S_END = (byte)(ACLToken.INTERNAL_FIRST + 2);
+  public static final byte S_ONE = ACLToken.INTERNAL_FIRST;
+  public static final byte S_TWO = (byte)(ACLToken.INTERNAL_FIRST + 1);
+  public static final byte S_END = (byte)(ACLToken.INTERNAL_FIRST + 2);
 
   private static KeywordMap aclSLKeywords;
 

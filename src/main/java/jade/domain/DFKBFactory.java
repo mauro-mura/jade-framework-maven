@@ -66,10 +66,12 @@ public class DFKBFactory {
 	protected DBKB getDFDBKB(int maxResultLimit, String driver, String url, String user, String passwd, boolean cleanTables) throws SQLException {
 		//#ANDROID_EXCLUDE_BEGIN
 		DBKB kb = null;
-		if (url == null)
+		if (url == null) {
 			kb = new DFHSQLKB(maxResultLimit, cleanTables);
-		else
+		}
+		else {
 			kb = new DFDBKB(maxResultLimit, driver, url, user, passwd, cleanTables);
+		}
 		kb.setup();
 		return kb;
 		//#ANDROID_EXCLUDE_END

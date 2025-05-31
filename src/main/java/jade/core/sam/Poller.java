@@ -37,13 +37,13 @@ import jade.core.exception.ServiceException;
 import jade.util.Logger;
 
 class Poller extends Thread {
-	private SAMService myService;
+	private final SAMService myService;
 	private volatile SAMInfoHandler[] handlers;
-	private long period;
+	private final long period;
 	private boolean active;
 	
-	private Timer watchDogTimer = null;
-	private Logger myLogger = Logger.getMyLogger(getClass().getName()); 
+	private Timer watchDogTimer;
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName()); 
 	
 	Poller(SAMService service, long p, SAMInfoHandler[] hh) {
 		super();
@@ -139,12 +139,14 @@ class Poller extends Thread {
 				String nodeName = s.getNode().getName();
 				startWatchDog(Thread.currentThread(), nodeName);
 				try {
-					if (myLogger.isLoggable(Logger.FINER))
-						myLogger.log(Logger.FINER, "SAMService poller - Retrieving SAM information from node "+nodeName);
+					if (myLogger.isLoggable(Logger.FINER)) {
+						myLogger.log(Logger.FINER, "SAMService poller - Retrieving SAM information from node " + nodeName);
+					}
 					SAMInfo sliceInfo = s.getSAMInfo();
 					globalInfo.update(sliceInfo);
-					if (myLogger.isLoggable(Logger.FINEST))
-						myLogger.log(Logger.FINEST, "SAMService poller - SAM information successfully retrieved from node "+nodeName);
+					if (myLogger.isLoggable(Logger.FINEST)) {
+						myLogger.log(Logger.FINEST, "SAMService poller - SAM information successfully retrieved from node " + nodeName);
+					}
 				}
 				catch (Exception imtpe) {
 					// Note that getAllSlices() always retrieves "fresh" slices --> no need for any retry

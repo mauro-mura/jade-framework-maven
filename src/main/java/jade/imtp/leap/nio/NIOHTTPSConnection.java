@@ -19,8 +19,8 @@ import jade.imtp.leap.exception.ICPException;
  * @author eduard
  */
 public class NIOHTTPSConnection extends NIOHTTPConnection {
-    private SSLEngineHelper helper = null;
-    private static Logger log = Logger.getLogger(NIOHTTPSConnection.class.getName());
+    private SSLEngineHelper helper;
+	private static final Logger log = Logger.getLogger(NIOHTTPSConnection.class.getName());
 
     @Override
     public void close() throws IOException {

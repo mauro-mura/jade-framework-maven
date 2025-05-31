@@ -88,8 +88,9 @@ public class LADT {
 
 		public synchronized void unlock() {
 			// Must be owner to unlock
-			if (owner != Thread.currentThread())
+			if (owner != Thread.currentThread()) {
 				return;
+			}
 			--depth;
 			if (depth == 0 || value == null) {
 				// Note that if the row has just been cleared we must wake up
@@ -125,7 +126,7 @@ public class LADT {
 	// private static final float MAP_LOAD_FACTOR = 0.50f;
 
 	// private Map agents = new HashMap<>(MAP_SIZE, MAP_LOAD_FACTOR);
-	private Map<AID, Row> agents;
+	private final Map<AID, Row> agents;
 
 	public LADT(int size) {
 		agents = new HashMap<>(size);
@@ -158,8 +159,9 @@ public class LADT {
 		synchronized (agents) {
 			r = agents.get(key);
 		}
-		if (r == null)
+		if (r == null) {
 			return null;
+		}
 		else {
 			r.lock();
 
@@ -180,8 +182,9 @@ public class LADT {
 		synchronized (agents) {
 			r = agents.get(key);
 		}
-		if (r == null)
+		if (r == null) {
 			return null;
+		}
 		else {
 			r.lock();
 			return r.get();

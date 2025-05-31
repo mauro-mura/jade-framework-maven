@@ -115,7 +115,7 @@ public class ACLFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void closeButton_actionPerformed(ActionEvent e) {
+  void closeButtonActionPerformed(ActionEvent e) {
     doExit();
   }
 
@@ -125,7 +125,7 @@ public class ACLFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void exitMenuItem_actionPerformed(ActionEvent e) {
+  void exitMenuItemActionPerformed(ActionEvent e) {
     doExit();
   }
 
@@ -143,7 +143,7 @@ public class ACLFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void systemoutMenuItem_actionPerformed(ActionEvent e) {
+  void systemoutMenuItemActionPerformed(ActionEvent e) {
     doSystemOut();
   }
 
@@ -161,7 +161,7 @@ public class ACLFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void saveMenuItem_actionPerformed(ActionEvent e) {
+  void saveMenuItemActionPerformed(ActionEvent e) {
     aclPanel.saveACL();
   }
 
@@ -192,7 +192,7 @@ public class ACLFrame extends JFrame {
     closeButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          closeButton_actionPerformed(e);
+          closeButtonActionPerformed(e);
         }
       });
     buttonPanel.setBackground(Color.white);
@@ -208,7 +208,7 @@ public class ACLFrame extends JFrame {
     saveMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          saveMenuItem_actionPerformed(e);
+          saveMenuItemActionPerformed(e);
         }
       });
     exitMenuItem.setBackground(Color.white);
@@ -218,7 +218,7 @@ public class ACLFrame extends JFrame {
     exitMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          exitMenuItem_actionPerformed(e);
+          exitMenuItemActionPerformed(e);
         }
       });
     toolsMenu.setBackground(Color.white);
@@ -231,7 +231,7 @@ public class ACLFrame extends JFrame {
     systemoutMenuItem.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          systemoutMenuItem_actionPerformed(e);
+          systemoutMenuItemActionPerformed(e);
         }
       });
     theMenuBar.setBackground(Color.white);
@@ -250,18 +250,18 @@ public class ACLFrame extends JFrame {
   }
 
 
-  private GridBagLayout gridBagLayout1 = new GridBagLayout();
-  private JPanel buttonPanel = new JPanel();
-  private JButton closeButton = new JButton();
-  private JMenuBar theMenuBar = new JMenuBar();
-  private JMenu fileMenu = new JMenu();
-  private JMenuItem saveMenuItem = new JMenuItem();
-  private JMenuItem exitMenuItem = new JMenuItem();
-  private JMenu toolsMenu = new JMenu();
-  private JMenuItem systemoutMenuItem = new JMenuItem();
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final JPanel buttonPanel = new JPanel();
+	private final JButton closeButton = new JButton();
+	private final JMenuBar theMenuBar = new JMenuBar();
+	private final JMenu fileMenu = new JMenu();
+	private final JMenuItem saveMenuItem = new JMenuItem();
+	private final JMenuItem exitMenuItem = new JMenuItem();
+	private final JMenu toolsMenu = new JMenu();
+	private final JMenuItem systemoutMenuItem = new JMenuItem();
   private ACLPanel aclPanel;
   private ACLMessage msg;
-  private Agent agent;
+	private final Agent agent;
 
 }
 //  ***EOF***

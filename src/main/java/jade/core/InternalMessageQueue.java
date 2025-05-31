@@ -60,8 +60,9 @@ class InternalMessageQueue implements MessageQueue {
 	}
 
 	public void setMaxSize(int newSize) throws IllegalArgumentException {
-		if (newSize < 0)
+		if (newSize < 0) {
 			throw new IllegalArgumentException("Invalid MsgQueue size");
+		}
 		maxSize = newSize;
 	}
 
@@ -160,7 +161,8 @@ class InternalMessageQueue implements MessageQueue {
 	}
 
 	public void copyTo(List<ACLMessage> messages) {
-		for (Iterator<ACLMessage> i = iterator(); i.hasNext(); messages.add(i.next()));
+		for (Iterator<ACLMessage> i = iterator();i.hasNext();messages.add(i.next())) {
+		}
 	}
 
 	public String dump(int limit) {

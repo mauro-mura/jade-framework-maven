@@ -27,7 +27,7 @@ public class JICPCompressor1 {
     // internal fields
     private static final int RLE_FLUSH     = 0x100;
     private int              rleOldValue   = RLE_FLUSH;
-    private int              rleOccurrence = 0;
+    private int              rleOccurrence;
     private byte[]           ba;
 
 //    private int count = 0;
@@ -130,7 +130,7 @@ public class JICPCompressor1 {
 
     private byte[] compressHelper(byte[] uba) {
 
-        int                   wordIndexes[] = new int[MAX_WORDS];
+        int[]                   wordIndexes = new int[MAX_WORDS];
         int                   beginIndex    = 0;
         int                   wordIndex     = 0;
         int                   lastWordIndex = 0;
@@ -242,7 +242,7 @@ public class JICPCompressor1 {
     private byte[] decompressHelper(byte[] cba) {
 //        System.out.print("" + cba.length + " -> ");
 
-        int                  wordIndexes[] = new int[MAX_WORDS];
+        int[]                  wordIndexes = new int[MAX_WORDS];
         int                  wordIndex     = 0;
         int                  currentIndex  = 0;
         int                  beginIndex    = 0;

@@ -47,8 +47,12 @@ import jade.lang.acl.ISO8601;
  */
 
 public class ServiceDscDlg extends JDialog {
-	JTextField txtName,txtType,txtOwner;
-	VisualStringList ontologiesListPanel,protocolsListPanel,languagesListPanel;
+	JTextField txtName;
+	JTextField txtType;
+	JTextField txtOwner;
+	VisualStringList ontologiesListPanel;
+	VisualStringList protocolsListPanel;
+	VisualStringList languagesListPanel;
 	VisualPropertiesList propertiesListPanel;
 	ServiceDescription serviceDesc;
 	ServiceDescription out;
@@ -92,10 +96,12 @@ public class ServiceDscDlg extends JDialog {
 		editable = ed;
 		checkSlots = checkMandatorySlots;
 
-		if(dsc != null)
+		if (dsc != null) {
 			serviceDesc = dsc;
-		else
+		}
+		else {
 			serviceDesc = new ServiceDescription();
+		}
 
 		JPanel main = new JPanel();
 		main.setLayout(new BoxLayout(main,BoxLayout.Y_AXIS));
@@ -213,7 +219,7 @@ public class ServiceDscDlg extends JDialog {
 			public void actionPerformed(ActionEvent e)
 			{    
 				String param = (String) e.getActionCommand();
-				if (param.equals("OK"))
+				if ("OK".equals(param))
 				{
 					if(editable)
 					{
@@ -242,17 +248,20 @@ public class ServiceDscDlg extends JDialog {
 						out.setOwnership(getSaveText(txtOwner));
 
 						Enumeration lang = languagesListPanel.getContent();
-						while(lang.hasMoreElements())
-							out.addLanguages((String)lang.nextElement());
+						while (lang.hasMoreElements()) {
+							out.addLanguages((String) lang.nextElement());
+						}
 
 						Enumeration onto = ontologiesListPanel.getContent();
-						while(onto.hasMoreElements())
-							out.addOntologies((String)onto.nextElement());
+						while (onto.hasMoreElements()) {
+							out.addOntologies((String) onto.nextElement());
+						}
 
 						//Protocols
 						Enumeration proto = protocolsListPanel.getContent();
-						while(proto.hasMoreElements())
-							out.addProtocols((String)proto.nextElement());
+						while (proto.hasMoreElements()) {
+							out.addProtocols((String) proto.nextElement());
+						}
 
 						Properties ps = propertiesListPanel.getContentProperties();	
 						Enumeration keys = ps.propertyNames();
@@ -281,8 +290,9 @@ public class ServiceDscDlg extends JDialog {
 						}
 
 					}
-					else
-						out = serviceDesc;			
+					else {
+						out = serviceDesc;
+					}			
 
 					dispose();
 				}
@@ -301,7 +311,7 @@ public class ServiceDscDlg extends JDialog {
 				public void actionPerformed(ActionEvent e)
 				{    
 					String param = (String) e.getActionCommand();
-					if (param.equals("Cancel"))
+					if ("Cancel".equals(param))
 					{
 						out = null;
 						dispose();
@@ -343,7 +353,7 @@ public class ServiceDscDlg extends JDialog {
 	private String getSaveText(JTextField field){
 		try{
 			String out = field.getText().trim();
-			return (out.length() == 0 ? null : out);
+			return out.length() == 0 ? null : out;
 		}catch( Exception e){
 			return null;
 		}

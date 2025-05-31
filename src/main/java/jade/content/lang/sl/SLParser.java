@@ -43,12 +43,15 @@ class SLParser implements SLParserConstants {
      */
 	private String unescape(String s) {
 		StringBuilder result = new StringBuilder(s.length());
-		for (int i = 1; i < s.length() - 1; i++)
+		for (int i = 1;i < s.length() - 1;i++) {
 			if (s.charAt(i) == '\u005c\u005c' && s.charAt(i + 1) == '\u005c"') {
 				result.append("\u005c"");
 				i++;
-			} else
+			}
+			else {
 				result.append(s.charAt(i));
+			}
+		}
 		return result.toString();
 	}
 
@@ -62,12 +65,15 @@ class SLParser implements SLParserConstants {
                 AbsAgentAction act = new AbsAgentAction(t.getTypeName());
                 String[] slotNames = t.getNames();
                 if (slotNames != null) {
-                        for (int i=0; i<slotNames.length; i++)
-                                act.set(slotNames[i], (AbsTerm) t.getAbsObject(slotNames[i]));
+									for (int i = 0;i < slotNames.length;i++) {
+										act.set(slotNames[i], (AbsTerm) t.getAbsObject(slotNames[i]));
+									}
                 }
                 return act;
-        } else
-                return t;
+        }
+				else {
+					return t;
+				}
      }
 
   /**
@@ -80,7 +86,7 @@ class SLParser implements SLParserConstants {
   }
 
 
-  Ontology curOntology = null;
+  Ontology curOntology;
   /**
    * Reinitialize the parser such as it is ready to parse a new expression.
    * @param content the content to be parsed
@@ -89,7 +95,9 @@ class SLParser implements SLParserConstants {
   */
   void reinit(Ontology o, String content) {
     curOntology = o;
-    if (content == null) content = new String();
+		if (content == null) {
+			content = new String();
+		}
     ReInit(new StringReader(content));
   }
 
@@ -102,10 +110,12 @@ class SLParser implements SLParserConstants {
   AbsContentElement parse(Ontology o, String content) throws ParseException, TokenMgrError{
           reinit(o, content);
     AbsContentElementList tuple = Content();
-    if (tuple.size() > 1)
-      return tuple;
-    else  // if there is a single ContentExpression than return just it, not the tuple
-      return tuple.get(0);
+		if (tuple.size() > 1) {
+			return tuple;
+		}
+		else {  // if there is a single ContentExpression than return just it, not the tuple
+			return tuple.get(0);
+		}
   }
 
   /** (0 for FIPa-SL0, 1 for SL1, 2 for SL2, >2 for full SL) **/
@@ -121,10 +131,12 @@ class SLParser implements SLParserConstants {
       System.out.println("usage: SLParser SLLevel\u005cn  where SLLevel can be 0 for SL0, 1 for SL1, 2 for SL2, 3 or more for full SL");
       System.exit(0);
     }
-    if (theParser.slType < 3)
-       System.out.println("SL-"+theParser.slType+" Parser Started ...");
-    else
-       System.out.println("Full-SL"+" Parser Started ...");
+		if (theParser.slType < 3) {
+			System.out.println("SL-" + theParser.slType + " Parser Started ...");
+		}
+		else {
+			System.out.println("Full-SL" + " Parser Started ...");
+		}
 
     SLCodec codec = new SLCodec();
     //Ontology o = new DefaultOntology();
@@ -157,7 +169,7 @@ class SLParser implements SLParserConstants {
 * <code>request</code>, predicate for <code>inform</code>, etc.), any
 * allowed SL content expression can be parsed from here.
 */
-  final public AbsContentElementList Content() throws ParseException {
+  public final AbsContentElementList Content() throws ParseException {
   AbsContentElementList tuple = new AbsContentElementList();
   AbsContentElement     val;
     LBrace();
@@ -165,7 +177,7 @@ class SLParser implements SLParserConstants {
     while (true) {
       val = ContentExpression();
                                     tuple.add(val);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      switch (jj_ntk==-1?jjNtk():jj_ntk) {
       case LBRACE:
       case WORD:
       case STRING_LITERAL:
@@ -182,22 +194,25 @@ class SLParser implements SLParserConstants {
       }
     }
     RBrace();
-  {if (true) return tuple;}
+  {
+		if (true) {
+			return tuple;
+		}}
     throw new Error("Missing return statement in function");
   }
 
 /** Left Brace in all of the possible states of the Token Manager **/
-  final public void LBrace() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+  public final void LBrace() throws ParseException {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case LBRACE:
-      jj_consume_token(LBRACE);
+      jjConsumeToken(LBRACE);
       break;
     case LBRACE2:
-      jj_consume_token(LBRACE2);
+      jjConsumeToken(LBRACE2);
       break;
     default:
       jj_la1[1] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
   }
@@ -205,25 +220,25 @@ class SLParser implements SLParserConstants {
                          // lbrace2 in the OperatorState of the Token Manager
 
 /** Right Brace in all of the possible states of the Token Manager **/
-  final public void RBrace() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+  public final void RBrace() throws ParseException {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case RBRACE:
-      jj_consume_token(RBRACE);
+      jjConsumeToken(RBRACE);
       break;
     case RBRACE2:
-      jj_consume_token(RBRACE2);
+      jjConsumeToken(RBRACE2);
       break;
     default:
       jj_la1[2] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
   }
 
                          // rbrace2 in the OperatorState of the Token Manager
-  final public AbsContentElement ContentExpression() throws ParseException {
+  public final AbsContentElement ContentExpression() throws ParseException {
   AbsContentElement val=null; String s;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case WORD:
     case STRING_LITERAL:
     case WORD2:
@@ -244,16 +259,19 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[3] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  val.setIsAContentExpression(true); {if (true) return val;}
+  val.setIsAContentExpression(true); {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsContentElement ContentExpression_NoBrace() throws ParseException {
+  public final AbsContentElement ContentExpression_NoBrace() throws ParseException {
   AbsContentElement val=null;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case REFERENTIALOP:
       val = IdentifyingExpression_NoBrace();
       break;
@@ -274,37 +292,49 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[4] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsIRE IdentifyingExpression_NoBrace() throws ParseException {
+  public final AbsIRE IdentifyingExpression_NoBrace() throws ParseException {
   Token t; AbsIRE ire=null; AbsPredicate prop; AbsTerm term; AbsVariable var;
-    t = jj_consume_token(REFERENTIALOP);
-                    if (slType<2) {if (true) throw new ParseException("NotFullSL_IdentifyExpression_NotParsable_UseAtLeastSL2");}
+    t = jjConsumeToken(REFERENTIALOP);
+                    if (slType<2) {
+											if (true) {
+												throw new ParseException("NotFullSL_IdentifyExpression_NotParsable_UseAtLeastSL2");
+											}}
     term = Term();
     /*var=Variable()*/ prop = Wff();
    ire = new AbsIRE(t.image);
    /*ire.setVariable(var);*/
    ire.setTerm(term);
    ire.setProposition(prop);
-   {if (true) return ire;}
+   {
+		 if (true) {
+			 return ire;
+		 }}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsVariable Variable() throws ParseException {
+  public final AbsVariable Variable() throws ParseException {
   AbsVariable val=null; Token v;
-    v = jj_consume_token(VARIABLE);
-   val = new AbsVariable(); val.setName(v.image.substring(1)); {if (true) return val;}
+    v = jjConsumeToken(VARIABLE);
+   val = new AbsVariable(); val.setName(v.image.substring(1)); {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsTerm Term() throws ParseException {
+  public final AbsTerm Term() throws ParseException {
   Token v; AbsTerm val=null; String s;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case VARIABLE:
       val = Variable();
       break;
@@ -323,7 +353,7 @@ class SLParser implements SLParserConstants {
     case LBRACE:
     case LBRACE2:
       LBrace();
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      switch (jj_ntk==-1?jjNtk():jj_ntk) {
       case WORD:
       case STRING_LITERAL:
       case ARITHMETICOP:
@@ -340,7 +370,7 @@ class SLParser implements SLParserConstants {
         break;
       default:
         jj_la1[5] = jj_gen;
-        jj_consume_token(-1);
+        jjConsumeToken(-1);
         throw new ParseException();
       }
       RBrace();
@@ -352,34 +382,40 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[6] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsPrimitive Constant() throws ParseException {
+  public final AbsPrimitive Constant() throws ParseException {
   String s; AbsPrimitive val=null; Token t;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case WORD:
     case STRING_LITERAL:
     case WORD2:
     case STRING_LITERAL2:
       s = String();
-        // if it is true or false, then converts the String into a Boolean
-        if (CaseInsensitiveString.equalsIgnoreCase(s, "true"))
-                val = AbsPrimitive.wrap(true);
-        else if (CaseInsensitiveString.equalsIgnoreCase(s, "false"))
-                val = AbsPrimitive.wrap(false);
-        else {
-        if (  (CaseInsensitiveString.equalsIgnoreCase(s,"\u005c"true\u005c""))
-            ||(CaseInsensitiveString.equalsIgnoreCase(s,"\u005c"false\u005c"")) )
-                  // in this case leading/trailing quotes were added by the
-                  // encoder and now they must be removed. 
-                  s = unescape(s);
-                    val = AbsPrimitive.wrap(s);
-        }
+			// if it is true or false, then converts the String into a Boolean
+			if (CaseInsensitiveString.equalsIgnoreCase(s, "true")) {
+				val = AbsPrimitive.wrap(true);
+			}
+			else if (CaseInsensitiveString.equalsIgnoreCase(s, "false")) {
+				val = AbsPrimitive.wrap(false);
+			}
+			else {
+				if ((CaseInsensitiveString.equalsIgnoreCase(s, "\u005c"true\u005c""))
+					|| (CaseInsensitiveString.equalsIgnoreCase(s, "\u005c"false\u005c""))) {
+					// in this case leading/trailing quotes were added by the
+					// encoder and now they must be removed. 
+					s = unescape(s);
+				}
+				val = AbsPrimitive.wrap(s);
+			}
       break;
     case INTEGER:
     case HEXINTEGER:
@@ -388,7 +424,7 @@ class SLParser implements SLParserConstants {
       val = Number();
       break;
     case DATETIME:
-      t = jj_consume_token(DATETIME);
+      t = jjConsumeToken(DATETIME);
     try {
       Date d=jade.lang.acl.ISO8601.toDate(t.image);
       val = AbsPrimitive.wrap(d);
@@ -397,33 +433,41 @@ class SLParser implements SLParserConstants {
                  }
       break;
     case PREFIXBYTELENGTHENCODEDSTRING:
-      t = jj_consume_token(PREFIXBYTELENGTHENCODEDSTRING);
+      t = jjConsumeToken(PREFIXBYTELENGTHENCODEDSTRING);
         try {
                 byte[]byteArray = Base64.getDecoder().decode(t.image.getBytes("US-ASCII"));
                 val = AbsPrimitive.wrap(byteArray);
         } catch (UnsupportedEncodingException uee) {
-                {if (true) throw new ParseException("Error decoding byte-array from Base64 US-ASCII, "+uee.getMessage());}
+                {
+									if (true) {
+										throw new ParseException("Error decoding byte-array from Base64 US-ASCII, " + uee.getMessage());
+									}}
         }
       break;
     default:
       jj_la1[7] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsConcept FunctionalTerm_NoBrace() throws ParseException {
-  Token t; AbsTerm term1, term2; AbsConcept val=null; String s;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+  public final AbsConcept FunctionalTerm_NoBrace() throws ParseException {
+  Token t;
+		AbsTerm term1;
+		AbsTerm term2; AbsConcept val=null; String s;
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case ARITHMETICOP:
-      t = jj_consume_token(ARITHMETICOP);
+      t = jjConsumeToken(ARITHMETICOP);
       term1 = Term();
       term2 = Term();
         val = new AbsConcept(t.image);
         try {
-           String slotNames[] = curOntology.getSchema(t.image).getNames();
+           String[] slotNames = curOntology.getSchema(t.image).getNames();
            val.set(slotNames[0], term1);
            val.set(slotNames[1], term2);
         } catch (Exception e) {
@@ -436,17 +480,18 @@ class SLParser implements SLParserConstants {
     case WORD2:
     case STRING_LITERAL2:
       s = String();
-      if ( (SL0Vocabulary.SET.equalsIgnoreCase(s)) || (SL0Vocabulary.SEQUENCE.equalsIgnoreCase(s)))
-        val = new AbsAggregate(s);
-      else {
-        try {
-          val = (AbsConcept) curOntology.getSchema(s).newInstance();
-        }
-        catch (Exception e) {
-          val = new AbsConcept(s);
-        }
-      }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+			if ((SL0Vocabulary.SET.equalsIgnoreCase(s)) || (SL0Vocabulary.SEQUENCE.equalsIgnoreCase(s))) {
+				val = new AbsAggregate(s);
+			}
+			else {
+				try {
+					val = (AbsConcept) curOntology.getSchema(s).newInstance();
+				}
+				catch (Exception e) {
+					val = new AbsConcept(s);
+				}
+			}
+      switch (jj_ntk==-1?jjNtk():jj_ntk) {
       case LBRACE:
       case VARIABLE:
       case INTEGER:
@@ -473,18 +518,21 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[9] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
 // artificial production, needed to avoid a bad warning from javacc
 // val can be either an AbsConcept or an AbsAggregate
-  final public void FunctionalTermParameters(AbsConcept val) throws ParseException {
+  public final void FunctionalTermParameters(AbsConcept val) throws ParseException {
   AbsTerm t; int slotNumber=0;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case LBRACE:
     case VARIABLE:
     case INTEGER:
@@ -500,7 +548,7 @@ class SLParser implements SLParserConstants {
     case WORD2:
     case STRING_LITERAL2:
     case METASYMBOL2:
-       String slotNames[] = null;
+       String[] slotNames = null;
          try {
            slotNames = curOntology.getSchema(val.getTypeName()).getNames();
          } catch (Exception e) {
@@ -514,7 +562,7 @@ class SLParser implements SLParserConstants {
                val.set(Codec.UNNAMEDPREFIX+slotNumber,t);
          }
         slotNumber++;
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        switch (jj_ntk==-1?jjNtk():jj_ntk) {
         case LBRACE:
         case VARIABLE:
         case INTEGER:
@@ -543,7 +591,7 @@ class SLParser implements SLParserConstants {
       label_3:
       while (true) {
         Parameter(val);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        switch (jj_ntk==-1?jjNtk():jj_ntk) {
         case PARAMETERNAME:
         case PARAMETERNAME_STRING:
           ;
@@ -556,41 +604,43 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[12] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
   }
 
-  final public void Parameter(AbsConcept val) throws ParseException {
+  public final void Parameter(AbsConcept val) throws ParseException {
   Token t; AbsTerm term; String slotName;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case PARAMETERNAME:
-      t = jj_consume_token(PARAMETERNAME);
+      t = jjConsumeToken(PARAMETERNAME);
                                slotName = t.image.substring(1);
       break;
     case PARAMETERNAME_STRING:
-      t = jj_consume_token(PARAMETERNAME_STRING);
+      t = jjConsumeToken(PARAMETERNAME_STRING);
                                slotName = unescape(t.image.substring(1));
       break;
     default:
       jj_la1[13] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
     term = Term();
                                val.set(slotName,term);
   }
 
-  final public AbsAgentAction ActionExpression_NoBrace() throws ParseException {
-  AbsAgentAction val=null; AbsTerm term1, term2; Token t;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+  public final AbsAgentAction ActionExpression_NoBrace() throws ParseException {
+  AbsAgentAction val=null;
+		AbsTerm term1;
+		AbsTerm term2; Token t;
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case ACTION:
-      t = jj_consume_token(ACTION);
+      t = jjConsumeToken(ACTION);
       term1 = Term();
       term2 = Term();
        val = new AbsAgentAction(t.image);
        try {
-           String slotNames[] = curOntology.getSchema(t.image).getNames();
+           String[] slotNames = curOntology.getSchema(t.image).getNames();
            val.set(slotNames[0], term1);
            val.set(slotNames[1], toAbsAgentAction(term2));
         } catch (Exception e) {
@@ -599,13 +649,16 @@ class SLParser implements SLParserConstants {
         }
       break;
     case ACTIONOPLL:
-      t = jj_consume_token(ACTIONOPLL);
-                    if (slType<2) {if (true) throw new ParseException("NotFullSL_ActionOperatorExpression_NotParsable");}
+      t = jjConsumeToken(ACTIONOPLL);
+                    if (slType<2) {
+											if (true) {
+												throw new ParseException("NotFullSL_ActionOperatorExpression_NotParsable");
+											}}
       term1 = ActionExpression();
       term2 = ActionExpression();
        val = new AbsAgentAction(t.image);
        try {
-           String slotNames[] = curOntology.getSchema(t.image).getNames();
+           String[] slotNames = curOntology.getSchema(t.image).getNames();
            val.set(slotNames[0], term1);
            val.set(slotNames[1], toAbsAgentAction(term2));
         } catch (Exception e) {
@@ -615,16 +668,19 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[14] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-   {if (true) return val;}
+   {
+		 if (true) {
+			 return val;
+		 }}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsTerm ActionExpression() throws ParseException {
+  public final AbsTerm ActionExpression() throws ParseException {
   AbsTerm val=null; String s;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case LBRACE:
     case LBRACE2:
       LBrace();
@@ -638,16 +694,19 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[15] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-   {if (true) return val;}
+   {
+		 if (true) {
+			 return val;
+		 }}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsPredicate Wff() throws ParseException {
+  public final AbsPredicate Wff() throws ParseException {
   AbsPredicate val=null; String s;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case WORD:
     case STRING_LITERAL:
     case WORD2:
@@ -668,20 +727,28 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[16] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsPredicate Wff_NoBrace() throws ParseException {
-  AbsPredicate arg1, arg2, val=null; Token t; AbsTerm term; String s;
-  String slotNames[]=null;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+  public final AbsPredicate Wff_NoBrace() throws ParseException {
+		AbsPredicate arg1;
+		AbsPredicate arg2;
+		AbsPredicate val = null; Token t; AbsTerm term; String s;
+  String[] slotNames=null;
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case UNARYLOGICALOP:
-      t = jj_consume_token(UNARYLOGICALOP);
-                        if (slType<1) {if (true) throw new ParseException("NotFullSL_NotExpression_NotParsable_UseAtLeastSL1");}
+      t = jjConsumeToken(UNARYLOGICALOP);
+                        if (slType<1) {
+													if (true) {
+														throw new ParseException("NotFullSL_NotExpression_NotParsable_UseAtLeastSL1");
+													}}
       arg1 = Wff();
     val = new AbsPredicate(t.image);
     try {
@@ -692,8 +759,11 @@ class SLParser implements SLParserConstants {
         }
       break;
     case BINARYLOGICALOP:
-      t = jj_consume_token(BINARYLOGICALOP);
-                         if (slType<1) {if (true) throw new ParseException("NotFullSL_BinaryLogicalExpression_NotParsable_UseAtLeastSL1");}
+      t = jjConsumeToken(BINARYLOGICALOP);
+                         if (slType<1) {
+													 if (true) {
+														 throw new ParseException("NotFullSL_BinaryLogicalExpression_NotParsable_UseAtLeastSL1");
+													 }}
       arg1 = Wff();
       arg2 = Wff();
     val = new AbsPredicate(t.image);
@@ -707,8 +777,11 @@ class SLParser implements SLParserConstants {
         }
       break;
     case QUANTIFIER:
-      t = jj_consume_token(QUANTIFIER);
-                    if (slType<2) {if (true) throw new ParseException("NotFullSL_QuantifierExpression_NotParsable_UseAtLeastSL2");} AbsVariable var;
+      t = jjConsumeToken(QUANTIFIER);
+                    if (slType<2) {
+											if (true) {
+												throw new ParseException("NotFullSL_QuantifierExpression_NotParsable_UseAtLeastSL2");
+											}} AbsVariable var;
       var = Variable();
       arg1 = Wff();
     val = new AbsPredicate(t.image);
@@ -722,8 +795,11 @@ class SLParser implements SLParserConstants {
         }
       break;
     case MODALOP:
-      t = jj_consume_token(MODALOP);
-                 if (slType<2) {if (true) throw new ParseException("NotFullSL_ModalOperatorExpression_NotParsable_UseAtLeastSL2");}
+      t = jjConsumeToken(MODALOP);
+                 if (slType<2) {
+									 if (true) {
+										 throw new ParseException("NotFullSL_ModalOperatorExpression_NotParsable_UseAtLeastSL2");
+									 }}
       term = Term();
       arg1 = Wff();
     val = new AbsPredicate(t.image);
@@ -737,7 +813,7 @@ class SLParser implements SLParserConstants {
         }
       break;
     case ACTIONOP:
-      t = jj_consume_token(ACTIONOP);
+      t = jjConsumeToken(ACTIONOP);
       term = ActionExpression();
     val = new AbsPredicate(t.image);
     try {
@@ -746,7 +822,7 @@ class SLParser implements SLParserConstants {
         } catch (Exception e) {
            val.set(Codec.UNNAMEDPREFIX+"0", term);
         }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      switch (jj_ntk==-1?jjNtk():jj_ntk) {
       case LBRACE:
       case WORD:
       case STRING_LITERAL:
@@ -786,7 +862,7 @@ class SLParser implements SLParserConstants {
                   val.set(Codec.UNNAMEDPREFIX+slotNumber, term);
               }
               slotNumber++;
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        switch (jj_ntk==-1?jjNtk():jj_ntk) {
         case LBRACE:
         case VARIABLE:
         case INTEGER:
@@ -812,18 +888,21 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[19] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-  {if (true) return val;}
+  {
+		if (true) {
+			return val;
+		}}
     throw new Error("Missing return statement in function");
   }
 
-  final public AbsPrimitive Number() throws ParseException {
+  public final AbsPrimitive Number() throws ParseException {
    Token t; AbsPrimitive val = null;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case INTEGER:
-      t = jj_consume_token(INTEGER);
+      t = jjConsumeToken(INTEGER);
                     long value;
                   try {
                    val = AbsPrimitive.wrap(Long.parseLong(t.image));
@@ -833,15 +912,15 @@ class SLParser implements SLParserConstants {
                   }
       break;
     case HEXINTEGER:
-      t = jj_consume_token(HEXINTEGER);
+      t = jjConsumeToken(HEXINTEGER);
                       val=AbsPrimitive.wrap(t.image);
       break;
     case FLOATONE:
-      t = jj_consume_token(FLOATONE);
+      t = jjConsumeToken(FLOATONE);
                     double d1;
                    try {
                     // J2ME incompatible d1=Double.parseDouble(t.image); 
-                    d1=(Double.valueOf(t.image)).doubleValue();
+                    d1=Double.valueOf(t.image).doubleValue();
                     val=AbsPrimitive.wrap(d1);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
@@ -849,11 +928,11 @@ class SLParser implements SLParserConstants {
                   }
       break;
     case FLOATTWO:
-      t = jj_consume_token(FLOATTWO);
+      t = jjConsumeToken(FLOATTWO);
                     double d2;
                    try {
                     // J2ME incompatible d2=Double.parseDouble(t.image); 
-                    d2=(Double.valueOf(t.image)).doubleValue();
+                    d2=Double.valueOf(t.image).doubleValue();
                     val=AbsPrimitive.wrap(d2);
                   } catch (NumberFormatException e) { //should never happen
                     e.printStackTrace();
@@ -862,50 +941,71 @@ class SLParser implements SLParserConstants {
       break;
     default:
       jj_la1[20] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
- {if (true) return val;}
+ {
+	 if (true) {
+		 return val;
+	 }}
     throw new Error("Missing return statement in function");
   }
 
 /**
 * <p> <code> String = WORD | STRING_LITERAL  </code>
 */
-  final public String String() throws ParseException {
+  public final String String() throws ParseException {
   Token t;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case WORD2:
-      t = jj_consume_token(WORD2);
-                         {if (true) return t.image;}
+      t = jjConsumeToken(WORD2);
+                         {
+													 if (true) {
+														 return t.image;
+													 }}
       break;
     case STRING_LITERAL2:
-      t = jj_consume_token(STRING_LITERAL2);
+      t = jjConsumeToken(STRING_LITERAL2);
                          if (  (CaseInsensitiveString.equalsIgnoreCase(t.image,"\u005c"true\u005c""))
                              ||(CaseInsensitiveString.equalsIgnoreCase(t.image,"\u005c"false\u005c"")) )
                             // in this case leading/trailing quotes must be left
                             // otherwise the value is confused with a boolean
-                            {if (true) return t.image;}
+                            {
+															if (true) {
+																return t.image;
+															}}
                          else
-                            {if (true) return unescape(t.image);}
+                            {
+															if (true) {
+																return unescape(t.image);
+															}}
       break;
     case WORD:
-      t = jj_consume_token(WORD);
-                         {if (true) return t.image;}
+      t = jjConsumeToken(WORD);
+                         {
+													 if (true) {
+														 return t.image;
+													 }}
       break;
     case STRING_LITERAL:
-      t = jj_consume_token(STRING_LITERAL);
+      t = jjConsumeToken(STRING_LITERAL);
                          if (  (CaseInsensitiveString.equalsIgnoreCase(t.image,"\u005c"true\u005c""))
                              ||(CaseInsensitiveString.equalsIgnoreCase(t.image,"\u005c"false\u005c"")) )
                             // in this case leading/trailing quotes must be left
                             // otherwise the value is confused with a boolean
-                            {if (true) return t.image;}
+                            {
+															if (true) {
+																return t.image;
+															}}
                          else
-                            {if (true) return unescape(t.image);}
+                            {
+															if (true) {
+																return unescape(t.image);
+															}}
       break;
     default:
       jj_la1[21] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
     throw new Error("Missing return statement in function");
@@ -913,21 +1013,27 @@ class SLParser implements SLParserConstants {
 
 /** This grammar rule is an extension to the FIPA SL Grammar. It is specific to the semantics framework.
     It allows to represent a symbol which is not matched by any FIPA-SL token. **/
-  final public String MetaSymbol() throws ParseException {
+  public final String MetaSymbol() throws ParseException {
   Token t;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    switch (jj_ntk==-1?jjNtk():jj_ntk) {
     case METASYMBOL:
-      t = jj_consume_token(METASYMBOL);
+      t = jjConsumeToken(METASYMBOL);
       break;
     case METASYMBOL2:
-      t = jj_consume_token(METASYMBOL2);
+      t = jjConsumeToken(METASYMBOL2);
       break;
     default:
       jj_la1[22] = jj_gen;
-      jj_consume_token(-1);
+      jjConsumeToken(-1);
       throw new ParseException();
     }
-       if (!metaAllowed) {if (true) throw new ParseException(META_EXCEPTION_MESSAGE);} else {if (true) return t.image;}
+       if (!metaAllowed) {
+				 if (true) {
+					 throw new ParseException(META_EXCEPTION_MESSAGE);
+				 }} else {
+				 if (true) {
+					 return t.image;
+				 }}
     throw new Error("Missing return statement in function");
   }
 
@@ -940,17 +1046,17 @@ class SLParser implements SLParserConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[23];
-  static private int[] jj_la1_0;
-  static private int[] jj_la1_1;
+  private final int[] jj_la1 = new int[23];
+  private static int[] jj_la1_0;
+  private static int[] jj_la1_1;
   static {
-      jj_la1_init_0();
-      jj_la1_init_1();
+      jjLa1Init0();
+      jjLa1Init1();
    }
-   private static void jj_la1_init_0() {
+   private static void jjLa1Init0() {
       jj_la1_0 = new int[] {0x843020,0x800020,0x1000040,0x843020,0xee003000,0x56003000,0x873fa0,0x33f00,0x87ffa0,0x10003000,0x873fa0,0xc000,0x87ffa0,0xc000,0x42000000,0x840020,0x843020,0x843020,0x873fa0,0xa8003000,0xf00,0x3000,0x40000,};
    }
-   private static void jj_la1_init_1() {
+   private static void jjLa1Init1() {
       jj_la1_1 = new int[] {0x1c,0x0,0x0,0x1c,0xf,0xc,0x1c,0xc,0x1c,0xc,0x1c,0x0,0x1c,0x0,0x0,0x10,0x1c,0x1c,0x1c,0xf,0x0,0xc,0x10,};
    }
 
@@ -965,7 +1071,9 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
   /** Reinitialise. */
@@ -979,7 +1087,9 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
   /** Constructor. */
@@ -989,7 +1099,9 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
   /** Reinitialise. */
@@ -999,7 +1111,9 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
   /** Constructor with generated Token Manager. */
@@ -1008,7 +1122,9 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
   /** Reinitialise. */
@@ -1017,13 +1133,19 @@ class SLParser implements SLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
+		for (int i = 0;i < 23;i++) {
+			jj_la1[i] = -1;
+		}
   }
 
-  private Token jj_consume_token(int kind) throws ParseException {
+  private Token jjConsumeToken(int kind) throws ParseException {
     Token oldToken;
-    if ((oldToken = token).next != null) token = token.next;
-    else token = token.next = token_source.getNextToken();
+		if ((oldToken = token).next != null) {
+			token = token.next;
+		}
+		else {
+			token = token.next = token_source.getNextToken();
+		}
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
@@ -1036,29 +1158,39 @@ class SLParser implements SLParserConstants {
 
 
 /** Get the next Token. */
-  final public Token getNextToken() {
-    if (token.next != null) token = token.next;
-    else token = token.next = token_source.getNextToken();
+  public final Token getNextToken() {
+		if (token.next != null) {
+			token = token.next;
+		}
+		else {
+			token = token.next = token_source.getNextToken();
+		}
     jj_ntk = -1;
     jj_gen++;
     return token;
   }
 
 /** Get the specific Token. */
-  final public Token getToken(int index) {
+  public final Token getToken(int index) {
     Token t = token;
     for (int i = 0; i < index; i++) {
-      if (t.next != null) t = t.next;
-      else t = t.next = token_source.getNextToken();
+			if (t.next != null) {
+				t = t.next;
+			}
+			else {
+				t = t.next = token_source.getNextToken();
+			}
     }
     return t;
   }
 
-  private int jj_ntk() {
-    if ((jj_nt=token.next) == null)
-      return (jj_ntk = (token.next=token_source.getNextToken()).kind);
-    else
-      return (jj_ntk = jj_nt.kind);
+  private int jjNtk() {
+		if ((jj_nt = token.next) == null) {
+			return jj_ntk = (token.next = token_source.getNextToken()).kind;
+		}
+		else {
+			return jj_ntk = jj_nt.kind;
+		}
   }
 
   private java.util.List jj_expentries = new java.util.ArrayList();
@@ -1100,11 +1232,11 @@ class SLParser implements SLParserConstants {
   }
 
   /** Enable tracing. */
-  final public void enable_tracing() {
+  public final void enable_tracing() {
   }
 
   /** Disable tracing. */
-  final public void disable_tracing() {
+  public final void disable_tracing() {
   }
 
 }

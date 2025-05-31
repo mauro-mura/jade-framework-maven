@@ -1,8 +1,8 @@
 package jade.core.sam;
 
 public class MediatedMeasureProvider extends AverageMeasureProviderImpl {
-	
-	private MeasureProvider realProvider; 
+
+	private final MeasureProvider realProvider; 
 	
 	public MediatedMeasureProvider(MeasureProvider realProvider) {
 		this.realProvider = realProvider;

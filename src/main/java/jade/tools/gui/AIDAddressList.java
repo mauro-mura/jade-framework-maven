@@ -167,7 +167,7 @@ public class AIDAddressList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void deleteButton_actionPerformed(ActionEvent e) {
+  void deleteButtonActionPerformed(ActionEvent e) {
     doDelete();
   }
 
@@ -179,7 +179,7 @@ public class AIDAddressList extends JPanel {
    * @param  e  The feature to be added to the Button_actionPerformed
    *      attribute
    */
-  void addButton_actionPerformed(ActionEvent e) {
+  void addButtonActionPerformed(ActionEvent e) {
     doAdd();
   }
 
@@ -189,7 +189,7 @@ public class AIDAddressList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void viewButton_actionPerformed(ActionEvent e) {
+  void viewButtonActionPerformed(ActionEvent e) {
     doView();
   }
 
@@ -199,7 +199,7 @@ public class AIDAddressList extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void contentList_keyPressed(KeyEvent e) {
+  void contentListKeyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
       doView();
     }
@@ -218,7 +218,7 @@ public class AIDAddressList extends JPanel {
   }
 
 
-  void contentList_mouseClicked(MouseEvent e) {
+  void contentListMouseClicked(MouseEvent e) {
     if (e.getClickCount() > 1) {
       doView();
     }
@@ -244,7 +244,7 @@ public class AIDAddressList extends JPanel {
     viewButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          viewButton_actionPerformed(e);
+          viewButtonActionPerformed(e);
         }
       });
     addButton.setBackground(Color.white);
@@ -257,7 +257,7 @@ public class AIDAddressList extends JPanel {
     addButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          addButton_actionPerformed(e);
+          addButtonActionPerformed(e);
         }
       });
     deleteButton.setBackground(Color.white);
@@ -270,20 +270,20 @@ public class AIDAddressList extends JPanel {
     deleteButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          deleteButton_actionPerformed(e);
+          deleteButtonActionPerformed(e);
         }
       });
     contentList.setFont(new java.awt.Font("Dialog", 0, 11));
     contentList.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          contentList_mouseClicked(e);
+          contentListMouseClicked(e);
         }
       });
     contentList.addKeyListener(
       new java.awt.event.KeyAdapter() {
         public void keyPressed(KeyEvent e) {
-          contentList_keyPressed(e);
+          contentListKeyPressed(e);
         }
       });
     contentScrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -382,7 +382,8 @@ public class AIDAddressList extends JPanel {
     }
 
 
-    private String theRemovedAddress, theChangedAddress;
+		private String theRemovedAddress;
+		private String theChangedAddress;
     private AID itsAID;
   }
 
@@ -476,7 +477,7 @@ public class AIDAddressList extends JPanel {
       okButton.addActionListener(
         new java.awt.event.ActionListener() {
           public void actionPerformed(ActionEvent e) {
-            okButton_actionPerformed(e);
+            okButtonActionPerformed(e);
           }
         });
       cancelButton.setBackground(Color.white);
@@ -485,7 +486,7 @@ public class AIDAddressList extends JPanel {
       cancelButton.addActionListener(
         new java.awt.event.ActionListener() {
           public void actionPerformed(ActionEvent e) {
-            cancelButton_actionPerformed(e);
+            cancelButtonActionPerformed(e);
           }
         });
       this.getContentPane().add(theAddressField, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0
@@ -504,7 +505,7 @@ public class AIDAddressList extends JPanel {
      *
      * @param  e  Description of Parameter
      */
-    void cancelButton_actionPerformed(ActionEvent e) {
+    void cancelButtonActionPerformed(ActionEvent e) {
       setUserAction(CANCELLED);
       setVisible(false);
     }
@@ -515,7 +516,7 @@ public class AIDAddressList extends JPanel {
      *
      * @param  e  Description of Parameter
      */
-    void okButton_actionPerformed(ActionEvent e) {
+    void okButtonActionPerformed(ActionEvent e) {
       setItsAddress(theAddressField.getText());
       setUserAction(OK);
       setVisible(false);
@@ -557,14 +558,14 @@ public class AIDAddressList extends JPanel {
   }
 
 
-  private GridBagLayout gridBagLayout1 = new GridBagLayout();
-  private JList contentList = new JList();
-  private JButton viewButton = new JButton();
-  private JButton addButton = new JButton();
-  private JButton deleteButton = new JButton();
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final JList contentList = new JList();
+	private final JButton viewButton = new JButton();
+	private final JButton addButton = new JButton();
+	private final JButton deleteButton = new JButton();
 
-  private DefaultListModel listModel = new DefaultListModel();
-  private JScrollPane contentScrollPane = new JScrollPane();
+	private final DefaultListModel listModel = new DefaultListModel();
+	private final JScrollPane contentScrollPane = new JScrollPane();
 
   private boolean editable = true;
   private AIDAddressListListener theDataListener;

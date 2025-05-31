@@ -39,11 +39,10 @@ import java.util.Date;
    @author Giovanni Caire - TILab 
  */
 public class PerDayFileLogger extends PrintStream {
-  private final static long DAY = 24*60*60*1000;
-  
-	private String file;
+  private static final long DAY = 24*60*60*1000;
+	private final String file;
 	private long dayCnt;
-	private static DateFormat df = new SimpleDateFormat("yyyyMMdd");
+	private static final DateFormat df = new SimpleDateFormat("yyyyMMdd");
 
     /**
        Create a new day-based logger.

@@ -32,9 +32,9 @@ import jade.content.abs.*;
  * This class represents the schema of a variable.
  * @author Federico Bergenti - Universita` di Parma
  */
-public class VariableSchema extends TermSchema {
+public final class VariableSchema extends TermSchema {
 	public static final String    BASE_NAME = "Variable";
-	private static VariableSchema baseSchema = new VariableSchema();
+	private static final VariableSchema baseSchema = new VariableSchema();
 
 	public static final String    NAME = "Name";
 	public static final String    VALUE_TYPE = "ValueType";

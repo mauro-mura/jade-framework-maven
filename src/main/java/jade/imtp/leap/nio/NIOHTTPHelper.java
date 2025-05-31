@@ -24,7 +24,7 @@ public class NIOHTTPHelper extends HTTPHelper implements BufferTransformer {
 
 	//private boolean needToRead = false;
 	NIOJICPConnection connection;
-	private static Logger log = Logger.getLogger(NIOHTTPHelper.class.getName());
+	private static final Logger log = Logger.getLogger(NIOHTTPHelper.class.getName());
 
 
 	public static ByteBuffer readByteBufferFromHttp(InputStream is) throws IOException {
@@ -37,7 +37,7 @@ public class NIOHTTPHelper extends HTTPHelper implements BufferTransformer {
 				throw new IOException("bytes left in stream after constructing HTTPRequest");
 			}
 		}
-		if (request.getMethod().equals("GET")) {
+		if ("GET".equals(request.getMethod())) {
 			String recipientID = request.getField(RECIPIENT_ID_FIELD);
 			JICPPacket pkt = new JICPPacket(JICPProtocol.CONNECT_MEDIATOR_TYPE, JICPProtocol.DEFAULT_INFO, recipientID, null);
 			ByteBuffer b = ByteBuffer.allocateDirect(pkt.getLength());

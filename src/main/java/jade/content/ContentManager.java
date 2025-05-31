@@ -135,7 +135,7 @@ public class ContentManager implements Serializable {
 	 *         <code>null</code> if no Codec was registered with the given name.
 	 */
 	public Codec lookupLanguage(String name) {
-		return (name == null ? null : (Codec) languages.get(new CaseInsensitiveString(name)));
+		return name == null ? null : (Codec) languages.get(new CaseInsensitiveString(name));
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class ContentManager implements Serializable {
 	 *         <code>null</code> if no Ontology was registered with the given name.
 	 */
 	public Ontology lookupOntology(String name) {
-		return (name == null ? null : (Ontology) ontologies.get(new CaseInsensitiveString(name)));
+		return name == null ? null : (Ontology) ontologies.get(new CaseInsensitiveString(name));
 	}
 
 	/**
@@ -349,22 +349,28 @@ public class ContentManager implements Serializable {
 
 	private void encode(ACLMessage msg, AbsContentElement content, Codec codec, Ontology onto)
 			throws CodecException, OntologyException {
-		if (codec instanceof ByteArrayCodec arrayCodec)
+		if (codec instanceof ByteArrayCodec arrayCodec) {
 			msg.setByteSequenceContent(arrayCodec.encode(onto, content));
-		else if (codec instanceof StringCodec stringCodec)
+		}
+		else if (codec instanceof StringCodec stringCodec) {
 			msg.setContent(stringCodec.encode(onto, content));
-		else
+		}
+		else {
 			throw new CodecException("UnsupportedTypeOfCodec");
+		}
 	}
 
 	private AbsContentElement decode(ACLMessage msg, Codec codec, Ontology onto)
 			throws CodecException, OntologyException {
-		if (codec instanceof ByteArrayCodec arrayCodec)
+		if (codec instanceof ByteArrayCodec arrayCodec) {
 			return arrayCodec.decode(onto, msg.getByteSequenceContent());
-		else if (codec instanceof StringCodec stringCodec)
+		}
+		else if (codec instanceof StringCodec stringCodec) {
 			return stringCodec.decode(onto, msg.getContent());
-		else
+		}
+		else {
 			throw new CodecException("UnsupportedTypeOfCodec");
+		}
 	}
 
 	public String toString() {

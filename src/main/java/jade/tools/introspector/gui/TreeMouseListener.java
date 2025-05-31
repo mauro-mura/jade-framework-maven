@@ -38,9 +38,9 @@ import jade.core.BehaviourID;
    @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
 */
 class TreeMouseListener implements MouseListener{
-  private BehaviourPanel parent;
-  private TreePopupMenu popMenu;
-  private JTree myTree;
+	private final BehaviourPanel parent;
+	private final TreePopupMenu popMenu;
+	private final JTree myTree;
 
   public TreeMouseListener(BehaviourPanel gui){
     parent=gui;

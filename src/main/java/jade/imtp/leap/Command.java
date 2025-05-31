@@ -93,7 +93,7 @@ public class Command {
 	 */
 	private List<Object> commandParameters;
 
-	private boolean requireFreshConnection = false;
+	private boolean requireFreshConnection;
 
 	/**
 	 */

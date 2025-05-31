@@ -175,14 +175,14 @@ public class ACLComboBox extends JComboBox implements Observer {
 		}
 	}
 
-	private static String fipaProtocols[] = { "", FIPANames.InteractionProtocol.FIPA_REQUEST,
-			FIPANames.InteractionProtocol.FIPA_QUERY, FIPANames.InteractionProtocol.FIPA_REQUEST_WHEN,
-			FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION, FIPANames.InteractionProtocol.FIPA_DUTCH_AUCTION,
-			FIPANames.InteractionProtocol.FIPA_BROKERING, FIPANames.InteractionProtocol.FIPA_RECRUITING,
-			FIPANames.InteractionProtocol.FIPA_PROPOSE, FIPANames.InteractionProtocol.FIPA_CONTRACT_NET,
-			FIPANames.InteractionProtocol.FIPA_ITERATED_CONTRACT_NET };
+	private static final String[] fipaProtocols = {"", FIPANames.InteractionProtocol.FIPA_REQUEST,
+		FIPANames.InteractionProtocol.FIPA_QUERY, FIPANames.InteractionProtocol.FIPA_REQUEST_WHEN,
+		FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION, FIPANames.InteractionProtocol.FIPA_DUTCH_AUCTION,
+		FIPANames.InteractionProtocol.FIPA_BROKERING, FIPANames.InteractionProtocol.FIPA_RECRUITING,
+		FIPANames.InteractionProtocol.FIPA_PROPOSE, FIPANames.InteractionProtocol.FIPA_CONTRACT_NET,
+		FIPANames.InteractionProtocol.FIPA_ITERATED_CONTRACT_NET};
 
-	private DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+	private final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
 
 	private ACLMessage msg;
 	private String fieldName;

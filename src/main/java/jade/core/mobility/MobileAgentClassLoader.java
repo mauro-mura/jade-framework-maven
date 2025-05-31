@@ -38,10 +38,10 @@ import jade.util.Logger;
 class MobileAgentClassLoader extends ClassLoader {
 
     private AgentMobilitySlice classServer;
-    private String agentName;
-    private String sliceName;
-    private ServiceFinder finder;
-    private Logger myLogger = Logger.getMyLogger(AgentMobilityService.NAME);
+	private final String agentName;
+	private final String sliceName;
+	private final ServiceFinder finder;
+	private final Logger myLogger = Logger.getMyLogger(AgentMobilityService.NAME);
 
     public MobileAgentClassLoader(String an, String sn, ServiceFinder sf, ClassLoader parent) throws IMTPException, ServiceException {
     	//#PJAVA_EXCLUDE_BEGIN

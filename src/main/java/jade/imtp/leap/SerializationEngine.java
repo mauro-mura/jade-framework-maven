@@ -44,7 +44,7 @@ class SerializationEngine {
 	private static final byte INTEGER_ID = 5;
 	private static final byte AID_ID = 6;
 
-	final static byte[] serialize(Command cmd) throws LEAPSerializationException {
+	static byte[] serialize(Command cmd) throws LEAPSerializationException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(baos);
 		try {
@@ -63,7 +63,7 @@ class SerializationEngine {
 		}
 	}
 
-	final static Command deserialize(byte[] data) throws LEAPSerializationException {
+	static Command deserialize(byte[] data) throws LEAPSerializationException {
 		try { 
 			DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
 			int type = (int) dis.readByte();
@@ -89,7 +89,7 @@ class SerializationEngine {
 	 * serialization or the object is an instance of a class that cannot be
 	 * serialized.
 	 */
-	private final static void serializeObject(Object o, DataOutputStream dos) throws LEAPSerializationException {
+	private static void serializeObject(Object o, DataOutputStream dos) throws LEAPSerializationException {
 		try {
 			if (o != null) {
 				if (o instanceof String string) {            // String
@@ -138,7 +138,7 @@ class SerializationEngine {
 	 * deserialization or the object is an instance of a class that cannot be
 	 * deserialized.
 	 */
-	private final static Object deserializeObject(DataInputStream dis, byte[] data) throws LEAPSerializationException {
+	private static Object deserializeObject(DataInputStream dis, byte[] data) throws LEAPSerializationException {
 		try {
 			byte id = dis.readByte();
 			switch (id) {
@@ -181,14 +181,14 @@ class SerializationEngine {
 	}
 
 
-	private final static void serializeStringArray(String[] ss, DataOutputStream dos) throws IOException, LEAPSerializationException {
+	private static void serializeStringArray(String[] ss, DataOutputStream dos) throws IOException, LEAPSerializationException {
 		dos.writeByte(ss.length);
 		for (int i = 0; i < ss.length; ++i) {
 			dos.writeUTF(ss[i]);
 		}
 	}
 
-	private final static String[] deserializeStringArray(DataInputStream dis) throws IOException, LEAPSerializationException {
+	private static String[] deserializeStringArray(DataInputStream dis) throws IOException, LEAPSerializationException {
 		String[] ss = new String[dis.readByte()];
 		for (int i = 0; i < ss.length; ++i) {
 			ss[i] = dis.readUTF();

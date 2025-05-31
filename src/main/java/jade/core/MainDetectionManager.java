@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 
 public class MainDetectionManager {
 
-	private final static Logger logger = Logger.getMyLogger(MainDetectionManager.class.getName());
+	private static final Logger logger = Logger.getMyLogger(MainDetectionManager.class.getName());
 
 	/*
 	 *  configuration options with defaults
@@ -315,14 +315,14 @@ public class MainDetectionManager {
 							responses.add(recv);
 						} catch (SocketTimeoutException ste) {
 							socket.setSoTimeout(mcast.timeout);
-							if (responses.size() > 0) {
+							if (!responses.isEmpty()) {
 								// we received at least one answer, it's enough
 								break;
 							}
 							throw ste;
 						}
 					} while(true);
-					if (responses.size() > 0) {
+					if (!responses.isEmpty()) {
 						// bail out
 						break;
 					}
@@ -332,7 +332,7 @@ public class MainDetectionManager {
 					logger.log(Logger.FINER, "MainDetectionManager::multicAsk(): timeout, "+retries+" retries left");
 				}
 			} while (retries > 0);
-			if (responses.size() > 0) {
+			if (!responses.isEmpty()) {
 				// we got at least a response!
 				result = responses;
 			}

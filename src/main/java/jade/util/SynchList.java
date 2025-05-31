@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class SynchList extends RWLock {
 	// The actual list of objects
-	private List innerList = null;
+	private List innerList;
 
 	/**
 	 * Default constructor.

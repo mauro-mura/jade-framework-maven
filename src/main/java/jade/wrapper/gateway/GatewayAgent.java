@@ -31,7 +31,7 @@ public class GatewayAgent extends Agent {
 
 	@Serial
 	private static final long serialVersionUID = -6380554009443776915L;
-	private GatewayBehaviour myB = null;
+	private GatewayBehaviour myB;
 	private GatewayListener listener;
 	private final Logger myLogger = Logger.getMyLogger(this.getClass().getName());
 

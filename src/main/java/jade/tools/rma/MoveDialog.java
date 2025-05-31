@@ -49,7 +49,7 @@ class MoveDialog extends JDialog implements ActionListener{
   protected static String containerToolTip = "Container on which the Agent will move";
 
   protected static String result  = "";
-  protected static int OK_BUTTON = 0;
+  protected static int OK_BUTTON;
   protected static int CANCEL_BUTTON = 1;
   protected static int choice = CANCEL_BUTTON;
 
@@ -129,7 +129,7 @@ class MoveDialog extends JDialog implements ActionListener{
   }
 
   public Dimension getPreferredSize () {
-    return (new Dimension(450,170));
+    return new Dimension(450,170);
   }
 
   public void actionPerformed (ActionEvent evt) {

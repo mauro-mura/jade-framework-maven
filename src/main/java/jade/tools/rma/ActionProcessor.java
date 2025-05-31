@@ -37,8 +37,8 @@ import jade.gui.AgentTree;
  @version $Date: 2020-08-20 14:21:30 +0200 (gio, 20 ago 2020) $ $Revision: 6852 $
  */
 class ActionProcessor {
-	
-	private MainPanel panel;
+
+	private final MainPanel panel;
 	private RMAAction action;
 	
 	public static final String  START_ACTION="Start new Agent";
@@ -118,43 +118,56 @@ class ActionProcessor {
 		AgentTree.Node now;
 		
 		FixedAction fx;
-		TreePath paths[];
+		TreePath[] paths;
 		action = a;
 		paths = panel.treeAgent.tree.getSelectionPaths();
-		
-		
+
+
 		// Fixed actions are without parameters, so they are executed once,
 		// regardless how many tree elements are selected
-		if (action instanceof FixedAction)
+		if (action instanceof FixedAction) {
 			fixedAct();
-		
-		// Other actions are executed for every selected tree element. This
-		// means that, if no selection is present, no action is performed.
+
+			// Other actions are executed for every selected tree element. This
+			// means that, if no selection is present, no action is performed.
+		}
 		else {
-			if(paths != null) {
-				lungpath=paths.length;
-				for (int i=0;i<lungpath;i++) {
+			if (paths != null) {
+				lungpath = paths.length;
+				for (int i = 0;i < lungpath;i++) {
 					now = (AgentTree.Node) (paths[i].getLastPathComponent());
-					if (action instanceof AgentAction) agentAct(now);
-					else if (action instanceof ContainerAction) containerAct(now);
-					else if (action instanceof GenericAction) genericAct(now);
-					else if(action instanceof PlatformAction) platformAct(now);
+					if (action instanceof AgentAction) {
+						agentAct(now);
+					}
+					else if (action instanceof ContainerAction) {
+						containerAct(now);
+					}
+					else if (action instanceof GenericAction) {
+						genericAct(now);
+					}
+					else if (action instanceof PlatformAction) {
+						platformAct(now);
+					}
 				}
 			}
 			else {
 				//path null
-				if (action instanceof AgentAction)
-					JOptionPane.showMessageDialog(new JFrame(),"You must select an agent in the Tree","Start Procedure Error",JOptionPane.ERROR_MESSAGE);
+				if (action instanceof AgentAction) {
+					JOptionPane.showMessageDialog(new JFrame(), "You must select an agent in the Tree", "Start Procedure Error", JOptionPane.ERROR_MESSAGE);
+				}
 				else
 					if
-					(action instanceof DummyAgentAction || action instanceof SnifferAction || action instanceof IntrospectorAction || action instanceof LogManagerAgentAction )	
+						(action instanceof DummyAgentAction || action instanceof SnifferAction || action instanceof IntrospectorAction || action instanceof LogManagerAgentAction) {
 						containerAct(null);
+					}
 					else
-						if(action instanceof PlatformAction)
-							JOptionPane.showMessageDialog(new JFrame(), "You must select a platform","Error", JOptionPane.ERROR_MESSAGE);
-						else
-							JOptionPane.showMessageDialog(new JFrame(), "You must select an agent-platform or a agent-container in the Tree","Start Procedure Error", JOptionPane.ERROR_MESSAGE);
-				
+						if (action instanceof PlatformAction) {
+							JOptionPane.showMessageDialog(new JFrame(), "You must select a platform", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							JOptionPane.showMessageDialog(new JFrame(), "You must select an agent-platform or a agent-container in the Tree", "Start Procedure Error", JOptionPane.ERROR_MESSAGE);
+						}
+
 			}
 		}
 		
@@ -177,18 +190,22 @@ class ActionProcessor {
 	private void containerAct(AgentTree.Node node){
 		ContainerAction ac=(ContainerAction) action;
 		AgentTree.ContainerNode nod;
-		if ((ac instanceof DummyAgentAction || ac instanceof SnifferAction || ac instanceof IntrospectorAction || ac instanceof LogManagerAgentAction) && (node == null || node instanceof AgentTree.SuperContainer))
+		if ((ac instanceof DummyAgentAction || ac instanceof SnifferAction || ac instanceof IntrospectorAction || ac instanceof LogManagerAgentAction) && (node == null || node instanceof AgentTree.SuperContainer)) {
 			ac.doAction(null);
-		else	
-			try{
-				if(node instanceof AgentTree.ContainerNode containerNode){
-					nod=containerNode;
+		}
+		else {
+			try {
+				if (node instanceof AgentTree.ContainerNode containerNode) {
+					nod = containerNode;
 					ac.doAction(nod);
 				}
-				else throw new StartException();
-			} catch(StartException ex) {
+				else {
+					throw new StartException();
+				}
+			} catch (StartException ex) {
 				StartException.handle();
 			}
+		}
 	}
 	
 	private void genericAct(AgentTree.Node node){
@@ -207,9 +224,10 @@ class ActionProcessor {
 	
 	private void platformAct(AgentTree.Node node){
 		
-		PlatformAction ac = (PlatformAction) action; 
-		if((node instanceof AgentTree.LocalPlatformFolderNode) || (node instanceof AgentTree.RemotePlatformNode))
+		PlatformAction ac = (PlatformAction) action;
+		if ((node instanceof AgentTree.LocalPlatformFolderNode) || (node instanceof AgentTree.RemotePlatformNode)) {
 			ac.doAction(node);
+		}
 		
 	}
 	

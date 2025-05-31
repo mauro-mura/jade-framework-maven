@@ -50,7 +50,8 @@ public class ConstraintDlg extends JDialog
 	/**
   @serial
   */
-  JTextField maxDepth,	maxResult ;
+	JTextField maxDepth;
+	JTextField maxResult;
 	/**
   @serial
   */
@@ -146,7 +147,7 @@ public class ConstraintDlg extends JDialog
 			public void actionPerformed(ActionEvent e)
  				{
  					String param = e.getActionCommand();
- 					if(param == "OK")
+ 					if("OK".equals(param))
  					{
             String depth = maxDepth.getText().trim();
             String result = maxResult.getText().trim();
@@ -156,14 +157,15 @@ public class ConstraintDlg extends JDialog
             	if(depth.length() != 0)
             	{
             		Long d = Long.valueOf(depth);
-            		
-            		if(d.compareTo(Long.valueOf(0)) >= 0)
-            		  constraints.setMaxDepth(d);
-            		else
-            			{
-            				JOptionPane.showMessageDialog(null,"The propagation depth must be positive !!!.","Error Message",JOptionPane.ERROR_MESSAGE); 
-								    return;
-            			}    
+
+								if (d.compareTo(Long.valueOf(0)) >= 0) {
+									constraints.setMaxDepth(d);
+								}
+								else
+								{
+									JOptionPane.showMessageDialog(null, "The propagation depth must be positive !!!.", "Error Message", JOptionPane.ERROR_MESSAGE);
+									return;
+								}    
             	}
             	
             	if(result.length() !=0)
@@ -172,12 +174,13 @@ public class ConstraintDlg extends JDialog
                       * The max result must be a positive value. It's initialized to 100.
                      */
                     Long r = Long.valueOf(result);
-					if(r.compareTo(Long.valueOf(0)) >= 0)
-                    	constraints.setMaxResults(r);              	
-					else{
-						JOptionPane.showMessageDialog(null,"The max result must be positive !!!.","Error Message",JOptionPane.ERROR_MESSAGE); 
-						return;
-					}
+								if (r.compareTo(Long.valueOf(0)) >= 0) {
+									constraints.setMaxResults(r);
+								}
+								else {
+									JOptionPane.showMessageDialog(null, "The max result must be positive !!!.", "Error Message", JOptionPane.ERROR_MESSAGE);
+									return;
+								}
             	}
                else {
                      /* the user didnt set any value so set the value of max-result
@@ -205,7 +208,7 @@ public class ConstraintDlg extends JDialog
 			public void actionPerformed(ActionEvent e)
  				{
  					String param = e.getActionCommand();
- 					if(param == "Cancel")
+ 					if("Cancel".equals(param))
  					{
             constraints = null; 
  						dispose(); 
@@ -222,12 +225,12 @@ public class ConstraintDlg extends JDialog
 		setModal(true);	
 		//pack();
 		//show();
-		ShowCorrect();
+		showCorrect();
 		
 		return constraints;
 	}
 	
-	private void ShowCorrect() 
+	private void showCorrect() 
  	 {
     pack();
     

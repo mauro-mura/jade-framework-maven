@@ -35,8 +35,8 @@ import jade.domain.introspection.ChangedAgentState;
    @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
 */
 public class StateUpdater implements Runnable {
-  private AgentState state;
-  private StatePanel sp;
+	private final AgentState state;
+	private final StatePanel sp;
 
   public StateUpdater(StatePanel wnd, ChangedAgentState cae) {
     sp = wnd;

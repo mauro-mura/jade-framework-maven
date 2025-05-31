@@ -38,8 +38,8 @@ class AddRemotePlatformFromURLAction extends FixedAction {
 
 	@Serial
 	private static final long serialVersionUID = 7934682763169541689L;
-	private rma myRMA;
-	private MainWindow main;
+	private final rma myRMA;
+	private final MainWindow main;
 
 	AddRemotePlatformFromURLAction(rma anRMA, ActionProcessor actPro, MainWindow mW) {
 
@@ -54,8 +54,9 @@ class AddRemotePlatformFromURLAction extends FixedAction {
 		StringDlg URLDialog = new StringDlg(main,
 				"Insert the URL that contains the APDescripition of the Remote Plaform:");
 		String url = URLDialog.editString("");
-		if (url != null)
+		if (url != null) {
 			myRMA.addRemotePlatformFromURL(url);
+		}
 
 	}
 

@@ -9,9 +9,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class NATUtils {
-	
-	private String serverAddr;
-	private int serverPort;
+
+	private final String serverAddr;
+	private final int serverPort;
 	
 	public NATUtils(String serverAddr, int serverPort) {
 		this.serverAddr = serverAddr;

@@ -6,7 +6,8 @@
  */
 
 package FIPA;
-public class stringsHelper {
+
+public final class stringsHelper {
      // It is useless to have instances of this class
      private stringsHelper() { }
 
@@ -40,9 +41,10 @@ public class stringsHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "strings", org.omg.CORBA.ORB.init().create_sequence_tc(0, org.omg.CORBA.ORB.init().get_primitive_tc(org.omg.CORBA.TCKind.tk_string)));
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "strings", org.omg.CORBA.ORB.init().create_sequence_tc(0, org.omg.CORBA.ORB.init().get_primitive_tc(org.omg.CORBA.TCKind.tk_string)));
+		 }
       return _tc;
    }
    public static String id() {

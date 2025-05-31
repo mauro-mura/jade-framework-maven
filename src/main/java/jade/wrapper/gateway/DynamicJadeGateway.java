@@ -25,10 +25,10 @@ public class DynamicJadeGateway {
 	static final int ACTIVE = 1;
 	static final int NOT_ACTIVE = 2;
 	
-	ContainerController myContainer = null;
-	AgentController myAgent = null;
+	ContainerController myContainer;
+	AgentController myAgent;
 	String agentType = GatewayAgent.class.getName();
-	String agentName = null;
+	String agentName;
 	// jade profile properties
 	ProfileImpl profile;
 	private Properties jadeProps;
@@ -36,11 +36,11 @@ public class DynamicJadeGateway {
 	
 	int gatewayAgentState = UNKNOWN;
 	//#DOTNET_EXCLUDE_BEGIN
-	private List<GatewayListener> listeners = new ArrayList<GatewayListener>();
+	private final List<GatewayListener> listeners = new ArrayList<>();
 	private volatile GatewayListener[] listenersArray = new GatewayListener[0];
 	//#DOTNET_EXCLUDE_END
 	
-	private static Logger myLogger = Logger.getMyLogger(DynamicJadeGateway.class.getName());
+	private static final Logger myLogger = Logger.getMyLogger(DynamicJadeGateway.class.getName());
 	
 	
 	/** Searches for the property with the specified key in the JADE Platform Profile. 
@@ -87,8 +87,9 @@ public class DynamicJadeGateway {
 			// incapsulate the command into an Event
 			e = new Event(-1, command);
 			try {
-				if (myLogger.isLoggable(Logger.INFO)) 
-					myLogger.log(Logger.INFO, "Requesting execution of command "+command);
+				if (myLogger.isLoggable(Logger.INFO)) {
+					myLogger.log(Logger.INFO, "Requesting execution of command " + command);
+				}
 				myAgent.putO2AObject(e, AgentController.ASYNC);
 			} catch (StaleProxyException exc) {
 				exc.printStackTrace();
@@ -207,7 +208,7 @@ public class DynamicJadeGateway {
 	
 	final void initProfile() {
 		// to initialize the profile every restart, otherwise an exception would be thrown by JADE
-		profile = (jadeProps == null ? new ProfileImpl(false) : new ProfileImpl(jadeProps));
+		profile = jadeProps == null ? new ProfileImpl(false) : new ProfileImpl(jadeProps);
 	}
 	
 	/**
@@ -215,13 +216,15 @@ public class DynamicJadeGateway {
 	 */
 	public void shutdown() {
 		try { // try to kill, but neglect any exception thrown
-			if (myAgent != null)
+			if (myAgent != null) {
 				myAgent.kill();
+			}
 		} catch (Exception e) {
 		}
 		try { // try to kill, but neglect any exception thrown
-			if (myContainer != null)
+			if (myContainer != null) {
 				myContainer.kill();
+			}
 		} catch (Exception e) {
 		}
 		myAgent = null;

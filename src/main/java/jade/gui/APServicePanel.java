@@ -176,11 +176,13 @@ public class APServicePanel extends JPanel {
 		tempDlg.setResizable(false);
 		if (parent != null) {
 			int locx = parent.getX() + (parent.getWidth() - tempDlg.getWidth()) / 2;
-			if (locx < 0)
+			if (locx < 0) {
 				locx = 0;
+			}
 			int locy = parent.getY() + (parent.getHeight() - tempDlg.getHeight()) / 2;
-			if (locy < 0)
+			if (locy < 0) {
 				locy = 0;
+			}
 			tempDlg.setLocation(locx, locy);
 		}
 		tempDlg.setVisible(true);

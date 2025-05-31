@@ -49,12 +49,12 @@ public class ResourceManagementProxy extends SliceProxy implements ResourceManag
 			
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof Exception exception) {
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 			return (byte[])result;

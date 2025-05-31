@@ -132,13 +132,13 @@ public class BEAgentManagementService extends BaseService {
 
 			try {
 				String name = cmd.getName();
-				if(name.equals(AgentManagementSlice.INFORM_KILLED)) {
+				if(AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					handleInformKilled(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				else if(AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.INFORM_CREATED)) {
+				else if(AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
 				}
 			}
@@ -355,19 +355,19 @@ public class BEAgentManagementService extends BaseService {
 
 			try {
 				String name = cmd.getName();
-				if(name.equals(AgentManagementSlice.REQUEST_CREATE)) {
+				if(AgentManagementSlice.REQUEST_CREATE.equals(name)) {
 					handleRequestCreate(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.REQUEST_KILL)) {
+				else if(AgentManagementSlice.REQUEST_KILL.equals(name)) {
 					handleRequestKill(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.REQUEST_STATE_CHANGE)) {
+				else if(AgentManagementSlice.REQUEST_STATE_CHANGE.equals(name)) {
 					handleRequestStateChange(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				else if(AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
 				}
-				else if(name.equals(AgentManagementSlice.KILL_CONTAINER)) {
+				else if(AgentManagementSlice.KILL_CONTAINER.equals(name)) {
 					handleKillContainer(cmd);
 				}
 			}
@@ -426,10 +426,10 @@ public class BEAgentManagementService extends BaseService {
 			AID agentID = (AID)params[0];
 			String newState = (String)params[1];
 
-			if (newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED)) {
+			if (jade.domain.FIPAAgentManagement.AMSAgentDescription.SUSPENDED.equals(newState)) {
 				suspendedAgent(agentID);
 			}
-			else if(newState.equals(jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE)) {
+			else if(jade.domain.FIPAAgentManagement.AMSAgentDescription.ACTIVE.equals(newState)) {
 				resumedAgent(agentID);
 			}
 
@@ -496,8 +496,9 @@ public class BEAgentManagementService extends BaseService {
 
 		private void changeAgentState(AID agentID, int newState) throws IMTPException, NotFoundException {
 			BackEndContainer.AgentImage a = myContainer.getAgentImage(agentID);
-			if(a == null)
+			if (a == null) {
 				throw new NotFoundException("Change-Agent-State failed to find " + agentID);
+			}
 
 			if(newState == Agent.AP_SUSPENDED) {
 				myContainer.suspendAgentOnFE(agentID.getLocalName());
@@ -579,7 +580,7 @@ public class BEAgentManagementService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if(cmdName.equals(AgentManagementSlice.H_CREATEAGENT)) {
+				if(AgentManagementSlice.H_CREATEAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_CREATE, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					String className = (String)params[1];
@@ -593,14 +594,14 @@ public class BEAgentManagementService extends BaseService {
 					gCmd.addParam(certs);
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_KILLAGENT)) {
+				else if(AgentManagementSlice.H_KILLAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_KILL, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					gCmd.addParam(agentID);
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_CHANGEAGENTSTATE)) {
+				else if(AgentManagementSlice.H_CHANGEAGENTSTATE.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.REQUEST_STATE_CHANGE, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					Integer newState = (Integer)params[1];
@@ -609,7 +610,7 @@ public class BEAgentManagementService extends BaseService {
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_BORNAGENT)) {
+				else if(AgentManagementSlice.H_BORNAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_CREATED, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					ContainerID cid = (ContainerID)params[1];
@@ -620,14 +621,14 @@ public class BEAgentManagementService extends BaseService {
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_DEADAGENT)) {
+				else if(AgentManagementSlice.H_DEADAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_KILLED, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					gCmd.addParam(agentID);
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_SUSPENDEDAGENT)) {
+				else if(AgentManagementSlice.H_SUSPENDEDAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_STATE_CHANGED, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					gCmd.addParam(agentID);
@@ -635,7 +636,7 @@ public class BEAgentManagementService extends BaseService {
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_RESUMEDAGENT)) {
+				else if(AgentManagementSlice.H_RESUMEDAGENT.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.INFORM_STATE_CHANGED, AgentManagementSlice.NAME, null);
 					AID agentID = (AID)params[0];
 					gCmd.addParam(agentID);
@@ -643,7 +644,7 @@ public class BEAgentManagementService extends BaseService {
 
 					result = gCmd;
 				}
-				else if(cmdName.equals(AgentManagementSlice.H_EXITCONTAINER)) {
+				else if(AgentManagementSlice.H_EXITCONTAINER.equals(cmdName)) {
 					GenericCommand gCmd = new GenericCommand(AgentManagementSlice.KILL_CONTAINER, AgentManagementSlice.NAME, null);
 
 					result = gCmd;
@@ -673,6 +674,6 @@ public class BEAgentManagementService extends BaseService {
 	private final CommandTargetSink receiverSink = new CommandTargetSink();
 
 	// Service specific data
-	private Map pendingImages = new HashMap<>(1);
+	private final Map pendingImages = new HashMap<>(1);
 
 }

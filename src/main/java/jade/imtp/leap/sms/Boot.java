@@ -37,7 +37,7 @@ import jade.core.ProfileImpl;
    @author Giovanni Caire - TILAB
  */
 public class Boot extends jade.Boot {
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     try {
     	// Create the Profile 
     	ProfileImpl p = null;

@@ -84,7 +84,7 @@ public class ACLTimeChooserDialog implements ActionListener {
    * @return    The Date value
    */
   public Date getDate() {
-    return (date);
+    return date;
   }
 
 
@@ -199,7 +199,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     }
     dlg.setVisible(true);
 
-    return (retVal);
+    return retVal;
   }
 
 
@@ -271,7 +271,7 @@ public class ACLTimeChooserDialog implements ActionListener {
    */
   public void actionPerformed(ActionEvent e) {
     String command = e.getActionCommand();
-    if (command.equals("Set")) {
+    if ("Set".equals(command)) {
       Integer I;
       I = Integer.valueOf(year.getText());
       int YY = I.intValue();
@@ -292,25 +292,25 @@ public class ACLTimeChooserDialog implements ActionListener {
       retVal = OK;
       dlg.dispose();
     }
-    else if (command.equals("Reset")) {
+    else if ("Reset".equals(command)) {
       date = null;
       retVal = OK;
       dlg.dispose();
     }
-    else if (command.equals("Cancel")) {
+    else if ("Cancel".equals(command)) {
       retVal = CANCEL;
       dlg.dispose();
     }
-    else if (command.equals("Close")) {
+    else if ("Close".equals(command)) {
       dlg.dispose();
     }
 
-    else if (command.equals("Absolute")) {
+    else if ("Absolute".equals(command)) {
       absButton.setSelected(true);
       relButton.setSelected(false);
       mode = ABSOLUTE;
     }
-    else if (command.equals("Relative")) {
+    else if ("Relative".equals(command)) {
       relButton.setSelected(true);
       absButton.setSelected(false);
       mode = RELATIVE;
@@ -367,7 +367,7 @@ public class ACLTimeChooserDialog implements ActionListener {
         public void actionPerformed(ActionEvent e) {
           Integer i = Integer.valueOf(timeUnitEdit.getText());
           int ii = i.intValue() - 1;
-          int inf_limit = (timeUnitLabel.equalsIgnoreCase("Hour:") || timeUnitLabel.equalsIgnoreCase("Min:") || timeUnitLabel.equalsIgnoreCase("Sec:") ? 0 : 1);
+          int inf_limit = "Hour:".equalsIgnoreCase(timeUnitLabel) || "Min:".equalsIgnoreCase(timeUnitLabel) || "Sec:".equalsIgnoreCase(timeUnitLabel) ? 0 : 1;
           if (ii >= inf_limit) {
             timeUnitEdit.setText(String.valueOf(ii));
           }
@@ -379,7 +379,7 @@ public class ACLTimeChooserDialog implements ActionListener {
     B2.setMargin(new Insets(2, 4, 2, 4));
     Dimension d = new Dimension();
     d.height = B1.getPreferredSize().height;
-    d.width = (new JLabel("XXXXX")).getPreferredSize().width;
+    d.width = new JLabel("XXXXX").getPreferredSize().width;
     l.setPreferredSize(d);
     l.setAlignmentX((float)1);
     timeUnitEdit.setPreferredSize(new Dimension(50, d.height));
@@ -395,27 +395,32 @@ public class ACLTimeChooserDialog implements ActionListener {
   /**
    *  Description of the Field
    */
-  public final static int ABSOLUTE = 0;
+  public static final int ABSOLUTE = 0;
   /**
    *  Description of the Field
    */
-  public final static int RELATIVE = 1;
+  public static final int RELATIVE = 1;
 
   /**
    *  Description of the Field
    */
-  public final static int OK = 1;
+  public static final int OK = 1;
   /**
    *  Description of the Field
    */
-  public final static int CANCEL = 0;
+  public static final int CANCEL = 0;
   JToggleButton absButton;
   JToggleButton relButton;
   private Date date;
   private int mode;
   private int retVal;
   private JDialog dlg;
-  private JTextField year, month, day, hour, min, sec;
+	private JTextField year;
+	private JTextField month;
+	private JTextField day;
+	private JTextField hour;
+	private JTextField min;
+	private JTextField sec;
 
 }
 //  ***EOF***

@@ -85,8 +85,9 @@ public class FIPAException extends Exception implements Predicate {
 	 **/
 	protected void setMessage(String message) {
 		content=message;
-		if (msg!=null)
+		if (msg != null) {
 			msg.setContent(message);
+		}
 	}
 
 	/**

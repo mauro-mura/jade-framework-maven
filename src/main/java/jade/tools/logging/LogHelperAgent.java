@@ -61,9 +61,9 @@ public class LogHelperAgent extends Agent {
 	
 	private String logManagerClass = JavaLoggingLogManagerImpl.JAVA_LOGGING_LOG_MANAGER_CLASS; //default logManagerClass if not specified.
 	private Logger logger;
-	private Codec codec = new SLCodec();
-	private LogManager logManager = null;
-	private AMSSubscriber myAMSSubscriber = null;
+	private final Codec codec = new SLCodec();
+	private LogManager logManager;
+	private AMSSubscriber myAMSSubscriber;
 	
 	protected void setup(){
 		
@@ -138,8 +138,9 @@ public class LogHelperAgent extends Agent {
 		private void handleGetAllLoggers(GetAllLoggers action, Action actExpr, ACLMessage reply) throws FailureException{
 			try {
 				String className = action.getType();
-				if (className != null)
+				if (className != null) {
 					logManagerClass = className;
+				}
 				
 				logger.log(Logger.CONFIG, "Log manager class defined: " + logManagerClass);
 				logManager = (LogManager) Class.forName(logManagerClass).getDeclaredConstructor().newInstance();

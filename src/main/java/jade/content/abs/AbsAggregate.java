@@ -44,7 +44,7 @@ public class AbsAggregate extends AbsConcept {
 	@Serial
 	private static final long serialVersionUID = 388174519762860702L;
 	private static final int UNNAMEDPREFIX_LENGTH = Codec.UNNAMEDPREFIX.length();
-	private List<AbsTerm> elements = new ArrayList<>();
+	private final List<AbsTerm> elements = new ArrayList<>();
 	private AbsTerm elementTemplate;
 
 	/**
@@ -153,8 +153,9 @@ public class AbsAggregate extends AbsConcept {
 	public AbsTerm[] toArray() {
 		int size = elements.size();
 		AbsTerm[] tmp = new AbsTerm[size];
-		for (int i = 0; i < size; i++)
+		for (int i = 0;i < size;i++) {
 			tmp[i] = (AbsTerm) elements.get(i);
+		}
 		return tmp;
 	}
 
@@ -263,7 +264,7 @@ public class AbsAggregate extends AbsConcept {
 		Iterator<AbsTerm> it = elements.iterator();
 		int i = 0;
 		while (it.hasNext()) {
-			sb.append(" #" + i + " " + it.next());
+			sb.append(" #").append(i).append(" ").append(it.next());
 			++i;
 		}
 		sb.append(")");

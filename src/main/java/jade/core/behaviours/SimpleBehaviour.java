@@ -46,7 +46,7 @@ public abstract class SimpleBehaviour extends Behaviour {
 	/**
 	 * Default constructor. It does not set the owner agent for this behaviour.
 	 */
-	public SimpleBehaviour() {
+	protected SimpleBehaviour() {
 		super();
 	}
 
@@ -55,7 +55,7 @@ public abstract class SimpleBehaviour extends Behaviour {
 	 * 
 	 * @param a The agent this behaviour belongs to.
 	 */
-	public SimpleBehaviour(Agent a) {
+	protected SimpleBehaviour(Agent a) {
 		super(a);
 	}
 

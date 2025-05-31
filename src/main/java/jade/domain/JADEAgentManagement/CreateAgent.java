@@ -48,7 +48,7 @@ public class CreateAgent implements AgentAction {
 	private static final long serialVersionUID = 9203311899220462675L;
 	private String agentName;
 	private String className;
-	private List<Object> arguments = new ArrayList<>();
+	private final List<Object> arguments = new ArrayList<>();
 	private ContainerID container;
 
 	private JADEPrincipal owner;

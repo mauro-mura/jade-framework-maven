@@ -38,7 +38,7 @@ public class WrapperBehaviour extends Behaviour {
 
 	@Serial
 	private static final long serialVersionUID = -6220275573418091343L;
-	private Behaviour wrappedBehaviour;
+	private final Behaviour wrappedBehaviour;
 
 	public WrapperBehaviour(Behaviour wrapped) {
 		super(wrapped.myAgent);

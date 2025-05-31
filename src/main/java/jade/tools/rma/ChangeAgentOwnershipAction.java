@@ -37,8 +37,8 @@ import jade.gui.AgentTreeModel;
  */
 class ChangeAgentOwnershipAction extends AgentAction {
 
-  private rma myRMA;
-  private MainWindow win;
+	private final rma myRMA;
+	private final MainWindow win;
 
   public ChangeAgentOwnershipAction(rma anRMA, ActionProcessor actPro, MainWindow win) {
     super("ChangeAgentOwnershipActionIcon", "Change owner", actPro);
@@ -51,8 +51,9 @@ class ChangeAgentOwnershipAction extends AgentAction {
 
     int result = JOptionPane.showConfirmDialog(null, pd, "Change agent ownership", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     String owner = null;
-    if (result == JOptionPane.OK_OPTION)
-    	owner = pd.getUserName() + ':' + new String(pd.getPassword());
+		if (result == JOptionPane.OK_OPTION) {
+			owner = pd.getUserName() + ':' + new String(pd.getPassword());
+		}
   	
     if (owner !=  null) {
       String toChange = node.getName();

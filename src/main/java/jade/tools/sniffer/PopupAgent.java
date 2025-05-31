@@ -56,14 +56,14 @@ public class PopupAgent
 
  //#DOTNET_EXCLUDE_BEGIN
  private JMenuItem tmp;
- //#DOTNET_EXCLUDE_END
- /*#DOTNET_INCLUDE_BEGIN
+	//#DOTNET_EXCLUDE_END
+	/*#DOTNET_INCLUDE_BEGIN
  private MenuItem tmp;
  private MMCanvas canvAgent;
  #DOTNET_INCLUDE_END*/
- private  PopSniffAgent popSniffAg;
- private  PopNoSniffAgent popNoSniffAg;
- private  PopShowAgent popShowAg;
+	private final  PopSniffAgent popSniffAg;
+	private final  PopNoSniffAgent popNoSniffAg;
+	private final  PopShowAgent popShowAg;
 
  protected Agent agent;
 

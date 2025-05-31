@@ -43,7 +43,7 @@ import jade.core.behaviours.Behaviour;
  * @author Giovanni Caire - TILab 
  */
 public class InputQueue {
-	private Vector<Object> queue = new Vector<>();
+	private final Vector<Object> queue = new Vector<>();
 	private Behaviour myManager;
 
 	/**

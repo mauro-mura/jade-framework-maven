@@ -33,12 +33,12 @@ class GlobalReplicationInfo implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 5967429587327862818L;
-	private AID virtualAid;
+	private final AID virtualAid;
 	private AID masterAid;
-	private int replicationMode;
-	private RoundList allReplicas = new RoundList();
+	private final int replicationMode;
+	private final RoundList allReplicas = new RoundList();
 
-	private Logger myLogger = Logger.getJADELogger(getClass().getName());
+	private final Logger myLogger = Logger.getJADELogger(getClass().getName());
 
 	GlobalReplicationInfo(AID virtual, AID master, int replicationMode) {
 		this.virtualAid = virtual;

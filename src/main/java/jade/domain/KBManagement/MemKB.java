@@ -52,15 +52,15 @@ public abstract class MemKB extends KB {
 	protected Map facts = new HashMap<>();
 	protected Hashtable subscriptions = new Hashtable();
 	protected LeaseManager lm;
-	protected int currentReg = 0;
+	protected int currentReg;
 	protected SubscriptionResponder sr;
 
-	protected final static int MAX_REGISTER_WITHOUT_CLEAN = 100;
+	protected static final int MAX_REGISTER_WITHOUT_CLEAN = 100;
 
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 	
 	
-	public MemKB(int maxResultLimit) {
+	protected MemKB(int maxResultLimit) {
 	    super(maxResultLimit);
 	}
 
@@ -113,8 +113,9 @@ public abstract class MemKB extends KB {
 			ACLMessage aclSub = (ACLMessage) s.getMessage();
 			subscriptions.put(dfdTemplate, s);
 		}catch(Exception e){
-                  if(logger.isLoggable(Logger.SEVERE))
-                    logger.log(Logger.SEVERE,"Subscribe error: "+e.getMessage());
+			if (logger.isLoggable(Logger.SEVERE)) {
+				logger.log(Logger.SEVERE, "Subscribe error: " + e.getMessage());
+			}
 			throw new NotUnderstoodException(e.getMessage());
 		}
 	}
@@ -126,8 +127,7 @@ public abstract class MemKB extends KB {
 
 
 	private SubscriptionResponder.Subscription getSubscription(Object key){
-		SubscriptionResponder.Subscription sub = (SubscriptionResponder.Subscription)subscriptions.get(key);
-		return sub;
+		return (SubscriptionResponder.Subscription)subscriptions.get(key);
 	}
 
 
@@ -136,7 +136,7 @@ public abstract class MemKB extends KB {
 		return	subscriptions.elements();
 	}
 
-	int offSetForSubscriptionToReturn = 0;
+	int offSetForSubscriptionToReturn;
 
 	// RITORNA Lista delle sottoscrizioni
 	public	Enumeration getSubscriptions(int offset){
@@ -155,7 +155,7 @@ public abstract class MemKB extends KB {
 			while(e.hasMoreElements()){
 				DFAgentDescription dfd = (DFAgentDescription)e.nextElement();
 				SubscriptionResponder.Subscription s = getSubscription((Object) dfd);
-				if((s.getMessage().getConversationId()).equals(convID)){
+				if(s.getMessage().getConversationId().equals(convID)){
 					subscriptions.remove(dfd);
 					break;
 				}
@@ -165,14 +165,15 @@ public abstract class MemKB extends KB {
 
 
 	// Helper method to match two Agent Identifiers
-	public static final boolean matchAID(AID template, AID fact) {
+	public static boolean matchAID(AID template, AID fact) {
 
 	  // Match the GUID in the ':name' slot
 	    String templateName = template.getName();
 	    if(templateName != null) {
 	        String factName = fact.getName();
-	        if((factName == null) || (!templateName.equalsIgnoreCase(factName)))
-		    	return false;
+				if ((factName == null) || (!templateName.equalsIgnoreCase(factName))) {
+					return false;
+				}
 	    }
 
 	    // Match the address sequence. See 'FIPA Agent Management Specification, Sect. 6.4.2.1'
@@ -190,8 +191,9 @@ public abstract class MemKB extends KB {
 	  	        String factAddr = (String)itFact.next();
 		        found = templateAddr.equalsIgnoreCase(factAddr);
 	        }
-	        if(!found) // An element of the template does not appear in the fact sequence
-				return false;
+				if (!found) { // An element of the template does not appear in the fact sequence
+					return false;
+				}
 	   	}
 
 	    // Match the resolvers sequence. See 'FIPA Agent Management Specification, Sect. 6.4.2.1'
@@ -207,8 +209,9 @@ public abstract class MemKB extends KB {
 			AID factRes = (AID)itFact.next();
 			found = matchAID(templateRes, factRes); // Recursive call
 	      }
-	      if(!found) // An element of the template does not appear in the fact sequence
-			  return false;
+				if (!found) { // An element of the template does not appear in the fact sequence
+					return false;
+				}
 	    }
 
 	    return true;

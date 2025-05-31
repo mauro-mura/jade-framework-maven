@@ -34,7 +34,7 @@ import jade.util.Logger;
  */
 public class EnumIterator implements Iterator {
 
-		private Enumeration e;
+	private final Enumeration e;
     /**
      * Constructor declaration
      * 
@@ -72,8 +72,9 @@ public class EnumIterator implements Iterator {
     public void remove() {
 	RuntimeException e = new RuntimeException("Unsupported Operation");
 	Logger logger = Logger.getMyLogger(this.getClass().getName());
-	if(logger.isLoggable(Logger.WARNING))
-		logger.log(Logger.WARNING,e.getMessage());
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, e.getMessage());
+			}
 	throw e;
     }
 

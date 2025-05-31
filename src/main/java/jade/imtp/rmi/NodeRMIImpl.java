@@ -102,8 +102,8 @@ class NodeRMIImpl extends UnicastRemoteObject implements NodeRMI {
 
 	// This monitor is used to hang a remote ping() call in order to
 	// detect node failures.
-	private Object terminationLock = new Object();
-	private boolean terminating = false;
-	private NodeAdapter myNode;
+	private final Object terminationLock = new Object();
+	private boolean terminating;
+	private final NodeAdapter myNode;
 
 }

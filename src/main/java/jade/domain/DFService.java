@@ -121,10 +121,12 @@ public class DFService extends FIPAService {
 			ServiceDescription sd;
 			while (i.hasNext()) {
 				sd = i.next();
-				if (sd.getName() == null)
+				if (sd.getName() == null) {
 					throw new MissingParameter(FIPAManagementVocabulary.SERVICEDESCRIPTION, FIPAManagementVocabulary.SERVICEDESCRIPTION_NAME);
-				if (sd.getType() == null)
+				}
+				if (sd.getType() == null) {
 					throw new MissingParameter(FIPAManagementVocabulary.SERVICEDESCRIPTION, FIPAManagementVocabulary.SERVICEDESCRIPTION_TYPE);
+				}
 			}
 		}
 	}
@@ -315,7 +317,7 @@ public class DFService extends FIPAService {
 	 */
 	public static void keepRegistered(Agent a, AID df, final DFAgentDescription dfd, Date deadline) {
 		Date lease = dfd.getLeaseTime();
-		final AID theDF = (df != null ? df : a.getDefaultDF());
+		final AID theDF = df != null ? df : a.getDefaultDF();
 		if (lease != null) {
 			if (deadline == null || lease.getTime() < deadline.getTime()) {
 				dfd.setLeaseTime(deadline);
@@ -334,9 +336,9 @@ public class DFService extends FIPAService {
 			}
 		}
 	}
-	
+
 	// constant used to set max results of SearchConstraints
-	private static Long MINUSONE = Long.valueOf(-1);
+	private static final Long MINUSONE = Long.valueOf(-1);
 	/**
 	 Searches for data contained within a <b>DF</b> agent. 
 	 @param a is the Agent requesting the search 
@@ -635,37 +637,37 @@ public class DFService extends FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_NAME)) {
+			if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_NAME.equals(slotName)) {
 				parser.consumeChar('(');
 				dfd.setName(parseAID(parser));
 			}
 			// Lease time
-			else if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_LEASE_TIME)) {
+			else if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_LEASE_TIME.equals(slotName)) {
 				dfd.setLeaseTime(ISO8601.toDate(parser.getElement()));
 			}
 			// Protocols
-			else if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_PROTOCOLS)) {
+			else if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_PROTOCOLS.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					dfd.addProtocols((String) it.next());
 				}
 			}
 			// Languages
-			else if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_LANGUAGES)) {
+			else if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_LANGUAGES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					dfd.addLanguages((String) it.next());
 				}
 			}
 			// Ontologies
-			else if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_ONTOLOGIES)) {
+			else if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_ONTOLOGIES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					dfd.addOntologies((String) it.next());
 				}
 			}
 			// Services
-			else if (slotName.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION_SERVICES)) {
+			else if (FIPAManagementVocabulary.DFAGENTDESCRIPTION_SERVICES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					dfd.addServices((ServiceDescription) it.next());
@@ -688,40 +690,40 @@ public class DFService extends FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_NAME)) {
+			if (FIPAManagementVocabulary.SERVICEDESCRIPTION_NAME.equals(slotName)) {
 				sd.setName(parser.getElement());
 			}
 			// Type
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_TYPE)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_TYPE.equals(slotName)) {
 				sd.setType(parser.getElement());
 			}
 			// Ownership
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_OWNERSHIP)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_OWNERSHIP.equals(slotName)) {
 				sd.setOwnership(parser.getElement());
 			}
 			// Protocols
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_PROTOCOLS)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_PROTOCOLS.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					sd.addProtocols((String) it.next());
 				}
 			}
 			// Languages
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_LANGUAGES)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_LANGUAGES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					sd.addLanguages((String) it.next());
 				}
 			}
 			// Ontologies
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_ONTOLOGIES)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_ONTOLOGIES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					sd.addOntologies((String) it.next());
 				}
 			}
 			// Properties
-			else if (slotName.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION_PROPERTIES)) {
+			else if (FIPAManagementVocabulary.SERVICEDESCRIPTION_PROPERTIES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					sd.addProperties((Property) it.next());
@@ -743,11 +745,11 @@ public class DFService extends FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(FIPAManagementVocabulary.PROPERTY_NAME)) {
+			if (FIPAManagementVocabulary.PROPERTY_NAME.equals(slotName)) {
 				p.setName(parser.getElement());
 			}
 			// Value
-			if (slotName.equals(FIPAManagementVocabulary.PROPERTY_VALUE)) {
+			if (FIPAManagementVocabulary.PROPERTY_VALUE.equals(slotName)) {
 				p.setValue(parser.getElement());
 			}
 		}
@@ -766,11 +768,11 @@ public class DFService extends FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(FIPAManagementVocabulary.PROPERTY_NAME)) {
+			if (FIPAManagementVocabulary.PROPERTY_NAME.equals(slotName)) {
 				mvp.setName(parser.getElement());
 			}
 			// Values
-			if (slotName.equals(FIPAManagementVocabulary.PROPERTY_VALUE)) {
+			if (FIPAManagementVocabulary.PROPERTY_VALUE.equals(slotName)) {
 				mvp.setValues(parseAggregate(parser));	
 			}
 		}
@@ -789,18 +791,18 @@ public class DFService extends FIPAService {
 		while (parser.nextToken().startsWith(":")) {
 			String slotName = parser.getElement();
 			// Name
-			if (slotName.equals(SL0Vocabulary.AID_NAME)) {
+			if (SL0Vocabulary.AID_NAME.equals(slotName)) {
 				id.setName(parser.getElement());
 			}
 			// Addresses
-			else if (slotName.equals(SL0Vocabulary.AID_ADDRESSES)) {
+			else if (SL0Vocabulary.AID_ADDRESSES.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					id.addAddresses((String) it.next());
 				}
 			}
 			// Resolvers
-			else if (slotName.equals(SL0Vocabulary.AID_RESOLVERS)) {
+			else if (SL0Vocabulary.AID_RESOLVERS.equals(slotName)) {
 				Iterator it = parseAggregate(parser).iterator();
 				while (it.hasNext()) {
 					id.addResolvers((AID) it.next());
@@ -842,19 +844,19 @@ public class DFService extends FIPAService {
 			else {
 				parser.consumeChar('(');
 				next = parser.nextToken();
-				if (next.equals(FIPAManagementVocabulary.DFAGENTDESCRIPTION)) {
+				if (FIPAManagementVocabulary.DFAGENTDESCRIPTION.equals(next)) {
 					l.add(parseDfd(parser));
 				}
-				if (next.equals(SL0Vocabulary.AID)) {
+				if (SL0Vocabulary.AID.equals(next)) {
 					l.add(parseAID(parser));
 				}
-				else if (next.equals(FIPAManagementVocabulary.SERVICEDESCRIPTION)) {
+				else if (FIPAManagementVocabulary.SERVICEDESCRIPTION.equals(next)) {
 					l.add(parseServiceDescription(parser));
 				}
-				else if (next.equals(FIPAManagementVocabulary.MULTI_VALUE_PROPERTY)) {
+				else if (FIPAManagementVocabulary.MULTI_VALUE_PROPERTY.equals(next)) {
 					l.add(parseMultiValueProperty(parser));
 				}
-				else if (next.equals(FIPAManagementVocabulary.PROPERTY)) {
+				else if (FIPAManagementVocabulary.PROPERTY.equals(next)) {
 					l.add(parseProperty(parser));
 				}
 			}
@@ -927,7 +929,7 @@ public class DFService extends FIPAService {
 		sb.append(actionName);
 		sb.append(' ');
 		encodeDfd(sb, dfd);
-		if (actionName.equals(FIPAManagementVocabulary.SEARCH) && sc == null) {
+		if (FIPAManagementVocabulary.SEARCH.equals(actionName) && sc == null) {
 			sc = new SearchConstraints();
 			sc.setMaxResults(MINUSONE);
 		}

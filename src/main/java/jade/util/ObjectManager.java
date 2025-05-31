@@ -29,8 +29,8 @@ public class ObjectManager {
 	 * The constant representing the "agent" type
 	 */
 	public static final String AGENT_TYPE = "agent";
-	
-	private static Map<String, List<Loader>> loaders = new HashMap<>();
+
+	private static final Map<String, List<Loader>> loaders = new HashMap<>();
 	
 	/**
 	 * The interface to be implemented by classes that can be registered to load objects of a given type

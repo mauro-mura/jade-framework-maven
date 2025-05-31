@@ -56,10 +56,10 @@ import System.Windows.Forms.MouseEventArgs;
 	   extends MenuItem
 	   #DOTNET_INCLUDE_END*/
    {
- private PopupAgent popAg;
- private List noSniffAgent=new ArrayList<>();
- private Sniffer mySniffer;
- private MMCanvas canvAgent;
+		 private final PopupAgent popAg;
+		 private final List noSniffAgent = new ArrayList<>();
+		 private final Sniffer mySniffer;
+		 private final MMCanvas canvAgent;
 
  public PopShowAgent(PopupAgent popAg,Sniffer mySniffer,MMCanvas canvAgent){
   super("Show Only Agent");

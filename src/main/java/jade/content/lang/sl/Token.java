@@ -14,12 +14,15 @@ public class Token {
    */
   public int kind;
 
-  /**
+	/**
    * beginLine and beginColumn describe the position of the first character
    * of this token; endLine and endColumn describe the position of the
    * last character of this token.
    */
-  public int beginLine, beginColumn, endLine, endColumn;
+	public int beginLine;
+	public int beginColumn;
+	public int endLine;
+	public int endColumn;
 
   /**
    * The string image of the token.
@@ -70,12 +73,9 @@ public class Token {
    * to the following switch statement. Then you can cast matchedToken
    * variable to the appropriate type and use it in your lexical actions.
    */
-  public static final Token newToken(int ofKind)
+  public static Token newToken(int ofKind)
   {
-     switch(ofKind)
-     {
-       default : return new Token();
-     }
+		return new Token();
   }
 
 }

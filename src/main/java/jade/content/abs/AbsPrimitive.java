@@ -40,8 +40,8 @@ public class AbsPrimitive implements AbsTerm {
 
 	@Serial
 	private static final long serialVersionUID = -4976477270014235832L;
-	private Object value = null;
-	private String typeName = null;
+	private Object value;
+	private String typeName;
 
 	/**
 	 * Construct an Abstract descriptor to hold a primitive of the proper type (e.g.
@@ -80,8 +80,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * a given <code>boolean</code> value.
 	 */
 	public static AbsPrimitive wrap(boolean value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.BOOLEAN, Boolean.valueOf(value));
-		return ret;
+		return new AbsPrimitive(BasicOntology.BOOLEAN, Boolean.valueOf(value));
 	}
 
 	/**
@@ -89,8 +88,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * a given <code>int</code> value.
 	 */
 	public static AbsPrimitive wrap(int value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, Integer.valueOf(value));
-		return ret;
+		return new AbsPrimitive(BasicOntology.INTEGER, Integer.valueOf(value));
 	}
 
 	/**
@@ -98,8 +96,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * a given <code>long</code> value.
 	 */
 	public static AbsPrimitive wrap(long value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.INTEGER, Long.valueOf(value));
-		return ret;
+		return new AbsPrimitive(BasicOntology.INTEGER, Long.valueOf(value));
 	}
 
 	/**
@@ -107,8 +104,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * given <code>float</code> value.
 	 */
 	public static AbsPrimitive wrap(float value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, Float.valueOf(value));
-		return ret;
+		return new AbsPrimitive(BasicOntology.FLOAT, Float.valueOf(value));
 	}
 
 	/**
@@ -116,8 +112,7 @@ public class AbsPrimitive implements AbsTerm {
 	 * given <code>double</code> value.
 	 */
 	public static AbsPrimitive wrap(double value) {
-		AbsPrimitive ret = new AbsPrimitive(BasicOntology.FLOAT, Double.valueOf(value));
-		return ret;
+		return new AbsPrimitive(BasicOntology.FLOAT, Double.valueOf(value));
 	}
 
 	/**
@@ -152,8 +147,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.STRING</code>
 	 */
 	public void set(String value) {
-		if (!getTypeName().equals(BasicOntology.STRING))
+		if (!BasicOntology.STRING.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = value;
 	}
 
@@ -165,8 +161,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.BOOLEAN</code>
 	 */
 	public void set(boolean value) {
-		if (!getTypeName().equals(BasicOntology.BOOLEAN))
+		if (!BasicOntology.BOOLEAN.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = Boolean.valueOf(value);
 	}
 
@@ -178,8 +175,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.INTEGER</code>
 	 */
 	public void set(int value) {
-		if (!getTypeName().equals(BasicOntology.INTEGER))
+		if (!BasicOntology.INTEGER.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = Integer.valueOf(value);
 	}
 
@@ -191,8 +189,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.INTEGER</code>
 	 */
 	public void set(long value) {
-		if (!getTypeName().equals(BasicOntology.INTEGER))
+		if (!BasicOntology.INTEGER.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = Long.valueOf(value);
 	}
 
@@ -204,8 +203,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.FLOAT</code>
 	 */
 	public void set(float value) {
-		if (!getTypeName().equals(BasicOntology.FLOAT))
+		if (!BasicOntology.FLOAT.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = Float.valueOf(value);
 	}
 
@@ -217,8 +217,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.FLOAT</code>
 	 */
 	public void set(double value) {
-		if (!getTypeName().equals(BasicOntology.FLOAT))
+		if (!BasicOntology.FLOAT.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = Double.valueOf(value);
 	}
 
@@ -230,8 +231,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.DATE</code>
 	 */
 	public void set(Date value) {
-		if (!getTypeName().equals(BasicOntology.DATE))
+		if (!BasicOntology.DATE.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = value;
 	}
 
@@ -243,8 +245,9 @@ public class AbsPrimitive implements AbsTerm {
 	 *                                  <code>BasicOntology.BYTE_SEQUENCE</code>
 	 */
 	public void set(byte[] value) {
-		if (!getTypeName().equals(BasicOntology.BYTE_SEQUENCE))
+		if (!BasicOntology.BYTE_SEQUENCE.equals(getTypeName())) {
 			throw new IllegalArgumentException("Wrong type");
+		}
 		this.value = value;
 	}
 
@@ -394,10 +397,12 @@ public class AbsPrimitive implements AbsTerm {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof AbsPrimitive primitive)
+		if (obj instanceof AbsPrimitive primitive) {
 			return getObject().equals(primitive.getObject());
-		else
+		}
+		else {
 			return false;
+		}
 	}
 
 	public int hashCode() {

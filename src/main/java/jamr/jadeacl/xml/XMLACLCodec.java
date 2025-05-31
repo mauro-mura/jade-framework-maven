@@ -66,7 +66,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 
 	static {
 		parserClassName = System.getProperty("org.xml.sax.parser");
-		if ((parserClassName == null) || parserClassName.equals("")) {
+		if ((parserClassName == null) || "".equals(parserClassName)) {
 			parserClassName = DEFAULT_PARSER_NAME;
 		}
 	}
@@ -117,9 +117,9 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 
 	XMLReader parser;
 
-	boolean pcdata_accumulate = false;
+	boolean pcdata_accumulate;
 
-	String pcdata_buf = null;
+	String pcdata_buf;
 
 	public XMLACLCodec() throws CodecException {
 
@@ -151,13 +151,13 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 
 	Vector<Object> stack = new Vector<>();
 
-	ACLMessage msg = null;
+	ACLMessage msg;
 
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
 		String tmp = null;
 
-		if (localName.equalsIgnoreCase(FIPA_MESSAGE_TAG)) {
+		if (FIPA_MESSAGE_TAG.equalsIgnoreCase(localName)) {
 
 			tmp = getValueByLocalName(attributes, ACT_ATTR);
 
@@ -170,28 +170,28 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 			stack.clear();
 		}
 
-		if (localName.equalsIgnoreCase(SENDER_TAG) || localName.equalsIgnoreCase(RECEIVER_TAG)
-				|| localName.equalsIgnoreCase(REPLY_TO_TAG) || localName.equalsIgnoreCase(RESOLVERS_TAG)) {
+		if (SENDER_TAG.equalsIgnoreCase(localName) || RECEIVER_TAG.equalsIgnoreCase(localName)
+				|| REPLY_TO_TAG.equalsIgnoreCase(localName) || RESOLVERS_TAG.equalsIgnoreCase(localName)) {
 			current = new AID();
 			stack.addElement(current);
-		} else if (localName.equalsIgnoreCase(NAME_TAG)) {
+		} else if (NAME_TAG.equalsIgnoreCase(localName)) {
 			tmp = getValueByLocalName(attributes, ID_ATTR);
 			if (tmp != null) {
 				((AID) current).setName(tmp);
 			} else {
 				throw new SAXException("Empty name value not allowed !");
 			}
-		} else if (localName.equalsIgnoreCase(URL_TAG)) {
+		} else if (URL_TAG.equalsIgnoreCase(localName)) {
 			tmp = getValueByLocalName(attributes, HREF_ATTR);
 			if (tmp != null) {
 				((AID) current).addAddresses(tmp);
 			} else {
 				throw new SAXException("Empty url value not allowed !");
 			}
-		} else if (localName.equalsIgnoreCase(REPLY_BY_TAG)) {
+		} else if (REPLY_BY_TAG.equalsIgnoreCase(localName)) {
 			tmp = getValueByLocalName(attributes, TIME_ATTR);
 
-			if ((tmp != null) && (!tmp.equals(""))) {
+			if ((tmp != null) && (!"".equals(tmp))) {
 				try {
 					msg.setReplyByDate(ISO8601.toDate(tmp));
 				} catch (Exception exc) {
@@ -205,21 +205,21 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		tmp = getValueByLocalName(attributes, HREF_ATTR);
 
 		if (tmp != null) {
-			if (localName.equalsIgnoreCase(CONTENT_TAG)) {
+			if (CONTENT_TAG.equalsIgnoreCase(localName)) {
 				msg.setContent(tmp);
-			} else if (localName.equalsIgnoreCase(LANGUAGE_TAG)) {
+			} else if (LANGUAGE_TAG.equalsIgnoreCase(localName)) {
 				msg.setLanguage(tmp);
-			} else if (localName.equalsIgnoreCase(CONTENT_LANGUAGE_ENCODING_TAG)) {
+			} else if (CONTENT_LANGUAGE_ENCODING_TAG.equalsIgnoreCase(localName)) {
 				msg.setEncoding(tmp);
-			} else if (localName.equalsIgnoreCase(ONTOLOGY_TAG)) {
+			} else if (ONTOLOGY_TAG.equalsIgnoreCase(localName)) {
 				msg.setOntology(tmp);
-			} else if (localName.equalsIgnoreCase(PROTOCOL_TAG)) {
+			} else if (PROTOCOL_TAG.equalsIgnoreCase(localName)) {
 				msg.setProtocol(tmp);
-			} else if (localName.equalsIgnoreCase(REPLY_WITH_TAG)) {
+			} else if (REPLY_WITH_TAG.equalsIgnoreCase(localName)) {
 				msg.setReplyWith(tmp);
-			} else if (localName.equalsIgnoreCase(IN_REPLY_TO_TAG)) {
+			} else if (IN_REPLY_TO_TAG.equalsIgnoreCase(localName)) {
 				msg.setInReplyTo(tmp);
-			} else if (localName.equalsIgnoreCase(CONVERSATION_ID_TAG)) {
+			} else if (CONVERSATION_ID_TAG.equalsIgnoreCase(localName)) {
 				msg.setConversationId(tmp);
 			}
 		} else {
@@ -231,27 +231,27 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
 		if (pcdata_accumulate) {
-			if (localName.equalsIgnoreCase(CONTENT_TAG)) {
+			if (CONTENT_TAG.equalsIgnoreCase(localName)) {
 				msg.setContent(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(LANGUAGE_TAG)) {
+			} else if (LANGUAGE_TAG.equalsIgnoreCase(localName)) {
 				msg.setLanguage(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(CONTENT_LANGUAGE_ENCODING_TAG)) {
+			} else if (CONTENT_LANGUAGE_ENCODING_TAG.equalsIgnoreCase(localName)) {
 				msg.setEncoding(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(ONTOLOGY_TAG)) {
+			} else if (ONTOLOGY_TAG.equalsIgnoreCase(localName)) {
 				msg.setOntology(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(PROTOCOL_TAG)) {
+			} else if (PROTOCOL_TAG.equalsIgnoreCase(localName)) {
 				msg.setProtocol(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(REPLY_WITH_TAG)) {
+			} else if (REPLY_WITH_TAG.equalsIgnoreCase(localName)) {
 				msg.setReplyWith(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(IN_REPLY_TO_TAG)) {
+			} else if (IN_REPLY_TO_TAG.equalsIgnoreCase(localName)) {
 				msg.setInReplyTo(pcdata_buf);
-			} else if (localName.equalsIgnoreCase(REPLY_BY_TAG)) {
+			} else if (REPLY_BY_TAG.equalsIgnoreCase(localName)) {
 				try {
 					msg.setReplyByDate(ISO8601.toDate(pcdata_buf));
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
-			} else if (localName.equalsIgnoreCase(CONVERSATION_ID_TAG)) {
+			} else if (CONVERSATION_ID_TAG.equalsIgnoreCase(localName)) {
 				msg.setConversationId(pcdata_buf);
 			} else if (localName.startsWith("X-")) {
 				msg.addUserDefinedParameter(localName, pcdata_buf);
@@ -259,16 +259,16 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 			pcdata_accumulate = false;
 			pcdata_buf = null;
 		} else {
-			if (localName.equalsIgnoreCase(SENDER_TAG)) {
+			if (SENDER_TAG.equalsIgnoreCase(localName)) {
 				msg.setSender((AID) current);
 				stack.removeElementAt(stack.size() - 1);
-			} else if (localName.equalsIgnoreCase(RECEIVER_TAG)) {
+			} else if (RECEIVER_TAG.equalsIgnoreCase(localName)) {
 				msg.addReceiver((AID) current);
 				stack.removeElementAt(stack.size() - 1);
-			} else if (localName.equalsIgnoreCase(REPLY_TO_TAG)) {
+			} else if (REPLY_TO_TAG.equalsIgnoreCase(localName)) {
 				msg.addReplyTo((AID) current);
 				stack.removeElementAt(stack.size() - 1);
-			} else if (localName.equalsIgnoreCase(RESOLVERS_TAG)) {
+			} else if (RESOLVERS_TAG.equalsIgnoreCase(localName)) {
 				AID tmpaid = (AID) current;
 				stack.removeElementAt(stack.size() - 1);
 				current = stack.elementAt(stack.size() - 1);
@@ -279,9 +279,9 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 
 	public void characters(char[] chars, int pos, int len) {
 		if (pcdata_accumulate) {
-			String str = (new String(chars, pos, len)).trim();
-			if (!str.equals("")) {
-				if ((pcdata_buf == null) || pcdata_buf.equals("")) {
+			String str = new String(chars, pos, len).trim();
+			if (!"".equals(str)) {
+				if ((pcdata_buf == null) || "".equals(pcdata_buf)) {
 					pcdata_buf = str;
 				} else {
 					pcdata_buf = pcdata_buf + " " + str;
@@ -291,7 +291,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 	}
 
 	/** Ignorable whitespace. */
-	public void ignorableWhitespace(char ch[], int start, int length) {
+	public void ignorableWhitespace(char[] ch, int start, int length) {
 	}
 
 	private void encodeAID(StringBuffer sb, String prefix, AID aid) {
@@ -309,7 +309,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		sb.append(aid.getName());
 		sb.append("\" />\n");
 
-		String addrs[] = aid.getAddressesArray();
+		String[] addrs = aid.getAddressesArray();
 		if ((addrs != null) && (addrs.length > 0)) {
 			sb.append(prefix);
 			sb.append("\t<");
@@ -435,7 +435,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getLanguage();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(LANGUAGE_TAG);
 			sb.append(">");
@@ -446,7 +446,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getEncoding();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(CONTENT_LANGUAGE_ENCODING_TAG);
 			sb.append(">");
@@ -457,7 +457,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getOntology();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(ONTOLOGY_TAG);
 			sb.append(">");
@@ -468,7 +468,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getProtocol();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(PROTOCOL_TAG);
 			sb.append(">");
@@ -479,7 +479,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getConversationId();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(CONVERSATION_ID_TAG);
 			sb.append(">");
@@ -490,7 +490,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getReplyWith();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(REPLY_WITH_TAG);
 			sb.append(">");
@@ -501,7 +501,7 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 
 		tmp = msg.getInReplyTo();
-		if ((tmp != null) && (!tmp.equals(""))) {
+		if ((tmp != null) && (!"".equals(tmp))) {
 			sb.append("\t<");
 			sb.append(IN_REPLY_TO_TAG);
 			sb.append(">");
@@ -547,17 +547,20 @@ public class XMLACLCodec extends DefaultHandler implements ACLCodec {
 		}
 	}
 
-	static private String escape(String s) {
+	private static String escape(String s) {
 		// Make the stringBuffer a little larger than strictly
 		// necessary in case we need to insert any additional
 		// characters. (If our size estimate is wrong, the
 		// StringBuffer will automatically grow as needed).
 		StringBuffer result = new StringBuffer(s.length() + 20);
-		for (int i = 0; i < s.length(); i++)
-			if (s.charAt(i) == '"')
+		for (int i = 0;i < s.length();i++) {
+			if (s.charAt(i) == '"') {
 				result.append("\\\"");
-			else
+			}
+			else {
 				result.append(s.charAt(i));
+			}
+		}
 		return result.toString();
 	}
 

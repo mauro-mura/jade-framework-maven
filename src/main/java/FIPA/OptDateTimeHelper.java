@@ -6,13 +6,14 @@
  */
 
 package FIPA;
-public class OptDateTimeHelper {
+
+public final class OptDateTimeHelper {
      // It is useless to have instances of this class
      private OptDateTimeHelper() { }
 
     public static void write(org.omg.CORBA.portable.OutputStream out, FIPA.DateTime[] that)  {
           {
-              if (that.length > (1L)) {
+              if (that.length > 1L) {
                   throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
               }
               out.write_long(that.length);
@@ -25,7 +26,7 @@ public class OptDateTimeHelper {
           FIPA.DateTime[] that;
           {
               int __length = in.read_long();
-              if (__length > (1L)) {
+              if (__length > 1L) {
                   throw new org.omg.CORBA.MARSHAL(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
               }
               that = new FIPA.DateTime[__length];
@@ -46,9 +47,10 @@ public class OptDateTimeHelper {
      a.read_value(out.create_input_stream(), type());
    }
    private static org.omg.CORBA.TypeCode _tc;
-   synchronized public static org.omg.CORBA.TypeCode type() {
-          if (_tc == null)
-             _tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "OptDateTime", org.omg.CORBA.ORB.init().create_sequence_tc((int) (1L), FIPA.DateTimeHelper.type()));
+   public static synchronized org.omg.CORBA.TypeCode type() {
+			if (_tc == null) {
+				_tc = org.omg.CORBA.ORB.init().create_alias_tc(id(), "OptDateTime", org.omg.CORBA.ORB.init().create_sequence_tc((int) (1L), FIPA.DateTimeHelper.type()));
+		 }
       return _tc;
    }
    public static String id() {

@@ -96,7 +96,7 @@ public class BehaviourID implements Concept {
 		// the class name for readability.
 		int dotIndex = localClassName.lastIndexOf('.');
 		int dollarIndex = localClassName.lastIndexOf('$');
-		int lastIndex = (dotIndex > dollarIndex ? dotIndex : dollarIndex);
+		int lastIndex = dotIndex > dollarIndex ? dotIndex : dollarIndex;
 		if (lastIndex == -1) {
 			return localClassName;
 		} else if (lastIndex == dotIndex) {
@@ -223,7 +223,7 @@ public class BehaviourID implements Concept {
 	 */
 	public boolean equals(Object o) {
 		if (o instanceof BehaviourID b) {
-			return (checkEquals(name, b.name) && checkEquals(className, b.className) && checkEquals(kind, b.kind));
+			return checkEquals(name, b.name) && checkEquals(className, b.className) && checkEquals(kind, b.kind);
 		} else {
 			return false;
 		}
@@ -231,7 +231,7 @@ public class BehaviourID implements Concept {
 
 	private boolean checkEquals(String s1, String s2) {
 		if (s1 != null) {
-			return (s1.equals(s2));
+			return s1.equals(s2);
 		} else {
 			return s2 == null;
 		}

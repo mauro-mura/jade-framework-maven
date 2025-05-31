@@ -37,7 +37,7 @@ import jade.util.Logger;
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
  */
-public class BackEndManager {
+public final class BackEndManager {
 	
 	// The singleton BackEndManager
 	private static BackEndManager theInstance;
@@ -49,9 +49,9 @@ public class BackEndManager {
 	private Node myNode;
 
 	// The child nodes
-	private Map<String, NodeDescriptor> children = new HashMap<>();
+	private final Map<String, NodeDescriptor> children = new HashMap<>();
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public static BackEndManager getInstance(Profile p) throws ProfileException {
 		if (theInstance == null) {

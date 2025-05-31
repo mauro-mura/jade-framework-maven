@@ -31,7 +31,7 @@ package jade.tools.rma;
  */
 abstract class FixedAction extends RMAAction{
 
-  public FixedAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected FixedAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
   public abstract void doAction();

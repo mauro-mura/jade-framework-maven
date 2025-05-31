@@ -127,7 +127,7 @@ public class ProposeResponder extends FSMBehaviour implements FIPANames.Interact
 
 
   // The MsgReceiver behaviour used to receive propose messages
-  MsgReceiver rec = null;
+  MsgReceiver rec;
 	
   /**
    * This static method can be used 
@@ -137,11 +137,13 @@ public class ProposeResponder extends FSMBehaviour implements FIPANames.Interact
    * @see FIPANames.InteractionProtocol
    **/
   public static MessageTemplate createMessageTemplate(String iprotocol){
-	
-    if(CaseInsensitiveString.equalsIgnoreCase(FIPA_PROPOSE,iprotocol))
-	    return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_PROPOSE),MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
-    else
-      return MessageTemplate.MatchProtocol(iprotocol);
+
+		if (CaseInsensitiveString.equalsIgnoreCase(FIPA_PROPOSE, iprotocol)) {
+			return MessageTemplate.and(MessageTemplate.MatchProtocol(FIPA_PROPOSE), MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
+		}
+		else {
+			return MessageTemplate.MatchProtocol(iprotocol);
+		}
   }
 
   /**

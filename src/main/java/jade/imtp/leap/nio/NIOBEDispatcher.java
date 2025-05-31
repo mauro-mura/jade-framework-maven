@@ -36,20 +36,20 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 	private long lastReceivedTime;
 	private boolean active = true;
 	private boolean peerActive = true;
-	private boolean connectionDropped = false;
+	private boolean connectionDropped;
 	private JICPMediatorManager myMediatorManager;
 	private String myID;
 	private Properties myProperties;
-	private BackEndContainer myContainer = null;
+	private BackEndContainer myContainer;
 	protected InputManager inpManager;
 	protected OutputManager outManager;
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	/**
 	 * Retrieve the ID of this mediator. Returns null if this mediator is not active
 	 */
 	public String getID() {
-		return (active ? myID : null);
+		return active ? myID : null;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 	}
 
 	// Local variable only used in the kill() method
-	private Object shutdownLock = new Object();
+	private final Object shutdownLock = new Object();
 
 	/**
 	 * Kill the above container. This may be called by the JICPMediatorManager or
@@ -174,7 +174,7 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 			boolean inp = false;
 			byte[] data = pkt.getData();
 			if (data.length == 1) {
-				inp = (data[0] == 1);
+				inp = data[0] == 1;
 			}
 			if (inp) {
 				inpManager.setConnection((NIOJICPConnection) c);
@@ -433,7 +433,7 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 	}
 
 	private void updateConnectedState() {
-		myProperties.put(BEManagementHelper.CONNECTED, (isConnected() ? "true" : "false"));
+		myProperties.put(BEManagementHelper.CONNECTED, isConnected() ? "true" : "false");
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 	protected class InputManager {
 
 		private NIOJICPConnection myConnection;
-		private boolean dispatching = false;
+		private boolean dispatching;
 		private boolean connectionRefreshed;
 		private boolean waitingForFlush;
 		private long readStartTime = -1;
@@ -629,7 +629,8 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 		private JICPPacket lastResponse;
 		private int lastSid;
 		private BackEndSkel mySkel;
-		private long maxDisconnectionTime, expirationDeadline;
+		private long maxDisconnectionTime;
+		private long expirationDeadline;
 
 		OutputManager(int n, BackEndSkel s, long t) {
 			lastSid = n;
@@ -667,7 +668,7 @@ public class NIOBEDispatcher implements NIOMediator, BEConnectionManager, Dispat
 		}
 
 		final boolean isConnected() {
-			return (myConnection != null);
+			return myConnection != null;
 		}
 
 		void shutdown() {

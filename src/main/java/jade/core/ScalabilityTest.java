@@ -71,9 +71,9 @@ public class ScalabilityTest {
 	private static final int BITRATE_MEASURE = 0;
 	private static final int RTT_MEASURE = 1;
 
-	private static Object terminatedLock = new Object();
-	private static Object readyLock = new Object();	
-	private static Object semaphore = new Object();
+	private static final Object terminatedLock = new Object();
+	private static final Object readyLock = new Object();
+	private static final Object semaphore = new Object();
 
 	private static byte[] content;
 	private static long timeInterval;
@@ -83,15 +83,15 @@ public class ScalabilityTest {
 	private static int mode; 
 	private static boolean randomStart;
 	private static int measure;
-	private static int readyCnt = 0;
-	private static int terminatedCnt = 0;
+	private static int readyCnt;
+	private static int terminatedCnt;
 
-	private static long totalTime = 0;
-	private static long totalTime2 = 0;
+	private static long totalTime;
+	private static long totalTime2;
 
 	private static BufferedReader inputReader;
-	
-	private static Random random = new Random();
+
+	private static final Random random = new Random();
 
 	public static void main(String[] args) {
 		ExtendedProperties pp = parseArguments(args);
@@ -444,10 +444,10 @@ public class ScalabilityTest {
 	   Inner class BitrateReceiverAgent
 	 */
 	public static class BitrateReceiverAgent extends Agent {
-		private boolean firstReceived = false;
-		private boolean terminated = false;
+		private boolean firstReceived;
+		private boolean terminated;
 		private long startTime;
-		private int cnt = 0;
+		private int cnt;
 
 		protected void setup() {
 			addBehaviour(new CyclicBehaviour(this) {
@@ -493,11 +493,11 @@ public class ScalabilityTest {
 		private AID myReceiver;
 		private MessageTemplate myTemplate;
 
-		private long totalCoupleTime = 0;
-		private long totalCoupleTime2 = 0;
-		private boolean terminated = false;
+		private long totalCoupleTime;
+		private long totalCoupleTime2;
+		private boolean terminated;
 
-		private int cnt = 0;
+		private int cnt;
 
 		protected void setup() {
 			Object[] args = getArguments();
@@ -541,7 +541,7 @@ public class ScalabilityTest {
 			if (!terminated) {
 				System.out.println("Agent "+getLocalName()+" "+cnt+" OK");
 				totalCoupleTime += time;
-				totalCoupleTime2 += (time*time);
+				totalCoupleTime2 += time*time;
 				if (nIterations > 0 && (++cnt) >= nIterations) {
 					notifyTerminated(totalCoupleTime, totalCoupleTime2);
 					terminated = true;
@@ -558,7 +558,7 @@ public class ScalabilityTest {
 	   Inner class RTTReceiverAgent
 	 */
 	public static class RTTReceiverAgent extends Agent {
-		private int cnt = 0;
+		private int cnt;
 		protected void setup() {
 			addBehaviour(new CyclicBehaviour(this) {
 				public void action() {

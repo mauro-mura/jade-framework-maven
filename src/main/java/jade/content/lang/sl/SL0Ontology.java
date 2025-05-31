@@ -37,9 +37,9 @@ import jade.core.CaseInsensitiveString;
 class SL0Ontology extends Ontology implements SL0Vocabulary {
 	// NAME
   public static final String ONTOLOGY_NAME = jade.domain.FIPANames.Ontology.SL0_ONTOLOGY;
-	
-  // The singleton instance of this ontology
-	private static Ontology theInstance = new SL0Ontology(ONTOLOGY_NAME, BasicOntology.getInstance(), null);
+
+	// The singleton instance of this ontology
+	private static final Ontology theInstance = new SL0Ontology(ONTOLOGY_NAME, BasicOntology.getInstance(), null);
 	
 	public static Ontology getInstance() {
 		return theInstance;
@@ -82,8 +82,8 @@ class SL0Ontology extends Ontology implements SL0Vocabulary {
 	}
 	
 	boolean isBinaryTermOp(String symbol) {
-		return (CaseInsensitiveString.equalsIgnoreCase(EQUALS, symbol) || 
-			CaseInsensitiveString.equalsIgnoreCase(RESULT, symbol));
+		return CaseInsensitiveString.equalsIgnoreCase(EQUALS, symbol) || 
+			CaseInsensitiveString.equalsIgnoreCase(RESULT, symbol);
 	}
 	
 	boolean isSLFunctionWithoutSlotNames(String symbol) {

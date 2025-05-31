@@ -35,12 +35,12 @@ import jade.content.schema.*;
    The actual <code>Ontology</code> object representing the 
    FIPA-Agent-Management-ontology is a singleton and is accessible through 
    the static method <code>getInstance()</code>
-   @author Fabio Bellifemine - CSELT S.p.A.
-   @version $Date: 2014-06-03 15:12:45 +0200 (mar, 03 giu 2014) $ $Revision: 6713 $
+	@author Fabio Bellifemine - CSELT S.p.A.
+	@version $Date: 2014-06-03 15:12:45 +0200 (mar, 03 giu 2014) $ $Revision: 6713 $
  */
-public class FIPAManagementOntology  extends Ontology implements FIPAManagementVocabulary {
+public final class FIPAManagementOntology  extends Ontology implements FIPAManagementVocabulary {
 
-  private static Ontology theInstance = new FIPAManagementOntology();
+	private static final Ontology theInstance = new FIPAManagementOntology();
   
   /**
      This method returns the unique instance (according to the singleton 

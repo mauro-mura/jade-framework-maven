@@ -51,22 +51,22 @@ import jade.util.leap.Properties;
  */
 public class ProfileImpl extends Profile {
 
-	private Properties props = null;
-	protected Properties bootProps = null;
+	private Properties props;
+	protected Properties bootProps;
 
 	// Keys to retrieve the implementation classes for configurable
 	// functionalities among the bootstrap properties.
 	private static final String RESOURCE = "resource";
 
 	
-	private MainContainerImpl myMain = null;
+	private MainContainerImpl myMain;
 	
 
-	private PlatformManager myPlatformManager = null;
-	private ServiceManager myServiceManager = null;
-	private CommandProcessor myCommandProcessor = null;
-	private IMTPManager myIMTPManager = null;
-	private ResourceManager myResourceManager = null;
+	private PlatformManager myPlatformManager;
+	private ServiceManager myServiceManager;
+	private CommandProcessor myCommandProcessor;
+	private IMTPManager myIMTPManager;
+	private ResourceManager myResourceManager;
 
 	/**
 	 * Creates a Profile implementation using the given properties to configure the
@@ -97,7 +97,7 @@ public class ProfileImpl extends Profile {
 		/*
 		 * #ALL_INCLUDE_BEGIN props = new Properties(); #ALL_INCLUDE_END
 		 */
-		props.setProperty(Profile.MAIN, (Boolean.valueOf(isMain)).toString()); // set to a main/non-main container
+		props.setProperty(Profile.MAIN, Boolean.valueOf(isMain).toString()); // set to a main/non-main container
 	}
 
 	/**
@@ -165,13 +165,16 @@ public class ProfileImpl extends Profile {
 		 * #ALL_INCLUDE_BEGIN props = new Properties(); #ALL_INCLUDE_END
 		 */
 		// set the passed properties
-		props.setProperty(Profile.MAIN, (Boolean.valueOf(isMain)).toString()); // set to a main/non-main container
-		if (host != null)
+		props.setProperty(Profile.MAIN, Boolean.valueOf(isMain).toString()); // set to a main/non-main container
+		if (host != null) {
 			props.setProperty(MAIN_HOST, host);
-		if (port > 0)
+		}
+		if (port > 0) {
 			setIntProperty(MAIN_PORT, port);
-		if (platformID != null)
+		}
+		if (platformID != null) {
 			props.setProperty(PLATFORM_ID, platformID);
+		}
 	}
 
 	void init() {
@@ -337,7 +340,7 @@ public class ProfileImpl extends Profile {
 			String underscoredKey = key.replace('.', '_');
 			v = props.getProperty(underscoredKey);
 		}
-		return (v != null ? v.trim() : aDefault);
+		return v != null ? v.trim() : aDefault;
 	}
 
 	/**
@@ -503,9 +506,9 @@ public class ProfileImpl extends Profile {
 	private void createIMTPManager() throws ProfileException {
 		String imtp = getParameter(IMTP, LEAP_IMTP);
 		String imtpClass = imtp;
-		if (imtp.equals(LEAP_IMTP)) {
+		if (LEAP_IMTP.equals(imtp)) {
 			imtpClass = "jade.imtp.leap.LEAPIMTPManager";
-		} else if (imtp.equals(RMI_IMTP)) {
+		} else if (RMI_IMTP.equals(imtp)) {
 			imtpClass = "jade.imtp.rmi.RMIIMTPManager";
 		}
 		try {

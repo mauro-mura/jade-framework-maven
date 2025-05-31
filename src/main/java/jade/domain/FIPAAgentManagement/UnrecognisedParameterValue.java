@@ -43,10 +43,11 @@ public class UnrecognisedParameterValue extends RefuseException implements Predi
     s1=parameterName;
     s2=parameterValue;
   }
-/**
-  @serial
-  */
-String s1,s2;
+	/**
+	  @serial
+	  */
+	String s1;
+	String s2;
 public void setParameterName(String a){s1=a;setMessage("(unrecognised-parameter-value "+s1+" \""+s2+"\")");}
 public String getParameterName() {return s1;}
 public void setParameterValue(String a){s2=a;setMessage("(unrecognised-parameter-value "+s1+" \""+s2+"\")");}

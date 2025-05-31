@@ -34,7 +34,7 @@ import jade.gui.AgentTree;
  */
 class SaveContainerAction extends ContainerAction {
 
-    private rma myRMA;
+	private final rma myRMA;
 
     SaveContainerAction(rma anRMA, ActionProcessor act)
     {

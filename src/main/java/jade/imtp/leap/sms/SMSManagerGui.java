@@ -25,7 +25,8 @@ public class SMSManagerGui extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -1851273744072456684L;
-	private JTextField msisdnTF, portTF;
+	private JTextField msisdnTF;
+	private JTextField portTF;
 	private JTextArea textTA;
 
 	private SMSManager theSMSManager;
@@ -107,8 +108,8 @@ public class SMSManagerGui extends JFrame {
 
 	private Dimension getProperSize(int maxX, int maxY) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (screenSize.width < maxX ? screenSize.width : maxX);
-		int y = (screenSize.height < maxY ? screenSize.height : maxY);
+		int x = screenSize.width < maxX ? screenSize.width : maxX;
+		int y = screenSize.height < maxY ? screenSize.height : maxY;
 		return new Dimension(x, y);
 	}
 

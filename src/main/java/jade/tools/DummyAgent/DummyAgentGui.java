@@ -56,9 +56,9 @@ class DummyAgentGui extends JFrame
 	File              currentDir;
   String 						logoDummy = "images/dummyagent.gif";
 	DummyAgentGui thisGUI;
-	
+
 	//logging
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 	
   // Constructor
 	DummyAgentGui(DummyAgent a)
@@ -184,9 +184,10 @@ class DummyAgentGui extends JFrame
           codec.decode(codec.encode(m,charset),charset);
           myAgent.send(m);
 		    } 
-        catch (ACLCodec.CodecException ce) {	
-		  	  if(logger.isLoggable(Logger.WARNING))
-		  	  	logger.log(Logger.WARNING,"Wrong ACL Message " + m.toString());
+        catch (ACLCodec.CodecException ce) {
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Wrong ACL Message " + m.toString());
+					}
 			    ce.printStackTrace();
 		      JOptionPane.showMessageDialog(null,"Wrong ACL Message: "+"\n"+ ce.getMessage(),"Error Message",JOptionPane.ERROR_MESSAGE);
         }
@@ -200,9 +201,10 @@ class DummyAgentGui extends JFrame
 	  Action openAction = new AbstractAction("Open", openImg){
 	  	public void actionPerformed(ActionEvent e)
 	  	{
-	  		JFileChooser chooser = new JFileChooser(); 
-		  	if (currentDir != null)
-				  chooser.setCurrentDirectory(currentDir); 
+	  		JFileChooser chooser = new JFileChooser();
+				if (currentDir != null) {
+					chooser.setCurrentDirectory(currentDir);
+				} 
 		  	int returnVal = chooser.showOpenDialog(null); 
 			  if(returnVal == JFileChooser.APPROVE_OPTION)
 			  {
@@ -215,12 +217,15 @@ class DummyAgentGui extends JFrame
           currentMsgGui.setMsg(codec.decode());
 				}
 				catch(FileNotFoundException e1) {
-						JOptionPane.showMessageDialog(null,"File not found: "+ fileName + e1.getMessage(),"Error Message",JOptionPane.ERROR_MESSAGE);
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"File Not Found: " + fileName); }
+					JOptionPane.showMessageDialog(null, "File not found: " + fileName + e1.getMessage(), "Error Message", JOptionPane.ERROR_MESSAGE);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "File Not Found: " + fileName);
+					}
+				}
 				catch (ACLCodec.CodecException e2) {
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"Wrong ACL Message in file: " +fileName);
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Wrong ACL Message in file: " + fileName);
+					}
 					// e2.printStackTrace(); 
 					JOptionPane.showMessageDialog(null,"Wrong ACL Message in file: "+ fileName +"\n"+ e2.getMessage(),"Error Message",JOptionPane.ERROR_MESSAGE);
 				}
@@ -235,8 +240,9 @@ class DummyAgentGui extends JFrame
 	  	public void actionPerformed(ActionEvent e)
 	  	{
 	  		JFileChooser chooser = new JFileChooser();
-			  if (currentDir != null)
-				  chooser.setCurrentDirectory(currentDir); 
+				if (currentDir != null) {
+					chooser.setCurrentDirectory(currentDir);
+				} 
 			  int returnVal = chooser.showSaveDialog(null); 
 			  if(returnVal == JFileChooser.APPROVE_OPTION)
 			  {
@@ -251,12 +257,16 @@ class DummyAgentGui extends JFrame
 				  	codec.write(ACLmsg);
             f.close();
 				  }
-				  catch(FileNotFoundException e3) { 
-				  if(logger.isLoggable(Logger.WARNING))
-				  	logger.log(Logger.WARNING,"Can't open file: " + fileName); }
+				  catch(FileNotFoundException e3) {
+						if (logger.isLoggable(Logger.WARNING)) {
+							logger.log(Logger.WARNING, "Can't open file: " + fileName);
+						}
+					}
 				  catch(IOException e4) {
-				  	if(logger.isLoggable(Logger.WARNING))
-				  		logger.log(Logger.WARNING,"IO Exception"); }
+						if (logger.isLoggable(Logger.WARNING)) {
+							logger.log(Logger.WARNING, "IO Exception");
+						}
+					}
 			  } 
 	  	}
 		};
@@ -270,9 +280,10 @@ class DummyAgentGui extends JFrame
 		Action openQAction = new AbstractAction("Open queue", openQImg){
 	  public void actionPerformed(ActionEvent e)
 	  {
-	  	JFileChooser chooser = new JFileChooser(); 
-			if (currentDir != null)
-				chooser.setCurrentDirectory(currentDir); 
+	  	JFileChooser chooser = new JFileChooser();
+			if (currentDir != null) {
+				chooser.setCurrentDirectory(currentDir);
+			} 
 			int returnVal = chooser.showOpenDialog(null); 
 			if(returnVal == JFileChooser.APPROVE_OPTION)
 			{
@@ -295,9 +306,11 @@ class DummyAgentGui extends JFrame
 						Integer nn = Integer.valueOf(inp.readLine());
 						n = nn.intValue();
 					}
-					catch(IOException ioEx) { 
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"IO Exception reading the number of messages in the queue"); }
+					catch(IOException ioEx) {
+						if (logger.isLoggable(Logger.WARNING)) {
+							logger.log(Logger.WARNING, "IO Exception reading the number of messages in the queue");
+						}
+					}
 					
 					// Read the messages and insert them in the queue
 					MsgIndication mi; 
@@ -307,12 +320,16 @@ class DummyAgentGui extends JFrame
 						queuedMsgListModel.add(i, (Object) mi);
 					}
 				}
-				catch(FileNotFoundException e5) { 
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"Can't open file: " + fileName); }
+				catch(FileNotFoundException e5) {
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Can't open file: " + fileName);
+					}
+				}
 				catch(IOException e6) {
-					if(logger.isLoggable(Logger.WARNING))
-					 logger.log(Logger.WARNING,"IO Exception"); }
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "IO Exception");
+					}
+				}
 			} 
 
 	  	}
@@ -324,9 +341,10 @@ class DummyAgentGui extends JFrame
 		Action saveQAction = new AbstractAction("Save queue", saveQImg){
 	  public void actionPerformed(ActionEvent e)
 	  {
-	  	JFileChooser chooser = new JFileChooser(); 
-			if (currentDir != null)
-				chooser.setCurrentDirectory(currentDir); 
+	  	JFileChooser chooser = new JFileChooser();
+			if (currentDir != null) {
+				chooser.setCurrentDirectory(currentDir);
+			} 
 			int returnVal = chooser.showSaveDialog(null); 
 			if(returnVal == JFileChooser.APPROVE_OPTION)
 			{
@@ -342,9 +360,11 @@ class DummyAgentGui extends JFrame
 						out.write(String.valueOf(queuedMsgListModel.getSize()));
 						out.newLine();
 					}
-					catch(IOException ioEx) { 
-					if(logger.isLoggable(Logger.WARNING))
-						logger.log(Logger.WARNING,"IO Exception writing the number of messages in the queue"); }
+					catch(IOException ioEx) {
+						if (logger.isLoggable(Logger.WARNING)) {
+							logger.log(Logger.WARNING, "IO Exception writing the number of messages in the queue");
+						}
+					}
 
 					// Write the messages
 					MsgIndication mi;
@@ -354,12 +374,16 @@ class DummyAgentGui extends JFrame
 						mi.toText(out);
 					}
 				}
-				catch(FileNotFoundException e5) { 
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"Can't open file: " + fileName); }
-				catch(IOException e6) { 
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"IO Exception"); }
+				catch(FileNotFoundException e5) {
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "Can't open file: " + fileName);
+					}
+				}
+				catch(IOException e6) {
+					if (logger.isLoggable(Logger.WARNING)) {
+						logger.log(Logger.WARNING, "IO Exception");
+					}
+				}
 			} 
 
 	  }

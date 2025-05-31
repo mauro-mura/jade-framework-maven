@@ -40,7 +40,7 @@ public class AverageMeasure implements Serializable, Provider {
 	private static final long serialVersionUID = 423475294834L;
 	
 	private double value = Double.NaN;
-	private int nSamples = 0;
+	private int nSamples;
 	private double variance = 0.0;
 	
 	public AverageMeasure() {
@@ -93,7 +93,7 @@ public class AverageMeasure implements Serializable, Provider {
 				double totValue = value * nSamples + am.getValue() * am.getNSamples();
 				int totSamples = nSamples + am.getNSamples();
 				
-				value = (totSamples != 0 ? totValue / totSamples : 0.0);
+				value = totSamples != 0 ? totValue / totSamples : 0.0;
 				nSamples = totSamples;
 			}
 		}

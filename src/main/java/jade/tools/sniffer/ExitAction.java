@@ -43,7 +43,7 @@ import java.awt.event.ActionEvent;
 
 public class ExitAction extends FixedAction{
 
- private Sniffer mySniffer; // is the handle to SnifferAgent
+	private final Sniffer mySniffer; // is the handle to SnifferAgent
 
 public ExitAction(ActionProcessor actpro,Sniffer mySniffer) {
    super ("ExitActionIcon","Exit",actpro);

@@ -39,15 +39,15 @@ class WaitAnswersBehaviour extends SimpleBehaviour {
     ACLMessage msg;
     PrintStream out;
     long timeout;
-    private final static long ONE_SEC_AS_MS = 1000;
-    private final static long TEN_SEC_AS_MS = 10 * ONE_SEC_AS_MS;
-    final static long DEFAULT_TIMEOUT = TEN_SEC_AS_MS;
+    private static final long ONE_SEC_AS_MS = 1000;
+    private static final long TEN_SEC_AS_MS = 10 * ONE_SEC_AS_MS;
+    static final long DEFAULT_TIMEOUT = TEN_SEC_AS_MS;
     boolean finished;
     MessageTemplate mt;
-    Agent myAgent=null;
-    private String myThreadName;
+    Agent myAgent;
+	private final String myThreadName;
     /** my logger */
-    private final static Logger logger = 
+    private static final Logger logger = 
         Logger.getMyLogger(WaitAnswersBehaviour.class.getName());
     
     /** 
@@ -79,7 +79,7 @@ class WaitAnswersBehaviour extends SimpleBehaviour {
         Date d = m.getReplyByDate();
         
         if (d != null) {
-            timeout = d.getTime() - (new Date()).getTime();
+            timeout = d.getTime() - new Date().getTime();
             if (timeout <= ONE_SEC_AS_MS) {
                 timeout = ONE_SEC_AS_MS;
             }
@@ -130,7 +130,7 @@ class WaitAnswersBehaviour extends SimpleBehaviour {
         out.flush();//Added by Sebastien_Siva@hp.com
         
         // an AGREE implies a subsequent message
-        finished = (msg.getPerformative() != ACLMessage.AGREE);
+        finished = msg.getPerformative() != ACLMessage.AGREE;
 	if ( logger.isLoggable( Logger.FINE ) ) {
 	    logger.log( Logger.FINE, 
 			myThreadName + ": set finished=" + finished );

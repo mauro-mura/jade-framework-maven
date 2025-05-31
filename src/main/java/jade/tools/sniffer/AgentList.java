@@ -48,7 +48,7 @@ public class AgentList implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -9024543038127657795L;
-	private List<Agent> agents;
+	private final List<Agent> agents;
 
 	/**
 	 * Default constructor for the class <em>AgentList</em>

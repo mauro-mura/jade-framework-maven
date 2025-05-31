@@ -71,7 +71,7 @@ public class JarClassLoader extends ClassLoader {
 	
 	public JarClassLoader(File[] ff, ClassLoader parent) throws IOException {
 		super(parent);
-		files = (ff != null ? ff : new File[0]);
+		files = ff != null ? ff : new File[0];
 		jarFiles = new JarFile[files.length];
 		for (int i = 0; i < files.length; ++i) {
 			jarFiles[i] = new JarFile(files[i]);
@@ -168,7 +168,7 @@ public class JarClassLoader extends ClassLoader {
 	
     @Override
     public URL findResource(String name) {
-        String entryName=(name.startsWith("/"))?name.substring(1):name;
+        String entryName=name.startsWith("/")?name.substring(1):name;
         
     	for (int i = 0; i < jarFiles.length; ++i) {
             ZipEntry zEntry = jarFiles[i].getEntry(name);
@@ -189,24 +189,11 @@ public class JarClassLoader extends ClassLoader {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int read = 0;
 
-		while ((read = is.read(buffer)) >= 0)
+		while ((read = is.read(buffer)) >= 0) {
 			baos.write(buffer, 0, read);
+		}
 
 		return baos.toByteArray();
-	}
-
-	/**
-	 * Clean up the JarClassLoader. This means closing the JAR file
-	 * if it has not explicitly done before by using the provided 
-	 * close() method.
-	 */
-	protected void finalize() throws Throwable {
-		
-		close();
-		// Close the JarFile.
-		//_jarFile.close();
-		
-		super.finalize();
 	}
 
 }

@@ -44,8 +44,8 @@ import jade.content.schema.ConceptSlotFunctionSchema;
  * @since JADE 3.7
  */
 public class ConceptSlotFunction extends AbsConceptSlotFunction {
-	private Concept concept;
-	private Ontology onto;
+	private final Concept concept;
+	private final Ontology onto;
 	
 	ConceptSlotFunction(String slotName, Concept concept, Ontology onto) {
 		super(slotName);

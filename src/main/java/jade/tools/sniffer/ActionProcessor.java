@@ -55,7 +55,7 @@ import System.Windows.Forms.*;
    public static final String  DO_NOT_SNIFFER_ACTION="DoNotSnifferAction";
    public static final String  SWOW_ONLY_ACTION="ShowOnlyAction";
    public final Map actions=new HashMap<>(10);
-   private MainPanel mainPanel;
+	 private final MainPanel mainPanel;
    private SnifferAction action;
 
   public ActionProcessor(Sniffer mySniffer,MainPanel mainPanel) {
@@ -77,54 +77,54 @@ import System.Windows.Forms.*;
   AgentAction agentAction;
   action = act;
   //#DOTNET_EXCLUDE_BEGIN
-  TreePath paths[];
+  TreePath[] paths;
   paths = mainPanel.treeAgent.tree.getSelectionPaths();
-  //#DOTNET_EXCLUDE_END
-  /*#DOTNET_INCLUDE_BEGIN
-  System.Collections.IList paths = new System.Collections.ArrayList();
-  TreeNode node;
+	 //#DOTNET_EXCLUDE_END
+	 /*#DOTNET_INCLUDE_BEGIN
+	 ystem.Collections.IList paths = new System.Collections.ArrayList();
+	 reeNode node;
+	 
+	 reeNode aNode = mainPanel.treeAgent.tree.get_SelectedNode();
+	 hile (aNode != null)
+	 
+	 	aths.Add( aNode );
+	 	Node = aNode.get_Parent();
+	 	f ( !(aNode instanceof AgentTree.AgentNode) ) 
+	 		ode = null;
+	 		DOTNET_INCLUDE_END*/
 
-  TreeNode aNode = mainPanel.treeAgent.tree.get_SelectedNode();
-  while (aNode != null)
-  {
-	  paths.Add( aNode );
-	  aNode = aNode.get_Parent();
-	  if ( !(aNode instanceof AgentTree.AgentNode) ) 
-	    aNode = null;
-  } 
-  #DOTNET_INCLUDE_END*/
+	 // Fixed actions are without parameters, so they are executed once,
+	 // regardless how many tree elements are selected
 
-   // Fixed actions are without parameters, so they are executed once,
-   // regardless how many tree elements are selected
+	 if (action instanceof FixedAction) {
+		 fixedAct();
 
-   if (action instanceof FixedAction)
-     fixedAct();
-
-   // Other actions are executed for every selected tree element. This
-   // means that, if no selection is present, no action is performed.
-   else {
-     if(paths != null) {
-	   //#DOTNET_EXCLUDE_BEGIN
-       lungpath=paths.length;
-       for (int i=0;i<lungpath;i++) {
-			 now = (AgentTree.Node) (paths[i].getLastPathComponent());
-			 agentAct(now);
+		 // Other actions are executed for every selected tree element. This
+		 // means that, if no selection is present, no action is performed.
+	 }
+	 else {
+		 if (paths != null) {
+			 //#DOTNET_EXCLUDE_BEGIN
+			 lungpath = paths.length;
+			 for (int i = 0;i < lungpath;i++) {
+				 now = (AgentTree.Node) (paths[i].getLastPathComponent());
+				 agentAct(now);
+			 }
+			 //#DOTNET_EXCLUDE_END
+			 /*#DOTNET_INCLUDE_BEGIN
+		 ungpath=paths.get_Count();
+		 for (int i=0;i<lungpath;i++) 
+		 {
+		 	ry 
+		 		
+		 			w = (AgentTree.Node) (paths.get_Item(i));
+		 			entAct(now);
+		 		
+		 		tch (ClassCastException cce) {}
+		 
+		 #DOTNET_INCLUDE_END*/
 		 }
-	   //#DOTNET_EXCLUDE_END
-	   /*#DOTNET_INCLUDE_BEGIN
- 	   lungpath=paths.get_Count();
-	   for (int i=0;i<lungpath;i++) 
-	   {
-        try 
-		    {
-			    now = (AgentTree.Node) (paths.get_Item(i));
-			    agentAct(now);
-		    }
-		    catch (ClassCastException cce) {}
-     }
-	   #DOTNET_INCLUDE_END*/
-     }
-   }
+	 }
 
  } // End Process
 
@@ -143,7 +143,9 @@ import System.Windows.Forms.*;
        ag.doAction(nod);
     }
 
-    else throw new StartException();
+		else {
+			throw new StartException();
+		}
 
    } catch(StartException a)  {
          a.handle();

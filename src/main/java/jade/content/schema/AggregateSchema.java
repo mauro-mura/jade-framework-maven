@@ -147,7 +147,7 @@ public class AggregateSchema extends TermSchema {
 	 */
 	public boolean equals(Object o) {
 		if (o != null) {
-			return (o instanceof AggregateSchema);
+			return o instanceof AggregateSchema;
 		}
 		else {
 			return false;

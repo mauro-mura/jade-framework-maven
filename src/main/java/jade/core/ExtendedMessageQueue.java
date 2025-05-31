@@ -154,7 +154,8 @@ public class ExtendedMessageQueue implements MessageQueue {
 
 	@Override
 	public void copyTo(List<ACLMessage> messages) {
-		for (Iterator<ACLMessage> i = list.iterator(); i.hasNext(); messages.add(i.next()));
+		for (Iterator<ACLMessage> i = list.iterator();i.hasNext();messages.add(i.next())) {
+		}
 	}
 	
 	private String getAgentName() {
@@ -168,7 +169,7 @@ public class ExtendedMessageQueue implements MessageQueue {
 		StringBuilder sb = new StringBuilder();
 		Object[] messages = list.toArray();
 		if (messages.length > 0) {
-			int max = (limit > 0 && limit < messages.length) ? limit : messages.length;
+			int max = limit > 0 && limit < messages.length ? limit : messages.length;
 			int cnt = 0;
 			for (int j = 0; j < max; ++j) {
 				sb.append("Message # ");
@@ -180,7 +181,7 @@ public class ExtendedMessageQueue implements MessageQueue {
 			}
 			if (cnt < messages.length) {
 				sb.append(".......\n");
-				sb.append(String.valueOf(messages.length)+" messages in total\n");
+				sb.append(messages.length + " messages in total\n");
 			}
 		}
 		else {

@@ -38,8 +38,8 @@ class CloneAgentAction extends AgentAction {
 
 	@Serial
 	private static final long serialVersionUID = -3175778962830871322L;
-	private rma myRMA;
-	private Frame mainWnd;
+	private final rma myRMA;
+	private final Frame mainWnd;
 
 	CloneAgentAction(rma anRMA, ActionProcessor act, Frame f) {
 		super("CloneAgentActionIcon", "Clone Agent", act);

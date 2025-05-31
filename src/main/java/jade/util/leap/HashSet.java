@@ -100,21 +100,25 @@ public class HashSet implements Set, Cloneable, Serializable {
 		Iterator i = iterator();
 		while (i.hasNext()) {
 			Object obj = i.next();
-			if (obj != null)
+			if (obj != null) {
 				h += obj.hashCode();
+			}
 		}
 		return h;
 	}
 
 	public boolean equals(Object o) {
-		if (o == this)
+		if (o == this) {
 			return true;
+		}
 
-		if (!(o instanceof Set))
+		if (!(o instanceof Set)) {
 			return false;
+		}
 		Collection c = (Collection) o;
-		if (c.size() != size())
+		if (c.size() != size()) {
 			return false;
+		}
 		try {
 			return containsAll(c);
 		} catch (ClassCastException unused) {

@@ -54,14 +54,14 @@ public class ACLPerformativesRenderer extends JLabel implements ListCellRenderer
    * @return               the choosen Color
    */
   public static Color determineColor(String performative) {
-    if (performative.equalsIgnoreCase("refuse") ||
-      performative.equalsIgnoreCase("disagree") ||
-      performative.equalsIgnoreCase("failure") ||
+    if ("refuse".equalsIgnoreCase(performative) ||
+      "disagree".equalsIgnoreCase(performative) ||
+      "failure".equalsIgnoreCase(performative) ||
       performative.startsWith("NOT")) {
       return Color.red;
     }
-    if (performative.equalsIgnoreCase("agree") ||
-      performative.equalsIgnoreCase("cancel") ||
+    if ("agree".equalsIgnoreCase(performative) ||
+      "cancel".equalsIgnoreCase(performative) ||
       performative.startsWith("ACCEPT")) {
       return Color.green;
     }
@@ -70,8 +70,8 @@ public class ACLPerformativesRenderer extends JLabel implements ListCellRenderer
     }
     if (performative.startsWith("REQUEST") ||
       performative.startsWith("QUERY") ||
-      performative.equalsIgnoreCase("cfp") ||
-      performative.equalsIgnoreCase("subscribe")
+      "cfp".equalsIgnoreCase(performative) ||
+      "subscribe".equalsIgnoreCase(performative)
       ) {
       return Color.blue;
     }

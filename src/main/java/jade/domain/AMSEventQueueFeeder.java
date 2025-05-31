@@ -30,8 +30,8 @@ import jade.domain.introspection.ThawedAgent;
 import jade.util.InputQueue;
 
 public class AMSEventQueueFeeder implements AgentManager.Listener {
-	private InputQueue eventQueue;
-	private Location localContainer;
+	private final InputQueue eventQueue;
+	private final Location localContainer;
 	private ams theAms;
 
 	public AMSEventQueueFeeder(InputQueue eventQueue, Location localContainer) {

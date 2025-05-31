@@ -51,11 +51,11 @@ class BeanIntrospector implements Introspector {
 	private static final long serialVersionUID = 6896919407513408002L;
 
 	private static final String ENUM_SLOT_NAME = BeanOntologyBuilder.ENUM_SLOT_NAME;
-	
-	private Map<SlotKey, SlotAccessData> accessors;
+
+	private final Map<SlotKey, SlotAccessData> accessors;
 
 	BeanIntrospector() {
-		accessors = new HashMap<SlotKey, SlotAccessData>();
+		accessors = new HashMap<>();
 	}
 
 	void addAccessors(Map<SlotKey, SlotAccessData> accessors) {

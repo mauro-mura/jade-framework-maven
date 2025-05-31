@@ -106,10 +106,11 @@ public class TreeUpdater implements Runnable {
             
             tree.clearSelection();
             Enumeration e=root.breadthFirstEnumeration();
-            
-            // Skip over the first element (the behaviours folder)
-            if (e.hasMoreElements())
-                e.nextElement();
+
+					// Skip over the first element (the behaviours folder)
+					if (e.hasMoreElements()) {
+						e.nextElement();
+					}
             
             while(e.hasMoreElements())
             {

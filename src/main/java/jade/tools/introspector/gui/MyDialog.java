@@ -35,7 +35,7 @@ import javax.swing.border.*;
    @author Andrea Squeri,Corti Denis,Ballestracci Paolo -  Universita` di Parma
 */
 public class MyDialog extends JDialog implements ActionListener,WindowListener {
-  String text=null;
+  String text;
   JPanel panel1 = new JPanel();
   JPanel panel2 = new JPanel();
   JButton button1 = new JButton();
@@ -87,28 +87,32 @@ public class MyDialog extends JDialog implements ActionListener,WindowListener {
 
   public void actionPerformed(ActionEvent e){
     JButton b=(JButton) e.getSource();
-    if (b==button1) this.ok_actionPerformed(e);
-    else this.cancel_actionPerformed(e);
+		if (b == button1) {
+			this.okActionPerformed(e);
+		}
+		else {
+			this.cancelActionPerformed(e);
+		}
   }
 
   public void windowClosing(WindowEvent e) {
-    this.close_window(e);
+    this.closeWindow(e);
   }
 
   // OK
-  void ok_actionPerformed(ActionEvent e) {
+  void okActionPerformed(ActionEvent e) {
     text=jTextField1.getText();
     dispose();
   }
 
   // Cancel
-  void cancel_actionPerformed(ActionEvent e) {
+  void cancelActionPerformed(ActionEvent e) {
     text=null;
     dispose();
   }
 
   //close
-  void close_window(WindowEvent e) {
+  void closeWindow(WindowEvent e) {
     text=null;
     dispose();
   }

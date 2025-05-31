@@ -74,7 +74,7 @@ import jade.imtp.leap.http.HTTPAddress;
  */
 class DeliverableDataOutputStream extends DataOutputStream {
 
-	private StubHelper myStubHelper;
+	private final StubHelper myStubHelper;
 
 	/**
 	 * Constructs a data output stream that is serializing Deliverables to a
@@ -517,7 +517,7 @@ class DeliverableDataOutputStream extends DataOutputStream {
 	private void serializeGenericMessage(GenericMessage gm) throws IOException, LEAPSerializationException {
 		byte[] payload = gm.getPayload();
 		if (payload == null) {
-			payload = (new LEAPACLCodec()).encode(gm.getACLMessage(), null);
+			payload = new LEAPACLCodec().encode(gm.getACLMessage(), null);
 		}
 		serializeByteArray(payload);
 
@@ -902,9 +902,7 @@ class DeliverableDataOutputStream extends DataOutputStream {
 		// DEBUG
 		// System.out.println(serName);
 		try {
-			Serializer s = (Serializer) Class.forName(serName).getDeclaredConstructor().newInstance();
-
-			return s;
+			return (Serializer) Class.forName(serName).getDeclaredConstructor().newInstance();
 		} 
 		catch (Exception e) {
 			throw new LEAPSerializationException("Error creating Serializer for object "+o);

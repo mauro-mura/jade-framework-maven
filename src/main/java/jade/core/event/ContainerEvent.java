@@ -44,7 +44,7 @@ public class ContainerEvent extends JADEEvent {
 	public static final int RECONNECTED = 4;
 	public static final int LEADERSHIP_ACQUIRED = 5;
 
-	private AID agent;
+	private final AID agent;
 
 	public ContainerEvent(int id, AID aid, ContainerID cid) {
 		super(id, cid);

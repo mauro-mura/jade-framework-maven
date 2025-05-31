@@ -106,13 +106,12 @@ public class StringDlg extends JDialog
 		public void actionPerformed(ActionEvent e)
 		{    
 		    String param = (String) e.getActionCommand();
-		    if (param.equals("OK"))
+		    if ("OK".equals(param))
 			{
-			    String insertedValue = (txtString.getText()).trim();
+			    String insertedValue = txtString.getText().trim();
 			    if(insertedValue.length() == 0)
                   		{
 				    JOptionPane.showMessageDialog(null,"Must have non-empty fields !","Error Message",JOptionPane.ERROR_MESSAGE);
-				    return;
                   		}
 			    else 
 				{
@@ -127,8 +126,9 @@ public class StringDlg extends JDialog
 		public void actionPerformed(ActionEvent e)
 		{    
 		    String param = (String) e.getActionCommand();
-		    if (param.equals("Cancel"))
-			dispose();
+			if ("Cancel".equals(param)) {
+				dispose();
+			}
 		    
 		} 
 	    } );
@@ -137,7 +137,7 @@ public class StringDlg extends JDialog
 	setModal(true);
 	setResizable(false);
 
-	ShowCorrect();
+	showCorrect();
 
 	
 	return out;
@@ -178,7 +178,7 @@ public class StringDlg extends JDialog
 		public void actionPerformed(ActionEvent e)
 		{    
 		    String param = (String) e.getActionCommand();
-		    if (param.equals("OK"))
+		    if ("OK".equals(param))
 			{
 			    dispose();
 			}
@@ -190,11 +190,11 @@ public class StringDlg extends JDialog
 	setModal(true);
 	setResizable(false);
 	
-	ShowCorrect();
+	showCorrect();
 	
     }
 
-    private void ShowCorrect() 
+    private void showCorrect() 
     {
 	pack();
     

@@ -40,7 +40,7 @@ import jade.gui.AboutJadeAction;
  */
   class MainMenu extends JMenuBar {
 
-  private ActionProcessor actPro;
+		private final ActionProcessor actPro;
   private RMAAction obj;
   private JMenu menu;
   private JMenuItem tmp;

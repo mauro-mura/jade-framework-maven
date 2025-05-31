@@ -54,10 +54,10 @@ public class TopicManagementService extends BaseService {
 	private Filter incFilter;
 	private Filter outFilter;
 	private ServiceComponent localSlice;
-	
-	private TopicTable topicTable = new TopicTable();
+
+	private final TopicTable topicTable = new TopicTable();
 	private MessagingService theMessagingService;
-	private boolean shutdownInProgress = false;
+	private boolean shutdownInProgress;
 	
 	public void init(AgentContainer ac, Profile p) throws ProfileException {
 		super.init(ac, p);
@@ -74,7 +74,7 @@ public class TopicManagementService extends BaseService {
 	public void boot(Profile p) throws ServiceException {
 		super.boot(p);
 		try {
-			if (myContainer.getPlatformID().equals(TopicManagementHelper.TOPIC_SUFFIX)) {
+			if (TopicManagementHelper.TOPIC_SUFFIX.equals(myContainer.getPlatformID())) {
 				throw new ServiceException("The TopicManagementService cannot be used within a platform called with the reserved name "+TopicManagementHelper.TOPIC_SUFFIX);
 			}
 			theMessagingService = (MessagingService) myContainer.getServiceFinder().findService(MessagingService.NAME);
@@ -122,7 +122,7 @@ public class TopicManagementService extends BaseService {
 		StringBuilder sb = new StringBuilder();
 		sb.append(topicTable.toString());
 		sb.append(super.dump(key));
-		return (sb.toString());
+		return sb.toString();
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class TopicManagementService extends BaseService {
 		
 		public final boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
-			if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+			if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 				AID sender = (AID) cmd.getParam(0);
 				// NOTE that the gMsg cannot be a MultipleGenericMessage since we are in the outgoing chain
 				GenericMessage gMsg = (GenericMessage) cmd.getParam(1);
@@ -152,7 +152,7 @@ public class TopicManagementService extends BaseService {
 					}
 					ACLMessage msg = gMsg.getACLMessage();
 					Collection interestedAgents = topicTable.getInterestedAgents(topic, msg);
-					if (interestedAgents.size() > 0) {
+					if (!interestedAgents.isEmpty()) {
 						// Forward the message to all agents interested in that topic.
 						// Note that if no agents are currently listening to this topic, the message is simply swallowed
 						msg.addUserDefinedParameter(ACLMessage.IGNORE_FAILURE, "true");
@@ -170,7 +170,7 @@ public class TopicManagementService extends BaseService {
 					return false;
 				}
 			}
-			else if (name.equals(AgentManagementSlice.SHUTDOWN_PLATFORM)) {
+			else if (AgentManagementSlice.SHUTDOWN_PLATFORM.equals(name)) {
 				// Platform is shutting down. Avoid propagating information to remote slices
 				myLogger.log(Logger.INFO, "TopicManagentService: platform shutdown process initiation detected");
 				shutdownInProgress = true;
@@ -204,17 +204,17 @@ public class TopicManagementService extends BaseService {
 		public boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			if (myMain != null) {
-				if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+				if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					// If the dead agent was registered to some topic, deregister it
 					handleInformKilled(cmd);
 				}
-				if (name.equals(Service.NEW_SLICE)) {
+				if (Service.NEW_SLICE.equals(name)) {
 					// If the new slice is a TopicManagementSlice, notify it about the currently registered agents
 					handleNewSlice(cmd);
 				}
 			}
 			else {
-				if (name.equals(Service.REATTACHED)) {
+				if (Service.REATTACHED.equals(name)) {
 					// The Main lost all information related to this container --> Notify it again
 					handleReattached(cmd);
 				}
@@ -236,7 +236,7 @@ public class TopicManagementService extends BaseService {
 			Object[] params = cmd.getParams();
 			AID aid = (AID) params[0];
 			List topics = topicTable.getRelevantTopics(aid);
-			if (topics.size() > 0) {
+			if (!topics.isEmpty()) {
 				try {
 					List<Slice> slices = getAllSlices();
 					Iterator it = topics.iterator();
@@ -255,7 +255,7 @@ public class TopicManagementService extends BaseService {
 	 * If the new slice is a TopicManagementSlice notify it about all current registrations
 	 */
 	private void handleNewSlice(VerticalCommand cmd) {
-		if (cmd.getService().equals(NAME)) {
+		if (NAME.equals(cmd.getService())) {
 			Object[] params = cmd.getParams();
 			String newSliceName = (String) params[0];
 			try {
@@ -325,7 +325,7 @@ public class TopicManagementService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 				
-				if (cmdName.equals(TopicManagementSlice.H_REGISTER)) {
+				if (TopicManagementSlice.H_REGISTER.equals(cmdName)) {
 					AID aid = (AID) params[0];
 					AID topic = (AID) params[1];
 					//System.out.println("Received registration of agent "+aid.getName()+" to topic "+topic.getLocalName());
@@ -334,7 +334,7 @@ public class TopicManagementService extends BaseService {
 					}					
 					register(aid, topic);
 				}
-				else if(cmdName.equals(TopicManagementSlice.H_DEREGISTER)) {
+				else if(TopicManagementSlice.H_DEREGISTER.equals(cmdName)) {
 					AID aid = (AID) params[0];
 					AID topic = (AID) params[1];
 					//System.out.println("Received deregistration of agent "+aid.getName()+" from topic "+topic.getLocalName());

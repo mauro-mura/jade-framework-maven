@@ -57,7 +57,7 @@ public class DFAppletCommunicator implements DFGUIAdapter{
 	private Applet a;
   private DataInputStream in;
   private PrintStream out;
-  private final static int DEFAULT_PORT = 6789;
+  private static final int DEFAULT_PORT = 6789;
   private ACLParser parser;
   private DFGUI gui;
   private String address;
@@ -65,10 +65,10 @@ public class DFAppletCommunicator implements DFGUIAdapter{
  
   
   //default description of the df. 
-  private DFAgentDescription thisDF = null;
-   
-  //logging
-  private Logger logger = Logger.getMyLogger(this.getClass().getName());
+  private DFAgentDescription thisDF;
+
+	//logging
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
  
   /**
    * Create a socket to communicate with a server on port 6789 of the
@@ -82,12 +82,14 @@ public class DFAppletCommunicator implements DFGUIAdapter{
     a = applet;
     //retrive the HAP from the html file.
     hap = a.getParameter("HAP");
-    if(logger.isLoggable(Logger.FINEST))
-    	logger.log(Logger.FINEST,"HAP:" + hap);
+			if (logger.isLoggable(Logger.FINEST)) {
+				logger.log(Logger.FINEST, "HAP:" + hap);
+			}
  
     Socket s = new Socket(a.getCodeBase().getHost(), DEFAULT_PORT);
-    if(logger.isLoggable(Logger.CONFIG))
-    	logger.log(Logger.CONFIG,"DFAppletClient connected to local port "+s.getLocalPort()+" and remote port "+s.getPort());
+			if (logger.isLoggable(Logger.CONFIG)) {
+				logger.log(Logger.CONFIG, "DFAppletClient connected to local port " + s.getLocalPort() + " and remote port " + s.getPort());
+			}
     in = new DataInputStream(s.getInputStream());
     parser = new ACLParser(in);
     out = new PrintStream(s.getOutputStream(),true);
@@ -123,8 +125,7 @@ public class DFAppletCommunicator implements DFGUIAdapter{
    * with the default DF.
    */
 public String getName() {
-    String dfName = "df" + "@" + hap;
-	return dfName;
+    return "df" + "@" + hap;
 }
 
   
@@ -149,19 +150,19 @@ public void postGuiEvent(GuiEvent event)
 	  	refreshDFGUI();
 	  	break;
 		case DFGUIAdapter.REGISTER:
-			RegisterNewAgent(event);
+			registerNewAgent(event);
 			break;
 		case DFGUIAdapter.DEREGISTER:
-		  DeregisterAgent(event);
+		  deregisterAgent(event);
 		  break;
 		case DFGUIAdapter.SEARCH:
-			SearchAgents(event);
+			searchAgents(event);
 			break;
 		case DFGUIAdapter.MODIFY:
-			Modify(event);
+			modify(event);
 			break;
 		case DFGUIAdapter.FEDERATE:
-			Federate(event);
+			federate(event);
 			break;
 	}
 }
@@ -190,8 +191,9 @@ public void refreshDFGUI()
     	{
     		DFAgentDescription next = (DFAgentDescription)result.next();
     		listOfAID.add(next.getName());
-    	  if(isADF(next))
-    	  	listOfChildren.add(next.getName());
+				if (isADF(next)) {
+					listOfChildren.add(next.getName());
+				}
     	}
   
     //second request the df the parent
@@ -214,102 +216,110 @@ public void refreshDFGUI()
 /**
 Register an agent with a given df.
 */
-private void RegisterNewAgent(GuiEvent event)
+private void registerNewAgent(GuiEvent event)
 {
 	
 	AID df = (AID)event.getParameter(0);
 	DFAgentDescription dfd = (DFAgentDescription)event.getParameter(1);
-	
-	if(df.getName().equalsIgnoreCase(thisDF.getName().getName()))
-	  try{
-	  	//register an agent with this df.
-		  FIPAAppletRequestProto  rf = new FIPAAppletRequestProto(this,df,FIPAManagementVocabulary.REGISTER,dfd,null);
-	    rf.doProto();
-	  }catch(FIPAException e){
-	  e.printStackTrace();
-	  }
-	else
-	//request the df to register an agent with another df.
-	try{
-		JADEAppletRequestProto requestBehav = new JADEAppletRequestProto(this,getDescriptionOfThisDF().getName(), DFAppletVocabulary.REGISTERWITH,dfd,df);
-    requestBehav.doProto();
-	}catch(FIPAException e){
-		e.printStackTrace();
+
+	if (df.getName().equalsIgnoreCase(thisDF.getName().getName())) {
+		try {
+			//register an agent with this df.
+			FIPAAppletRequestProto  rf = new FIPAAppletRequestProto(this, df, FIPAManagementVocabulary.REGISTER, dfd, null);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+	}
+	else {
+		//request the df to register an agent with another df.
+		try {
+			JADEAppletRequestProto requestBehav = new JADEAppletRequestProto(this, getDescriptionOfThisDF().getName(), DFAppletVocabulary.REGISTERWITH, dfd, df);
+			requestBehav.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
 /**
 Deregister an agent with a df.
 */
-private void DeregisterAgent(GuiEvent event)
+private void deregisterAgent(GuiEvent event)
 {
 	AID df = (AID)event.getParameter(0);
 	DFAgentDescription dfd = (DFAgentDescription)event.getParameter(1);
-	if(df.getName().equalsIgnoreCase(thisDF.getName().getName()))
-	  try{
-		  FIPAAppletRequestProto  rf = new FIPAAppletRequestProto(this,df,FIPAManagementVocabulary.DEREGISTER,dfd,null);
-	    rf.doProto();
-	  }catch(FIPAException e){
-	  e.printStackTrace();
-	  }
-  else
-    //deregister the df from a parent
-  	try
-	  {
-		  JADEAppletRequestProto rf = new JADEAppletRequestProto(this,getDescriptionOfThisDF().getName(), DFAppletVocabulary.DEREGISTERFROM,dfd,df);
-      rf.doProto();
-	  }catch(FIPAException e){
-	  e.printStackTrace();
-	  }
+	if (df.getName().equalsIgnoreCase(thisDF.getName().getName())) {
+		try {
+			FIPAAppletRequestProto  rf = new FIPAAppletRequestProto(this, df, FIPAManagementVocabulary.DEREGISTER, dfd, null);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+	}
+	else {
+		//deregister the df from a parent
+		try
+		{
+			JADEAppletRequestProto rf = new JADEAppletRequestProto(this, getDescriptionOfThisDF().getName(), DFAppletVocabulary.DEREGISTERFROM, dfd, df);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+	}
   
 }
 
 /**
 Finds all the agent descriptors that match the given agent descriptor
 */
-private void SearchAgents(GuiEvent event)
+private void searchAgents(GuiEvent event)
 {
 	
 	AID df = (AID)event.getParameter(0);
 	DFAgentDescription dfd = (DFAgentDescription)event.getParameter(1);
 	SearchConstraints sc = (SearchConstraints)event.getParameter(2);
-	if(df.getName().equalsIgnoreCase(thisDF.getName().getName()))
-	try{
-		FIPAAppletRequestProto rf = new FIPAAppletRequestProto(this,df,FIPAManagementVocabulary.SEARCH,dfd,sc);
-    rf.doProto();
-	}catch(FIPAException e){
-	e.printStackTrace();
+	if (df.getName().equalsIgnoreCase(thisDF.getName().getName())) {
+		try {
+			FIPAAppletRequestProto rf = new FIPAAppletRequestProto(this, df, FIPAManagementVocabulary.SEARCH, dfd, sc);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
 	}
-  else
-  	try{
-  		JADEAppletRequestProto rf = new JADEAppletRequestProto(this,getDescriptionOfThisDF().getName(),DFAppletVocabulary.SEARCHON,dfd,df,sc);
-  		rf.doProto();
-  	}catch(FIPAException e){
-  	e.printStackTrace();
-  	}
+	else {
+		try {
+			JADEAppletRequestProto rf = new JADEAppletRequestProto(this, getDescriptionOfThisDF().getName(), DFAppletVocabulary.SEARCHON, dfd, df, sc);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 /**
 Modifies the DFAgent description of an agent.
 */
-private void Modify(GuiEvent event)
+private void modify(GuiEvent event)
 {
 	AID df = (AID)event.getParameter(0);
 	DFAgentDescription dfd = (DFAgentDescription)event.getParameter(1);
-	
-	if(df.equals(thisDF.getName()))
-	try{
-		FIPAAppletRequestProto rf = new FIPAAppletRequestProto(this,df,FIPAManagementVocabulary.MODIFY,dfd,null);
-    rf.doProto();
-	}catch(FIPAException e){
-	e.printStackTrace();
+
+	if (df.equals(thisDF.getName())) {
+		try {
+			FIPAAppletRequestProto rf = new FIPAAppletRequestProto(this, df, FIPAManagementVocabulary.MODIFY, dfd, null);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
 	}
-	else
-	try{
-		JADEAppletRequestProto rf = new JADEAppletRequestProto(this,thisDF.getName(),DFAppletVocabulary.MODIFYON,dfd,df);
-		rf.doProto();
-	}catch(FIPAException e){
-	e.printStackTrace();
+	else {
+		try {
+			JADEAppletRequestProto rf = new JADEAppletRequestProto(this, thisDF.getName(), DFAppletVocabulary.MODIFYON, dfd, df);
+			rf.doProto();
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
@@ -317,13 +327,12 @@ private void Modify(GuiEvent event)
 /**
 This method requests the df to perform a federate action. 
 */
-private void Federate(GuiEvent event)
+private void federate(GuiEvent event)
 {
 	AID parentDF = (AID)event.getParameter(0);
 	if(parentDF.equals(thisDF.getName()))
 	{
 	 gui.showStatusMsg("Self federation not allowed.");
-	 return;
 	}
 	else
 	{
@@ -357,8 +366,9 @@ public DFAgentDescription getDFAgentDsc(AID name) throws FIPAException {
 		FIPAAppletRequestProto arp = new FIPAAppletRequestProto(this,df,FIPAManagementVocabulary.SEARCH,dfd,sc);
     arp.doProto();
     Iterator result = arp.getSearchResult().iterator();
-    if(result.hasNext())
-     outDesc = (DFAgentDescription)result.next();
+		if (result.hasNext()) {
+			outDesc = (DFAgentDescription) result.next();
+		}
 	}catch(FIPAAppletRequestProto.NotYetReady nyr){
 		nyr.printStackTrace();
 	}catch(FIPAException e){
@@ -398,8 +408,9 @@ public DFAgentDescription getDFAgentDsc(AID name) throws FIPAException {
   */
   public DFAgentDescription getDescriptionOfThisDF(AID df)
   {
-      if(logger.isLoggable(Logger.FINEST))
-      	logger.log(Logger.FINEST,"CALLED METHOD: getDescriptionOfThisDF(aid) into DFAppletCommunicator");
+		if (logger.isLoggable(Logger.FINEST)) {
+			logger.log(Logger.FINEST, "CALLED METHOD: getDescriptionOfThisDF(aid) into DFAppletCommunicator");
+		}
     DFAgentDescription output = null;
   	try{
     	
@@ -424,7 +435,7 @@ public DFAgentDescription getDFAgentDsc(AID name) throws FIPAException {
    	{
    		try{
    			ServiceDescription sd = (ServiceDescription)((DFAgentDescription)dfd).getAllServices().next();
-        return(sd.getType().equalsIgnoreCase("fipa-df"));
+        return "fipa-df".equalsIgnoreCase(sd.getType());
    		}catch(Exception e){return false;}
    	}
    	

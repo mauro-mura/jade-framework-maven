@@ -86,10 +86,10 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	private static final int ACTIVE_STATE = 1;
 	private static final int TERMINATING_STATE = 2;
 
-	private AID observerAgent;
-	private Set observedAgents = new HashSet();
-	private HashMap pendingEvents = new HashMap<>();
-	private SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
+	private final AID observerAgent;
+	private final Set observedAgents = new HashSet();
+	private final HashMap pendingEvents = new HashMap<>();
+	private final SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
 
 	private volatile int state = IDLE_STATE;
 
@@ -334,7 +334,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 				cs.setFrom(ev.getBehaviourFrom());
 				cs.setTo(ev.getBehaviourTo());
 
-				if (ev.getBehaviourTo().equals(Behaviour.STATE_RUNNING) && ev.getBehaviour().isSimple()) {
+				if (Behaviour.STATE_RUNNING.equals(ev.getBehaviourTo()) && ev.getBehaviour().isSimple()) {
 					// This event requires synchronous handling. As it may have already
 					// been processed by other listeners reset its processed status
 					ev.reset();
@@ -346,7 +346,6 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 						// This is the thread of the observed agent. If it has been interrupted
 						// the agent is exiting or moving --> just do nothing
 					}
-					return;
 				} else {
 					sendEvent(cs, null);
 				}
@@ -430,7 +429,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 		private static final long serialVersionUID = 3180731801665726348L;
 		private Event ev;
 		private JADEEvent jev;
-		private boolean finished = false;
+		private boolean finished;
 		private MessageTemplate template;
 
 		SynchEventInformer(Agent a, Event ev, JADEEvent jev) {

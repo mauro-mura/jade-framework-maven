@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class RegisterRemoteAgentAction extends AgentAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public RegisterRemoteAgentAction(rma anRMA, ActionProcessor actPro) {
     super ("RegisterRemoteAgentIcon", "Register Remote Agent with local AMS", actPro);

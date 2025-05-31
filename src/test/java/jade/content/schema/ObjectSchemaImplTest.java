@@ -11,7 +11,7 @@ import jade.content.onto.*;
 import jade.content.onto.exception.OntologyException;
 
 public class ObjectSchemaImplTest {
-	private Ontology basic = BasicOntology.getInstance();
+	private final Ontology basic = BasicOntology.getInstance();
 	
 	private class TestFacet1 implements Facet {
 		public void validate(AbsObject value, Ontology onto) throws OntologyException {

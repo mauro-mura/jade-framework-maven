@@ -12,27 +12,25 @@ import java.util.Hashtable;
 
 public abstract class _MTSImplBase extends org.omg.CORBA.DynamicImplementation implements FIPA.MTS {
 	// Constructor
-	public _MTSImplBase() {
+	protected _MTSImplBase() {
 		super();
 	}
 
 	// Type strings for this class and its superclases
-	private static final String _type_ids[] = { "IDL:FIPA/MTS:1.0" };
+	private static final String[] _type_ids = { "IDL:FIPA/MTS:1.0" };
 
 	public String[] _ids() {
 		return (String[]) _type_ids.clone();
 	}
 
-	private static Dictionary _methods = new Hashtable<>();
+	private static final Dictionary _methods = new Hashtable<>();
 	static {
 		_methods.put("message", Integer.valueOf(0));
 	}
 
 	// DSI Dispatch call
 	public void invoke(org.omg.CORBA.ServerRequest r) {
-		switch (((java.lang.Integer) _methods.get(r.op_name())).intValue()) {
-		case 0: // FIPA.MTS.message
-		{
+		if (((java.lang.Integer) _methods.get(r.op_name())).intValue() == 0) {
 			org.omg.CORBA.NVList _list = _orb().create_list(0);
 			org.omg.CORBA.Any _aFipaMessage = _orb().create_any();
 			_aFipaMessage.type(FIPA.FipaMessageHelper.type());
@@ -45,8 +43,7 @@ public abstract class _MTSImplBase extends org.omg.CORBA.DynamicImplementation i
 			__return.type(_orb().get_primitive_tc(org.omg.CORBA.TCKind.tk_void));
 			r.result(__return);
 		}
-			break;
-		default:
+		else {
 			throw new org.omg.CORBA.BAD_OPERATION(0, org.omg.CORBA.CompletionStatus.COMPLETED_MAYBE);
 		}
 	}

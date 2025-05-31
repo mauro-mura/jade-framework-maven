@@ -49,7 +49,8 @@ public class ReplySender extends OneShotBehaviour {
 	private static final long serialVersionUID = -4038731546640878108L;
 	public static final int NO_REPLY_SENT = -1;
 	private int ret;
-	private String replyKey, msgKey;
+	private String replyKey;
+	private String msgKey;
 
 	/**
 	 * Constructor.
@@ -114,8 +115,9 @@ public class ReplySender extends OneShotBehaviour {
 		// Set the Protocol.
 		reply.setProtocol(msg.getProtocol());
 		// Set ReplyWith if not yet set
-		if (reply.getReplyWith() == null)
+		if (reply.getReplyWith() == null) {
 			reply.setReplyWith(myAgent.getName() + java.lang.System.currentTimeMillis());
+		}
 
 		// Set the receivers if not yet set
 		if (!reply.getAllReceiver().hasNext()) {

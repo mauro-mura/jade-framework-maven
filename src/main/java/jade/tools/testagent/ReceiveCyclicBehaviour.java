@@ -53,6 +53,6 @@ public class ReceiveCyclicBehaviour extends CyclicBehaviour {
   }
 
 
-  private TestAgent agent;
+	private final TestAgent agent;
 }
 //  ***EOF***

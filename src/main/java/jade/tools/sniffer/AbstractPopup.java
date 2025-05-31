@@ -50,9 +50,9 @@ import javax.swing.Action;
  */
 
 
-abstract public class AbstractPopup extends AbstractAction {
+public abstract class AbstractPopup extends AbstractAction {
 
-  public AbstractPopup(String actionName) {
+  protected AbstractPopup(String actionName) {
     putValue(Action.NAME,actionName);
   }
 

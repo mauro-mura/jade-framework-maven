@@ -68,7 +68,7 @@ class AgentNameTableModel extends AbstractTableModel
 	// GETELEMENTAT
 	public AID getElementAt(int index)
 	{
-		return((AID) names.get(index));
+		return (AID) names.get(index);
 	}
 
 	// CLEAR
@@ -80,12 +80,12 @@ class AgentNameTableModel extends AbstractTableModel
 	// Methods to be implemented to have a concrete class
 	public int getRowCount()
 	{
-		return(names.size());
+		return names.size();
 	}
 
 	public int getColumnCount()
 	{
-		return(3);
+		return 3;
 	}
 
 	public Object getValueAt(int row, int column)
@@ -93,23 +93,26 @@ class AgentNameTableModel extends AbstractTableModel
 		AID aid=getElementAt(row);
 		String out = "";
 		switch (column) {
-		  case 0:  out = aid.getName(); break;
-		  case 1:  for ( Iterator i=aid.getAllAddresses(); i.hasNext(); )
-		  	         try{
-		  	         	out = out+(String)i.next()+" "; 
-		  	         }catch(Exception e){
-		  	         	e.printStackTrace();
-		  	         out = " ";
-		  	         }
-		  	      break;
-		  case 2:  for ( Iterator i=aid.getAllResolvers(); i.hasNext(); )
-		  	         try{
-		  	         	out = out+((AID)i.next()).getName()+" "; 
-		  	         }catch(Exception e1){
-		  	         	e1.printStackTrace();
-		  	          out = " ";
-		  	         }
-		  	      break;		}
+			case 0:  out = aid.getName(); break;
+			case 1:  for (Iterator i = aid.getAllAddresses();i.hasNext();) {
+				try {
+					out = out + (String) i.next() + " ";
+				} catch (Exception e) {
+					e.printStackTrace();
+					out = " ";
+				}
+			}
+				break;
+			case 2:  for (Iterator i = aid.getAllResolvers();i.hasNext();) {
+				try {
+					out = out + ((AID) i.next()).getName() + " ";
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					out = " ";
+				}
+			}
+				break;
+		}
 		return out;
 	}
 }

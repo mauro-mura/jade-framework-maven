@@ -46,7 +46,7 @@ public class RoundList implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -2515257950583607199L;
 	private int cur = -1;
-	private List<Object> l = new LinkedList<>();
+	private final List<Object> l = new LinkedList<>();
 
 	/**
 	 * Default constructor.
@@ -87,12 +87,14 @@ public class RoundList implements Serializable {
 	 * @throws NoSuchElementException if the list is empty
 	 **/
 	public Object get() throws NoSuchElementException {
-		if (cur < 0)
+		if (cur < 0) {
 			throw new NoSuchElementException("The RoundList is empty");
+		}
 		Object val = l.get(cur);
 		cur++;
-		if (cur == l.size())
+		if (cur == l.size()) {
 			cur = 0;
+		}
 		return val;
 	}
 
@@ -184,7 +186,7 @@ public class RoundList implements Serializable {
 	/**
 	 * Just for Debugging this implementation.
 	 **/
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		RoundList r = new RoundList();
 
 		while (true) {
@@ -201,8 +203,9 @@ public class RoundList implements Serializable {
 				} else if (op.toLowerCase().startsWith("r")) {
 					System.out.println("ENTER Element to remove");
 					String el = buff.readLine();
-					if (!r.remove(el))
+					if (!r.remove(el)) {
 						System.out.println("Element not found");
+					}
 				}
 				System.out.println("The RoundList is now:" + r.toString());
 			} catch (Exception e) {

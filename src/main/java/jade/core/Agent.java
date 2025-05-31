@@ -261,7 +261,7 @@ public class Agent implements Runnable, Serializable
 	 * Inner class CondVar A simple class for a boolean condition variable
 	 */
 	private static class CondVar {
-		private boolean value = false;
+		private boolean value;
 
 		public synchronized void waitOn() throws InterruptedException {
 			while (!value) {
@@ -287,8 +287,9 @@ public class Agent implements Runnable, Serializable
 	 * @see jade.core.behaviours.Behaviour#block(long millis)
 	 */
 	public void restartLater(Behaviour b, long millis) {
-		if (millis <= 0)
+		if (millis <= 0) {
 			return;
+		}
 		Timer t = new Timer(System.currentTimeMillis() + millis, this);
 		pendingTimers.addPair(b, t);
 	}
@@ -432,20 +433,20 @@ public class Agent implements Runnable, Serializable
 	private transient AgentToolkit myToolkit;
 
 	private transient MessageQueue msgQueue;
-	private int msgQueueMaxSize = 0;
+	private int msgQueueMaxSize;
 	
 	private transient boolean temporaryMessageQueue;
 	private transient List<Object> o2aQueue;
-	private int o2aQueueSize = 0;
+	private int o2aQueueSize;
 	private transient Map<Object, CondVar> o2aLocks;
-	private Behaviour o2aManager = null;
+	private Behaviour o2aManager;
 	private transient Object suspendLock;
 
 	private Map<Class<?>, Object> o2aInterfaces;
 
-	private String myName = null;
-	private AID myAID = null;
-	private String myHap = null;
+	private String myName;
+	private AID myAID;
+	private String myHap;
 
 	private transient Object stateLock;
 
@@ -456,7 +457,7 @@ public class Agent implements Runnable, Serializable
 
 	private transient AssociationTB pendingTimers;
 
-	private boolean restarting = false;
+	private boolean restarting;
 
 	private LifeCycle myLifeCycle;
 	private LifeCycle myBufferedLifeCycle;
@@ -465,10 +466,10 @@ public class Agent implements Runnable, Serializable
 	private transient LifeCycle mySuspendedLifeCycle;
 
 	// Statistics
-	private long sentMessagesCnt = 0;
-	private long postedMessagesCnt = 0;
-	private long receivedMessagesCnt = 0;
-	private long executedBehavioursCnt = 0;
+	private long sentMessagesCnt;
+	private long postedMessagesCnt;
+	private long receivedMessagesCnt;
+	private long executedBehavioursCnt;
 
 	/**
 	 * This flag is used to distinguish the normal AP_ACTIVE state from the
@@ -477,9 +478,9 @@ public class Agent implements Runnable, Serializable
 	 * fact a call to <code>doDelete()</code>, <code>doMove()</code>,
 	 * <code>doClone()</code> and <code>doSuspend()</code> should have no effect.
 	 */
-	private boolean terminating = false;
+	private boolean terminating;
 
-	private boolean generateBehaviourEvents = false;
+	private boolean generateBehaviourEvents;
 	private boolean generateMessageEvents = true;
 
 	/**
@@ -569,7 +570,7 @@ public class Agent implements Runnable, Serializable
 	/**
 	 * Declared transient because the container changes in case of agent migration.
 	 */
-	private transient jade.wrapper.AgentContainer myContainer = null;
+	private transient jade.wrapper.AgentContainer myContainer;
 
 	/**
 	 * Return a controller for the container this agent lives in. <br>
@@ -600,7 +601,7 @@ public class Agent implements Runnable, Serializable
 		return myContainer;
 	}
 
-	private transient Object[] arguments = null; // array of arguments
+	private transient Object[] arguments; // array of arguments
 	// #APIDOC_EXCLUDE_BEGIN
 
 	/**
@@ -611,7 +612,7 @@ public class Agent implements Runnable, Serializable
 	 * 
 	 * @see #getArguments() how to get the arguments passed to an agent
 	 **/
-	public final void setArguments(Object args[]) {
+	public final void setArguments(Object[] args) {
 		// I have declared the method final otherwise getArguments would not work!
 		arguments = args;
 	}
@@ -1286,7 +1287,7 @@ public class Agent implements Runnable, Serializable
 				if (!f.isAccessible()) {
 					f.setAccessible(true);
 				}
-				if (restoreMethod.equals(Restore.DEFAULT_RESTORE)) {
+				if (Restore.DEFAULT_RESTORE.equals(restoreMethod)) {
 					// Restore via the default method i.e. replace the field value
 					log.info("Agent " + getLocalName() + " - Restoring field " + f.getName());
 					Object val = f.get(a);
@@ -1317,8 +1318,9 @@ public class Agent implements Runnable, Serializable
 	public void putO2AObject(Object o, boolean blocking) throws InterruptedException {
 		// Drop object on the floor if object-to-agent communication is
 		// disabled.
-		if (o2aQueue == null)
+		if (o2aQueue == null) {
 			return;
+		}
 
 		CondVar cond = null;
 		// the following block is synchronized because o2aQueue.add and o2aLocks.put
@@ -1327,8 +1329,9 @@ public class Agent implements Runnable, Serializable
 		synchronized (o2aQueue) {
 			// If the queue has a limited capacity and it is full, discard the
 			// first element
-			if ((o2aQueueSize != 0) && (o2aQueue.size() == o2aQueueSize))
+			if ((o2aQueueSize != 0) && (o2aQueue.size() == o2aQueueSize)) {
 				o2aQueue.remove(0);
+			}
 
 			o2aQueue.add(o);
 
@@ -1348,9 +1351,10 @@ public class Agent implements Runnable, Serializable
 		} else {
 			o2aManager.restart();
 		}
-		if (blocking)
+		if (blocking) {
 			// Sleep on the condition. This method is synchronized on the condvar
 			cond.waitOn();
+		}
 	}
 
 	/**
@@ -1372,14 +1376,16 @@ public class Agent implements Runnable, Serializable
 	public Object getO2AObject() {
 
 		// Return 'null' if object-to-agent communication is disabled
-		if (o2aQueue == null)
+		if (o2aQueue == null) {
 			return null;
+		}
 
 		CondVar cond = null;
 		Object result = null;
 		synchronized (o2aQueue) {
-			if (o2aQueue.isEmpty())
+			if (o2aQueue.isEmpty()) {
 				return null;
+			}
 
 			// Retrieve the first object from the object-to-agent
 			// communication queue
@@ -1416,18 +1422,21 @@ public class Agent implements Runnable, Serializable
 	 */
 	public void setEnabledO2ACommunication(boolean enabled, int queueSize) {
 		if (enabled) {
-			if (o2aQueue == null)
+			if (o2aQueue == null) {
 				o2aQueue = new ArrayList<>(queueSize);
+			}
 
 			// Ignore a negative value
-			if (queueSize >= 0)
+			if (queueSize >= 0) {
 				o2aQueueSize = queueSize;
+			}
 		} else {
 
 			// Wake up all threads blocked in putO2AObject() calls
 			for (CondVar cv : o2aLocks.values()) {
-				if (cv != null)
+				if (cv != null) {
 					cv.set();
+				}
 			}
 			o2aQueue = null;
 		}
@@ -1515,12 +1524,13 @@ public class Agent implements Runnable, Serializable
 		terminating = true;
 		myLifeCycle.end();
 	}
+
 	// #APIDOC_EXCLUDE_END
 
 	/**
 	 * Inner class ActiveLifeCycle
 	 */
-	private class ActiveLifeCycle extends LifeCycle {
+	private final class ActiveLifeCycle extends LifeCycle {
 		@Serial
 		private static final long serialVersionUID = 11111;
 
@@ -1618,7 +1628,7 @@ public class Agent implements Runnable, Serializable
 	/**
 	 * Inner class DeletedLifeCycle
 	 */
-	private class DeletedLifeCycle extends LifeCycle {
+	private final class DeletedLifeCycle extends LifeCycle {
 		@Serial
 		private static final long serialVersionUID = 11112;
 
@@ -1641,7 +1651,7 @@ public class Agent implements Runnable, Serializable
 	/**
 	 * Inner class SuspendedLifeCycle
 	 */
-	private class SuspendedLifeCycle extends LifeCycle {
+	private final class SuspendedLifeCycle extends LifeCycle {
 		@Serial
 		private static final long serialVersionUID = 11113;
 
@@ -1662,7 +1672,7 @@ public class Agent implements Runnable, Serializable
 		@Override
 		public boolean transitionTo(LifeCycle to) {
 			// We can only die or resume
-			return (to.getState() == AP_ACTIVE || to.getState() == AP_DELETED);
+			return to.getState() == AP_ACTIVE || to.getState() == AP_DELETED;
 		}
 	} // END of inner class SuspendedLifeCycle
 
@@ -1807,8 +1817,9 @@ public class Agent implements Runnable, Serializable
 		pendingTimers = new AssociationTB();
 		theDispatcher = TimerDispatcher.getTimerDispatcher();
 		// restore O2AQueue
-		if (o2aQueueSize > 0)
+		if (o2aQueueSize > 0) {
 			o2aQueue = new ArrayList<>(o2aQueueSize);
+		}
 		o2aLocks = new HashMap<>();
 		myToolkit = DummyToolkit.instance();
 		temporaryMessageQueue = true;
@@ -1895,7 +1906,7 @@ public class Agent implements Runnable, Serializable
 		} catch (Exception e) {
 			msg.setSender(myAID);
 		}
-		boolean cloneMessage = !("true".equals(msg.clearUserDefinedParameter(ACLMessage.NO_CLONE)));
+		boolean cloneMessage = !"true".equals(msg.clearUserDefinedParameter(ACLMessage.NO_CLONE));
 		myToolkit.handleSend(msg, myAID, cloneMessage);
 		sentMessagesCnt++;
 	}
@@ -2043,8 +2054,9 @@ public class Agent implements Runnable, Serializable
 
 				if (millis != 0) {
 					timeToWait -= elapsedTime;
-					if (timeToWait <= 0)
+					if (timeToWait <= 0) {
 						break;
+					}
 				}
 			}
 		}
@@ -2202,7 +2214,7 @@ public class Agent implements Runnable, Serializable
 	}
 
 	// #CUSTOM_EXCLUDE_BEGIN
-	private jade.content.ContentManager theContentManager = null;
+	private jade.content.ContentManager theContentManager;
 
 	/**
 	 * Retrieves the agent's content manager

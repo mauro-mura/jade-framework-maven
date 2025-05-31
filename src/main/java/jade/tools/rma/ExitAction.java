@@ -31,7 +31,7 @@ package jade.tools.rma;
  */
 	class ExitAction extends FixedAction {
 
-  private rma myRMA;
+		private final rma myRMA;
 
   public ExitAction (rma anRMA,ActionProcessor actPro) {
     super ("ExitActionIcon","Exit this Container",actPro);

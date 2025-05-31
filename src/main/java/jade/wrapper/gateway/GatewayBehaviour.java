@@ -70,7 +70,7 @@ public abstract class GatewayBehaviour extends CyclicBehaviour {
 	 * Behaviour that asynchronously processes this command and release the command
 	 * just when the Behaviour terminates, i.e. in its <code>onEnd()</code> method.
 	 **/
-	abstract protected void processCommand(Object command);
+	protected abstract void processCommand(Object command);
 
 	/**
 	 * notify that the command has been processed and remove the command from the
@@ -79,7 +79,7 @@ public abstract class GatewayBehaviour extends CyclicBehaviour {
 	 * @param command is the same object that was passed in the processCommand
 	 *                method
 	 **/
-	final public void releaseCommand(Object command) {
+	public final void releaseCommand(Object command) {
 		// remove the command from the queue
 		Event e = (Event) commandQueue.remove(command);
 		// notify that the command has been processed such as the JADEGateway is
@@ -93,10 +93,12 @@ public abstract class GatewayBehaviour extends CyclicBehaviour {
 	}
 
 	public int onEnd() {
-		if (myLogger.isLoggable(Logger.INFO))
+		if (myLogger.isLoggable(Logger.INFO)) {
 			myLogger.log(Logger.INFO, myAgent.getLocalName() + " terminated GatewayBehaviour");
-		for (Iterator<Event> i = commandQueue.values().iterator(); i.hasNext();)
-			((i.next())).notifyProcessed(null);
+		}
+		for (Iterator<Event> i = commandQueue.values().iterator();i.hasNext();) {
+			i.next().notifyProcessed(null);
+		}
 		return super.onEnd();
 	}
 

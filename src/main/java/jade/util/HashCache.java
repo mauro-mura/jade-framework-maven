@@ -45,9 +45,9 @@ import java.util.Set;
  *          5378 $
  **/
 public class HashCache implements Map {
-	private List list;
-	private Map ht;
-	private int cs;
+	private final List list;
+	private final Map ht;
+	private final int cs;
 
 	/**
 	 * Constructs a new, empty HashCache with the specified size.

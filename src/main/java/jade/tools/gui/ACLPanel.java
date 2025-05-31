@@ -52,7 +52,7 @@ import jade.util.Logger;
 
 public class ACLPanel extends JPanel {
 
-   private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
   /**
    *  Constructor for the ACLPanel object
    *
@@ -139,7 +139,7 @@ public class ACLPanel extends JPanel {
     //env
 
     envToList.register(itsEnvelope, "To");
-    envFromTextField.setText((itsEnvelope.getFrom() != null ? itsEnvelope.getFrom().getName() : ""));
+    envFromTextField.setText(itsEnvelope.getFrom() != null ? itsEnvelope.getFrom().getName() : "");
     envCommentsTextArea.register(itsEnvelope, "Comments");
     envACLReprTextField.register(itsEnvelope, "AclRepresentation");
     envPayloadEncodingTextField.register(itsEnvelope, "PayloadEncoding");
@@ -176,8 +176,9 @@ public class ACLPanel extends JPanel {
         sn.invoke(obj, new Object[]{os});
       }
       catch (Exception ex) {
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"Obj: " + obj.getClass().toString() + " " + ex.getMessage());
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Obj: " + obj.getClass().toString() + " " + ex.getMessage());
+				}
       }
     }
   }
@@ -187,8 +188,9 @@ public class ACLPanel extends JPanel {
    *  Description of the Method
    */
   public void doSystemOut() {
-    if(logger.isLoggable(Logger.WARNING))
-    	logger.log(Logger.INFO,"\n" + itsMsg.toString() + "\n");
+		if (logger.isLoggable(Logger.WARNING)) {
+			logger.log(Logger.INFO, "\n" + itsMsg.toString() + "\n");
+		}
   }
 
 
@@ -224,12 +226,14 @@ public class ACLPanel extends JPanel {
         f.close();
       }
       catch (FileNotFoundException e3) {
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"Can't open file: " + fileName);
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Can't open file: " + fileName);
+				}
       }
       catch (IOException e4) {
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"IO Exception");
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "IO Exception");
+				}
       }
     }
   }
@@ -259,12 +263,14 @@ public class ACLPanel extends JPanel {
       }
       catch (FileNotFoundException e1) {
         JOptionPane.showMessageDialog(null, "File not found: " + fileName + e1.getMessage(), "Error Message", JOptionPane.ERROR_MESSAGE);
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"File Not Found: " + fileName);
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "File Not Found: " + fileName);
+				}
       }
       catch (ACLCodec.CodecException e2) {
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"Wrong ACL Message in file: " + fileName);
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Wrong ACL Message in file: " + fileName);
+				}
         // e2.printStackTrace();
         JOptionPane.showMessageDialog(null, "Wrong ACL Message in file: " + fileName + "\n" + e2.getMessage(), "Error Message", JOptionPane.ERROR_MESSAGE);
       }
@@ -286,8 +292,9 @@ public class ACLPanel extends JPanel {
   void setDefaultEnvelope() {
     itsMsg.setDefaultEnvelope();
     setItsMsg(itsMsg);
-    if(logger.isLoggable(Logger.WARNING))
-    	logger.log(Logger.CONFIG,":" + this.itsEnvelope.toString());
+		if (logger.isLoggable(Logger.WARNING)) {
+			logger.log(Logger.CONFIG, ":" + this.itsEnvelope.toString());
+		}
   }
 
 
@@ -297,7 +304,7 @@ public class ACLPanel extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void senderButton_actionPerformed(ActionEvent e) {
+  void senderButtonActionPerformed(ActionEvent e) {
     doShowSender();
   }
 
@@ -324,7 +331,7 @@ public class ACLPanel extends JPanel {
 
   void doShowFrom() {
     ACLAIDDialog aidGui = new ACLAIDDialog(agent);
-    AID currentAID = (itsMsg.getEnvelope().getFrom() != null ? itsMsg.getEnvelope().getFrom() : new AID());
+    AID currentAID = itsMsg.getEnvelope().getFrom() != null ? itsMsg.getEnvelope().getFrom() : new AID();
     AID editAID = (AID)currentAID.clone();
     aidGui.setLocation((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY());
     aidGui.setItsAID(editAID);
@@ -344,7 +351,7 @@ public class ACLPanel extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void replyByButton_actionPerformed(ActionEvent e) {
+  void replyByButtonActionPerformed(ActionEvent e) {
     doShowTimeDialog();
   }
 
@@ -361,8 +368,9 @@ public class ACLPanel extends JPanel {
       }
       catch (Exception ee) {
         JOptionPane.showMessageDialog(this, ee.getMessage(), "Incorrect date format", JOptionPane.ERROR_MESSAGE);
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"Incorrect date format");
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Incorrect date format");
+				}
         return;
       }
     }
@@ -396,8 +404,9 @@ public class ACLPanel extends JPanel {
       }
       catch (Exception ee) {
         JOptionPane.showMessageDialog(this, ee.getMessage(), "Incorrect date format", JOptionPane.ERROR_MESSAGE);
-        if(logger.isLoggable(Logger.WARNING))
-        	logger.log(Logger.WARNING,"Incorrect date format");
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Incorrect date format");
+				}
         return;
       }
     }
@@ -428,10 +437,11 @@ public class ACLPanel extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void contentTextArea_mouseClicked(MouseEvent e) {
+  void contentTextAreaMouseClicked(MouseEvent e) {
     if (e.getClickCount() > 2) {
-      if(logger.isLoggable(Logger.WARNING))
-      	logger.log(Logger.WARNING,"to do display content dialog");
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "to do display content dialog");
+			}
     }
 
   }
@@ -442,7 +452,7 @@ public class ACLPanel extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void senderTextField_mouseClicked(MouseEvent e) {
+  void senderTextFieldMouseClicked(MouseEvent e) {
     doShowSender();
   }
 
@@ -452,37 +462,37 @@ public class ACLPanel extends JPanel {
    *
    * @param  e  Description of Parameter
    */
-  void replybyTextField_mouseClicked(MouseEvent e) {
+  void replybyTextFieldMouseClicked(MouseEvent e) {
     doShowTimeDialog();
   }
 
 
-  void defaultEnvelopeButton_actionPerformed(ActionEvent e) {
+  void defaultEnvelopeButtonActionPerformed(ActionEvent e) {
     setDefaultEnvelope();
   }
 
 
-  void fromButton_actionPerformed(ActionEvent e) {
+  void fromButtonActionPerformed(ActionEvent e) {
     doShowFrom();
   }
 
 
-  void envDateButton_actionPerformed(ActionEvent e) {
+  void envDateButtonActionPerformed(ActionEvent e) {
     this.doShowEnvTimeDialog();
   }
 
 
-  void contentZoomButton_actionPerformed(ActionEvent e) {
+  void contentZoomButtonActionPerformed(ActionEvent e) {
     doZoomContent();
   }
 
 
-  void envFromTextField_mouseClicked(MouseEvent e) {
+  void envFromTextFieldMouseClicked(MouseEvent e) {
     doShowFrom();
   }
 
 
-  void envDateTextField_mouseClicked(MouseEvent e) {
+  void envDateTextFieldMouseClicked(MouseEvent e) {
     this.doShowEnvTimeDialog();
   }
 
@@ -544,7 +554,7 @@ public class ACLPanel extends JPanel {
     senderButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          senderButton_actionPerformed(e);
+          senderButtonActionPerformed(e);
         }
       });
     replyByButton.setBackground(Color.white);
@@ -559,7 +569,7 @@ public class ACLPanel extends JPanel {
     replyByButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          replyByButton_actionPerformed(e);
+          replyByButtonActionPerformed(e);
         }
       });
     senderTextField.setFont(new java.awt.Font("Dialog", 0, 11));
@@ -568,7 +578,7 @@ public class ACLPanel extends JPanel {
     senderTextField.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          senderTextField_mouseClicked(e);
+          senderTextFieldMouseClicked(e);
         }
       });
     replybyTextField.setFont(new java.awt.Font("Dialog", 0, 11));
@@ -577,7 +587,7 @@ public class ACLPanel extends JPanel {
     replybyTextField.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          replybyTextField_mouseClicked(e);
+          replybyTextFieldMouseClicked(e);
         }
       });
     performativesComboBox.setBackground(Color.white);
@@ -617,7 +627,7 @@ public class ACLPanel extends JPanel {
     envDateTextField.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          envDateTextField_mouseClicked(e);
+          envDateTextFieldMouseClicked(e);
         }
       });
     envDateTextField.setEnabled(false);
@@ -628,13 +638,13 @@ public class ACLPanel extends JPanel {
     defaultEnvelopeButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          defaultEnvelopeButton_actionPerformed(e);
+          defaultEnvelopeButtonActionPerformed(e);
         }
       });
     fromButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          fromButton_actionPerformed(e);
+          fromButtonActionPerformed(e);
         }
       });
     fromButton.setMargin(new Insets(0, 0, 0, 0));
@@ -650,7 +660,7 @@ public class ACLPanel extends JPanel {
     envFromTextField.addMouseListener(
       new java.awt.event.MouseAdapter() {
         public void mouseClicked(MouseEvent e) {
-          envFromTextField_mouseClicked(e);
+          envFromTextFieldMouseClicked(e);
         }
       });
     envFromTextField.setEnabled(false);
@@ -664,7 +674,7 @@ public class ACLPanel extends JPanel {
     envDateButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          envDateButton_actionPerformed(e);
+          envDateButtonActionPerformed(e);
         }
       });
     contentZoomButton.setBorder(null);
@@ -675,7 +685,7 @@ public class ACLPanel extends JPanel {
     contentZoomButton.addActionListener(
       new java.awt.event.ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          contentZoomButton_actionPerformed(e);
+          contentZoomButtonActionPerformed(e);
         }
       });
     contentTextArea.setText("");
@@ -835,7 +845,7 @@ public class ACLPanel extends JPanel {
     }
 
 
-    private String extensions[] = {".acl"};
+    private String[] extensions = {".acl"};
   }
 
 
@@ -871,42 +881,42 @@ public class ACLPanel extends JPanel {
   JButton envDateButton = new JButton();
   JButton contentZoomButton = new JButton();
   ACLTextArea contentTextArea = new ACLTextArea();
-  private ACLTextField envACLReprTextField = new ACLTextField();
-  private ACLTextField envPayloadLengthTextField = new ACLTextField();
-  private ACLTextField envPayloadEncodingTextField = new ACLTextField();
-  private JTextField envFromTextField = new JTextField();
+	private final ACLTextField envACLReprTextField = new ACLTextField();
+	private final ACLTextField envPayloadLengthTextField = new ACLTextField();
+	private final ACLTextField envPayloadEncodingTextField = new ACLTextField();
+	private final JTextField envFromTextField = new JTextField();
   private boolean editable = true;
-  private JTextField senderTextField = new JTextField();
-  private ACLPropertyList userpropList = new ACLPropertyList();
+	private final JTextField senderTextField = new JTextField();
+	private final ACLPropertyList userpropList = new ACLPropertyList();
 
-  private ACLTextField conversationTextField = new ACLTextField();
-  private ACLTextField languageTextField = new ACLTextField();
-  private ACLTextField encodingTextField = new ACLTextField();
-  private ACLTextField ontologyTextField = new ACLTextField();
-  private ACLComboBox protocolComboBox = new ACLComboBox();
-  private ACLTextField inreplytoTextField = new ACLTextField();
-  private ACLTextField replywithTextField = new ACLTextField();
-  private JTextField replybyTextField = new JTextField();
-  private ACLComboBox performativesComboBox = new ACLComboBox();
+	private final ACLTextField conversationTextField = new ACLTextField();
+	private final ACLTextField languageTextField = new ACLTextField();
+	private final ACLTextField encodingTextField = new ACLTextField();
+	private final ACLTextField ontologyTextField = new ACLTextField();
+	private final ACLComboBox protocolComboBox = new ACLComboBox();
+	private final ACLTextField inreplytoTextField = new ACLTextField();
+	private final ACLTextField replywithTextField = new ACLTextField();
+	private final JTextField replybyTextField = new JTextField();
+	private final ACLComboBox performativesComboBox = new ACLComboBox();
   private ACLMessage itsMsg = new ACLMessage(ACLMessage.INFORM);
 
-  private Vector editsVector = new Vector<>();
-  private JPanel aclTab = new JPanel();
-  private GridBagLayout gridBagLayout2 = new GridBagLayout();
-  private JTabbedPane theTabbedPane = new JTabbedPane();
-  private JPanel envelopeTab = new JPanel();
-  private GridBagLayout gridBagLayout3 = new GridBagLayout();
-  private JScrollPane commentsScrollPane = new JScrollPane();
-  private EnvCommentsTextArea envCommentsTextArea = new EnvCommentsTextArea();
+	private final Vector editsVector = new Vector<>();
+	private final JPanel aclTab = new JPanel();
+	private final GridBagLayout gridBagLayout2 = new GridBagLayout();
+	private final JTabbedPane theTabbedPane = new JTabbedPane();
+	private final JPanel envelopeTab = new JPanel();
+	private final GridBagLayout gridBagLayout3 = new GridBagLayout();
+	private final JScrollPane commentsScrollPane = new JScrollPane();
+	private final EnvCommentsTextArea envCommentsTextArea = new EnvCommentsTextArea();
 
-  private ImageIcon zoomIcon =
-    new ImageIcon(this.getClass().getResource("images/zoom.gif"));
-  private ImageIcon dateIcon =
-    new ImageIcon(this.getClass().getResource("images/date.gif"));
-  private ImageIcon envelopeIcon =
-    new ImageIcon(this.getClass().getResource("images/envelope.gif"));
-  private ImageIcon messageIcon =
-    new ImageIcon(this.getClass().getResource("images/message.gif"));
+	private final ImageIcon zoomIcon =
+		new ImageIcon(this.getClass().getResource("images/zoom.gif"));
+	private final ImageIcon dateIcon =
+		new ImageIcon(this.getClass().getResource("images/date.gif"));
+	private final ImageIcon envelopeIcon =
+		new ImageIcon(this.getClass().getResource("images/envelope.gif"));
+	private final ImageIcon messageIcon =
+		new ImageIcon(this.getClass().getResource("images/message.gif"));
   private ACLAIDList envToList;
   private ACLAIDList envIntendedReceiversList;
   private Agent agent;

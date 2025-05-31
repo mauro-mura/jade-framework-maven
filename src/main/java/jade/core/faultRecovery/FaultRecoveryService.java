@@ -97,7 +97,7 @@ public class FaultRecoveryService extends BaseService {
 	private PersistentStorage myPS;
 	private NodeSerializer nodeSerializer;
 	
-	private boolean bootComplete = false;
+	private boolean bootComplete;
 	private String orphanNodePolicy;
 	
 	public void init(AgentContainer ac, Profile p) throws ProfileException {
@@ -146,8 +146,8 @@ public class FaultRecoveryService extends BaseService {
 		if (myMain != null) {
 			try {
 				String[] platformInfo = myPS.getPlatformInfo();
-				String oldPlatformName = (platformInfo != null ? platformInfo[0] : null);
-				String oldAddress = (platformInfo != null ? platformInfo[1] : null);
+				String oldPlatformName = platformInfo != null ? platformInfo[0] : null;
+				String oldAddress = platformInfo != null ? platformInfo[1] : null;
 				String currentPlatformName = myContainer.getPlatformID();
 				String currentAddress = myContainer.getServiceManager().getLocalAddress();
 				myPS.storePlatformInfo(currentPlatformName, currentAddress);
@@ -236,7 +236,7 @@ public class FaultRecoveryService extends BaseService {
 			public VerticalCommand serve(HorizontalCommand cmd) {
 				try {
 					String cmdName = cmd.getName();
-					if (cmdName.equals(H_KILLNODE)) {
+					if (H_KILLNODE.equals(cmdName)) {
 						suicide();
 					}
 				} catch (Throwable t) {
@@ -327,14 +327,14 @@ public class FaultRecoveryService extends BaseService {
 		public boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			try {
-				if (name.equals(Service.NEW_NODE)) {
+				if (Service.NEW_NODE.equals(name)) {
 					handleNewNode((NodeDescriptor) cmd.getParams()[0]);
 				}
-				if (name.equals(Service.ADOPTED_NODE)) {
+				if (Service.ADOPTED_NODE.equals(name)) {
 					// An adopted node is treated exactly as a new node
 					handleNewNode((NodeDescriptor) cmd.getParams()[0]);
 				}
-				else if (name.equals(Service.DEAD_NODE)) {
+				else if (Service.DEAD_NODE.equals(name)) {
 					handleDeadNode((NodeDescriptor) cmd.getParams()[0]);
 				}
 			}
@@ -358,13 +358,13 @@ public class FaultRecoveryService extends BaseService {
 		public boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			try {
-				if (name.equals(NodeMonitoringService.NODE_UNREACHABLE)) {
+				if (NodeMonitoringService.NODE_UNREACHABLE.equals(name)) {
 					handleNodeUnreachable((Node) cmd.getParams()[0]);
 				}
-				else if (name.equals(NodeMonitoringService.NODE_REACHABLE)) {
+				else if (NodeMonitoringService.NODE_REACHABLE.equals(name)) {
 					handleNodeReachable((Node) cmd.getParams()[0]);
 				}
-				else if (name.equals(UDPNodeMonitoringService.ORPHAN_NODE)) {
+				else if (UDPNodeMonitoringService.ORPHAN_NODE.equals(name)) {
 					handleOrphanNode((String) cmd.getParams()[0]);
 				}
 			}
@@ -387,7 +387,7 @@ public class FaultRecoveryService extends BaseService {
 		public boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			try {
-				if (name.equals(Service.REATTACHED)) {
+				if (Service.REATTACHED.equals(name)) {
 					handleReattached();
 				}
 			}
@@ -412,7 +412,7 @@ public class FaultRecoveryService extends BaseService {
 		Node node = dsc.getNode();
 		if (!node.hasPlatformManager()) {
 			byte[] nn = nodeSerializer.serialize(node);
-			myPS.storeNode(node.getName(), (dsc.getParentNode() != null), nn);			
+			myPS.storeNode(node.getName(), dsc.getParentNode() != null, nn);			
 			myLogger.log(Logger.FINE, "Node "+node.getName()+" added to persistent storage.");
 		}
 	}
@@ -457,16 +457,16 @@ public class FaultRecoveryService extends BaseService {
 			try {
 				byte[] nn = myPS.getUnreachableNode(nodeName);
 				if (nn != null) {
-					if (orphanNodePolicy.equals(ORPHAN_NODE_POLICY_RECOVER)) {
+					if (ORPHAN_NODE_POLICY_RECOVER.equals(orphanNodePolicy)) {
 						myLogger.log(Logger.INFO, "Try to recover orphan node "+nodeName);
 						String address = myContainer.getServiceManager().getLocalAddress();
 						checkNode(nodeName, nn, address, address);
 					}
-					else if (orphanNodePolicy.equals(ORPHAN_NODE_POLICY_KILL)) {
+					else if (ORPHAN_NODE_POLICY_KILL.equals(orphanNodePolicy)) {
 						myLogger.log(Logger.INFO, "Try to kill orphan node "+nodeName);
 						killNode(nodeName, nn);
 					}
-					else if (orphanNodePolicy.equals(ORPHAN_NODE_POLICY_IGNORE)) {
+					else if (ORPHAN_NODE_POLICY_IGNORE.equals(orphanNodePolicy)) {
 						// Just do nothing
 					}
 				}

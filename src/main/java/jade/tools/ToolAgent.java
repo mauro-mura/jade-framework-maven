@@ -57,10 +57,10 @@ public abstract class ToolAgent extends Agent {
 
 	@Serial
 	private static final long serialVersionUID = 1828903558285969767L;
-	private ACLMessage amsSubscription = new ACLMessage(ACLMessage.SUBSCRIBE);
-	private ACLMessage amsCancellation = new ACLMessage(ACLMessage.CANCEL);
+	private final ACLMessage amsSubscription = new ACLMessage(ACLMessage.SUBSCRIBE);
+	private final ACLMessage amsCancellation = new ACLMessage(ACLMessage.CANCEL);
 
-	private transient ContainerListener myContainerListener = null;
+	private transient ContainerListener myContainerListener;
 	protected transient Logger logger;
 
 	// This is left here for backward compatibility
@@ -84,7 +84,7 @@ public abstract class ToolAgent extends Agent {
 	/**
 	 * Default constructor.
 	 */
-	public ToolAgent() {
+	protected ToolAgent() {
 	}
 
 	/**

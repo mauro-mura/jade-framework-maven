@@ -48,7 +48,7 @@ public class SniffOff implements AgentAction {
 	@Serial
 	private static final long serialVersionUID = -7593636251003373904L;
 	private AID sniffer;
-    private List sniffedAgents = new ArrayList<>();
+	private final List sniffedAgents = new ArrayList<>();
     private String password;
 
 

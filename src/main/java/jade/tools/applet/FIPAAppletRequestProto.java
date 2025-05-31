@@ -66,7 +66,7 @@ public class FIPAAppletRequestProto extends AppletRequestProto
 	Codec c;
 	String action;
 	Object dfd;
-	private static Ontology o = FIPAManagementOntology.getInstance();
+	private static final Ontology o = FIPAManagementOntology.getInstance();
 	AID receiver;
 	DFGUI gui;
 	DFAppletCommunicator dfApplet;
@@ -94,8 +94,8 @@ public class FIPAAppletRequestProto extends AppletRequestProto
     this.reqMsg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
     this.reqMsg.setLanguage(FIPANames.ContentLanguage.FIPA_SL);
     this.reqMsg.setOntology(FIPAManagementOntology.NAME);
-    this.reqMsg.setReplyWith("rw"+(new Date()).getTime());
-    this.reqMsg.setConversationId("conv"+(new Date()).getTime());
+    this.reqMsg.setReplyWith("rw"+new Date().getTime());
+    this.reqMsg.setConversationId("conv"+new Date().getTime());
 
     this.action = actionName;
     this.dfd = agentDescription;
@@ -103,29 +103,30 @@ public class FIPAAppletRequestProto extends AppletRequestProto
 
     Action act = new Action();
     act.setActor(receiver);
-    if(actionName.equalsIgnoreCase(FIPAManagementVocabulary.REGISTER))
+    if(FIPAManagementVocabulary.REGISTER.equalsIgnoreCase(actionName))
     {
     	Register action = new Register();
     	action.setDescription(agentDescription);
     	act.setAction(action);
-    }else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.DEREGISTER)) {
+    }else if (FIPAManagementVocabulary.DEREGISTER.equalsIgnoreCase(actionName)) {
        Deregister action = new Deregister();
        action.setDescription(agentDescription);
        act.setAction(action);
      }
-     else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.MODIFY)) {
+     else if (FIPAManagementVocabulary.MODIFY.equalsIgnoreCase(actionName)) {
        Modify action = new Modify();
        action.setDescription(agentDescription);
        act.setAction(action);
      }
-     else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.SEARCH)) {
+     else if (FIPAManagementVocabulary.SEARCH.equalsIgnoreCase(actionName)) {
        Search action = new Search();
        action.setDescription(agentDescription);
        action.setConstraints(sc);
        act.setAction(action);
      }
-     else
-       throw new UnsupportedFunction();
+		 else {
+			 throw new UnsupportedFunction();
+		 }
 
      // initialize SL0 Codec and FIPAAgentManagementOntology
      //FIXME for applet I have not the agent c = sender.lookupLanguage(SL0Codec.NAME);
@@ -144,15 +145,18 @@ public class FIPAAppletRequestProto extends AppletRequestProto
 
   public List getSearchResult() throws FIPAException, NotYetReady
   {
-  	if (notYetReady)
-  		throw new NotYetReady();
-  	if(lastMsg.getPerformative() != ACLMessage.INFORM)
-  		throw new FIPAException(lastMsg);
+		if (notYetReady) {
+			throw new NotYetReady();
+		}
+		if (lastMsg.getPerformative() != ACLMessage.INFORM) {
+			throw new FIPAException(lastMsg);
+		}
   	Result r = AppletRequestProto.extractContent(lastMsg.getContent(),(SLCodec)c,o);
         Iterator i = r.getItems().iterator(); //this is the set of DFAgentDescription
         List l = new ArrayList<>();
-        while (i.hasNext())
-          l.add(i.next());
+		while (i.hasNext()) {
+			l.add(i.next());
+		}
         return l;
   }
 
@@ -162,17 +166,18 @@ public class FIPAAppletRequestProto extends AppletRequestProto
    		notYetReady = false;
       lastMsg = (ACLMessage)msg.clone();
    		try{
-   		  if (this.action.equalsIgnoreCase(FIPAManagementVocabulary.REGISTER))
+   		  if (FIPAManagementVocabulary.REGISTER.equalsIgnoreCase(this.action))
    		  {    // refresh the gui
-   		  	   // I register a df, so it will be a child.
-   		  		if(dfApplet.isADF((DFAgentDescription)this.dfd))
-   		  		  gui.addChildren(((DFAgentDescription)this.dfd).getName());
+					 // I register a df, so it will be a child.
+					 if (dfApplet.isADF((DFAgentDescription) this.dfd)) {
+						 gui.addChildren(((DFAgentDescription) this.dfd).getName());
+					 }
    		  	  gui.addAgentDesc(((DFAgentDescription)this.dfd).getName());
    		  	  gui.showStatusMsg("Registration of agent:" + ((DFAgentDescription)this.dfd).getName().getName()+" done.");
 
    		  }
    		  else
-   		  if(this.action.equalsIgnoreCase(FIPAManagementVocabulary.SEARCH))
+   		  if(FIPAManagementVocabulary.SEARCH.equalsIgnoreCase(this.action))
    		  { //extract the results and  update the gui
    		  	try{
             gui.showStatusMsg("Search request Processed. Ready for new request.");
@@ -181,7 +186,7 @@ public class FIPAAppletRequestProto extends AppletRequestProto
    		  	}catch(FIPAException e){}
 
    		  }
-   		  else if(this.action.equalsIgnoreCase(FIPAManagementVocabulary.DEREGISTER))
+   		  else if(FIPAManagementVocabulary.DEREGISTER.equalsIgnoreCase(this.action))
    		  {
    		  	//update the gui
    		  	try{
@@ -191,7 +196,7 @@ public class FIPAAppletRequestProto extends AppletRequestProto
    		    gui.removeAgentDesc(((DFAgentDescription)dfd).getName(),dfApplet.getDescriptionOfThisDF().getName());
    		  	gui.showStatusMsg("Deregistration of agent: "+((DFAgentDescription)dfd).getName().getName() + " done.");
 
-   		  }else if(this.action.equalsIgnoreCase(FIPAManagementVocabulary.MODIFY))
+   		  }else if(FIPAManagementVocabulary.MODIFY.equalsIgnoreCase(this.action))
    		  {
    		  	gui.removeAgentDesc(((DFAgentDescription)dfd).getName(),dfApplet.getDescriptionOfThisDF().getName());
    		  	gui.addAgentDesc(((DFAgentDescription)dfd).getName());

@@ -60,9 +60,8 @@ import java.util.TimeZone;
  */
 public class ISO8601 {
 
-    
-    private static Calendar localCal = Calendar.getInstance();
-    private static Calendar utcCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+	private static final Calendar localCal = Calendar.getInstance();
+	private static final Calendar utcCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
     /**
      * parse a date time token in UTC format (i.e. ending with a Z)
@@ -125,18 +124,18 @@ public class ISO8601 {
     }
 
 
-    // set of constants used by the next method
-    private static char plus = '+';
-    private static char minus = '-';
-    private static String z = "Z";
-    private static char t = 'T';
+	// set of constants used by the next method
+	private static final char plus = '+';
+	private static final char minus = '-';
+	private static final String z = "Z";
+	private static final char t = 'T';
     // 
-    private final static long year = 365*24*60*60*1000L;
-    private final static long month = 30*24*60*60*1000L;
-    private final static long day = 24*60*60*1000;
-    private final static long hour = 60*60*1000;
-    private final static long minute = 60*1000;
-    private final static long sec = 1000;
+    private static final long year = 365*24*60*60*1000L;
+    private static final long month = 30*24*60*60*1000L;
+    private static final long day = 24*60*60*1000;
+    private static final long hour = 60*60*1000;
+    private static final long minute = 60*1000;
+    private static final long sec = 1000;
 
     /**
        Default constructor.
@@ -150,9 +149,10 @@ public class ISO8601 {
    * @throws an Exception if the String is not a valid dateTime
    * @return an absolute value of DateTime
    */
-public synchronized static Date toDate(String dateTimeToken) throws Exception {
-    if (dateTimeToken == null)
-      return new Date();
+public static synchronized Date toDate(String dateTimeToken) throws Exception {
+	if (dateTimeToken == null) {
+		return new Date();
+	}
     char sign = dateTimeToken.charAt(0);
     if ( (sign == plus) || (sign == minus) ) {
 	// convert a relative time into an absolute time
@@ -166,7 +166,7 @@ public synchronized static Date toDate(String dateTimeToken) throws Exception {
 	System.out.println(year+" "+month+" "+day+" "+hour);
 	System.out.println("currentTime="+System.currentTimeMillis());
 	millisec = System.currentTimeMillis() + (sign == plus ? millisec : (-millisec));
-	return(new Date(millisec));
+	return new Date(millisec);
     }        
     else if( dateTimeToken.endsWith(z)) {
         // Preferred format is to pass UTC times, indicated by trailing 'Z'
@@ -190,7 +190,7 @@ public synchronized static Date toDate(String dateTimeToken) throws Exception {
    * @return a String, e.g. "19640625T073000000Z" to represent 7:30AM on the
    * 25th of June of 1964, UTC time.
    */
-public synchronized static String toString(Date d, boolean useUTCtime){
+public static synchronized String toString(Date d, boolean useUTCtime){
     if( useUTCtime ) {
         // perferred style is to generate UTC times, indicated by trailing 'Z'
         return formatutcDate(d);
@@ -221,12 +221,13 @@ public static String toString(Date d){
 public static String toRelativeTimeString(long millisec) {
     StringBuffer str = new StringBuffer();
 
-    if (millisec > 0)
-	str.append(plus);
-    else {
-	str.append(minus);
-	millisec = (-millisec); // get only the absolute value
-    }
+	if (millisec > 0) {
+		str.append(plus);
+	}
+	else {
+		str.append(minus);
+		millisec = -millisec; // get only the absolute value
+	}
 
     long tmp = millisec/1000;
     long msec = millisec - tmp*1000;
@@ -269,8 +270,9 @@ public static String toRelativeTimeString(long millisec) {
 private static String zeroPaddingNumber(long value, int digits) {
   String s = Long.toString(value);
   int n=digits-s.length();
-  for (int i=0; i<n; i++)
-      s="0"+s;
+	for (int i = 0;i < n;i++) {
+		s = "0" + s;
+	}
   return s;
 }
 
@@ -283,7 +285,7 @@ private static String zeroPaddingNumber(long value, int digits) {
    * <p>
    * <code> java jade.lang.acl.ISO8601 <yourtoken> </code>
    */
-public static void main(String argv[]) {
+public static void main(String[] argv) {
 
     System.out.println(localCal);
 

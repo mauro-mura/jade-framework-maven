@@ -196,7 +196,7 @@ public class MessageTemplate implements Serializable {
 			case REPLY_WITH:
 				return CaseInsensitiveString.equalsIgnoreCase((String) matchValue, msg.getReplyWith());
 			case PERFORMATIVE:
-				return (perfValue == msg.getPerformative());
+				return perfValue == msg.getPerformative();
 			case LANGUAGE:
 				return CaseInsensitiveString.equalsIgnoreCase((String) matchValue, msg.getLanguage());
 			case ONTOLOGY:
@@ -225,12 +225,15 @@ public class MessageTemplate implements Serializable {
 								break; // out of the inner loop
 							}
 						} // end while
-						if (found == false)
+						if (!found) {
 							return false;
+						}
 					} // end for
 					return true;
-				} else
+				}
+				else {
 					return false;
+				}
 
 			case REPLY_TO:
 				if (matchValue != null) {
@@ -245,19 +248,24 @@ public class MessageTemplate implements Serializable {
 								break; // out of the inner loop
 							}
 						} // end while
-						if (found == false)
+						if (!found) {
 							return false;
+						}
 					} // end for
 					return true;
-				} else
+				}
+				else {
 					return false;
+				}
 			case CONTENT:// FIXME: verificare il caso in cui il contenuto e'in byte.
 				return CaseInsensitiveString.equalsIgnoreCase((String) matchValue, msg.getContent());
 			case SENDER:
-				if (matchValue != null)
+				if (matchValue != null) {
 					return ((AID) matchValue).equals(msg.getSender());
-				else
+				}
+				else {
 					return false;
+				}
 
 			default:
 				return false;
@@ -298,8 +306,10 @@ public class MessageTemplate implements Serializable {
 						output += recToMatch.toString();
 					}
 					return output + ")";
-				} else
+				}
+				else {
 					return "(Receivers: null)";
+				}
 			case REPLY_TO: // FIXME: da finire.
 				if (matchValue != null) {
 					AID[] receivers = (AID[]) matchValue;
@@ -309,17 +319,21 @@ public class MessageTemplate implements Serializable {
 						output += recToMatch.toString();
 					}
 					return output + " )";
-				} else
+				}
+				else {
 					return "(ReplyTo: null)";
+				}
 			case PERFORMATIVE:
 				return "( Perfomative: " + ACLMessage.getPerformative(perfValue) + " )";
 			case CONTENT:
 				return "( Content: " + (String) matchValue + ")";
 			case SENDER:
-				if (matchValue != null)
+				if (matchValue != null) {
 					return "( Sender AID: " + ((AID) matchValue).toString() + ")";
-				else
+				}
+				else {
 					return "(Sender AID: null)";
+				}
 
 			default:
 				return "No slot. This casa should never occur !!!";
@@ -356,49 +370,65 @@ public class MessageTemplate implements Serializable {
 		}
 
 		private static boolean compareByteArrays(byte[] a, byte[] a2) {
-			if (a == a2)
+			if (a == a2) {
 				return true;
-			if (a == null || a2 == null)
+			}
+			if (a == null || a2 == null) {
 				return false;
+			}
 
 			int length = a.length;
-			if (a2.length != length)
+			if (a2.length != length) {
 				return false;
+			}
 
-			for (int i = 0; i < length; i++)
-				if (a[i] != a2[i])
+			for (int i = 0;i < length;i++) {
+				if (a[i] != a2[i]) {
 					return false;
+				}
+			}
 
 			return true;
 		}
 
 		public boolean match(ACLMessage msg) {
 
-			if (matchPerformative && (messageToMatch.getPerformative() != msg.getPerformative()))
+			if (matchPerformative && (messageToMatch.getPerformative() != msg.getPerformative())) {
 				return false;
+			}
 			if (messageToMatch.hasByteSequenceContent()) {
 				// we cannot use Array.equals() here because it is not available in MIDP
-				if (!compareByteArrays(messageToMatch.getByteSequenceContent(), msg.getByteSequenceContent()))
+				if (!compareByteArrays(messageToMatch.getByteSequenceContent(), msg.getByteSequenceContent())) {
 					return false;
-				else if (!match(messageToMatch.getContent(), msg.getContent()))
+				}
+				else if (!match(messageToMatch.getContent(), msg.getContent())) {
 					return false;
+				}
 			}
-			if (!match(messageToMatch.getConversationId(), msg.getConversationId()))
+			if (!match(messageToMatch.getConversationId(), msg.getConversationId())) {
 				return false;
-			if (!match(messageToMatch.getEncoding(), msg.getEncoding()))
+			}
+			if (!match(messageToMatch.getEncoding(), msg.getEncoding())) {
 				return false;
-			if (!match(messageToMatch.getInReplyTo(), msg.getInReplyTo()))
+			}
+			if (!match(messageToMatch.getInReplyTo(), msg.getInReplyTo())) {
 				return false;
-			if (!match(messageToMatch.getLanguage(), msg.getLanguage()))
+			}
+			if (!match(messageToMatch.getLanguage(), msg.getLanguage())) {
 				return false;
-			if (!match(messageToMatch.getOntology(), msg.getOntology()))
+			}
+			if (!match(messageToMatch.getOntology(), msg.getOntology())) {
 				return false;
-			if (!match(messageToMatch.getProtocol(), msg.getProtocol()))
+			}
+			if (!match(messageToMatch.getProtocol(), msg.getProtocol())) {
 				return false;
-			if (!match(messageToMatch.getReplyWith(), msg.getReplyWith()))
+			}
+			if (!match(messageToMatch.getReplyWith(), msg.getReplyWith())) {
 				return false;
-			if (!match(messageToMatch.getReplyByDate(), msg.getReplyByDate()))
+			}
+			if (!match(messageToMatch.getReplyByDate(), msg.getReplyByDate())) {
 				return false;
+			}
 			// receiver
 			Iterator it1 = messageToMatch.getAllReceiver();
 			while (it1.hasNext()) {
@@ -411,8 +441,9 @@ public class MessageTemplate implements Serializable {
 						break;
 					}
 				} // end while
-				if (found == false)
+				if (!found) {
 					return false; // when a receiver of the template is not into the receivers of the ACLMessage.
+				}
 			} // end while
 
 			// replyTo
@@ -427,35 +458,37 @@ public class MessageTemplate implements Serializable {
 						break;
 					}
 				} // end while
-				if (found == false)
+				if (!found) {
 					return false; // when a receiver of the template is not into the receivers of the ACLMessage.
+				}
 			} // end while
 
 			// sender
-			if ((messageToMatch.getSender() != null) && !(messageToMatch.getSender().equals(msg.getSender())))
-				return false;
-
-			return true;
+			return !((messageToMatch.getSender() != null) && !messageToMatch.getSender().equals(msg.getSender()));
 		}
 
 		private boolean match(String template, String actualValue) {
-			if (template == null)
+			if (template == null) {
 				return true;
-			else
+			}
+			else {
 				return CaseInsensitiveString.equalsIgnoreCase(template, actualValue);
+			}
 		}
 
 		private boolean match(Date template, Date actualValue) {
-			if (template == null)
+			if (template == null) {
 				return true;
-			else
+			}
+			else {
 				return template.equals(actualValue);
+			}
 		}
 
 		// only for debug purpose.
 		public String toString() {
-			String output = (matchPerformative ? "match the performative " : "no match on performative ");
-			return (output + messageToMatch.toString());
+			String output = matchPerformative ? "match the performative " : "no match on performative ";
+			return output + messageToMatch.toString();
 		}
 
 	}// end class CustomMsgLiteral
@@ -463,11 +496,11 @@ public class MessageTemplate implements Serializable {
 	private static class MatchTopic implements MatchExpression {
 		private String topicName;
 		private boolean isTemplate;
-		private boolean matchAll = false;
+		private boolean matchAll;
 
 		MatchTopic(AID topic) {
 			String tmp = topic.getLocalName();
-			if (tmp.equals(TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD)) {
+			if (TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD.equals(tmp)) {
 				matchAll = true;
 			} else {
 				if (tmp.endsWith("." + TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD)) {
@@ -501,8 +534,8 @@ public class MessageTemplate implements Serializable {
 		}
 
 		public String toString() {
-			String name = (matchAll ? TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD
-					: (isTemplate ? topicName + '.' + TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : topicName));
+			String name = matchAll ? TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD
+					: (isTemplate ? topicName + '.' + TopicManagementHelper.TOPIC_TEMPLATE_WILDCARD : topicName);
 			return "( Topic: " + name + " )";
 		}
 	} // END of inner class MatchTopic
@@ -510,7 +543,7 @@ public class MessageTemplate implements Serializable {
 	/**
 	 * @serial
 	 */
-	private MatchExpression toMatch;
+	private final MatchExpression toMatch;
 	private String id;
 
 	/**
@@ -731,8 +764,7 @@ public class MessageTemplate implements Serializable {
 	 */
 	public static MessageTemplate and(MessageTemplate op1, MessageTemplate op2) {
 		AndExpression e = new AndExpression(op1.toMatch, op2.toMatch);
-		MessageTemplate result = new MessageTemplate(e);
-		return result;
+		return new MessageTemplate(e);
 	}
 
 	/**
@@ -748,8 +780,7 @@ public class MessageTemplate implements Serializable {
 	 */
 	public static MessageTemplate or(MessageTemplate op1, MessageTemplate op2) {
 		OrExpression e = new OrExpression(op1.toMatch, op2.toMatch);
-		MessageTemplate result = new MessageTemplate(e);
-		return result;
+		return new MessageTemplate(e);
 	}
 
 	/**
@@ -762,8 +793,7 @@ public class MessageTemplate implements Serializable {
 	 */
 	public static MessageTemplate not(MessageTemplate op) {
 		NotExpression e = new NotExpression(op.toMatch);
-		MessageTemplate result = new MessageTemplate(e);
-		return result;
+		return new MessageTemplate(e);
 	}
 
 	/**

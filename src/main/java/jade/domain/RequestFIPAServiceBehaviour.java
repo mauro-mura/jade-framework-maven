@@ -119,22 +119,22 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
        ACLMessage msg = FIPAService.createRequestMessage(a,receiver);
      Action act = new Action();
      act.setActor(receiver);
-     if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.REGISTER)) {
+     if (FIPAManagementVocabulary.REGISTER.equalsIgnoreCase(actionName)) {
        Register action = new Register();
        action.setDescription(agentDescription);
        act.setAction(action);
      }
-     else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.DEREGISTER)) {
+     else if (FIPAManagementVocabulary.DEREGISTER.equalsIgnoreCase(actionName)) {
        Deregister action = new Deregister();
        action.setDescription(agentDescription);
        act.setAction(action);
      }
-     else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.MODIFY)) {
+     else if (FIPAManagementVocabulary.MODIFY.equalsIgnoreCase(actionName)) {
        Modify action = new Modify();
        action.setDescription(agentDescription);
        act.setAction(action);
      }
-     else if (actionName.equalsIgnoreCase(FIPAManagementVocabulary.SEARCH)) {
+     else if (FIPAManagementVocabulary.SEARCH.equalsIgnoreCase(actionName)) {
        Search action = new Search();
        action.setDescription(agentDescription);
        action.setConstraints(constraints);
@@ -142,14 +142,17 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
        // set a timeout for the recursive search.
        msg.setReplyByDate(new Date(System.currentTimeMillis()+ timeout));
      }
-     else
-       throw new UnsupportedFunction();
+		 else {
+			 throw new UnsupportedFunction();
+		 }
 
-     // initialize SL0 Codec and FIPAManagementVocabulary
-     if (a.getContentManager().lookupOntology(FIPAManagementOntology.NAME) == null)
-     	a.getContentManager().registerOntology(FIPAManagementOntology.getInstance());    
-     if (a.getContentManager().lookupLanguage(FIPANames.ContentLanguage.FIPA_SL0) == null)
-     	a.getContentManager().registerLanguage(new SLCodec(0),FIPANames.ContentLanguage.FIPA_SL0);
+		 // initialize SL0 Codec and FIPAManagementVocabulary
+		 if (a.getContentManager().lookupOntology(FIPAManagementOntology.NAME) == null) {
+			 a.getContentManager().registerOntology(FIPAManagementOntology.getInstance());
+		 }
+		 if (a.getContentManager().lookupLanguage(FIPANames.ContentLanguage.FIPA_SL0) == null) {
+			 a.getContentManager().registerLanguage(new SLCodec(0), FIPANames.ContentLanguage.FIPA_SL0);
+		 }
 
      // Write the action in the :content slot of the request
      try {
@@ -244,11 +247,13 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
      */
     protected void handleAllResponses(Vector reply){
 	notYetReady = false;
-	if(reply.size() == 0)
-	    //the timeout has expired: no replies received.
-	    lastMsg = new ACLMessage(ACLMessage.NOT_UNDERSTOOD);
-	else
-	    lastMsg = (ACLMessage)((ACLMessage)reply.elementAt(0)).clone();
+			if (reply.isEmpty()) {
+				//the timeout has expired: no replies received.
+				lastMsg = new ACLMessage(ACLMessage.NOT_UNDERSTOOD);
+			}
+			else {
+				lastMsg = (ACLMessage) ((ACLMessage) reply.elementAt(0)).clone();
+			}
     }
 
     // This exception object records last outcome. When it is
@@ -256,7 +261,7 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
     /**
     @serial
 	  */
-    private FIPAException outcome = null;
+    private FIPAException outcome;
 
   /**
     This public method allows to get the INFORM message received in the final
@@ -268,10 +273,12 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
       * @exception NotYetReady is thrown if the protocol is not yet finished.
   **/
   public ACLMessage getLastMsg() throws FIPAException,NotYetReady {
-    if (notYetReady)
-      throw new NotYetReady();
-    if (lastMsg.getPerformative() != ACLMessage.INFORM)
-      throw new FIPAException(lastMsg);
+		if (notYetReady) {
+			throw new NotYetReady();
+		}
+		if (lastMsg.getPerformative() != ACLMessage.INFORM) {
+			throw new FIPAException(lastMsg);
+		}
     return lastMsg;
   }
 
@@ -305,10 +312,12 @@ public class RequestFIPAServiceBehaviour extends SimpleAchieveREInitiator{
       * @exception NotYetReady is thrown if the protocol is not yet finished.
   **/
   public Object[] getSearchResults() throws FIPAException,NotYetReady {
-    if (notYetReady)
-      throw new NotYetReady();
-    if (lastMsg.getPerformative() != ACLMessage.INFORM)
-      throw new FIPAException(lastMsg);
+		if (notYetReady) {
+			throw new NotYetReady();
+		}
+		if (lastMsg.getPerformative() != ACLMessage.INFORM) {
+			throw new FIPAException(lastMsg);
+		}
       
     List l = null;
     try {

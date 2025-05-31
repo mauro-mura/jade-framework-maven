@@ -45,7 +45,7 @@ public class DebugOn implements AgentAction {
 	@Serial
 	private static final long serialVersionUID = 6475089825376465336L;
 	private AID debugger;
-	private List<AID> debuggedAgents = new ArrayList<>();
+	private final List<AID> debuggedAgents = new ArrayList<>();
 	private String password;
 
 	/**

@@ -94,7 +94,7 @@ public class ACLTracePanel extends JPanel {
 	private static final long serialVersionUID = -6137388081869530587L;
 //logging
 
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 	/**
 	 * Constructor for the ACLTreePanel object
@@ -128,8 +128,9 @@ public class ACLTracePanel extends JPanel {
 		if (currentACL == null) {
 			return;
 		}
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "\n" + currentACL.toString() + "\n");
+		}
 	}
 
 	/**
@@ -164,7 +165,7 @@ public class ACLTracePanel extends JPanel {
 		String aclString = theACL.toString();
 		aclString = aclString.replace('\n', ' ');
 
-		String contentString = (theACL.getContent() != null ? theACL.getContent().replace('\n', ' ') : "");
+		String contentString = theACL.getContent() != null ? theACL.getContent().replace('\n', ' ') : "";
 
 		String theSender = theACL.getSender().getLocalName();
 		String theReceiver = "<none>";
@@ -190,10 +191,10 @@ public class ACLTracePanel extends JPanel {
 		messageNode.setTime(theTime);
 		aclModel.insertNodeInto(messageNode, aclRoot, aclIndex++);
 
-		String contentLanguage = (theACL.getLanguage() != null ? theACL.getLanguage() : "<unknown>");
-		String plainContent = (theACL.getContent() != null ? theACL.getContent() : "");
+		String contentLanguage = theACL.getLanguage() != null ? theACL.getLanguage() : "<unknown>";
+		String plainContent = theACL.getContent() != null ? theACL.getContent() : "";
 
-		if (contentLanguage.indexOf("SL") >= 0) {
+		if (contentLanguage.contains("SL")) {
 			// Only format when SL
 			try {
 				plainContent = (String) new SLFormatter().format(plainContent);
@@ -348,11 +349,13 @@ public class ACLTracePanel extends JPanel {
 				f.close();
 
 			} catch (FileNotFoundException e3) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Can't open file: " + fileName);
+				}
 			} catch (IOException e4) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "IO Exception");
+				}
 			}
 		}
 
@@ -411,11 +414,13 @@ public class ACLTracePanel extends JPanel {
 				f.close();
 
 			} catch (FileNotFoundException e3) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Can't open file: " + fileName);
+				}
 			} catch (IOException e4) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "IO Exception");
+				}
 			}
 		}
 	}
@@ -450,7 +455,7 @@ public class ACLTracePanel extends JPanel {
 
 					String theMessageLine = "";
 					line = br.readLine();
-					while ((line != null) && (!line.equals(""))) {
+					while ((line != null) && (!"".equals(line))) {
 						theMessageLine = theMessageLine + "\n" + line;
 						line = br.readLine();
 					}
@@ -466,11 +471,13 @@ public class ACLTracePanel extends JPanel {
 				f.close();
 
 			} catch (FileNotFoundException e3) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Can't open file: " + fileName);
+				}
 			} catch (IOException e4) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "IO Exception");
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -493,7 +500,7 @@ public class ACLTracePanel extends JPanel {
 	public void doSort() {
 
 		int direction = this.sortComboBox.getSelectedIndex();
-		int ascending = (this.ascRadioButton.isSelected() ? 1 : -1);
+		int ascending = this.ascRadioButton.isSelected() ? 1 : -1;
 		ACLMessageNodeComparator anc = new ACLMessageNodeComparator(direction, ascending);
 		int size = aclModel.getChildCount(this.aclRoot);
 		if (size < 2) {
@@ -543,7 +550,7 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e the MouseEvent
 	 */
-	void aclTree_mouseClicked(MouseEvent e) {
+	void aclTreeMouseClicked(MouseEvent e) {
 		try {
 			// since JDK1.3 TreePath tp = aclTree.getAnchorSelectionPath();
 			TreePath tp = aclTree.getSelectionPath();
@@ -581,9 +588,8 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e ActionEvent
 	 */
-	void systemMenuItem_actionPerformed(ActionEvent e) {
+	void systemMenuItemActionPerformed(ActionEvent e) {
 		if (currentACL == null) {
-			return;
 		}
 	}
 
@@ -592,7 +598,7 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e ActionEvent
 	 */
-	void zoomMenuItem_actionPerformed(ActionEvent e) {
+	void zoomMenuItemActionPerformed(ActionEvent e) {
 		doShowCurrentACL();
 	}
 
@@ -601,7 +607,7 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e ActionEvent
 	 */
-	void saveMenuItem_actionPerformed(ActionEvent e) {
+	void saveMenuItemActionPerformed(ActionEvent e) {
 		saveACL();
 	}
 
@@ -610,7 +616,7 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e ActionEvent
 	 */
-	void stasticsMenuItem_actionPerformed(ActionEvent e) {
+	void stasticsMenuItemActionPerformed(ActionEvent e) {
 		showStastistics();
 	}
 
@@ -619,7 +625,7 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e KeyEvent
 	 */
-	void aclTree_keyTyped(KeyEvent e) {
+	void aclTreeKeyTyped(KeyEvent e) {
 		if (e.getKeyCode() == e.VK_DELETE) {
 			deleteCurrent();
 		}
@@ -631,43 +637,43 @@ public class ACLTracePanel extends JPanel {
 	 *
 	 * @param e ActionEvent
 	 */
-	void deleteMenuItem_actionPerformed(ActionEvent e) {
+	void deleteMenuItemActionPerformed(ActionEvent e) {
 		this.deleteCurrent();
 	}
 
-	void sortButton_actionPerformed(ActionEvent e) {
+	void sortButtonActionPerformed(ActionEvent e) {
 		this.doSort();
 	}
 
-	void sortComboBox_itemStateChanged(ItemEvent e) {
+	void sortComboBoxItemStateChanged(ItemEvent e) {
 		doSort();
 	}
 
-	void ascRadioButton_itemStateChanged(ItemEvent e) {
+	void ascRadioButtonItemStateChanged(ItemEvent e) {
 		doSort();
 	}
 
-	void descRadioButton_itemStateChanged(ItemEvent e) {
+	void descRadioButtonItemStateChanged(ItemEvent e) {
 		doSort();
 	}
 
-	void aboutMenuItem_mouseClicked(MouseEvent e) {
+	void aboutMenuItemMouseClicked(MouseEvent e) {
 		this.doShowAbout();
 	}
 
-	void saveQMenuItem_actionPerformed(ActionEvent e) {
+	void saveQMenuItemActionPerformed(ActionEvent e) {
 		this.saveQueue();
 	}
 
-	void clearQMenuItem_actionPerformed(ActionEvent e) {
+	void clearQMenuItemActionPerformed(ActionEvent e) {
 		this.clearACLModel();
 	}
 
-	void openQMenuItem_actionPerformed(ActionEvent e) {
+	void openQMenuItemActionPerformed(ActionEvent e) {
 		this.loadQueue();
 	}
 
-	void aboutMenuItem_actionPerformed(ActionEvent e) {
+	void aboutMenuItemActionPerformed(ActionEvent e) {
 		this.doShowAbout();
 	}
 
@@ -779,7 +785,7 @@ public class ACLTracePanel extends JPanel {
 		saveQMenuItem.setText("Save ACLMessage Trace");
 		saveQMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveQMenuItem_actionPerformed(e);
+				saveQMenuItemActionPerformed(e);
 			}
 		});
 		openQMenuItem.setBackground(Color.white);
@@ -837,32 +843,32 @@ public class ACLTracePanel extends JPanel {
 
 			switch (mode) {
 			case DIRECTION:
-				comp1 = (node1.getDirection() != null ? node1.getDirection() : "");
-				comp2 = (node2.getDirection() != null ? node2.getDirection() : "");
+				comp1 = node1.getDirection() != null ? node1.getDirection() : "";
+				comp2 = node2.getDirection() != null ? node2.getDirection() : "";
 				break;
 			case DATE:
 				Date date1 = node1.getTheDate();
 				Date date2 = node2.getTheDate();
 				return sorting * date1.compareTo(date2);
 			case SENDER:
-				comp1 = (node1.getMessage().getSender() != null ? node1.getMessage().getSender().getName() : "");
-				comp2 = (node2.getMessage().getSender() != null ? node2.getMessage().getSender().getName() : "");
+				comp1 = node1.getMessage().getSender() != null ? node1.getMessage().getSender().getName() : "";
+				comp2 = node2.getMessage().getSender() != null ? node2.getMessage().getSender().getName() : "";
 				break;
 			case RECEIVER:
-				comp1 = (node1.getMessage().getAllReceiver().hasNext()
+				comp1 = node1.getMessage().getAllReceiver().hasNext()
 						? ((AID) node1.getMessage().getAllReceiver().next()).getName()
-						: "");
-				comp2 = (node2.getMessage().getAllReceiver().hasNext()
+						: "";
+				comp2 = node2.getMessage().getAllReceiver().hasNext()
 						? ((AID) node2.getMessage().getAllReceiver().next()).getName()
-						: "");
+						: "";
 				break;
 			case PERFORMATIVE:
 				comp1 = ACLMessage.getPerformative(node1.getMessage().getPerformative());
 				comp2 = ACLMessage.getPerformative(node2.getMessage().getPerformative());
 				break;
 			case ONTOLOGY:
-				comp1 = (node1.getMessage().getOntology() != null ? node1.getMessage().getOntology() : "");
-				comp2 = (node2.getMessage().getOntology() != null ? node2.getMessage().getOntology() : "");
+				comp1 = node1.getMessage().getOntology() != null ? node1.getMessage().getOntology() : "";
+				comp2 = node2.getMessage().getOntology() != null ? node2.getMessage().getOntology() : "";
 				break;
 			}
 
@@ -874,15 +880,15 @@ public class ACLTracePanel extends JPanel {
 			throw new java.lang.UnsupportedOperationException("Method equals() not yet implemented.");
 		}
 
-		final static int DATE = 0;
-		final static int DIRECTION = 1;
-		final static int SENDER = 2;
-		final static int RECEIVER = 3;
-		final static int PERFORMATIVE = 4;
-		final static int ONTOLOGY = 5;
+		static final int DATE = 0;
+		static final int DIRECTION = 1;
+		static final int SENDER = 2;
+		static final int RECEIVER = 3;
+		static final int PERFORMATIVE = 4;
+		static final int ONTOLOGY = 5;
 
-		final static int SORT_ASCENDING = 1;
-		final static int SORT_DESCENDING = -1;
+		static final int SORT_ASCENDING = 1;
+		static final int SORT_DESCENDING = -1;
 
 		private int sorting;
 		private int mode;
@@ -898,7 +904,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void itemStateChanged(ItemEvent e) {
-			adaptee.sortComboBox_itemStateChanged(e);
+			adaptee.sortComboBoxItemStateChanged(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -911,7 +917,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void itemStateChanged(ItemEvent e) {
-			adaptee.ascRadioButton_itemStateChanged(e);
+			adaptee.ascRadioButtonItemStateChanged(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -924,7 +930,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void itemStateChanged(ItemEvent e) {
-			adaptee.descRadioButton_itemStateChanged(e);
+			adaptee.descRadioButtonItemStateChanged(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -937,7 +943,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			adaptee.sortButton_actionPerformed(e);
+			adaptee.sortButtonActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -994,7 +1000,7 @@ public class ACLTracePanel extends JPanel {
 			}
 		}
 
-		private String extensions[] = { ".trc" };
+		private String[] extensions = { ".trc" };
 	}
 
 	private class AboutFrame extends JWindow {
@@ -1012,91 +1018,91 @@ public class ACLTracePanel extends JPanel {
 			}
 		}
 
-		void logoLabel_mouseClicked(MouseEvent e) {
+		void logoLabelMouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void logoLabel3_mousePressed(MouseEvent e) {
+		void logoLabel3MousePressed(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel2_mouseClicked(MouseEvent e) {
+		void jLabel2MouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void logoLabel3_mouseClicked(MouseEvent e) {
+		void logoLabel3MouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void logoLabel_mouseEntered(MouseEvent e) {
+		void logoLabelMouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void logoLabel_mouseExited(MouseEvent e) {
+		void logoLabelMouseExited(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 
-		void logoLabel3_mouseEntered(MouseEvent e) {
+		void logoLabel3MouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void logoLabel3_mouseExited(MouseEvent e) {
+		void logoLabel3MouseExited(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 
-		void jLabel2_mouseEntered(MouseEvent e) {
+		void jLabel2MouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void jLabel2_mouseExited(MouseEvent e) {
+		void jLabel2MouseExited(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 
-		void logoLabel_mousePressed(MouseEvent e) {
+		void logoLabelMousePressed(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void logoLabel_mouseReleased(MouseEvent e) {
+		void logoLabelMouseReleased(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel2_mousePressed(MouseEvent e) {
+		void jLabel2MousePressed(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel2_mouseReleased(MouseEvent e) {
+		void jLabel2MouseReleased(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel4_mouseClicked(MouseEvent e) {
+		void jLabel4MouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void contentPanel_mouseClicked(MouseEvent e) {
+		void contentPanelMouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel1_mouseClicked(MouseEvent e) {
+		void jLabel1MouseClicked(MouseEvent e) {
 			this.setVisible(false);
 		}
 
-		void jLabel4_mouseEntered(MouseEvent e) {
+		void jLabel4MouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void jLabel1_mouseEntered(MouseEvent e) {
+		void jLabel1MouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void contentPanel_mouseEntered(MouseEvent e) {
+		void contentPanelMouseEntered(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 
-		void jLabel4_mouseExited(MouseEvent e) {
+		void jLabel4MouseExited(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 
-		void contentPanel_mouseExited(MouseEvent e) {
+		void contentPanelMouseExited(MouseEvent e) {
 			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 
@@ -1110,26 +1116,26 @@ public class ACLTracePanel extends JPanel {
 			jLabel1.setText("donated by Acklin B.V. to the Jade project");
 			jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					jLabel1_mouseClicked(e);
+					jLabel1MouseClicked(e);
 				}
 
 				public void mouseEntered(MouseEvent e) {
-					jLabel1_mouseEntered(e);
+					jLabel1MouseEntered(e);
 				}
 			});
 			jLabel2.setFont(new java.awt.Font("Dialog", 0, 12));
 			jLabel2.setText("web: www.acklin.nl  |  email: info@acklin.nl");
 			jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					jLabel2_mouseClicked(e);
+					jLabel2MouseClicked(e);
 				}
 
 				public void mouseEntered(MouseEvent e) {
-					jLabel2_mouseEntered(e);
+					jLabel2MouseEntered(e);
 				}
 
 				public void mouseExited(MouseEvent e) {
-					jLabel2_mouseExited(e);
+					jLabel2MouseExited(e);
 				}
 			});
 			contentPanel.setBackground(Color.white);
@@ -1137,15 +1143,15 @@ public class ACLTracePanel extends JPanel {
 			contentPanel.setBorder(border1);
 			contentPanel.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					contentPanel_mouseClicked(e);
+					contentPanelMouseClicked(e);
 				}
 
 				public void mouseEntered(MouseEvent e) {
-					contentPanel_mouseEntered(e);
+					contentPanelMouseEntered(e);
 				}
 
 				public void mouseExited(MouseEvent e) {
-					contentPanel_mouseExited(e);
+					contentPanelMouseExited(e);
 				}
 			});
 			logoLabel3.setFont(new java.awt.Font("SansSerif", 1, 60));
@@ -1153,15 +1159,15 @@ public class ACLTracePanel extends JPanel {
 			logoLabel3.setText("Acklin");
 			logoLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					logoLabel3_mouseClicked(e);
+					logoLabel3MouseClicked(e);
 				}
 
 				public void mouseEntered(MouseEvent e) {
-					logoLabel3_mouseEntered(e);
+					logoLabel3MouseEntered(e);
 				}
 
 				public void mouseExited(MouseEvent e) {
-					logoLabel3_mouseExited(e);
+					logoLabel3MouseExited(e);
 				}
 			});
 			jLabel4.setFont(new java.awt.Font("Dialog", 1, 20));
@@ -1169,15 +1175,15 @@ public class ACLTracePanel extends JPanel {
 			jLabel4.setText("agent based support");
 			jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					jLabel4_mouseClicked(e);
+					jLabel4MouseClicked(e);
 				}
 
 				public void mouseEntered(MouseEvent e) {
-					jLabel4_mouseEntered(e);
+					jLabel4MouseEntered(e);
 				}
 
 				public void mouseExited(MouseEvent e) {
-					jLabel4_mouseExited(e);
+					jLabel4MouseExited(e);
 				}
 			});
 			this.getContentPane().add(contentPanel, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
@@ -1221,7 +1227,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void actionPerformed(ActionEvent e) {
-			adaptee.stasticsMenuItem_actionPerformed(e);
+			adaptee.stasticsMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1272,7 +1278,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void mouseClicked(MouseEvent e) {
-			adaptee.aclTree_mouseClicked(e);
+			adaptee.aclTreeMouseClicked(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1295,7 +1301,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void actionPerformed(ActionEvent e) {
-			adaptee.systemMenuItem_actionPerformed(e);
+			adaptee.systemMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1318,7 +1324,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void actionPerformed(ActionEvent e) {
-			adaptee.zoomMenuItem_actionPerformed(e);
+			adaptee.zoomMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1342,7 +1348,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void actionPerformed(ActionEvent e) {
-			adaptee.saveMenuItem_actionPerformed(e);
+			adaptee.saveMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1367,7 +1373,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void keyTyped(KeyEvent e) {
-			adaptee.aclTree_keyTyped(e);
+			adaptee.aclTreeKeyTyped(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1392,7 +1398,7 @@ public class ACLTracePanel extends JPanel {
 		 * @param e Description of Parameter
 		 */
 		public void actionPerformed(ActionEvent e) {
-			adaptee.deleteMenuItem_actionPerformed(e);
+			adaptee.deleteMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1443,7 +1449,7 @@ public class ACLTracePanel extends JPanel {
 				setIcon(rootIcon);
 				break;
 			case 1:
-				if (sValue.indexOf("in:") > 0) {
+				if (sValue.indexOf("in:") >= 1) {
 					setIcon(incomingIcon);
 					theColor = Color.red;
 				} else {
@@ -1544,7 +1550,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			adaptee.aboutMenuItem_mouseClicked(e);
+			adaptee.aboutMenuItemMouseClicked(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1557,7 +1563,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			adaptee.clearQMenuItem_actionPerformed(e);
+			adaptee.clearQMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1570,7 +1576,7 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			adaptee.openQMenuItem_actionPerformed(e);
+			adaptee.openQMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
@@ -1583,16 +1589,16 @@ public class ACLTracePanel extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			adaptee.aboutMenuItem_actionPerformed(e);
+			adaptee.aboutMenuItemActionPerformed(e);
 		}
 
 		ACLTracePanel adaptee;
 	}
 
-	public final static String DIRECTION_IN = "in";
-	public final static String DIRECTION_OUT = "out";
+	public static final String DIRECTION_IN = "in";
+	public static final String DIRECTION_OUT = "out";
 
-	private static DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+	private static final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 	JLabel jLabel1 = new JLabel();
 	ButtonGroup sortingButtonGroup = new ButtonGroup();
 	JComboBox sortComboBox = new JComboBox();
@@ -1604,36 +1610,38 @@ public class ACLTracePanel extends JPanel {
 	JMenuItem clearQMenuItem = new JMenuItem();
 	Border border2;
 	Border border3;
-	private boolean sorting = false;
-	private JMenuItem deleteMenuItem = new JMenuItem();
+	private boolean sorting;
+	private final JMenuItem deleteMenuItem = new JMenuItem();
 
-	private int inMsgCount = 0, outMsgCount = 0;
+	private int inMsgCount;
+	private int outMsgCount;
 
-	private int aclIndex = 0;
-	private DefaultMutableTreeNode aclRoot = new DefaultMutableTreeNode("messagetrace");
-	private DefaultTreeModel aclModel = new DefaultTreeModel(aclRoot);
-	private GridBagLayout gridBagLayout1 = new GridBagLayout();
-	private GridBagLayout gridBagLayout2 = new GridBagLayout();
-	private JScrollPane aclTreeScrollPane = new JScrollPane();
-	private JTree aclTree = new JTree();
-	private ACLTreeRenderer aclTreeRenderer = new ACLTreeRenderer();
-	private JPopupMenu thePopupMenu = new JPopupMenu();
-	private JMenuItem systemMenuItem = new JMenuItem();
-	private JMenuItem zoomMenuItem = new JMenuItem();
+	private int aclIndex;
+	private final DefaultMutableTreeNode aclRoot = new DefaultMutableTreeNode("messagetrace");
+	private final DefaultTreeModel aclModel = new DefaultTreeModel(aclRoot);
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final GridBagLayout gridBagLayout2 = new GridBagLayout();
+	private final JScrollPane aclTreeScrollPane = new JScrollPane();
+	private final JTree aclTree = new JTree();
+	private final ACLTreeRenderer aclTreeRenderer = new ACLTreeRenderer();
+	private final JPopupMenu thePopupMenu = new JPopupMenu();
+	private final JMenuItem systemMenuItem = new JMenuItem();
+	private final JMenuItem zoomMenuItem = new JMenuItem();
 
-	private int currentSelection = 0;
-	private JMenuItem saveMenuItem = new JMenuItem();
-	private JMenuItem stasticsMenuItem = new JMenuItem();
-	private JMenuItem aboutMenuItem = new JMenuItem();
+	private int currentSelection;
+	private final JMenuItem saveMenuItem = new JMenuItem();
+	private final JMenuItem stasticsMenuItem = new JMenuItem();
+	private final JMenuItem aboutMenuItem = new JMenuItem();
 
-	private ImageIcon sortIcon = new ImageIcon(this.getClass().getResource("images/sort.gif"));
+	private final ImageIcon sortIcon = new ImageIcon(this.getClass().getResource("images/sort.gif"));
 
-	private DefaultComboBoxModel sortComboBoxModel = new DefaultComboBoxModel();
-	private Agent agent;
+	private final DefaultComboBoxModel sortComboBoxModel = new DefaultComboBoxModel();
+	private final Agent agent;
 
 	private File currentDir;
 
-	private int x, y;
+	private int x;
+	private int y;
 	private ACLMessage currentACL;
 	private Border border1;
 	private TitledBorder titledBorder1;

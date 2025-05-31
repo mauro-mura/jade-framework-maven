@@ -35,7 +35,7 @@ package jade.util.leap;
    @see java.util.TreeSet
  */
 public class SortedSetImpl implements SortedSet {
-    private java.util.TreeSet hiddenSet = null;
+	private final java.util.TreeSet hiddenSet;
 
     /**
      * Default Constructor, creates an empty Set,

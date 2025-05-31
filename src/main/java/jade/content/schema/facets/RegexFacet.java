@@ -38,7 +38,7 @@ import jade.content.schema.Facet;
  * expressed as a regular expression.
  */
 public class RegexFacet implements Facet {
-	private String regex;
+	private final String regex;
 
 	/**
 	   Construct a <code>PermittedValuesFacet</code> that 

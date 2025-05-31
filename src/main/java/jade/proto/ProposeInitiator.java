@@ -150,9 +150,9 @@ public class ProposeInitiator extends FSMBehaviour {
   // is concerned. Sessions are protocol-specific
   protected Map sessions = new HashMap<>();	
   // The MsgReceiver behaviour used to receive replies 
-  protected MsgReceiver replyReceiver = null;
+  protected MsgReceiver replyReceiver;
   // The MessageTemplate used by the replyReceiver
-  protected MessageTemplate replyTemplate = null; 
+  protected MessageTemplate replyTemplate; 
 
     //#APIDOC_EXCLUDE_END
 
@@ -182,7 +182,7 @@ public class ProposeInitiator extends FSMBehaviour {
 
 
   // If set to true all expected responses have been received
-  private boolean allResponsesReceived = false;
+  private boolean allResponsesReceived;
 	
   /**
    * Construct a <code>ProposeInitiator</code> with an empty DataStore
@@ -771,7 +771,7 @@ public class ProposeInitiator extends FSMBehaviour {
     // If the conversation-id of the first message is set --> 
     // use it. Otherwise create a default one
     String convId = null;
-    if (msgs.size() > 0) {
+    if (!msgs.isEmpty()) {
       ACLMessage msg = (ACLMessage) msgs.elementAt(0);
       if ((msg == null) || (msg.getConversationId() == null)) {
         convId = "C"+hashCode()+"_"+System.currentTimeMillis();
@@ -837,7 +837,7 @@ public class ProposeInitiator extends FSMBehaviour {
     }
 	
     boolean isCompleted() {
-	    return (state == NEGATIVE_RESPONSE_RECEIVED || state == RESULT_NOTIFICATION_RECEIVED);
+	    return state == NEGATIVE_RESPONSE_RECEIVED || state == RESULT_NOTIFICATION_RECEIVED;
     }
 	
   } // End of inner class Session

@@ -73,20 +73,20 @@ public class HTTPServer extends Thread {
 	// static String CODEC = "org.apache.xerces.parsers.SAXParser";
 	public static String CODEC = "org.apache.crimson.parser.XMLReaderImpl";
 
-	private String address;
-	private int port;
-	private InChannel.Dispatcher dispatcher;
-	private int maxKA;
-	private int timeout;
+	private final String address;
+	private final int port;
+	private final InChannel.Dispatcher dispatcher;
+	private final int maxKA;
+	private final int timeout;
 	private ServerSocket server;
 
 	// logging
-	private static Logger logger = Logger.getMyLogger(HTTPServer.class.getName());
+	private static final Logger logger = Logger.getMyLogger(HTTPServer.class.getName());
 
-	private Vector<ServerThread> threads; // for keep alive connections
+	private final Vector<ServerThread> threads; // for keep alive connections
 
 	// attribute for synchronized
-	private static Object lock = new Object();
+	private static final Object lock = new Object();
 
 	// the flag that shows if the server is active or not
 	boolean active = true;
@@ -123,8 +123,9 @@ public class HTTPServer extends Thread {
 				/*
 				 * #PJAVA_INCLUDE_BEGIN server = new ServerSocket(0); #PJAVA_INCLUDE_END
 				 */
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "Port " + p + " is already in used, selected another one");
+				}
 			} else {
 				throw ioe;
 			}
@@ -177,22 +178,24 @@ public class HTTPServer extends Thread {
 	void addThread(ServerThread st) {
 		synchronized (lock) {
 			threads.addElement(st);
-			if (logger.isLoggable(Logger.CONFIG))
+			if (logger.isLoggable(Logger.CONFIG)) {
 				logger.log(Logger.CONFIG, " Added Ka threads: " + threads.size() + "/" + maxKA);
+			}
 		}
 	}
 
 	void removeThread(ServerThread st) {
 		synchronized (lock) {
 			threads.removeElement(st);
-			if (logger.isLoggable(Logger.CONFIG))
+			if (logger.isLoggable(Logger.CONFIG)) {
 				logger.log(Logger.CONFIG, " Removed Ka threads: " + threads.size() + "/" + maxKA);
+			}
 		}
 	}
 
 	boolean isSpaceLeft() {
 		synchronized (lock) {
-			return (threads.size() < maxKA);
+			return threads.size() < maxKA;
 		}
 	}
 
@@ -208,8 +211,9 @@ public class HTTPServer extends Thread {
 			}
 		} catch (Exception e) {
 			if (active) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "HTTP Server closed on port " + port);
+				}
 			}
 		}
 	}
@@ -221,8 +225,8 @@ public class HTTPServer extends Thread {
 		private OutputStream output;
 		private InChannel.Dispatcher dispatcher;
 		private XMLCodec codec;
-		private boolean keepAlive = false;
-		private boolean active = false;
+		private boolean keepAlive;
+		private boolean active;
 
 		/** Constructor: Store client port */
 		public ServerThread(HTTPServer f, Socket s, InChannel.Dispatcher d) {
@@ -282,8 +286,9 @@ public class HTTPServer extends Thread {
 							if (logger.isLoggable(Logger.WARNING)) {
 								// check payload size
 								if ((env.getPayloadLength() != null) && (env.getPayloadLength().intValue() >= 0)
-										&& (env.getPayloadLength().intValue() != payload.size()))
+									&& (env.getPayloadLength().intValue() != payload.size())) {
 									logger.log(Logger.WARNING, "Payload size does not match envelope information");
+								}
 							}
 							dispatcher.dispatchMessage(env, payload.toByteArray());
 						}
@@ -309,8 +314,9 @@ public class HTTPServer extends Thread {
 			} catch (SocketException se) {
 			} catch (IOException ioe) {
 			} catch (Exception e) {
-				if (logger.isLoggable(Logger.WARNING))
+				if (logger.isLoggable(Logger.WARNING)) {
 					logger.log(Logger.WARNING, "HTTPServer error : " + e);
+				}
 			} finally {
 				// Close socket connection
 				if (keepAlive) {

@@ -49,7 +49,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
      * An array of string names, one for each of the valid state this object
      * can represent.
      */
-    private String stateNames[];
+    private String[] stateNames;
 
     private StateBase() {
         // empty
@@ -108,7 +108,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
      * @return The integer code that identifies this state.
      */
     public int getCode() {
-        return (m_code);
+        return m_code;
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
         boolean found = false;
         int idx;
 
-        for (idx = 0; (!found && (idx < stateNames.length)); idx++) {
+        for (idx = 0; !found && (idx < stateNames.length); idx++) {
             if (stateNames[idx].equalsIgnoreCase(name)) {
                 found = true;
             }
@@ -168,10 +168,10 @@ public abstract class StateBase implements State, Comparable, Serializable {
         boolean equal = false;
 
         if (object != null) {
-            equal = (m_code == ((State) object).getCode());
+            equal = m_code == ((State) object).getCode();
         }
 
-        return (equal);
+        return equal;
     }
 
     /**
@@ -229,7 +229,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
             result = -1;
         }
 
-        return (result);
+        return result;
     }
 
     /**
@@ -239,7 +239,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
      * @return The state code for this state.
      */
     public int hashCode() {
-        return (m_code);
+        return m_code;
     }
 
     /**
@@ -252,7 +252,7 @@ public abstract class StateBase implements State, Comparable, Serializable {
 
         buf.append(getName()).append("(").append(m_code).append(")");
 
-        return (buf.toString());
+        return buf.toString();
     }
 
     /**
@@ -273,6 +273,6 @@ public abstract class StateBase implements State, Comparable, Serializable {
             }
         }
 
-        return (buf.toString());
+        return buf.toString();
     }
 }

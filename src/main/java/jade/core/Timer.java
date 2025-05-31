@@ -37,7 +37,7 @@ public class Timer {
 
 	private long expireTimeMillis;
 	private boolean fired;
-	private TimerListener owner;
+	private final TimerListener owner;
 
 	public Timer(long when, TimerListener tl) {
 		expireTimeMillis = when;
@@ -47,7 +47,7 @@ public class Timer {
 
 	public boolean equals(Object o) {
 		Timer t = (Timer)o;
-		return (expireTimeMillis == t.expireTimeMillis);
+		return expireTimeMillis == t.expireTimeMillis;
 	}
 
 

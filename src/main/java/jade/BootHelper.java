@@ -145,7 +145,7 @@ public class BootHelper {
 				break;
 
 			case ESCAPE:
-				if ((ch != '"') || (keepquote)) {
+				if ((ch != '"') || keepquote) {
 					token.append('\\');
 				}
 

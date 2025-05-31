@@ -73,10 +73,12 @@ class RoutingTable {
 			try {
 				OutViaSlice rhs = (OutViaSlice)o;
 				String sn = rhs.sliceName;
-				if(sliceName.equals(sn))
+				if (sliceName.equals(sn)) {
 					return true;
-				else
+				}
+				else {
 					return false;
+				}
 			}
 			catch(ClassCastException cce) {
 				return false;
@@ -110,10 +112,12 @@ class RoutingTable {
 			try {
 				OutViaMTP rhs = (OutViaMTP)o;
 				OutChannel ch = rhs.myChannel;
-				if(myChannel.equals(ch))
+				if (myChannel.equals(ch)) {
 					return true;
-				else
+				}
+				else {
 					return false;
+				}
 			}
 			catch(ClassCastException cce) {
 				return false;
@@ -145,12 +149,14 @@ class RoutingTable {
 		
 		public OutPort get() {
 			// Look first in the local list
-			if(!local.isEmpty())
-				return (OutPort)local.get(0);
-			// Then look in the remote list
+			if (!local.isEmpty()) {
+				return (OutPort) local.get(0);
+				// Then look in the remote list
+			}
 			else
-				if(!remote.isEmpty())
-					return (OutPort)remote.get(0);
+				if (!remote.isEmpty()) {
+					return (OutPort) remote.get(0);
+				}
 			return null;
 		}
 		
@@ -192,7 +198,7 @@ class RoutingTable {
 	private final List remoteMTPs = new ArrayList<>();
 	private static final int EXPECTED_PLATFORMADDRESSES_SIZE = 2;
 	private final List platformAddresses = new ArrayList<>(EXPECTED_PLATFORMADDRESSES_SIZE);
-	private String platformInfo = null;
+	private String platformInfo;
 	
 	public RoutingTable(boolean attachPlatformInfo) {
 		if (attachPlatformInfo) {
@@ -321,8 +327,9 @@ class RoutingTable {
 		//proto = proto.toLowerCase();
 		CaseInsensitiveString protoTmp = new CaseInsensitiveString(proto);
 		OutPortList l = (OutPortList)outPorts.get(protoTmp);
-		if(l != null)
+		if (l != null) {
 			l.add(port, location);
+		}
 		else {
 			l = new OutPortList();
 			l.add(port, location);
@@ -341,8 +348,9 @@ class RoutingTable {
 	
 	private String extractProto(String address) {
 		int colonPos = address.indexOf(':');
-		if(colonPos == -1)
+		if (colonPos == -1) {
 			return null;
+		}
 		return address.substring(0, colonPos);
 	}
 }

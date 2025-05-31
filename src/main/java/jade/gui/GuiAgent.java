@@ -70,11 +70,11 @@ public abstract class GuiAgent extends Agent {
 	/**
 	 * @serial
 	 */
-	private Vector<GuiEvent> guiEventQueue;
+	private final Vector<GuiEvent> guiEventQueue;
 	/**
 	 * @serial
 	 */
-	private Boolean guiEventQueueLock;
+	private final Boolean guiEventQueueLock;
 
 	////////////////////////
 	// GUI HANDLER BEHAVIOUR
@@ -108,19 +108,21 @@ public abstract class GuiAgent extends Agent {
 				 * #DOTNET_INCLUDE_BEGIN if (ev != null) onGuiEvent(ev); else block();
 				 * #DOTNET_INCLUDE_END
 				 */
-			} else
+			}
+			else {
 				block();
+			}
 		}
 
 		public boolean done() {
-			return (false);
+			return false;
 		}
 	}
 
 	/**
 	 * Default constructor.
 	 */
-	public GuiAgent() {
+	protected GuiAgent() {
 		super();
 		guiEventQueue = new Vector<>();
 		guiEventQueueLock = Boolean.valueOf(true);

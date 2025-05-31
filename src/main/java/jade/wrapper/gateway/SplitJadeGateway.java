@@ -15,7 +15,7 @@ import jade.wrapper.StaleProxyException;
 
 public class SplitJadeGateway extends DynamicJadeGateway {
 
-	private static Logger myLogger = Logger.getMyLogger(SplitJadeGateway.class.getName());
+	private static final Logger myLogger = Logger.getMyLogger(SplitJadeGateway.class.getName());
 	
 	@Override
 	public void checkJADE() throws StaleProxyException, ControllerException {

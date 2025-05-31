@@ -41,7 +41,7 @@ import java.util.Enumeration;
    @see java.util.LinkedList
  */
 public class LinkedList implements List, Serializable {
-    private transient java.util.List realHiddenList = null;
+    private transient java.util.List realHiddenList;
     private Vector                         hiddenList;
 
 	// This is needed to ensure compatibility with the J2ME version of 

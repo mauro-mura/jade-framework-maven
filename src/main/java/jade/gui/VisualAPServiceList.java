@@ -50,7 +50,7 @@ public class VisualAPServiceList extends VisualStringList
 	
 	protected String getElementName(Object el)
 	{
-		return (((APService)el).getName());
+		return ((APService)el).getName();
 	}
 
 	protected Object editElement(Object el, boolean isEditable)

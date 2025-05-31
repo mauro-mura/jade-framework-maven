@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class PropertyHelper {
+public final class PropertyHelper {
 	// It is useless to have instances of this class
 	private PropertyHelper() {
 	}
@@ -38,7 +38,7 @@ public class PropertyHelper {
 	private static org.omg.CORBA.TypeCode _tc;
 
 	@SuppressWarnings("unused")
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		int _memberCount = 2;
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {

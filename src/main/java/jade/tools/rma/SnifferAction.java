@@ -33,8 +33,8 @@ import jade.gui.AgentTree;
  */
 //class SnifferAction extends FixedAction {
 class SnifferAction extends ContainerAction {
-  private static int progressiveNumber = 0;
-  private rma myRMA;
+  private static int progressiveNumber;
+	private final rma myRMA;
 
   public SnifferAction(rma anRMA,ActionProcessor actPro) {
     super ("SnifferActionIcon","Start Sniffer",actPro);
@@ -43,8 +43,9 @@ class SnifferAction extends ContainerAction {
 
   public void doAction(AgentTree.ContainerNode node) {
   	String containerName = "";
-   	if(node != null)
-   	  	containerName = node.getName();
+		if (node != null) {
+			containerName = node.getName();
+		}
 
     myRMA.newAgent("sniffer"+progressiveNumber, "jade.tools.sniffer.Sniffer",new Object[0], containerName);
     progressiveNumber++;

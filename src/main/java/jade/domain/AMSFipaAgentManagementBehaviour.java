@@ -62,7 +62,7 @@ class AMSFipaAgentManagementBehaviour extends RequestManagementBehaviour {
 
 	@Serial
 	private static final long serialVersionUID = -290456791163096519L;
-	private ams theAMS;
+	private final ams theAMS;
 
 	protected AMSFipaAgentManagementBehaviour(ams a, MessageTemplate mt) {
 		super(a, mt);

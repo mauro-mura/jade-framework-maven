@@ -264,7 +264,7 @@ public class LEAPFrameCodec implements java.io.Serializable {
 			} while (marker != END);
 
 			// If this QualifiedFrame represents an AID, convert it
-			if (f.getTypeName().equals(SL0Vocabulary.AID)) {
+			if (SL0Vocabulary.AID.equals(f.getTypeName())) {
 				obj = frameToAid(f);
 			} else {
 				obj = f;
@@ -307,8 +307,7 @@ public class LEAPFrameCodec implements java.io.Serializable {
 	private final String readString(DataInputStream stream, byte tag) throws Throwable {
 		if ((tag & MODIFIER) != 0) {
 			int index = stream.readUnsignedByte();
-			String s = stringReferences.get(index);
-			return s;
+			return stringReferences.get(index);
 		} else {
 			String s = stream.readUTF();
 			if ((s.length() > 1) && (stringReferences.size() < 256)) {

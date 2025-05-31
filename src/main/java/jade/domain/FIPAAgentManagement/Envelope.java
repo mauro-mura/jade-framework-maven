@@ -313,10 +313,12 @@ public class Envelope implements Concept, java.io.Serializable {
 	 *         <code>null</code> if no value was set.
 	 */
 	public ReceivedObject getReceived() {
-		if (stamps.isEmpty())
+		if (stamps.isEmpty()) {
 			return null;
-		else
+		}
+		else {
 			return (ReceivedObject) stamps.get(stamps.size() - 1);
+		}
 	}
 
 	/**
@@ -338,8 +340,9 @@ public class Envelope implements Concept, java.io.Serializable {
 		ReceivedObject[] ret = new ReceivedObject[stamps.size()];
 		int counter = 0;
 
-		for (Iterator<ReceivedObject> it = stamps.iterator(); it.hasNext();)
+		for (Iterator<ReceivedObject> it = stamps.iterator();it.hasNext();) {
 			ret[counter++] = it.next();
+		}
 
 		return ret;
 	}
@@ -393,27 +396,35 @@ public class Envelope implements Concept, java.io.Serializable {
 		Iterator<AID> i = getAllTo();
 		if (i.hasNext()) {
 			s = s + " :to (sequence ";
-			for (Iterator<AID> ii = i; ii.hasNext();)
+			for (Iterator<AID> ii = i;ii.hasNext();) {
 				s = s + " " + ii.next().toString();
+			}
 			s = s + ") ";
 		}
-		if (getFrom() != null)
+		if (getFrom() != null) {
 			s = s + " :from " + getFrom().toString();
-		if (getComments() != null)
+		}
+		if (getComments() != null) {
 			s = s + " :comments " + getComments();
-		if (getAclRepresentation() != null)
+		}
+		if (getAclRepresentation() != null) {
 			s = s + " :acl-representation " + getAclRepresentation();
-		if (getPayloadLength() != null)
+		}
+		if (getPayloadLength() != null) {
 			s = s + " :payload-length " + getPayloadLength().toString();
-		if (getPayloadEncoding() != null)
+		}
+		if (getPayloadEncoding() != null) {
 			s = s + " :payload-encoding " + getPayloadEncoding();
-		if (getDate() != null)
+		}
+		if (getDate() != null) {
 			s = s + " :date " + getDate().toString();
+		}
 		i = getAllIntendedReceiver();
 		if (i.hasNext()) {
 			s = s + " :intended-receiver (sequence ";
-			for (Iterator<AID> ii = i; ii.hasNext();)
+			for (Iterator<AID> ii = i;ii.hasNext();) {
 				s = s + " " + ii.next().toString();
+			}
 			s = s + ") ";
 		}
 		ReceivedObject[] ro = getStamps();

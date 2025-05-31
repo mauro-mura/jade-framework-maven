@@ -28,18 +28,18 @@ import java.util.List;
 
 //#APIDOC_EXCLUDE_FILE
 
-class SingletonResourceManagementHelper {
+final class SingletonResourceManagementHelper {
 
-	private List<ResourceManagementHelper> helpers;
+	private final List<ResourceManagementHelper> helpers;
 
-	private final static SingletonResourceManagementHelper theInstance = new SingletonResourceManagementHelper();
+	private static final SingletonResourceManagementHelper theInstance = new SingletonResourceManagementHelper();
 	
-	public final static SingletonResourceManagementHelper getInstance() {
+	public static SingletonResourceManagementHelper getInstance() {
 		return theInstance;
 	}
 	
 	private SingletonResourceManagementHelper() {
-		helpers = new ArrayList<ResourceManagementHelper>();
+		helpers = new ArrayList<>();
 	}
 
 	public void addHelper(ResourceManagementHelper helper) {
@@ -52,7 +52,7 @@ class SingletonResourceManagementHelper {
 	
 	public ResourceManagementHelper getHelper() {
 		ResourceManagementHelper helper = null;
-		if (helpers.size() > 0) {
+		if (!helpers.isEmpty()) {
 			helper = helpers.get(0);
 		}
 		return helper;

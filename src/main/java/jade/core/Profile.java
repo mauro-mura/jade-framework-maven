@@ -446,7 +446,7 @@ public abstract class Profile {
 					e.printStackTrace();
 				}
 			}
-			if (host.equals(LOCALHOST_CONSTANT) || host.equals(LOOPBACK_ADDRESS_CONSTANT)) {
+			if (LOCALHOST_CONSTANT.equals(host) || LOOPBACK_ADDRESS_CONSTANT.equals(host)) {
 				for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
 					NetworkInterface intf = en.nextElement();
 					for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
@@ -457,16 +457,16 @@ public abstract class Profile {
 								switch (useIPVersion) {
 								case IPV4:
 									if (inetAddress instanceof Inet4Address) {
-										return  inetAddress.getHostAddress().toString();
+										return  inetAddress.getHostAddress();
 									}
 									break;
 								case IPV6:
 									if (inetAddress instanceof Inet6Address) {
-										return  inetAddress.getHostAddress().toString();
+										return  inetAddress.getHostAddress();
 									}
 									break;
 								default:
-									return  inetAddress.getHostAddress().toString();
+									return  inetAddress.getHostAddress();
 								}
 							}
 						}
@@ -541,10 +541,10 @@ public abstract class Profile {
 		}
 
 		try {
-			if (host1.equalsIgnoreCase(LOCALHOST_CONSTANT) || host1.equals(LOOPBACK_ADDRESS_CONSTANT)) {
+			if (LOCALHOST_CONSTANT.equalsIgnoreCase(host1) || LOOPBACK_ADDRESS_CONSTANT.equals(host1)) {
 				return isLocalHost(host2);
 			}
-			if (host2.equalsIgnoreCase(LOCALHOST_CONSTANT) || host2.equals(LOOPBACK_ADDRESS_CONSTANT)) {
+			if (LOCALHOST_CONSTANT.equalsIgnoreCase(host2) || LOOPBACK_ADDRESS_CONSTANT.equals(host2)) {
 				return isLocalHost(host1);
 			}
 

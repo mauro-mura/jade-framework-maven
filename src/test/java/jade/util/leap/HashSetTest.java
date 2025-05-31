@@ -17,7 +17,7 @@ import org.junit.Test;
 public class HashSetTest {
 
 	private HashSet hs;
-	private String[] hsContent = new String[] {"one", "two", "three", "four"};
+	private final String[] hsContent = new String[]{"one", "two", "three", "four"};
 
 	@Before
 	public void createTestData() {

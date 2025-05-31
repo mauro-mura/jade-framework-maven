@@ -41,23 +41,23 @@ import java.util.Map;
 class DefaultSAMInfoHandlerImpl implements SAMInfoHandler {
 
 	private static final String SAM_PREFIX = "SAM_";
-	
-	private Map<String, PrintStream> entityFiles = new HashMap<String, PrintStream>();
+
+	private final Map<String, PrintStream> entityFiles = new HashMap<>();
 	// For counters we need to keep the total value together with the Stream used to write the CSV file
-	private Map<String, CounterInfo> counters = new HashMap<String, CounterInfo>();
-	
-	private SimpleDateFormat timeStampFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private final Map<String, CounterInfo> counters = new HashMap<>();
+
+	private final SimpleDateFormat timeStampFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private String csvSeparator;
 	
-	private List<String> summaryFields = null;
-	private List<String> summaryValues = null;
-	private PrintStream summaryFile = null;
+	private List<String> summaryFields;
+	private List<String> summaryValues;
+	private PrintStream summaryFile;
 	
 	
 	private File samInfoDirectory;
 	private String fileSeparator;
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	public void initialize(Profile p) throws Exception {
 		fileSeparator = System.getProperty("file.separator");
@@ -83,8 +83,8 @@ class DefaultSAMInfoHandlerImpl implements SAMInfoHandler {
 		String summaryStr = p.getParameter("jade_core_sam_SAMService_summary", null);
 		if (summaryStr != null && summaryStr.length() > 0) {
 			String[] ff = summaryStr.split(";");
-			summaryFields = new ArrayList<String>(ff.length);
-			summaryValues = new ArrayList<String>(ff.length);
+			summaryFields = new ArrayList<>(ff.length);
+			summaryValues = new ArrayList<>(ff.length);
 			for (String field : ff) {
 				summaryFields.add(field);
 				summaryValues.add("");
@@ -190,13 +190,13 @@ class DefaultSAMInfoHandlerImpl implements SAMInfoHandler {
 					summaryFile = new PrintStream(f);
 					StringBuilder sb = new StringBuilder("Time-stamp");
 					for (String field : summaryFields) {
-						sb.append(csvSeparator+field);
+						sb.append(csvSeparator).append(field);
 					}
 					summaryFile.println(sb.toString());
 				}
 				StringBuilder sb = new StringBuilder(timeStampStr);
 				for (String value : summaryValues) {
-					sb.append(csvSeparator+value);
+					sb.append(csvSeparator).append(value);
 				}
 				summaryFile.println(sb.toString());
 			}
@@ -243,7 +243,7 @@ class DefaultSAMInfoHandlerImpl implements SAMInfoHandler {
 	private class CounterInfo {
 		
 		PrintStream stream;
-		long totValue = 0;
+		long totValue;
 		
 		CounterInfo(PrintStream ps) {
 			stream = ps;

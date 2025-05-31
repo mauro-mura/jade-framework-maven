@@ -74,20 +74,22 @@ class MsgIndication
 		int perf = msg.getPerformative();
 		String tmpType = ACLMessage.getPerformative(perf);
 		int blancCharCnt = TYPE_LEN - tmpType.length();
-		while (blancCharCnt-- > 0)
+		while (blancCharCnt-- > 0) {
 			tmpType += " ";
+		}
 		
 		// Put the destination agent group in form of a string
 		String dest = "";
 		Iterator destAG = msg.getAllReceiver();
-		
-		while(destAG.hasNext())
-			dest = dest + ((AID)destAG.next()).getName() + " ";
 
-		String tmpDir = (direction == OUTGOING ? "sent to  " : "recv from");
+		while (destAG.hasNext()) {
+			dest = dest + ((AID) destAG.next()).getName() + " ";
+		}
+
+		String tmpDir = direction == OUTGOING ? "sent to  " : "recv from";
 	
-		String tmpPeer = (direction == OUTGOING ? dest : msg.getSender().getName());
-		return(df.format(date) + ":  " + tmpType + " " + tmpDir + "   " + tmpPeer);
+		String tmpPeer = direction == OUTGOING ? dest : msg.getSender().getName();
+		return df.format(date) + ":  " + tmpType + " " + tmpDir + "   " + tmpPeer;
 	}
 
 	void setMessage(ACLMessage m)
@@ -97,12 +99,12 @@ class MsgIndication
 
 	ACLMessage getMessage()
 	{
-		return(msg);
+		return msg;
 	}
 
 	public String toString()
 	{
-		return(df.format(date) + "\n" + direction + "\n" + msg.toString());
+		return df.format(date) + "\n" + direction + "\n" + msg.toString();
 	}
 
 	void toText(BufferedWriter w)
@@ -125,9 +127,11 @@ class MsgIndication
 
 			w.flush();
 		}
-		catch(IOException e) { 
-		if(logger.isLoggable(Logger.WARNING))
-			logger.log(Logger.WARNING,"IO Exception in MsgIndication.toText()"); }
+		catch(IOException e) {
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "IO Exception in MsgIndication.toText()");
+			}
+		}
 	}
 
 	static MsgIndication fromText(BufferedReader r)
@@ -161,17 +165,23 @@ class MsgIndication
 			line = r.readLine();
  
 		}
-		catch(IOException e) { 
-		if(logger.isLoggable(Logger.WARNING))
-			logger.log(Logger.WARNING,"IO Exception in MsgIndication.fromText()"); }
-		catch (java.text.ParseException e1) { 
-		if(logger.isLoggable(Logger.WARNING))
-			logger.log(Logger.WARNING,"ParseException in MsgIndication.fromText()"); }
+		catch(IOException e) {
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "IO Exception in MsgIndication.fromText()");
+			}
+		}
+		catch (java.text.ParseException e1) {
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "ParseException in MsgIndication.fromText()");
+			}
+		}
 		catch (ACLCodec.CodecException e2) {
-			if(logger.isLoggable(Logger.WARNING))
-				logger.log(Logger.WARNING,"ParseException in parsing the ACL message"); } //Exception thrown by ACLMessage.fromText()
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "ParseException in parsing the ACL message");
+			}
+		} //Exception thrown by ACLMessage.fromText()
 
-		return(mi);
+		return mi;
 	}
 }
 

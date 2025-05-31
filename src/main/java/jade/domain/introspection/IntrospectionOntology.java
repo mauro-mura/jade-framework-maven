@@ -52,14 +52,14 @@ import jade.domain.FIPAAgentManagement.APService;
  @version $Date: 2018-03-19 11:25:13 +0100 (lun, 19 mar 2018) $ $Revision: 6835 $
  
  */
-public class IntrospectionOntology extends Ontology implements IntrospectionVocabulary {
+public final class IntrospectionOntology extends Ontology implements IntrospectionVocabulary {
 	
 	/**
 	 A symbolic constant, containing the name of this ontology.
 	 */
 	public static final String NAME = "JADE-Introspection";
-	
-	private static Ontology theInstance = new IntrospectionOntology();
+
+	private static final Ontology theInstance = new IntrospectionOntology();
 	
 	
 	/**
@@ -304,7 +304,7 @@ public class IntrospectionOntology extends Ontology implements IntrospectionVoca
 	//#APIDOC_EXCLUDE_BEGIN
 	
 	// Used for debug
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		Ontology ontology = IntrospectionOntology.getInstance();
 	}
 	

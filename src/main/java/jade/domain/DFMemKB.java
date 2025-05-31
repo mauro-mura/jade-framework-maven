@@ -43,7 +43,7 @@ import jade.domain.KBManagement.*;
  */
 public class DFMemKB extends MemKB {
 
-	boolean entriesToDelete = false; // gets true if there's at least one entry to delete for the method clean
+	boolean entriesToDelete; // gets true if there's at least one entry to delete for the method clean
 
 	/**
 	 * Constructor
@@ -89,22 +89,24 @@ public class DFMemKB extends MemKB {
 		return compare(template, fact);
 	}
 
-	public static final boolean compare(Object template, Object fact) {
+	public static boolean compare(Object template, Object fact) {
 
 		try {
 			DFAgentDescription templateDesc = (DFAgentDescription)template;
 			DFAgentDescription factDesc = (DFAgentDescription)fact;
 			// We must not return facts whose lease time has expired (no 
 			// matter if they match)
-			if(factDesc.checkLeaseTimeExpired())
+			if (factDesc.checkLeaseTimeExpired()) {
 				return false;
+			}
 
 			// Match name
 			AID id1 = templateDesc.getName();
 			if(id1 != null) {
 				AID id2 = factDesc.getName();
-				if((id2 == null) || (!matchAID(id1, id2)))
+				if ((id2 == null) || (!matchAID(id1, id2))) {
 					return false;
+				}
 			}
 
 			// Match protocol set
@@ -117,8 +119,9 @@ public class DFMemKB extends MemKB {
 					String factProto = (String)itFact.next();
 					found = templateProto.equalsIgnoreCase(factProto);
 				}
-				if(!found)
+				if (!found) {
 					return false;
+				}
 			}
 
 			// Match ontologies set
@@ -131,8 +134,9 @@ public class DFMemKB extends MemKB {
 					String factOnto = (String)itFact.next();
 					found = templateOnto.equalsIgnoreCase(factOnto);
 				}
-				if(!found)
+				if (!found) {
 					return false;
+				}
 			}
 
 			// Match languages set
@@ -145,8 +149,9 @@ public class DFMemKB extends MemKB {
 					String factLang = (String)itFact.next();
 					found = templateLang.equalsIgnoreCase(factLang);
 				}
-				if(!found)
+				if (!found) {
 					return false;
+				}
 			}
 
 			// Match services set
@@ -159,8 +164,9 @@ public class DFMemKB extends MemKB {
 					ServiceDescription factSvc = (ServiceDescription)itFact.next();
 					found = compareServiceDesc(templateSvc, factSvc);
 				}
-				if(!found)
+				if (!found) {
 					return false;
+				}
 			}
 
 			return true;
@@ -171,30 +177,33 @@ public class DFMemKB extends MemKB {
 	}
 
 	// Helper method to compare two Service Description objects
-	public static final boolean compareServiceDesc(ServiceDescription template, ServiceDescription fact) {
+	public static boolean compareServiceDesc(ServiceDescription template, ServiceDescription fact) {
 
 		// Match name
 		String n1 = template.getName();
 		if(n1 != null) {
 			String n2 = fact.getName();
-			if((n2 == null) || (!n1.equalsIgnoreCase(n2)))
+			if ((n2 == null) || (!n1.equalsIgnoreCase(n2))) {
 				return false;
+			}
 		}
 
 		// Match type
 		String t1 = template.getType();
 		if(t1 != null) {
 			String t2 = fact.getType();
-			if((t2 == null) || (!t1.equalsIgnoreCase(t2)))
+			if ((t2 == null) || (!t1.equalsIgnoreCase(t2))) {
 				return false;
+			}
 		}
 
 		// Match ownership
 		String o1 = template.getOwnership();
 		if(o1 != null) {
 			String o2 = fact.getOwnership();
-			if((o2 == null) || (!o1.equalsIgnoreCase(o2)))
+			if ((o2 == null) || (!o1.equalsIgnoreCase(o2))) {
 				return false;
+			}
 		}
 
 		// Match ontologies set
@@ -207,8 +216,9 @@ public class DFMemKB extends MemKB {
 				String factOnto = (String)itFact.next();
 				found = templateOnto.equalsIgnoreCase(factOnto);
 			}
-			if(!found)
+			if (!found) {
 				return false;
+			}
 		}
 
 		// Match languages set
@@ -221,8 +231,9 @@ public class DFMemKB extends MemKB {
 				String factLang = (String)itFact.next();
 				found = templateLang.equalsIgnoreCase(factLang);
 			}
-			if(!found)
+			if (!found) {
 				return false;
+			}
 		}
 
 		// Match protocols set
@@ -235,8 +246,9 @@ public class DFMemKB extends MemKB {
 				String factProto = (String)itFact.next();
 				found = templateProto.equalsIgnoreCase(factProto);
 			}
-			if(!found)
+			if (!found) {
 				return false;
+			}
 		}
 
 		// Match properties set
@@ -249,8 +261,9 @@ public class DFMemKB extends MemKB {
 				Property factProp = (Property)itFact.next();
 				found = factProp.match(templateProp);
 			}
-			if(!found)
+			if (!found) {
 				return false;
+			}
 		}
 
 		return true;

@@ -84,31 +84,31 @@ public class NotificationService extends BaseService {
 
 	// The special name of an auxiliary thread used to avoid deadlock when debugging
 	// the AMS
-	private final static String AMS_DEBUG_HELPER = "AMS-debug-helper";
+	private static final String AMS_DEBUG_HELPER = "AMS-debug-helper";
 
 	// The concrete agent container, providing access to LADT, etc.
 	private AgentContainer myContainer;
 
 	// The local slice for this service
 	private ServiceComponent localSlice;
-	private Sink sourceSink = new NotificationSourceSink();
-	private Filter outgoingFilter = new NotificationOutgoingFilter();
-	private Filter incomingFilter = new NotificationIncomingFilter();
-	private NotificationHelper helper = new NotificationHelperImpl();
+	private final Sink sourceSink = new NotificationSourceSink();
+	private final Filter outgoingFilter = new NotificationOutgoingFilter();
+	private final Filter incomingFilter = new NotificationIncomingFilter();
+	private final NotificationHelper helper = new NotificationHelperImpl();
 
 	// The list of all listeners of ACL messaging related events (uses RW-locking)
-	private SynchList messageListeners = new SynchList();
+	private final SynchList messageListeners = new SynchList();
 
 	// The list of all listeners of agent life cycle events (uses RW-locking)
-	private SynchList agentListeners = new SynchList();
+	private final SynchList agentListeners = new SynchList();
 
 	// The list of all listeners of container events (uses RW-locking)
-	private SynchList containerListeners = new SynchList();
+	private final SynchList containerListeners = new SynchList();
 
 	// This maps a debugged agent into the list of debuggers that are
 	// currently debugging it. It is used to know when an agent is no longer
 	// debugged by any debugger and behaviour event generation can be turned off.
-	private Map<AID, List> debuggers = new HashMap<>();
+	private final Map<AID, List> debuggers = new HashMap<>();
 
 	@Override
 	public void init(AgentContainer ac, Profile p) throws ProfileException {
@@ -166,26 +166,26 @@ public class NotificationService extends BaseService {
 		public void consume(VerticalCommand cmd) {
 			try {
 				String name = cmd.getName();
-				if (name.equals(NotificationSlice.SNIFF_ON)) {
+				if (NotificationSlice.SNIFF_ON.equals(name)) {
 					handleSniffOn(cmd);
 				}
-				if (name.equals(NotificationSlice.SNIFF_OFF)) {
+				if (NotificationSlice.SNIFF_OFF.equals(name)) {
 					handleSniffOff(cmd);
-				} else if (name.equals(NotificationSlice.DEBUG_ON)) {
+				} else if (NotificationSlice.DEBUG_ON.equals(name)) {
 					handleDebugOn(cmd);
-				} else if (name.equals(NotificationSlice.DEBUG_OFF)) {
+				} else if (NotificationSlice.DEBUG_OFF.equals(name)) {
 					handleDebugOff(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_POSTED)) {
+				} else if (NotificationSlice.NOTIFY_POSTED.equals(name)) {
 					handleNotifyPosted(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_RECEIVED)) {
+				} else if (NotificationSlice.NOTIFY_RECEIVED.equals(name)) {
 					handleNotifyReceived(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_CHANGED_AGENT_PRINCIPAL)) {
+				} else if (NotificationSlice.NOTIFY_CHANGED_AGENT_PRINCIPAL.equals(name)) {
 					handleNotifyChangedAgentPrincipal(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_BEHAVIOUR_ADDED)) {
+				} else if (NotificationSlice.NOTIFY_BEHAVIOUR_ADDED.equals(name)) {
 					handleNotifyAddedBehaviour(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_BEHAVIOUR_REMOVED)) {
+				} else if (NotificationSlice.NOTIFY_BEHAVIOUR_REMOVED.equals(name)) {
 					handleNotifyRemovedBehaviour(cmd);
-				} else if (name.equals(NotificationSlice.NOTIFY_CHANGED_BEHAVIOUR_STATE)) {
+				} else if (NotificationSlice.NOTIFY_CHANGED_BEHAVIOUR_STATE.equals(name)) {
 					handleNotifyChangedBehaviourState(cmd);
 				}
 			} catch (Throwable t) {
@@ -364,15 +364,15 @@ public class NotificationService extends BaseService {
 		public boolean accept(VerticalCommand cmd) {
 			try {
 				String name = cmd.getName();
-				if (name.equals(jade.core.messaging.MessagingSlice.SEND_MESSAGE)) {
+				if (jade.core.messaging.MessagingSlice.SEND_MESSAGE.equals(name)) {
 					handleSendMessage(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.INFORM_CREATED)) {
+				} else if (jade.core.management.AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.INFORM_KILLED)) {
+				} else if (jade.core.management.AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					handleInformKilled(cmd);
-				} else if (name.equals(jade.core.management.AgentManagementSlice.INFORM_STATE_CHANGED)) {
+				} else if (jade.core.management.AgentManagementSlice.INFORM_STATE_CHANGED.equals(name)) {
 					handleInformStateChanged(cmd);
-				} else if (name.equals(jade.core.replication.MainReplicationSlice.LEADERSHIP_ACQUIRED)) {
+				} else if (jade.core.replication.MainReplicationSlice.LEADERSHIP_ACQUIRED.equals(name)) {
 					handleLeadershipAcquired(cmd);
 				}
 			} catch (Throwable t) {
@@ -432,9 +432,9 @@ public class NotificationService extends BaseService {
 		public void postProcess(VerticalCommand cmd) {
 			try {
 				String name = cmd.getName();
-				if (name.equals(jade.core.Service.REATTACHED)) {
+				if (jade.core.Service.REATTACHED.equals(name)) {
 					handleReattached(cmd);
-				} else if (name.equals(jade.core.Service.RECONNECTED)) {
+				} else if (jade.core.Service.RECONNECTED.equals(name)) {
 					handleReconnected(cmd);
 				}
 			} catch (Throwable t) {
@@ -475,22 +475,22 @@ public class NotificationService extends BaseService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(NotificationSlice.H_SNIFFON)) {
+				if (NotificationSlice.H_SNIFFON.equals(cmdName)) {
 					AID snifferName = (AID) params[0];
 					AID targetName = (AID) params[1];
 
 					sniffOn(snifferName, targetName);
-				} else if (cmdName.equals(NotificationSlice.H_SNIFFOFF)) {
+				} else if (NotificationSlice.H_SNIFFOFF.equals(cmdName)) {
 					AID snifferName = (AID) params[0];
 					AID targetName = (AID) params[1];
 
 					sniffOff(snifferName, targetName);
-				} else if (cmdName.equals(NotificationSlice.H_DEBUGON)) {
+				} else if (NotificationSlice.H_DEBUGON.equals(cmdName)) {
 					AID introspectorName = (AID) params[0];
 					AID targetName = (AID) params[1];
 
 					debugOn(introspectorName, targetName);
-				} else if (cmdName.equals(NotificationSlice.H_DEBUGOFF)) {
+				} else if (NotificationSlice.H_DEBUGOFF.equals(cmdName)) {
 					AID introspectorName = (AID) params[0];
 					AID targetName = (AID) params[1];
 
@@ -532,7 +532,7 @@ public class NotificationService extends BaseService {
 			// AMS debug enabling must be done by a separated Thread to avoid
 			// deadlock with ToolNotifier startup
 			if (targetName.equals(myContainer.getAMS())
-					&& !(Thread.currentThread().getName().equals(AMS_DEBUG_HELPER))) {
+					&& !AMS_DEBUG_HELPER.equals(Thread.currentThread().getName())) {
 				final AID in = introspectorName;
 				final AID tg = targetName;
 				Thread helper = new Thread(new Runnable() {
@@ -571,7 +571,6 @@ public class NotificationService extends BaseService {
 						Thread.sleep(1000);
 					} catch (Exception e) {
 					}
-					;
 					helper.registerMessageListener(tn);
 					helper.registerAgentListener(tn);
 				} catch (Exception e) {
@@ -653,7 +652,7 @@ public class NotificationService extends BaseService {
 				List l = (List) debuggers.get(targetName);
 				if (l != null) {
 					l.remove(introspectorName);
-					if (l.size() > 0) {
+					if (!l.isEmpty()) {
 						// There is still at least 1 debugger debugging the agent
 						// Do not stop generation of behaviour events
 						resetGenerateBehaviourEvents = false;

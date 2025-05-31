@@ -63,7 +63,7 @@ public class VisualServicesList extends VisualStringList
 	
 	protected String getElementName(Object el)
 	{
-		return (((ServiceDescription)el).getName());
+		return ((ServiceDescription)el).getName();
 	}
 	
 	protected Object editElement(Object el, boolean isEditable)

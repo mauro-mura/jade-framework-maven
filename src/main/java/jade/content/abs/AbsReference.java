@@ -126,7 +126,7 @@ public class AbsReference extends AbsObjectImpl implements AbsTerm {
 
 	// Easy way to access the Java class representing AbsReference.
 	// Useful in MIDP where XXX.class is not available
-	private static Class<?> absReferenceClass = null;
+	private static Class<?> absReferenceClass;
 	public static Class<?> getJavaClass() {
 		if (absReferenceClass == null) {
 			try {
@@ -167,7 +167,7 @@ public class AbsReference extends AbsObjectImpl implements AbsTerm {
 	}
 	
 	public boolean isInstance() {
-		return getName().indexOf(REFERENCE_ATTRIBUTE_SEPARATOR) > -1;
+		return getName().contains(REFERENCE_ATTRIBUTE_SEPARATOR);
 		
 	}
 	
@@ -175,7 +175,7 @@ public class AbsReference extends AbsObjectImpl implements AbsTerm {
 		return getName().indexOf(REFERENCE_ATTRIBUTE_SEPARATOR) == -1;
 	}
 	
-	public static final String asString(String type, String name) {
+	public static String asString(String type, String name) {
 		StringBuilder sb = new StringBuilder(REFERENCE_PREFIX);		
 		sb.append(type);
 		sb.append(REFERENCE_NAME_SEPARATOR);
@@ -183,7 +183,7 @@ public class AbsReference extends AbsObjectImpl implements AbsTerm {
 		return sb.toString();
 	}
 	
-	public static final String asString(String type, String id, String attribute) {
+	public static String asString(String type, String id, String attribute) {
 		StringBuilder sb = new StringBuilder(REFERENCE_PREFIX);	
 		sb.append(REFERENCE_NAME_SEPARATOR);
 		sb.append(id);

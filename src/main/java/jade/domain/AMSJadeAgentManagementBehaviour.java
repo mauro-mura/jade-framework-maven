@@ -65,7 +65,7 @@ import jade.security.Credentials;
 
 class AMSJadeAgentManagementBehaviour extends RequestManagementBehaviour{
 
-	private ams theAMS;
+	private final ams theAMS;
 
 	protected AMSJadeAgentManagementBehaviour(ams a, MessageTemplate mt) {
 		super(a,mt);

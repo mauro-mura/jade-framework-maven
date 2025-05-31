@@ -33,12 +33,12 @@ import jade.domain.FIPAAgentManagement.ExceptionOntology;
    This class represents the BehaviourLoading ontology including
    the concepts and actions required to dynamically load and execute 
    jade behaviours whose code is not included in the JVM classpath.
-   @see jade.core.behaviours.LoaderBehaviour
-   @author Giovanni Caire - TILAB  
+	@see jade.core.behaviours.LoaderBehaviour
+	@author Giovanni Caire - TILAB  
  */
-public class BehaviourLoadingOntology  extends Ontology implements BehaviourLoadingVocabulary {
+public final class BehaviourLoadingOntology  extends Ontology implements BehaviourLoadingVocabulary {
 
-  private static Ontology theInstance = new BehaviourLoadingOntology();
+	private static final Ontology theInstance = new BehaviourLoadingOntology();
   
   /**
      This method returns the singleton instance of the 

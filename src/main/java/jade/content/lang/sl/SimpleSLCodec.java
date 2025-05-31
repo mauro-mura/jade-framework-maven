@@ -55,9 +55,9 @@ public class SimpleSLCodec extends StringCodec {
 	private static final long serialVersionUID = 677306221060280959L;
 
 	@SuppressWarnings("unused")
-	private int indent = 0;
+	private int indent;
 
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
 	public SimpleSLCodec() {
 		super(jade.domain.FIPANames.ContentLanguage.FIPA_SL);
@@ -87,14 +87,18 @@ public class SimpleSLCodec extends StringCodec {
 	}
 
 	private void stringify(AbsObject val, Ontology onto, StringBuilder str) throws CodecException {
-		if (val instanceof AbsPrimitive primitive)
+		if (val instanceof AbsPrimitive primitive) {
 			stringifyPrimitive(primitive, str);
-		else if (val instanceof AbsVariable variable)
+		}
+		else if (val instanceof AbsVariable variable) {
 			stringifyVariable(variable, str);
-		else if (val instanceof AbsAggregate aggregate)
+		}
+		else if (val instanceof AbsAggregate aggregate) {
 			stringifyAggregate(aggregate, onto, str);
-		else
+		}
+		else {
 			stringifyComplex(val, onto, str);
+		}
 	}
 
 	private void stringifyComplex(AbsObject val, Ontology onto, StringBuilder str) throws CodecException {
@@ -173,7 +177,7 @@ public class SimpleSLCodec extends StringCodec {
 
 	private void stringifyPrimitive(AbsPrimitive val, StringBuilder str) throws CodecException {
 		String type = val.getTypeName();
-		if (type.equals(BasicOntology.STRING)) {
+		if (BasicOntology.STRING.equals(type)) {
 			String s = val.getString();
 			if (CaseInsensitiveString.equalsIgnoreCase("true",s) || CaseInsensitiveString.equalsIgnoreCase("false",s)) {
 				s = '"'+s+'"'; // quote it to avoid confusion with the boolean primitives
@@ -182,12 +186,15 @@ public class SimpleSLCodec extends StringCodec {
 			}
 			str.append(s);
 		}
-		else if (type.equals(BasicOntology.DATE))
+		else if (BasicOntology.DATE.equals(type)) {
 			str.append(ISO8601.toString(val.getDate()));
-		else if (type.equals(BasicOntology.BYTE_SEQUENCE))
+		}
+		else if (BasicOntology.BYTE_SEQUENCE.equals(type)) {
 			throw new CodecException("SL_does_not_allow_encoding_sequencesOfBytes");
-		else
+		}
+		else {
 			str.append(val.getObject().toString());
+		}
 	}
 
 	/**
@@ -203,13 +210,13 @@ public class SimpleSLCodec extends StringCodec {
 		try {
 			p.consumeChar('(');
 			AbsContentElement abs = (AbsContentElement) parse(p, ontology);
-			if (!p.nextToken().equals(")")) {
+			if (!")".equals(p.nextToken())) {
 				AbsContentElementList l = new AbsContentElementList();
 				l.add(abs);
 				do {
 					AbsContentElement abs1 = (AbsContentElement) parse(p, ontology);
 					l.add(abs1);
-				} while (!p.nextToken().equals(")"));
+				} while (!")".equals(p.nextToken()));
 				abs = l;
 			}
 			p.consumeChar(')');
@@ -245,8 +252,9 @@ public class SimpleSLCodec extends StringCodec {
 		AbsObject abs = null;
 		p.consumeChar('(');
 		String name = p.getElement();
-		if(logger.isLoggable(Logger.FINE))
-			logger.log(Logger.FINE,"Parse complex descriptor: "+name);
+		if (logger.isLoggable(Logger.FINE)) {
+			logger.log(Logger.FINE, "Parse complex descriptor: " + name);
+		}
 		++indent;
 		try {
 			ObjectSchema s = o.getSchema(name);
@@ -274,8 +282,9 @@ public class SimpleSLCodec extends StringCodec {
 		}
 		indent--;
 		p.consumeChar(')');
-		if(logger.isLoggable(Logger.FINE))
-			logger.log(Logger.FINE,abs.toString());
+		if (logger.isLoggable(Logger.FINE)) {
+			logger.log(Logger.FINE, abs.toString());
+		}
 		return abs;
 	}
 
@@ -323,8 +332,9 @@ public class SimpleSLCodec extends StringCodec {
 
 	private AbsObject parseSimple(SimpleSLTokenizer p) throws CodecException {
 		String val = p.getElement();
-		if(logger.isLoggable(Logger.FINE))
-			logger.log(Logger.FINE,"Parse simple descriptor: "+val+". Next is "+p.nextToken());
+		if (logger.isLoggable(Logger.FINE)) {
+			logger.log(Logger.FINE, "Parse simple descriptor: " + val + ". Next is " + p.nextToken());
+		}
 		try {
 			return AbsPrimitive.wrap(Long.parseLong(val));
 		}
@@ -346,10 +356,10 @@ public class SimpleSLCodec extends StringCodec {
 		catch (Exception e) {
 		}
 		// Boolean
-		if (val.equals("true")) {
+		if ("true".equals(val)) {
 			return AbsPrimitive.wrap(true);
 		}
-		if (val.equals("false")) {
+		if ("false".equals(val)) {
 			return AbsPrimitive.wrap(false);
 		}
 		// Variable

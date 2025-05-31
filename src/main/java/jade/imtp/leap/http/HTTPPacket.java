@@ -49,10 +49,10 @@ public class HTTPPacket {
     private static final int CR = 13;
     private static final int LF = 10;
     private static final String DELIMITER = new String(new byte[]{CR, LF});
-    protected String firstLine = null;
-    protected String httpType = null;
+    protected String firstLine;
+    protected String httpType;
     protected Hashtable fields = new Hashtable();
-    protected byte[] payload = null;
+    protected byte[] payload;
 
     /**
      * Constructor declaration
@@ -138,7 +138,7 @@ public class HTTPPacket {
             try {
                 int colonIndex = line.indexOf(':');
                 String key = line.substring(0, colonIndex);
-                String value = (line.substring(colonIndex + 1, line.length())).trim();
+                String value = line.substring(colonIndex + 1, line.length()).trim();
                 setField(key, value);
             } catch (Exception e) {
                 throw new IOException("Header field format error. " + e);
@@ -167,7 +167,7 @@ public class HTTPPacket {
         }
     }
 
-    private static final boolean endOfHeader(int[] bb, int pos) {
+    private static boolean endOfHeader(int[] bb, int pos) {
         if (bb[pos] == LF) {
             if ((++pos) >= 3) {
                 pos = 0;

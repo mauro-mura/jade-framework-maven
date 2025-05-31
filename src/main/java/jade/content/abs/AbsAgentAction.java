@@ -37,7 +37,7 @@ public class AbsAgentAction extends AbsConcept implements AbsContentElement, Age
 
 	@Serial
 	private static final long serialVersionUID = 6312774993909760409L;
-	private boolean isAContentExpression = false;
+	private boolean isAContentExpression;
 
 	/**
 	 * Construct an Abstract descriptor to hold an agent action of
@@ -61,7 +61,7 @@ public class AbsAgentAction extends AbsConcept implements AbsContentElement, Age
 
 	// Easy way to access the Java class representing AbsAgentAction.
 	// Useful in MIDP where XXX.class is not available
-	private static Class<?> absAgentActionClass = null;
+	private static Class<?> absAgentActionClass;
 	public static Class<?> getJavaClass() {
 		if (absAgentActionClass == null) {
 			try {

@@ -40,7 +40,7 @@ public class AbsIRE extends AbsObjectImpl implements AbsContentElement, AbsTerm 
 
 	@Serial
 	private static final long serialVersionUID = 7997942232452854076L;
-	private boolean isAContentExpression = false;
+	private boolean isAContentExpression;
 	/**
 	 * Construct an Abstract descriptor to hold a IRE of
 	 * the proper type (e.g. ANY, IOTA, ALL...).
@@ -134,7 +134,7 @@ public class AbsIRE extends AbsObjectImpl implements AbsContentElement, AbsTerm 
 
 	// Easy way to access the Java class representing AbsIRE.
 	// Useful in MIDP where XXX.class is not available
-	private static Class<?> absIREClass = null;
+	private static Class<?> absIREClass;
 	public static Class<?> getJavaClass() {
 		if (absIREClass == null) {
 			try {

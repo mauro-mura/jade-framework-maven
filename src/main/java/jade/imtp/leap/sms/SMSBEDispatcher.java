@@ -45,7 +45,7 @@ public class SMSBEDispatcher extends NIOBEDispatcher {
 	private SMSManager theSMSManager; 
 	private int smsPort;
 	private String msisdn;
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
   public void init(JICPMediatorManager mgr, String id, Properties props) throws ICPException {
   	// Get the msisdn

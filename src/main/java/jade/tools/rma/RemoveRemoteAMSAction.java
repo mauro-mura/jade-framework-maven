@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class RemoveRemoteAMSAction extends PlatformAction {
 
-  private rma myRMA;
+	private final rma myRMA;
 
   public RemoveRemoteAMSAction(rma anRMA, ActionProcessor actPro) {
     super ("RemoveRemoteAMSIcon", "Remove Remote Platform", actPro);

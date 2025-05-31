@@ -175,7 +175,7 @@ public class ACLAIDList extends JPanel {
 	 *
 	 * @param e ActionEvent belonging to delete button
 	 */
-	void deleteButton_actionPerformed(ActionEvent e) {
+	void deleteButtonActionPerformed(ActionEvent e) {
 		doDelete();
 	}
 
@@ -195,7 +195,7 @@ public class ACLAIDList extends JPanel {
 	 *
 	 * @param e ActionEvent belonging to add button
 	 */
-	void addButton_actionPerformed(ActionEvent e) {
+	void addButtonActionPerformed(ActionEvent e) {
 		doAdd();
 	}
 
@@ -219,7 +219,7 @@ public class ACLAIDList extends JPanel {
 	 *
 	 * @param e ActionEvent belonging to view button
 	 */
-	void viewButton_actionPerformed(ActionEvent e) {
+	void viewButtonActionPerformed(ActionEvent e) {
 		doView();
 	}
 
@@ -228,7 +228,7 @@ public class ACLAIDList extends JPanel {
 	 *
 	 * @param e MouseEvent beloning to mouseClicked
 	 */
-	void contentList_mouseClicked(MouseEvent e) {
+	void contentListMouseClicked(MouseEvent e) {
 		if (e.getClickCount() > 1) {
 			doView();
 		}
@@ -241,7 +241,7 @@ public class ACLAIDList extends JPanel {
 	 *
 	 * @param e KeyEvent beloning to keyPressed
 	 */
-	void contentList_keyPressed(KeyEvent e) {
+	void contentListKeyPressed(KeyEvent e) {
 		if (e.getKeyCode() == e.VK_ENTER) {
 			doView();
 		}
@@ -277,7 +277,7 @@ public class ACLAIDList extends JPanel {
 		viewButton.setText("v");
 		viewButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewButton_actionPerformed(e);
+				viewButtonActionPerformed(e);
 			}
 		});
 		addButton.setBackground(Color.white);
@@ -290,7 +290,7 @@ public class ACLAIDList extends JPanel {
 		addButton.setText("+");
 		addButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addButton_actionPerformed(e);
+				addButtonActionPerformed(e);
 			}
 		});
 		deleteButton.setBackground(Color.white);
@@ -303,18 +303,18 @@ public class ACLAIDList extends JPanel {
 		deleteButton.setText("x");
 		deleteButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deleteButton_actionPerformed(e);
+				deleteButtonActionPerformed(e);
 			}
 		});
 		contentList.setCellRenderer(aidListCellRenderer);
 		contentList.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				contentList_keyPressed(e);
+				contentListKeyPressed(e);
 			}
 		});
 		contentList.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				contentList_mouseClicked(e);
+				contentListMouseClicked(e);
 			}
 		});
 		contentScrollPane.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -468,27 +468,28 @@ public class ACLAIDList extends JPanel {
 
 		String fieldName = "";
 
-		private AID theRemovedAID, theChangedAID;
+		private AID theRemovedAID;
+		private AID theChangedAID;
 
 		private Object itsObj;
 	}
 
-	private String MSG = "msg";
-	private String AID = "Aid";
-	private JScrollPane contentScrollPane = new JScrollPane();
-	private JList contentList = new JList();
+	private final String MSG = "msg";
+	private final String AID = "Aid";
+	private final JScrollPane contentScrollPane = new JScrollPane();
+	private final JList contentList = new JList();
 
-	private GridBagLayout gridBagLayout1 = new GridBagLayout();
-	private JButton viewButton = new JButton();
-	private JButton addButton = new JButton();
-	private JButton deleteButton = new JButton();
+	private final GridBagLayout gridBagLayout1 = new GridBagLayout();
+	private final JButton viewButton = new JButton();
+	private final JButton addButton = new JButton();
+	private final JButton deleteButton = new JButton();
 
-	private DefaultListModel listModel = new DefaultListModel();
-	private AIDListCellRenderer aidListCellRenderer = new AIDListCellRenderer();
+	private final DefaultListModel listModel = new DefaultListModel();
+	private final AIDListCellRenderer aidListCellRenderer = new AIDListCellRenderer();
 	private boolean editable = true;
 	private String fieldName = "";
 	private String mode = MSG;
-	private Agent agent;
+	private final Agent agent;
 	private AIDListListener theDataListener;
 	private ACLMessage itsMsg;
 	private AID itsAid;

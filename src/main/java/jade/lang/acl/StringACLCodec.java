@@ -81,8 +81,8 @@ public class StringACLCodec implements ACLCodec {
 	private static final String PROTOCOL = " :protocol ";
 	private static final String CONVERSATION_ID = " :conversation-id ";
 
-	ACLParser parser = null;
-	Writer out = null;
+	ACLParser parser;
+	Writer out;
 
 	/**
 	 * constructor for the codec. The standard input is used as an input stream of
@@ -189,17 +189,20 @@ public class StringACLCodec implements ACLCodec {
 		}
 	}
 
-	static private String escape(String s) {
+	private static String escape(String s) {
 		// Make the stringBuffer a little larger than strictly
 		// necessary in case we need to insert any additional
 		// characters. (If our size estimate is wrong, the
 		// StringBuffer will automatically grow as needed).
 		StringBuilder result = new StringBuilder(s.length() + 20);
-		for (int i = 0; i < s.length(); i++)
-			if (s.charAt(i) == '"')
+		for (int i = 0;i < s.length();i++) {
+			if (s.charAt(i) == '"') {
 				result.append("\\\"");
-			else
+			}
+			else {
 				result.append(s.charAt(i));
+			}
+		}
 		return result.toString();
 	}
 
@@ -208,7 +211,7 @@ public class StringACLCodec implements ACLCodec {
 	 * quotation marks to the beginning/end and escape any quotation marks inside
 	 * the string.
 	 */
-	static private String quotedString(String str) {
+	private static String quotedString(String str) {
 		return "\"" + escape(str) + "\"";
 	}
 
@@ -223,27 +226,31 @@ public class StringACLCodec implements ACLCodec {
 		StringBuilder str = new StringBuilder("(");
 		str.append(msg.getPerformative(msg.getPerformative()) + "\n");
 		AID sender = msg.getSender();
-		if (sender != null)
-			str.append(SENDER + " " + sender.toString() + "\n");
+		if (sender != null) {
+			
+				str.append(SENDER + " ").append(sender.toString()).append("\n");
+		}
 		Iterator<AID> it = msg.getAllReceiver();
 		if (it.hasNext()) {
 			str.append(RECEIVER + " (set ");
-			while (it.hasNext())
+			while (it.hasNext()) {
 				str.append(it.next().toString() + " ");
+			}
 			str.append(")\n");
 		}
 		it = msg.getAllReplyTo();
 		if (it.hasNext()) {
 			str.append(REPLY_TO + " (set \n");
-			while (it.hasNext())
+			while (it.hasNext()) {
 				str.append(it.next().toString() + " ");
+			}
 			str.append(")\n");
 		}
 		if (msg.hasByteSequenceContent()) {
-			str.append(":X-" + BASE64ENCODING_KEY + " " + BASE64ENCODING_VALUE + "\n");
+			str.append(":X-").append(BASE64ENCODING_KEY).append(" ").append(BASE64ENCODING_VALUE).append("\n");
 			try {
 				String b64 = new String(Base64.getEncoder().encode(msg.getByteSequenceContent()), "US-ASCII");
-				str.append(CONTENT + " \"" + b64 + "\" \n");
+				str.append(CONTENT + " \"").append(b64).append("\" \n");
 			} catch (java.lang.NoClassDefFoundError jlncdfe) {
 				System.err.println("\n\t===== E R R O R !!! =======\n");
 				System.err.println("Missing support for Base64 conversions");
@@ -269,8 +276,10 @@ public class StringACLCodec implements ACLCodec {
 			String content = msg.getContent();
 			if (content != null) {
 				content = content.trim();
-				if (content.length() > 0)
-					str.append(CONTENT + " \"" + escape(content) + "\" \n");
+				if (content.length() > 0) {
+					
+						str.append(CONTENT + " \"").append(escape(content)).append("\" \n");
+				}
 			}
 		}
 		appendACLExpression(str, REPLY_WITH, msg.getReplyWith());
@@ -280,14 +289,18 @@ public class StringACLCodec implements ACLCodec {
 		appendACLExpression(str, ONTOLOGY, msg.getOntology());
 
 		Date d = msg.getReplyByDate();
-		if (d != null)
-			str.append(REPLY_BY + " " + ISO8601.toString(d) + "\n");
+		if (d != null) {
+			
+				str.append(REPLY_BY + " ").append(ISO8601.toString(d)).append("\n");
+		}
 
 		String tmp = msg.getProtocol();
 		if (tmp != null) {
 			tmp = tmp.trim();
-			if (tmp.length() > 0)
-				str.append(PROTOCOL + " " + tmp + "\n");
+			if (tmp.length() > 0) {
+				
+					str.append(PROTOCOL + " ").append(tmp).append("\n");
+			}
 		}
 
 		appendACLExpression(str, CONVERSATION_ID, msg.getConversationId());
@@ -296,16 +309,20 @@ public class StringACLCodec implements ACLCodec {
 		if (userDefProps != null) {
 			Enumeration e = userDefProps.propertyNames();
 			while (e.hasMoreElements()) {
-				String key = ((String) e.nextElement());
+				String key = (String) e.nextElement();
 				if (key.indexOf(' ') == -1) {
-					if ((!key.startsWith("X-")) && (!key.startsWith("x-")))
+					if ((!key.startsWith("X-")) && (!key.startsWith("x-"))) {
 						appendACLExpression(str, ":X-" + key, userDefProps.getProperty(key));
-					else
+					}
+					else {
 						appendACLExpression(str, ":" + key, userDefProps.getProperty(key));
-				} else
+					}
+				}
+				else {
 					System.err.println(
-							"WARNING: The slotName of user-defined parameters cannot contain blanks inside. Therefore "
-									+ key + " is not being encoded");
+						"WARNING: The slotName of user-defined parameters cannot contain blanks inside. Therefore "
+							+ key + " is not being encoded");
+				}
 			}
 		}
 		str.append(")");
@@ -368,7 +385,7 @@ public class StringACLCodec implements ACLCodec {
 					slotValue = quotedString(slotValue);
 				}
 			}
-			str.append(slotName + " " + slotValue + " ");
+			str.append(slotName + " ").append(slotValue).append(" ");
 		}
 	}
 
@@ -379,17 +396,20 @@ public class StringACLCodec implements ACLCodec {
 	 * to FIPA's restrictions, place the additional restriction that a Word can not
 	 * contain a '\"', that would confuse the parser at the other end.
 	 */
-	static private boolean isAWord(String s) {
+	private static boolean isAWord(String s) {
 		// This should permit strings of length 0 to be encoded.
-		if (s == null || s.length() == 0)
+		if (s == null || s.length() == 0) {
 			return false; // words must have at least one character
-		if (illegalFirstChar.indexOf(s.charAt(0)) >= 0)
+		}
+		if (illegalFirstChar.indexOf(s.charAt(0)) >= 0) {
 			return false;
+		}
 
-		for (int i = 0; i < s.length(); i++) {
+		for (int i = 0;i < s.length();i++) {
 			char c = s.charAt(i);
-			if (c == '"' || c == '(' || c == ')' || c <= 0x20)
+			if (c == '"' || c == '(' || c == ')' || c <= 0x20) {
 				return false;
+			}
 		}
 		return true;
 	}

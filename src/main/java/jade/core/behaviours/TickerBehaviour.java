@@ -43,9 +43,9 @@ public abstract class TickerBehaviour extends SimpleBehaviour {
 	private long wakeupTime;
 	private long period;
 	private boolean finished;
-	private int tickCount = 0;
+	private int tickCount;
 
-	private boolean fixedPeriod = false;
+	private boolean fixedPeriod;
 	private long startTime;
 
 	/**
@@ -55,7 +55,7 @@ public abstract class TickerBehaviour extends SimpleBehaviour {
 	 * @param a      is the pointer to the agent
 	 * @param period the tick period in ms
 	 */
-	public TickerBehaviour(Agent a, long period) {
+	protected TickerBehaviour(Agent a, long period) {
 		super(a);
 		if (period <= 0) {
 			throw new IllegalArgumentException("Period must be greater than 0");

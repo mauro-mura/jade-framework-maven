@@ -38,9 +38,8 @@ public class CFReflectiveIntrospector extends ReflectiveIntrospector {
 	}
 
 	public Object internalizeAggregate(String slotName, AbsAggregate absAggregate, ObjectSchema schema, Ontology referenceOnto) throws OntologyException {
-		Collection c = internaliseCollection(absAggregate, referenceOnto);
 		// FIXME: Here we should check for Long --> Integer casting, but how?
-		return c;
+		return internaliseCollection(absAggregate, referenceOnto);
 	}
 
 	private AbsAggregate externaliseCollection(Collection c, Ontology referenceOnto, String aggregateType) throws OntologyException {
@@ -61,7 +60,7 @@ public class CFReflectiveIntrospector extends ReflectiveIntrospector {
 
 	private Collection internaliseCollection(AbsAggregate absAggregate, Ontology referenceOnto) throws OntologyException {
 		Collection ret = null;
-		if (absAggregate.getTypeName().equals(SL0Vocabulary.SET)) {
+		if (SL0Vocabulary.SET.equals(absAggregate.getTypeName())) {
 			ret = new HashSet(absAggregate.size());
 		}
 		else {

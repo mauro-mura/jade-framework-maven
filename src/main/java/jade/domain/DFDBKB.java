@@ -95,9 +95,9 @@ public class DFDBKB extends DBKB {
 	private static final String DFAGENTDESCR = "dfagentdescr";
 	
 	// Number of registrations after the last lease-time-cleanup
-	private int regsCnt = 0;
+	private int regsCnt;
 	
-	private boolean tablesReady = false;
+	private boolean tablesReady;
 	
 	/**
 	 * Default data type for very long strings
@@ -106,8 +106,8 @@ public class DFDBKB extends DBKB {
 	
 	// This is used to generate unique IDs
 	private String localIPAddress;
-	
-	private class PreparedStatements {
+
+	private final class PreparedStatements {
 		// prepared SQL statements
 		private PreparedStatement stm_selNrOfPropForKey;
 		private PreparedStatement stm_selNrOfDescrForAID;
@@ -414,17 +414,20 @@ public class DFDBKB extends DBKB {
 				String sql = "CREATE TABLE " + name + " (";
 				for (int i = 0; i < entries.length; i++) {
 					sql += entries[i];
-					if (i < entries.length - 1)
+					if (i < entries.length - 1) {
 						sql += ", ";
-					else
+					}
+					else {
 						sql += ")";
+					}
 				}
 				stmt.executeUpdate(sql);
 				conn.commit();
 				
 			} catch (SQLException e) {
-				if(logger.isLoggable(Logger.SEVERE)) 
-					logger.log(Logger.SEVERE, "Error creating table '"+name+"'", e);
+				if (logger.isLoggable(Logger.SEVERE)) {
+					logger.log(Logger.SEVERE, "Error creating table '" + name + "'", e);
+				}
 				
 			} finally {
 				if (stmt != null) {
@@ -463,8 +466,9 @@ public class DFDBKB extends DBKB {
 			conn.commit();
 			
 		} catch (SQLException e) {
-			if(logger.isLoggable(Logger.FINE)) 
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Indices for DF tables couldn't be created", e);
+			}
 			
 		} finally {
 			if (stmt != null) {
@@ -576,10 +580,11 @@ public class DFDBKB extends DBKB {
 				"PRIMARY KEY( id )"});
 		
 		createIndices();
-		
+
 		//DEBUG
-		if(logger.isLoggable(Logger.FINE))
-			logger.log(Logger.FINE,"Tables correctly created");
+		if (logger.isLoggable(Logger.FINE)) {
+			logger.log(Logger.FINE, "Tables correctly created");
+		}
 		
 	}
 	
@@ -588,9 +593,9 @@ public class DFDBKB extends DBKB {
 	 */
 	private String getBatchUpdateErroMsg(BatchUpdateException e) {
 		StringBuilder msg = new StringBuilder("SQLException: " + e.getMessage() + "\n");
-		msg.append("SQLState:  " + e.getSQLState() + "\n");
-		msg.append("Message:  " + e.getMessage() + "\n");
-		msg.append("Vendor:  " + e.getErrorCode() + "\n");
+		msg.append("SQLState:  ").append(e.getSQLState()).append("\n");
+		msg.append("Message:  ").append(e.getMessage()).append("\n");
+		msg.append("Vendor:  ").append(e.getErrorCode()).append("\n");
 		msg.append("Update counts: ");
 		
 		int [] updateCounts = e.getUpdateCounts();
@@ -751,9 +756,10 @@ public class DFDBKB extends DBKB {
 								saveProperty(pss, serviceId, prop);
 								executePropertiesBatch = true;            
 							} catch (Exception e) {
-								if(logger.isLoggable(Logger.SEVERE))
-									logger.log(Logger.SEVERE,"Cannot serialize multi value property '" + prop.getName() + 
-											"' for service '" + service.getName() + "'", e);
+								if (logger.isLoggable(Logger.SEVERE)) {
+									logger.log(Logger.SEVERE, "Cannot serialize multi value property '" + prop.getName() +
+										"' for service '" + service.getName() + "'", e);
+								}
 							}							
 							index++;
 						}
@@ -763,9 +769,10 @@ public class DFDBKB extends DBKB {
 							saveProperty(pss, serviceId, prop);
 							executePropertiesBatch = true;            
 						} catch (Exception e) {
-							if(logger.isLoggable(Logger.SEVERE))
-								logger.log(Logger.SEVERE,"Cannot serialize property '" + prop.getName() + 
-										"' for service '" + service.getName() + "'", e);
+							if (logger.isLoggable(Logger.SEVERE)) {
+								logger.log(Logger.SEVERE, "Cannot serialize property '" + prop.getName() +
+									"' for service '" + service.getName() + "'", e);
+							}
 						}							
 					}
 				}
@@ -810,12 +817,12 @@ public class DFDBKB extends DBKB {
 			pss.stm_insServiceProperty.setString(3, null);
 			pss.stm_insServiceProperty.setString(4, (String) value);
 			pss.stm_insServiceProperty.setString(5, null);
-		};
+		}
 		
 		pss.stm_insServiceProperty.addBatch();
 	}
 	
-	private static final boolean needSerialization(Object value) {
+	private static boolean needSerialization(Object value) {
 		return !((value instanceof String s) && ( s.length() <= MAX_PROP_LENGTH ));		
 	}
 	
@@ -840,7 +847,7 @@ public class DFDBKB extends DBKB {
 
 			// DF Agent Description
 			Date leaseTime = dfd.getLeaseTime();
-			long lt = (leaseTime != null ? leaseTime.getTime() : -1);
+			long lt = leaseTime != null ? leaseTime.getTime() : -1;
 			String descrId = getGUID();
 
 			pss.stm_insAgentDescr.setString(1, descrId);
@@ -1055,9 +1062,9 @@ public class DFDBKB extends DBKB {
 	 Inner class DFDBKBIterator
 	 */
 	private class DFDBKBIterator implements KBIterator {
-		private Statement s = null;
-		private ResultSet rs = null;
-		private boolean hasMoreElements = false;
+		private Statement s;
+		private ResultSet rs;
+		private boolean hasMoreElements;
 		
 		public DFDBKBIterator(Statement s, ResultSet rs) throws SQLException {
 			this.s = s;
@@ -1222,7 +1229,7 @@ public class DFDBKB extends DBKB {
 					String propKey = rsS.getString("propkey");
 					String objStrVal = rsS.getString("propval_obj");
 					String strStrVal = rsS.getString("propval_str");
-					Object value = ( objStrVal == null )? strStrVal : deserializeObj(objStrVal);
+					Object value = objStrVal == null? strStrVal : deserializeObj(objStrVal);
 					
 					int pos = propKey.indexOf(MULTI_VALUE_PROPERTY_SEPARATOR);
 					if (pos == -1) {
@@ -1339,8 +1346,9 @@ public class DFDBKB extends DBKB {
 		pss.stm_selNrOfDescrForAID.setString(1, aid);
 		ResultSet rs = pss.stm_selNrOfDescrForAID.executeQuery();
 		int found = 0;
-		if (rs.next())
+		if (rs.next()) {
 			found = Integer.parseInt(rs.getString(1));
+		}
 		
 		// no description found --> delete
 		if (found == 0) {
@@ -1450,8 +1458,9 @@ public class DFDBKB extends DBKB {
 				conn.commit();
 				
 			} else {
-				if(logger.isLoggable(Logger.FINE))
-					logger.log(Logger.FINE,"No DF description found to remove for agent '"+aid+"'");
+				if (logger.isLoggable(Logger.FINE)) {
+					logger.log(Logger.FINE, "No DF description found to remove for agent '" + aid + "'");
+				}
 			}
 		}
 		catch(SQLException sqle){
@@ -1609,7 +1618,7 @@ public class DFDBKB extends DBKB {
 			select.append((String) iter.next());
 		}
 		// Concatenate all WHERE
-		if (lWhere.size() > 0) {
+		if (!lWhere.isEmpty()) {
 			select.append(" WHERE ");
 		}
 		iter = lWhere.iterator();
@@ -1681,8 +1690,9 @@ public class DFDBKB extends DBKB {
 			}
 		}
 		catch(SQLException se){
-			if(logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.WARNING, "Error cleaning expired DF registrations", se);
+			}
 			
 		} finally {
 			closeResultSet(rs);
@@ -1695,8 +1705,8 @@ public class DFDBKB extends DBKB {
 	private void cleanExpiredSubscriptions() {
 		//FIXME: To be implemented
 	}
-	
-	private StringACLCodec codec = new StringACLCodec();
+
+	private final StringACLCodec codec = new StringACLCodec();
 	
 	protected void subscribeSingle(Object dfd, SubscriptionResponder.Subscription s) throws SQLException, NotUnderstoodException{
 		ACLMessage aclM = s.getMessage();
@@ -1757,8 +1767,9 @@ public class DFDBKB extends DBKB {
 			}
 			
 		} catch (Exception e) {
-			if(logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Error retrieving subscriptions from the database", e);
+			}
 			
 		} finally {
 			closeResultSet(rs);
@@ -1771,9 +1782,11 @@ public class DFDBKB extends DBKB {
 		ACLMessage aclM = sub.getMessage();
 		String convID = aclM.getConversationId();
 		boolean deleted = deregisterSubscription(convID);
-		if(!deleted)
-			if(logger.isLoggable(Logger.WARNING))
-				logger.log(Logger.WARNING,"No subscription to delete.");
+		if (!deleted) {
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "No subscription to delete.");
+			}
+		}
 	}
 	
 	
@@ -1791,7 +1804,7 @@ public class DFDBKB extends DBKB {
 			pss.stm_delSubscription.setString(1, convID);
 			int rowCount = pss.stm_delSubscription.executeUpdate();
 			conn.commit();
-			return (rowCount != 0);
+			return rowCount != 0;
 		} catch (SQLException sqle) {
 			// Rollback the transaction
 			try {
@@ -1837,8 +1850,9 @@ public class DFDBKB extends DBKB {
 				s = null;
 			}
 		} catch (Exception e) {
-			if(logger.isLoggable(Logger.WARNING))
-				logger.log(Logger.WARNING,"Closing SQL statement failed.");
+			if (logger.isLoggable(Logger.WARNING)) {
+				logger.log(Logger.WARNING, "Closing SQL statement failed.");
+			}
 		}
 	}
 	
@@ -1848,8 +1862,9 @@ public class DFDBKB extends DBKB {
 	 * @throws IOException An error during the serialization
 	 */
 	private String serializeObj(Object obj) throws IOException {
-		if (obj == null)
+		if (obj == null) {
 			return null;
+		}
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -1866,8 +1881,9 @@ public class DFDBKB extends DBKB {
 	 * @throws ClassNotFoundException The deserialized java class is unknown
 	 */
 	private Object deserializeObj(String str) throws IOException, ClassNotFoundException {
-		if (str == null)
+		if (str == null) {
 			return null;
+		}
 		byte[] data = Base64.getDecoder().decode(str.getBytes("US-ASCII"));
 		ByteArrayInputStream bais = new ByteArrayInputStream(data);
 		ObjectInputStream ois = new ObjectInputStream(bais);
@@ -1882,9 +1898,10 @@ public class DFDBKB extends DBKB {
 	 */
 	protected String getHashValue(Object obj) throws Exception {
 		final String HASH_ALGORITHM = "MD5";
-		
-		if (obj == null)
+
+		if (obj == null) {
 			return "null";
+		}
 		
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -1929,8 +1946,9 @@ public class DFDBKB extends DBKB {
 		
 		while ((e = str.indexOf(pattern, s)) >= 0) {
 			result.append(str.substring(s, e));
-			if(replaceWith != null)
+			if (replaceWith != null) {
 				result.append(replaceWith);
+			}
 			s = e+pattern.length();
 		}
 		result.append(str.substring(s));

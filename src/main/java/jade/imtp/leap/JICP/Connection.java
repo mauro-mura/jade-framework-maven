@@ -41,7 +41,7 @@ import java.io.IOException;
    @author Giovanni Caire - TILAB
  */
 public abstract class Connection {
-	public static int socketCnt = 0;
+	public static int socketCnt;
 	
 	/**
 	   Read a JICPPacket from the connection

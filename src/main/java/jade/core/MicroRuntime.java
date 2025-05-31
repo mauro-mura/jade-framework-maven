@@ -125,7 +125,7 @@ public class MicroRuntime {
 	//#APIDOC_EXCLUDE_END
 
 	
-	private static Logger logger = Logger.getJADELogger(MicroRuntime.class.getName());
+	private static final Logger logger = Logger.getJADELogger(MicroRuntime.class.getName());
 	
 	/*#J2ME_INCLUDE_BEGIN
 	private static Logger logger = Logger.getJADELogger("jade.core.MicroRuntime");

@@ -98,7 +98,7 @@ public class LEAPACLCodec implements ACLCodec {
 
 	/**
 	 */
-	public final static void serializeACL(ACLMessage msg, DataOutputStream dos) throws IOException {
+	public static void serializeACL(ACLMessage msg, DataOutputStream dos) throws IOException {
 		dos.writeByte(msg.getPerformative());
 
 		byte presence1 = 0;
@@ -126,7 +126,7 @@ public class LEAPACLCodec implements ACLCodec {
 		if (inReplyTo != null) { presence1 |= 0x02; }
 		if (replyWith != null) { presence1 |= 0x01; }
 		if (replyBy != null) { presence2 |= 0x80; }
-		presence2 |= (props.size() & 0x3F);
+		presence2 |= props.size() & 0x3F;
 		dos.writeByte(presence1);
 		dos.writeByte(presence2);
 
@@ -185,7 +185,7 @@ public class LEAPACLCodec implements ACLCodec {
 
 	/**
 	 */
-	public final static ACLMessage deserializeACL(DataInputStream dis) throws IOException {
+	public static ACLMessage deserializeACL(DataInputStream dis) throws IOException {
 		ACLMessage msg = new ACLMessage((int) dis.readByte());
 
 		byte presence1 = dis.readByte();
@@ -237,7 +237,7 @@ public class LEAPACLCodec implements ACLCodec {
 	}
 
 
-	public final static void serializeAID(AID id, DataOutputStream dos) throws IOException {
+	public static void serializeAID(AID id, DataOutputStream dos) throws IOException {
 		byte presence = 0;
 		String name = id.getName();
 		Iterator addresses = id.getAllAddresses();
@@ -249,7 +249,7 @@ public class LEAPACLCodec implements ACLCodec {
 		if (name != null) { presence |= 0x80; }
 		if (addresses.hasNext()) { presence |= 0x40; }
 		if (resolvers.hasNext()) { presence |= 0x20; }
-		presence |= (props.size() & 0x1F);
+		presence |= props.size() & 0x1F;
 		dos.writeByte(presence);
 
 		if (name != null) { dos.writeUTF(name); }
@@ -267,9 +267,9 @@ public class LEAPACLCodec implements ACLCodec {
 		serializeProperties(props, dos);
 	}
 
-	public final static AID deserializeAID(DataInputStream dis) throws IOException {
+	public static AID deserializeAID(DataInputStream dis) throws IOException {
 		byte presence = dis.readByte();
-		AID id = ((presence & 0x80) != 0 ? new AID(dis.readUTF(), AID.ISGUID) : new AID());
+		AID id = (presence & 0x80) != 0 ? new AID(dis.readUTF(), AID.ISGUID) : new AID();
 
 		// Addresses
 		if ((presence & 0x40) != 0) {
@@ -293,7 +293,7 @@ public class LEAPACLCodec implements ACLCodec {
 		return id;
 	}
 
-	private static final void serializeProperties(Properties props, DataOutputStream dos) throws IOException {
+	private static void serializeProperties(Properties props, DataOutputStream dos) throws IOException {
 		Enumeration e = props.keys();
 		while (e.hasMoreElements()) {
 			String key = (String) e.nextElement();

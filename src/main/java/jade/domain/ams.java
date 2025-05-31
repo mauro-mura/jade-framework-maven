@@ -141,33 +141,33 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	private static final int DEFAULT_PERIODIC_LOG_DELAY = -1;
 
 	private int amsMaxResults = DEFAULT_MAX_RESULTS;
-	
-	private Logger logger;
+
+	private final Logger logger;
 
 	// The AgentPlatform where information about agents is stored
-	private AgentManager myPlatform;
+	private final AgentManager myPlatform;
 
 	// The codec for the SL language
-	private Codec codec = new SLCodec();
+	private final Codec codec = new SLCodec();
 
 	// ACL Message to use for tool notification
-	private ACLMessage toolNotification = new ACLMessage(ACLMessage.INFORM);
-	private boolean keepNotifyOnShutdown = false;
+	private final ACLMessage toolNotification = new ACLMessage(ACLMessage.INFORM);
+	private boolean keepNotifyOnShutdown;
 
 	// Buffer for AgentPlatform notifications
 	private InputQueue eventQueue = new InputQueue();
 	
-	private AMSEventQueueFeeder queueFeeder; 
+	private AMSEventQueueFeeder queueFeeder;
 
-	private Map<Object, ACLMessage> pendingNewAgents = new Hashtable<>();
-	private Map<Object, ACLMessage> pendingDeadAgents = new Hashtable<>();
-	private Map<Object, ACLMessage> pendingClonedAgents = new Hashtable<>();
-	private Map<Object, ACLMessage> pendingMovedAgents = new Hashtable<>();
-	private Map<Object, ACLMessage> pendingRemovedContainers = new Hashtable<>();
+	private final Map<Object, ACLMessage> pendingNewAgents = new Hashtable<>();
+	private final Map<Object, ACLMessage> pendingDeadAgents = new Hashtable<>();
+	private final Map<Object, ACLMessage> pendingClonedAgents = new Hashtable<>();
+	private final Map<Object, ACLMessage> pendingMovedAgents = new Hashtable<>();
+	private final Map<Object, ACLMessage> pendingRemovedContainers = new Hashtable<>();
 
-	private APDescription theProfile = new APDescription();
+	private final APDescription theProfile = new APDescription();
 	
-	private boolean shuttingDown = false;
+	private boolean shuttingDown;
 
 	/**
 	 This constructor creates a new <em>AMS</em> agent. Since a direct
@@ -327,8 +327,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		final AID agentID = new AID(agentName, AID.ISLOCALNAME);
 		final String className = ca.getClassName();
 		final ContainerID container = ca.getContainer();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Create-agent " + agentID + " on container " + container);
+		}
 		// Prepare arguments as a Object[]
 		Iterator<Object> it = ca.getAllArguments();
 		List<Object> listArg = new ArrayList<>();
@@ -348,8 +349,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 					// Send failure notification to the requester if any. Note that UnreachableException also wraps IMTPException that is not necessarily related to a real un-reachability problem
 					sendFailureNotification(ca, agentID, new InternalError(ue.getMessage()));
 				} catch (JADESecurityException ae) {
-					if (logger.isLoggable(Logger.SEVERE))
+					if (logger.isLoggable(Logger.SEVERE)) {
 						logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action Create-agent: " + ae);
+					}
 					// Send failure notification to the requester if any
 					sendFailureNotification(ca, agentID, new Unauthorised());
 				} catch (NotFoundException nfe) {
@@ -370,14 +372,16 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	// KILL AGENT
 	public void killAgentAction(KillAgent ka, AID requester, JADEPrincipal requesterPrincipal, Credentials requesterCredentials) throws FIPAException {
 		final AID agentID = ka.getAgent();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Kill-agent " + agentID);
+		}
 
 		try {
 			myPlatform.kill(agentID, requesterPrincipal, requesterCredentials);
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action KillAgent");
+			}
 			throw new Unauthorised();
 		} catch (UnreachableException ue) {
 			throw new InternalError("Container not reachable. " + ue.getMessage());
@@ -395,14 +399,16 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		final AID agentID = dsc.getName();
 		final ContainerID where = (ContainerID) dsc.getDestination();
 		final String newName = ca.getNewName();
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "Agent " + requester + " requesting Clone-agent " + agentID + " on container " + where);
+		}
 
 		try {
 			myPlatform.copy(agentID, where, newName);
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action CloneAgent");
+			}
 			throw new Unauthorised();
 		} catch (UnreachableException ue) {
 			throw new InternalError("Container not reachable. " + ue.getMessage());
@@ -421,14 +427,16 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		MobileAgentDescription dsc = ma.getMobileAgentDescription();
 		final AID agentID = dsc.getName();
 		final ContainerID where = (ContainerID) dsc.getDestination();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Move-agent " + agentID + " on container " + where);
+		}
 
 		try {
 			myPlatform.move(agentID, where);
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action MoveAgent");
+			}
 			throw new Unauthorised();
 		} catch (UnreachableException ue) {
 			throw new InternalError("Container not reachable. " + ue.getMessage());
@@ -524,8 +532,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// INSTALL MTP
 	MTPDescriptor installMTPAction(InstallMTP im, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Install-MTP");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			return myPlatform.installMTP(im.getAddress(), im.getContainer(), im.getClassName());
@@ -540,8 +549,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// UNINSTALL MTP
 	void uninstallMTPAction(UninstallMTP um, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Uninstall-MTP");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			myPlatform.uninstallMTP(um.getAddress(), um.getContainer());
@@ -556,8 +566,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// SNIFF ON
 	void sniffOnAction(SniffOn so, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Sniff-on");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			myPlatform.sniffOn(so.getSniffer(), so.getCloneOfSniffedAgents());
@@ -570,8 +581,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// SNIFF OFF
 	void sniffOffAction(SniffOff so, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Sniff-off");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			myPlatform.sniffOff(so.getSniffer(), so.getCloneOfSniffedAgents());
@@ -584,8 +596,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// DEBUG ON
 	void debugOnAction(DebugOn don, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Debug-on");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			myPlatform.debugOn(don.getDebugger(), don.getCloneOfDebuggedAgents());
@@ -598,8 +611,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// DEBUG OFF
 	void debugOffAction(DebugOff doff, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Debug-off");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			myPlatform.debugOff(doff.getDebugger(), doff.getCloneOfDebuggedAgents());
@@ -612,8 +626,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// WHERE IS AGENT
 	Location whereIsAgentAction(WhereIsAgentAction wia, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Where-is-agent");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			return myPlatform.getContainerID(wia.getAgentIdentifier());
@@ -624,8 +639,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// QUERY PLATFORM LOCATIONS
 	public List<ContainerID> queryPlatformLocationsAction(QueryPlatformLocationsAction qpl, AID requester) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Query-platform-locations");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		ContainerID[] ids = myPlatform.containerIDs();
 		List<ContainerID> l = new ArrayList<>();
@@ -637,8 +653,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// QUERY AGENTS ON LOCATION
 	public List<AID> queryAgentsOnLocationAction(QueryAgentsOnLocation qaol, AID requester) throws FIPAException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting Query-agents-on-location");
+		}
 		// FIXME: Permissions for this action are not yet defined
 		try {
 			return myPlatform.containerAgents((ContainerID) qaol.getLocation());
@@ -664,8 +681,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		final AMSAgentDescription amsd = (AMSAgentDescription) r.getDescription();
 		// Check mandatory slots
 		AID id = amsd.getName();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting AMS-registration for " + id);
+		}
 		if (id == null || id.getName() == null || id.getName().length() == 0) {
 			throw new MissingParameter(FIPAManagementVocabulary.AMSAGENTDESCRIPTION, FIPAManagementVocabulary.DFAGENTDESCRIPTION_NAME);
 		}
@@ -675,8 +693,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		} catch (AlreadyRegistered ar) {
 			throw ar;
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action Register");
+			}
 			throw new Unauthorised();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -689,8 +708,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		final AMSAgentDescription amsd = (AMSAgentDescription) d.getDescription();
 		// Check mandatory slots
 		AID id = amsd.getName();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting AMS-deregistration for " + id);
+		}
 		if (id == null || id.getName() == null || id.getName().length() == 0) {
 			throw new MissingParameter(FIPAManagementVocabulary.AMSAGENTDESCRIPTION, FIPAManagementVocabulary.DFAGENTDESCRIPTION_NAME);
 		}
@@ -700,8 +720,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		} catch (NotRegistered nr) {
 			throw nr;
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action Deregister");
+			}
 			throw new Unauthorised();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -732,8 +753,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 		} catch (NotFoundException nfe) {
 			throw new InternalError("Agent not found. " + nfe.getMessage());
 		} catch (JADESecurityException ae) {
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Agent " + requester.getName() + " does not have permission to perform action Modify");
+			}
 			throw new Unauthorised();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -743,8 +765,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 
 	// SEARCH
 	public List<AMSAgentDescription> searchAction(Search s, AID requester) {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Agent " + requester + " requesting AMS-search");
+		}
 		return myPlatform.amsSearch((AMSAgentDescription) s.getDescription(), getActualMaxResults(s.getConstraints()));
 	}
 
@@ -758,16 +781,17 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 	 * </ul>
 	 **/
 	private long getActualMaxResults(SearchConstraints constraints) {
-		long maxResult = (constraints.getMaxResults() == null ? 1 : constraints.getMaxResults().longValue());
-		maxResult = (maxResult < 0 ? amsMaxResults : maxResult); // limit the max num of results
+		long maxResult = constraints.getMaxResults() == null ? 1 : constraints.getMaxResults().longValue();
+		maxResult = maxResult < 0 ? amsMaxResults : maxResult; // limit the max num of results
 		return maxResult;
 	}
 
 	// GET_DESCRIPTION
 	public APDescription getDescriptionAction(AID requester) {
 		if (requester != null) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Agent " + requester + " requesting AMS-get-description");
+			}
 		}
 		theProfile.clearAllAPServices(); // clear all the services and recreate the new APDescription
 		MTPDescriptor dr;
@@ -929,8 +953,10 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else
+			}
+			else {
 				block();
+			}
 
 		}
 
@@ -969,8 +995,10 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 				// Remove this tool from tools agent group.
 				myPlatform.removeTool(current.getSender());
 
-			} else
+			}
+			else {
 				block();
+			}
 
 		}
 
@@ -1066,8 +1094,9 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 				if (er != null) {
 					// Perform event-specific actions (if any)
 					Event ev = er.getWhat();
-					if (logger.isLoggable(Logger.FINE))
+					if (logger.isLoggable(Logger.FINE)) {
 						logger.log(Logger.FINE, "EventManager serving event " + ev.getName());
+					}
 					Handler handler = handlers.get(ev.getName());
 					if (handler != null) {
 						handler.handle(ev);
@@ -1164,7 +1193,7 @@ public class ams extends Agent /*implements AgentManager.Listener*/ {
 					AID agentName = agents[j];
 					// FIXME: Check if we have to lock the AgentDescriptor
 					AMSAgentDescription amsd = myPlatform.getAMSDescription(agentName);
-					if (! amsd.getState().equals(AMSAgentDescription.LATENT)) {
+					if (! AMSAgentDescription.LATENT.equals(amsd.getState())) {
 
 						ContainerID c = myPlatform.getContainerID(agentName);
 						// ContainerID is null in case of foreign agents registered with this AMS or virtual agents

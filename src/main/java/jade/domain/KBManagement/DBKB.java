@@ -61,8 +61,10 @@ public abstract class DBKB extends KB {
 	 * (such as prepared statements) currently used by each Thread
 	 */
 	private ThreadLocal connections = new ThreadLocal();
-	
-	private String url, username, password;
+
+	private String url;
+	private String username;
+	private String password;
 	
 	/**
 	 * Specifies whether the KB should delete all existing tables for the DF at startup
@@ -100,7 +102,7 @@ public abstract class DBKB extends KB {
 	 * @param cleanTables specifies whether the KB should delete all existing tables for the DF at startup
 	 * @throws SQLException an error occured while opening a connection to the database
 	 */
-	public DBKB(String url, int maxResultLimit, boolean cleanTables) throws SQLException {
+	protected DBKB(String url, int maxResultLimit, boolean cleanTables) throws SQLException {
 		this(null, url, maxResultLimit, cleanTables);
 	}
 	
@@ -116,7 +118,7 @@ public abstract class DBKB extends KB {
 	 * @param cleanTables specifies whether the KB should delete all existing tables for the DF at startup
 	 * @throws SQLException an error occured while opening a connection to the database
 	 */
-	public DBKB(String drv, String url, int maxResultLimit, boolean cleanTables) throws SQLException {
+	protected DBKB(String drv, String url, int maxResultLimit, boolean cleanTables) throws SQLException {
 		this(drv, url, null, null, maxResultLimit, cleanTables);
 	}
 	
@@ -132,7 +134,7 @@ public abstract class DBKB extends KB {
 	 * @param cleanTables specifies whether the KB should delete all existing tables for the DF at startup
 	 * @throws SQLException an error occured while opening a connection to the database
 	 */
-	public DBKB(String drv, String url, String username, String password, int maxResultLimit, boolean cleanTables) throws SQLException {
+	protected DBKB(String drv, String url, String username, String password, int maxResultLimit, boolean cleanTables) throws SQLException {
 		super(maxResultLimit);
 		this.cleanTables = cleanTables;
 		loadDBDriver(drv);
@@ -148,8 +150,9 @@ public abstract class DBKB extends KB {
 		String dbName = md.getDatabaseProductName();	
 		if (dbName.toLowerCase().indexOf("sql server") != -1) {  
 			if (url.toLowerCase().indexOf("selectmethod") == -1) {
-				if (!url.endsWith(";"))
+				if (!url.endsWith(";")) {
 					url = url + ";";
+				}
 				url = url + "SelectMethod=cursor";
 				this.url = url;
 				invalidateConnectionWrapper();
@@ -160,7 +163,7 @@ public abstract class DBKB extends KB {
 	/**
 	 * This method is called by the KB Factory and is a placeholder for implementation specific KB initializations. 
 	 */
-	abstract public void setup() throws SQLException;
+	public abstract void setup() throws SQLException;
 	
 	/**
 	 * Loads an JDBC driver
@@ -172,8 +175,9 @@ public abstract class DBKB extends KB {
 		//  Load DB driver
 		try {
 			if(drv != null) {
-				if(!drv.equals("null"))
+				if (!"null".equals(drv)) {
 					driver = drv;
+				}
 			}
 			Class.forName(driver).getDeclaredConstructor().newInstance();
 		}

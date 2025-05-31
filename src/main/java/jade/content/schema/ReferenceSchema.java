@@ -10,9 +10,9 @@ import jade.content.onto.exception.OntologyException;
  * The schema of a reference to an object or an attribute of an object
  * @author Caire
  */
-public class ReferenceSchema extends TermSchema {
+public final class ReferenceSchema extends TermSchema {
 	public static final String    BASE_NAME = "Reference";
-	private static ReferenceSchema baseSchema = new ReferenceSchema();
+	private static final ReferenceSchema baseSchema = new ReferenceSchema();
 
 	public static final String    NAME = "Name";
 	public static final String    OBJECT_TYPE = "ObjectType";

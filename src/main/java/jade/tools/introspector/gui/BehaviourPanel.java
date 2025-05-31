@@ -36,12 +36,12 @@ import jade.core.behaviours.Behaviour;
    @author Andrea Squeri, -  Universita` di Parma
 */
 public class BehaviourPanel extends JSplitPane{
-  private JTree behaviourTree;
+	private final JTree behaviourTree;
   private JTextArea text;
   private JScrollPane behaviourScroll;
   private JScrollPane textScroll;
   private JPanel treePanel;
-  private TreeMouseListener treeListener;
+	private final TreeMouseListener treeListener;
   private Icon readyIcon;
   private Icon runningIcon;
   private Icon blockedIcon;
@@ -127,10 +127,10 @@ public class BehaviourPanel extends JSplitPane{
             BehaviourTreeNode node = (BehaviourTreeNode)mut.getUserObject();
             
             String state = node.getState();
-            if (state.equals(Behaviour.STATE_BLOCKED)) {
+            if (Behaviour.STATE_BLOCKED.equals(state)) {
             	changeIcon(blockedIcon);
             }
-            else if (state.equals(Behaviour.STATE_RUNNING)) {
+            else if (Behaviour.STATE_RUNNING.equals(state)) {
             	changeIcon(runningIcon);
             }
             else {

@@ -46,14 +46,14 @@ import jade.tools.introspector.Sensor;
 public class MainWindow extends JInternalFrame implements InternalFrameListener
 {
 
-  private Sensor debuggerSensor;
-  private AID debuggedID;
-  private JSplitPane splitPanel;
-  private MainBar mainBar;
-  private MessagePanel messagePanel;
-  private StatePanel statePanel;
-  private BehaviourPanel behaviourPanel;
-  private MainBarListener list;
+	private final Sensor debuggerSensor;
+	private final AID debuggedID;
+	private final JSplitPane splitPanel;
+	private final MainBar mainBar;
+	private final MessagePanel messagePanel;
+	private final StatePanel statePanel;
+	private final BehaviourPanel behaviourPanel;
+	private final MainBarListener list;
   private int lastDividerLocation;
 
   public MainWindow(Sensor sn, AID id){

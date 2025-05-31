@@ -50,10 +50,10 @@ public class DoSnifferAction extends AgentAction {
 
 	@Serial
 	private static final long serialVersionUID = 4193973823625844982L;
-	private MainPanel mainPanel;
+	private final MainPanel mainPanel;
 	private Agent agent;
-	private Sniffer mySniffer;
-	private List<Agent> sniffedAgents = new ArrayList<>();
+	private final Sniffer mySniffer;
+	private final List<Agent> sniffedAgents = new ArrayList<>();
 
 	public DoSnifferAction(ActionProcessor actPro, MainPanel mainPanel, Sniffer mySniffer) {
 		super("DoSnifferActionIcon", "Do sniff this agent(s)", actPro);
@@ -77,9 +77,10 @@ public class DoSnifferAction extends AgentAction {
 		agent = new Agent(realName);
 
 		// Check if the agent is in the canvas
-		if (!mainPanel.panelcan.canvAgent.isPresent(realName))
+		if (!mainPanel.panelcan.canvAgent.isPresent(realName)) {
 			mainPanel.panelcan.canvAgent.addAgent(agent); // add Agent in the Canvas
 
+		}
 		mainPanel.panelcan.canvAgent.rAgfromNoSniffVector(agent);
 
 		sniffedAgents.add(agent);
@@ -91,8 +92,9 @@ public class DoSnifferAction extends AgentAction {
 		int index;
 
 		index = nameAgent.indexOf("@");
-		if (index != -1)
+		if (index != -1) {
 			return nameAgent.substring(0, index);
+		}
 		else {
 			Logger.getMyLogger(this.getClass().getName()).log(Logger.WARNING, "The agent's name is not correct");
 			return null;

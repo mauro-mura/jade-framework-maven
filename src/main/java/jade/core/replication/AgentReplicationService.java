@@ -75,13 +75,13 @@ public class AgentReplicationService extends BaseService {
 	private ServiceComponent localSlice;
 
 	// Map a virtual agent to the set of global information associated to it 
-	private Map<AID, GlobalReplicationInfo> globalReplications = new Hashtable<AID, GlobalReplicationInfo>();
+	private final Map<AID, GlobalReplicationInfo> globalReplications = new Hashtable<>();
 	// Map a replica agent to the related virtual agent
-	private Map<AID, AID> replicaToVirtualMap = new Hashtable<AID, AID>();
+	private final Map<AID, AID> replicaToVirtualMap = new Hashtable<>();
 	// Map a master replica agent to the pending replica creation requests
-	private Map<AID, List<ReplicaInfo>> pendingReplicaCreationRequests = new Hashtable<AID, List<ReplicaInfo>>();
+	private final Map<AID, List<ReplicaInfo>> pendingReplicaCreationRequests = new Hashtable<>();
 
-	private Map<String, Method> cachedAgentMethods = new HashMap<String, Method>();
+	private final Map<String, Method> cachedAgentMethods = new HashMap<>();
 
 
 	public String getName() {
@@ -162,7 +162,7 @@ public class AgentReplicationService extends BaseService {
 	private class AgentReplicationHelperImpl implements AgentReplicationHelper {
 		private AID myAid;
 		private AID virtualAid;
-		private List<ReplicaInfo> peerReplicas = new ArrayList<ReplicaInfo>();
+		private List<ReplicaInfo> peerReplicas = new ArrayList<>();
 		private ReplicaInfo[] peerReplicasArray = new ReplicaInfo[0];
 
 		public void init(Agent a) {
@@ -252,7 +252,7 @@ public class AgentReplicationService extends BaseService {
 						// Enqueue the replica creation request
 						List<ReplicaInfo> rr = pendingReplicaCreationRequests.get(myAid);
 						if (rr == null) {
-							rr = new ArrayList<ReplicaInfo>();
+							rr = new ArrayList<>();
 							pendingReplicaCreationRequests.put(myAid, rr);
 						}
 						rr.add(new ReplicaInfo(replicaAid, where));
@@ -393,7 +393,7 @@ public class AgentReplicationService extends BaseService {
 		@Override
 		public final boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
-			if (name.equals(MessagingSlice.SEND_MESSAGE)) {
+			if (MessagingSlice.SEND_MESSAGE.equals(name)) {
 				AID receiver = (AID) cmd.getParam(2);
 				GlobalReplicationInfo info = globalReplications.get(receiver);
 				if (info != null) {
@@ -416,7 +416,7 @@ public class AgentReplicationService extends BaseService {
 					return false;
 				}
 			}
-			else if (name.equals(MessagingSlice.NOTIFY_FAILURE)) {
+			else if (MessagingSlice.NOTIFY_FAILURE.equals(name)) {
 				GenericMessage gMsg = (GenericMessage) cmd.getParam(0);
 				ACLMessage msg = gMsg.getACLMessage();
 				if (msg != null) {
@@ -449,7 +449,7 @@ public class AgentReplicationService extends BaseService {
 					}
 				}
 			}
-			else if (name.equals(MainReplicationSlice.LEADERSHIP_ACQUIRED)) {
+			else if (MainReplicationSlice.LEADERSHIP_ACQUIRED.equals(name)) {
 				// The master Main Container died and this backup Main just took the leadership.
 				// Other peripheral containers may have died in the meanwhile -->
 				// Check all replicated agents
@@ -460,7 +460,7 @@ public class AgentReplicationService extends BaseService {
 
 		@Override
 		public final void postProcess(VerticalCommand cmd) {
-			if (cmd.getName().equals(AgentMobilityHelper.INFORM_CLONED)) {
+			if (AgentMobilityHelper.INFORM_CLONED.equals(cmd.getName())) {
 				AID id = (AID) cmd.getParam(0);
 				Location where = (Location) cmd.getParam(1);
 				String newName = (String) cmd.getParam(2);
@@ -480,7 +480,7 @@ public class AgentReplicationService extends BaseService {
 
 
 						// Finally, if there are other pending replica creation requests, serve the next one
-						if (rr.size() > 0) {
+						if (!rr.isEmpty()) {
 							ReplicaInfo nextR = rr.get(0);
 							// In this very moment the agent state is already AP_COPY --> Cloning the agent now would have no effect
 							asynchCloneReplica(id, nextR.replicaAid.getLocalName(), nextR.where);
@@ -509,19 +509,19 @@ public class AgentReplicationService extends BaseService {
 		public final boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			if (myContainer.getMain() != null) {
-				if (name.equals(AgentManagementSlice.INFORM_KILLED)) {
+				if (AgentManagementSlice.INFORM_KILLED.equals(name)) {
 					// If the dead agent is a master replica of a virtual agent, select a new master replica and broadcast the information 
 					AID deadAgent = (AID) cmd.getParam(0);
 					handleInformKilled(deadAgent);
 				}
-				else if (name.equals(Service.NEW_SLICE)) {
+				else if (Service.NEW_SLICE.equals(name)) {
 					// If the new slice is an AgentReplicationSlice, notify it about the current virtual agents
-					if (cmd.getService().equals(NAME)) {
+					if (NAME.equals(cmd.getService())) {
 						String sliceName = (String) cmd.getParam(0);
 						handleNewSlice(sliceName);
 					}
 				}
-				else if (name.equals(Service.DEAD_NODE)) {
+				else if (Service.DEAD_NODE.equals(name)) {
 					// A node monitored by this Main Container has just been removed
 					// If it was a sudden termination (e.g. fault) INFORM_KILLED VCommands 
 					// for agents in the dead node were not issued --> 
@@ -530,7 +530,7 @@ public class AgentReplicationService extends BaseService {
 				}
 			}
 			else {
-				if (name.equals(Service.REATTACHED)) {
+				if (Service.REATTACHED.equals(name)) {
 					// The Main lost all information related to this container --> Notify it again
 					handleReattached();
 				}
@@ -581,7 +581,7 @@ public class AgentReplicationService extends BaseService {
 				// by more than one container, but this case is properly taken into account so
 				// that duplications are avoided.
 				AID[] aa = replicaToVirtualMap.keySet().toArray(new AID[0]);
-				List<AID> vv = new ArrayList<AID>();
+				List<AID> vv = new ArrayList<>();
 				for (AID aid : aa) {
 					if (myContainer.isLocalAgent(aid)) {
 						AID virtualAid = replicaToVirtualMap.get(aid);
@@ -610,7 +610,7 @@ public class AgentReplicationService extends BaseService {
 	/**
 	 * Inner class ReplicaInfo
 	 */
-	private class ReplicaInfo {
+private final class ReplicaInfo {
 		private AID replicaAid;
 		private Location where;
 
@@ -1091,34 +1091,34 @@ public class AgentReplicationService extends BaseService {
 		public VerticalCommand serve(HorizontalCommand cmd) {
 			try {
 				String cmdName = cmd.getName();				
-				if (cmdName.equals(AgentReplicationSlice.H_INVOKEAGENTMETHOD)) {
+				if (AgentReplicationSlice.H_INVOKEAGENTMETHOD.equals(cmdName)) {
 					AID aid = (AID) cmd.getParam(0);
 					String methodName = (String) cmd.getParam(1);
 					Object[] arguments = (Object[]) cmd.getParam(2);
 					invokeAgentMethod(aid, methodName, arguments);
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_ADDREPLICA)) {
+				else if(AgentReplicationSlice.H_ADDREPLICA.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					AID replicaAid = (AID) cmd.getParam(1);
 					Location where = (Location) cmd.getParam(2);
 					addReplica(virtualAid, replicaAid, where);
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_NEWVIRTUALAGENT)) {
+				else if(AgentReplicationSlice.H_NEWVIRTUALAGENT.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					AID masterAid = (AID) cmd.getParam(1);
 					int replicationMode = (Integer) cmd.getParam(2);
 					newVirtualAgent(virtualAid, masterAid, replicationMode);
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_GETAGENTLOCATION)) {
+				else if(AgentReplicationSlice.H_GETAGENTLOCATION.equals(cmdName)) {
 					AID aid = (AID) cmd.getParam(0);
 					cmd.setReturnValue(getAgentLocation(aid));
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_REPLICACREATIONREQUESTED)) {
+				else if(AgentReplicationSlice.H_REPLICACREATIONREQUESTED.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					AID replicaAid = (AID) cmd.getParam(1);
 					addReplicaVirtualMapping(replicaAid, virtualAid);
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_SYNCHREPLICATION)) {
+				else if(AgentReplicationSlice.H_SYNCHREPLICATION.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					AID masterAid = (AID) cmd.getParam(1);
 					int replicationMode = (Integer) cmd.getParam(2);
@@ -1134,7 +1134,7 @@ public class AgentReplicationService extends BaseService {
 						}
 					}
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_MASTERREPLICACHANGED)) {
+				else if(AgentReplicationSlice.H_MASTERREPLICACHANGED.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					AID newMasterAid = (AID) cmd.getParam(1);
 					GlobalReplicationInfo info = globalReplications.get(virtualAid);
@@ -1142,16 +1142,16 @@ public class AgentReplicationService extends BaseService {
 						info.masterReplicaChanged(newMasterAid);
 					}
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_VIRTUALAGENTDEAD)) {
+				else if(AgentReplicationSlice.H_VIRTUALAGENTDEAD.equals(cmdName)) {
 					AID virtualAid = (AID) cmd.getParam(0);
 					globalReplications.remove(virtualAid);
 					myLogger.log(Logger.CONFIG, "Virtual agent "+virtualAid.getLocalName()+" removed");
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_NOTIFYBECOMEMASTER)) {
+				else if(AgentReplicationSlice.H_NOTIFYBECOMEMASTER.equals(cmdName)) {
 					AID newMasterAid = (AID) cmd.getParam(0);
 					localNotifyBecomeMasterToMaster(newMasterAid);
 				}
-				else if(cmdName.equals(AgentReplicationSlice.H_NOTIFYREPLICAREMOVED)) {
+				else if(AgentReplicationSlice.H_NOTIFYREPLICAREMOVED.equals(cmdName)) {
 					AID masterAid = (AID) cmd.getParam(0);
 					AID removedReplica = (AID) cmd.getParam(1);
 					Location where = (Location) cmd.getParam(2);

@@ -159,8 +159,8 @@ public class Ontology implements Serializable {
 	private static final long serialVersionUID = 171852701730104825L;
 	private static final String DEFAULT_INTROSPECTOR_CLASS = "jade.content.onto.ReflectiveIntrospector";
 	private Ontology[] base = new Ontology[0];
-	private String name = null;
-	private Introspector introspector = null;
+	private String name;
+	private Introspector introspector;
 
 	// Maps type-names to schemas
 	private Map<String, ObjectSchema> elements = new HashMap<>();
@@ -175,7 +175,7 @@ public class Ontology implements Serializable {
 
 	// This is required for compatibility with CLDC MIDP where XXX.class
 	// is not supported
-	private static Class<?> absObjectClass = null;
+	private static Class<?> absObjectClass;
 	static {
 		try {
 			absObjectClass = Class.forName("jade.content.abs.AbsObject");
@@ -223,7 +223,7 @@ public class Ontology implements Serializable {
 	 * @param introspector The introspector.
 	 */
 	public Ontology(String name, Ontology base, Introspector introspector) {
-		this(name, (base != null ? new Ontology[] { base } : new Ontology[0]), introspector);
+		this(name, base != null ? new Ontology[] { base } : new Ontology[0], introspector);
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class Ontology implements Serializable {
 	public Ontology(String name, Ontology[] base, Introspector introspector) {
 		this.name = name;
 		this.introspector = introspector;
-		this.base = (base != null ? base : new Ontology[0]);
+		this.base = base != null ? base : new Ontology[0];
 	}
 
 	/**
@@ -321,12 +321,14 @@ public class Ontology implements Serializable {
 				return new ConceptSlotFunctionSchema(name);
 			}
 
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Ontology " + getName() + ". Schema for " + name + " not found");
+			}
 			for (int i = 0; i < base.length; ++i) {
 				if (base[i] == null) {
-					if (logger.isLoggable(Logger.FINE))
+					if (logger.isLoggable(Logger.FINE)) {
 						logger.log(Logger.FINE, "Base ontology # " + i + " for ontology " + getName() + " is null");
+					}
 				} else {
 					ret = base[i].getSchema(name);
 					if (ret != null) {
@@ -353,12 +355,14 @@ public class Ontology implements Serializable {
 		}
 		ObjectSchema ret = (ObjectSchema) schemas.get(clazz);
 		if (ret == null) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Ontology " + getName() + ". Schema for class " + clazz + " not found");
+			}
 			for (int i = 0; i < base.length; ++i) {
 				if (base[i] == null) {
-					if (logger.isLoggable(Logger.FINE))
+					if (logger.isLoggable(Logger.FINE)) {
 						logger.log(Logger.FINE, "Base ontology # " + i + " for ontology " + getName() + " is null");
+					}
 				} else {
 					ret = base[i].getSchema(clazz);
 					if (ret != null) {
@@ -500,24 +504,27 @@ public class Ontology implements Serializable {
 	 */
 	protected Object toObject(AbsObject abs, String lcType, Ontology globalOnto)
 			throws OntologyException {
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Ontology " + getName() + ". Translating ABS descriptor " + abs);
+		}
 
 		// Retrieve the schema
 		ObjectSchema schema = elements.get(lcType);
 		if (schema != null) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Ontology " + getName() + ". Schema for type " + abs.getTypeName()
-						+ " found locally: " + schema);
+					+ " found locally: " + schema);
+			}
 
 			// Retrieve the java class
 			Class<?> javaClass = (Class<?>) classes.get(lcType);
 			if (javaClass == null) {
 				throw new OntologyException("No java class associated to type " + abs.getTypeName());
 			}
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE, "Ontology " + getName() + ". Class for type " + abs.getTypeName() + " = "
-						+ javaClass.getName());
+					+ javaClass.getName());
+			}
 
 			// If the Java class is an Abstract descriptor --> just return abs
 			if (absObjectClass.isAssignableFrom(javaClass)) {
@@ -535,9 +542,6 @@ public class Ontology implements Serializable {
 					internalize(abs, obj, schema, globalOnto);
 				}
 				return obj;
-			} catch (OntologyException oe) {
-				// Let the exception pass through
-				throw oe;
 			} catch (InstantiationException ie) {
 				throw new OntologyException("Class " + javaClass + " can't be instantiated", ie);
 			} catch (IllegalAccessException iae) {
@@ -628,15 +632,17 @@ public class Ontology implements Serializable {
 
 		// Retrieve the Java class
 		Class<?> javaClass = obj.getClass();
-		if (logger.isLoggable(Logger.FINE))
+		if (logger.isLoggable(Logger.FINE)) {
 			logger.log(Logger.FINE, "Ontology " + getName() + ". Translating object of class " + javaClass);
+		}
 
 		// Retrieve the schema
 		ObjectSchema schema = schemas.get(javaClass);
 		if (schema != null) {
-			if (logger.isLoggable(Logger.FINE))
+			if (logger.isLoggable(Logger.FINE)) {
 				logger.log(Logger.FINE,
-						"Ontology " + getName() + ". Schema for class " + javaClass + " found locally: " + schema);
+					"Ontology " + getName() + ". Schema for class " + javaClass + " found locally: " + schema);
+			}
 
 			// Try to manage as special type (i.e. types that need special handling such as
 			// enum)
@@ -1092,7 +1098,7 @@ public class Ontology implements Serializable {
 	public void dump(PrintStream ps) {
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append("Ontology " + name + "\n");
+			sb.append("Ontology ").append(name).append("\n");
 
 			dump(getConceptNames(), "concept", sb);
 			dump(getPredicateNames(), "predicate", sb);
@@ -1125,7 +1131,7 @@ public class Ontology implements Serializable {
 				first = false;
 			}
 
-			sb.append("  " + label + " " + conceptName + " (" + sbsc.toString() + ") {\n");
+			sb.append("  ").append(label).append(" ").append(conceptName).append(" (").append(sbsc.toString()).append(") {\n");
 			String[] names = os.getOwnNames();
 			for (int i = 0; i < names.length; i++) {
 				sb.append("    " + names[i] + ": ");
@@ -1156,23 +1162,23 @@ public class Ontology implements Serializable {
 						}
 					}
 
-					sb.append(schema.getTypeName() + (!mandatory ? " (OPTIONAL)" : ""));
+					sb.append(schema.getTypeName()).append(mandatory ? "" : " (OPTIONAL)");
 					if (defaultValue != null) {
-						sb.append(" (DEFAULT=" + defaultValue + ")");
+						sb.append(" (DEFAULT=").append(defaultValue).append(")");
 					}
 					if (regex != null) {
-						sb.append(" (REGEX=" + regex + ")");
+						sb.append(" (REGEX=").append(regex).append(")");
 					}
 					if (pValues != null && pValues.length() > 0) {
-						sb.append(" (VALUES=" + pValues + ")");
+						sb.append(" (VALUES=").append(pValues).append(")");
 					}
 					if (cardMin != null && cardMax != null) {
-						sb.append(" ([" + cardMin + "," + (cardMax != -1 ? cardMax : "unbounded") + "])");
+						sb.append(" ([").append(cardMin).append(",").append(cardMax != -1 ? cardMax : "unbounded").append("])");
 					}
 					sb.append("\n");
 				}
 			}
-			sb.append("  } -> " + getClassForElement(os.getTypeName()).getName() + "\n\n");
+			sb.append("  } -> ").append(getClassForElement(os.getTypeName()).getName()).append("\n\n");
 		}
 	}
 

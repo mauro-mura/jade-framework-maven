@@ -55,11 +55,11 @@ import java.io.IOException;
  */
 class JICPClient {
 
-	private TransportProtocol protocol;
-	private ConnectionFactory connFactory;
-	private ConnectionPool pool;
-	private int readTimeout;
-	private static Logger log = Logger.getMyLogger(JICPClient.class.getName());
+	private final TransportProtocol protocol;
+	private final ConnectionFactory connFactory;
+	private final ConnectionPool pool;
+	private final int readTimeout;
+	private static final Logger log = Logger.getMyLogger(JICPClient.class.getName());
 
 	/**
 	 * Constructor declaration
@@ -106,7 +106,7 @@ class JICPClient {
 				// Read the reply
 				JICPPacket reply = connection.readPacket();
 				
-				DeliveryTracing.setTracingInfo("Network-waiting-time", (System.currentTimeMillis() - start));
+				DeliveryTracing.setTracingInfo("Network-waiting-time", System.currentTimeMillis() - start);
 				DeliveryTracing.setTracingInfo("Reused-connection", cw.isReused());
 				
 

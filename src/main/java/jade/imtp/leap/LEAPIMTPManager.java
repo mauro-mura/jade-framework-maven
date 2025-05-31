@@ -73,12 +73,12 @@ public class LEAPIMTPManager implements IMTPManager {
 	/**
 	 * Local pointer to the singleton command dispatcher in this JVM
 	 */
-	private CommandDispatcher theDispatcher = null;
+	private CommandDispatcher theDispatcher;
 
 	/**
 	 * The Profile holding the configuration for this IMTPManager
 	 */
-	private Profile theProfile = null;
+	private Profile theProfile;
 
 	private String masterPMAddr;
 	private String localAddr;
@@ -119,11 +119,12 @@ public class LEAPIMTPManager implements IMTPManager {
 				Specifier s = it.next();
 				try {
 					ICP peer = (ICP) Class.forName(s.getClassName()).getDeclaredConstructor().newInstance();
-					String id = (s.getArgs() != null ? (String) (s.getArgs()[0]) : null);
+					String id = s.getArgs() != null ? (String) (s.getArgs()[0]) : null;
 					theDispatcher.addICP(peer, id, theProfile);
 				} catch (Exception e) {
-					if (logger.isLoggable(Logger.SEVERE))
+					if (logger.isLoggable(Logger.SEVERE)) {
 						logger.log(Logger.SEVERE, "Error adding ICP. ", e);
+					}
 				}
 			}
 
@@ -133,8 +134,9 @@ public class LEAPIMTPManager implements IMTPManager {
 			theDispatcher.registerSkeleton(skel, localNode);
 		} catch (ProfileException pe) {
 			// Just print a warning
-			if (logger.isLoggable(Logger.SEVERE))
+			if (logger.isLoggable(Logger.SEVERE)) {
 				logger.log(Logger.SEVERE, "Profile error. " + pe.getMessage());
+			}
 		}
 
 		// Now check that some ICP is active. Note that, as a CommandDispatcher
@@ -148,7 +150,7 @@ public class LEAPIMTPManager implements IMTPManager {
 			Iterator<String> it = URLs.iterator();
 			StringBuilder sb = new StringBuilder("Listening for intra-platform commands on address: ");
 			while (it.hasNext()) {
-				sb.append("- " + it.next());
+				sb.append("- ").append(it.next());
 			}
 			logger.log(Logger.INFO, sb.toString());
 		}
@@ -177,7 +179,7 @@ public class LEAPIMTPManager implements IMTPManager {
 			java.net.InetAddress ad = java.net.InetAddress.getByName(ta.getHost());
 			TransportProtocol tp = theDispatcher.getProtocol(ta.getProto());
 			String hostAddr = ad.getHostAddress();
-			if (hostAddr.equals("127.0.0.1")) {
+			if ("127.0.0.1".equals(hostAddr)) {
 				hostAddr = ad.getHostName();
 			}
 			ta = tp.buildAddress(hostAddr, ta.getPort(), ta.getFile(), ta.getAnchor());
@@ -310,7 +312,7 @@ public class LEAPIMTPManager implements IMTPManager {
 			if (mainHost != null) {
 				String mainProto = theProfile.getParameter(Profile.MAIN_PROTO, "jicp");
 				String mainPort = theProfile.getParameter(Profile.MAIN_PORT, null);
-				mainPort = (mainPort != null) ? (":" + mainPort) : (":" + JICPProtocol.DEFAULT_PORT);
+				mainPort = mainPort != null ? (":" + mainPort) : (":" + JICPProtocol.DEFAULT_PORT);
 				mainURL = new String(mainProto + "://" + mainHost + mainPort);
 				theProfile.setParameter(MAIN_URL, mainURL);
 			}
@@ -325,7 +327,7 @@ public class LEAPIMTPManager implements IMTPManager {
 					throw new ProfileException("Stand-alone execution mode not supported in MIDP");
 				} else {
 					// Set default ICPS for J2SE and PJAVA
-					if (theDispatcher.getLocalURLs().size() == 0) {
+					if (theDispatcher.getLocalURLs().isEmpty()) {
 						theProfile.setParameter(ICPS, "jade.imtp.leap.JICP.JICPPeer");
 					}
 				}

@@ -51,7 +51,12 @@ public class TimeChooser implements ActionListener
 	private int         mode;
 	private int         retVal;
 	private JDialog     dlg;
-	private JTextField  year, month, day, hour, min, sec;
+	private JTextField year;
+	private JTextField month;
+	private JTextField day;
+	private JTextField hour;
+	private JTextField min;
+	private JTextField sec;
 
 	JToggleButton absButton;
 	JToggleButton relButton;
@@ -113,8 +118,9 @@ public class TimeChooser implements ActionListener
 */
 		// Controls to set the time
 		cal = new GregorianCalendar();
-		if (date != null)
+		if (date != null) {
 			cal.setTime(date);
+		}
 
 		JPanel timePanel = new JPanel();
 		timePanel.setLayout(new GridLayout(2,3));
@@ -182,7 +188,7 @@ public class TimeChooser implements ActionListener
 		}
 		dlg.setVisible(true);
 
-		return(retVal);
+		return retVal;
 	}
 
     /**
@@ -251,7 +257,7 @@ public class TimeChooser implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		String command = e.getActionCommand();
-		if (command.equals("Set"))
+		if ("Set".equals(command))
 		{
 			Integer I;
 			I = Integer.valueOf(year.getText());
@@ -273,28 +279,28 @@ public class TimeChooser implements ActionListener
 			retVal = OK;
 			dlg.dispose();
 		}
-		else if (command.equals("Reset"))
+		else if ("Reset".equals(command))
 		{
 			date = null;
 			retVal = OK;
 			dlg.dispose();
 		}
-		else if (command.equals("Cancel"))
+		else if ("Cancel".equals(command))
 		{
 			retVal = CANCEL;
 			dlg.dispose();
 		}
-		else if (command.equals("Close"))
+		else if ("Close".equals(command))
 		{
 			dlg.dispose();
 		}
-		else if (command.equals("Absolute"))
+		else if ("Absolute".equals(command))
 		{
 			absButton.setSelected(true);
 			relButton.setSelected(false);
 			mode = ABSOLUTE;
 		}
-		else if (command.equals("Relative"))
+		else if ("Relative".equals(command))
 		{
 			relButton.setSelected(true);
 			absButton.setSelected(false);
@@ -310,7 +316,7 @@ public class TimeChooser implements ActionListener
     */
 	public Date getDate()
 	{
-		return(date);
+		return date;
 	}
 
     /**
@@ -338,8 +344,9 @@ public class TimeChooser implements ActionListener
 										{
 											Integer i = Integer.valueOf(timeUnitEdit.getText());
 											int ii = i.intValue() + 1;
-											if(ii <= limit)
-											  timeUnitEdit.setText(String.valueOf(ii));
+											if (ii <= limit) {
+												timeUnitEdit.setText(String.valueOf(ii));
+											}
 										}
 									} );
 		JButton B2 = new JButton("-");
@@ -349,9 +356,10 @@ public class TimeChooser implements ActionListener
 										{
 											Integer i = Integer.valueOf(timeUnitEdit.getText());
 											int ii = i.intValue() - 1;
-											int inf_limit = (timeUnitLabel.equalsIgnoreCase("Hour:") || timeUnitLabel.equalsIgnoreCase("Min:") || timeUnitLabel.equalsIgnoreCase("Sec:")? 0 : 1);
-											if(ii >= inf_limit)
-											  timeUnitEdit.setText(String.valueOf(ii));
+											int inf_limit = "Hour:".equalsIgnoreCase(timeUnitLabel) || "Min:".equalsIgnoreCase(timeUnitLabel) || "Sec:".equalsIgnoreCase(timeUnitLabel)? 0 : 1;
+											if (ii >= inf_limit) {
+												timeUnitEdit.setText(String.valueOf(ii));
+											}
 										}
 									} );
 
@@ -359,7 +367,7 @@ public class TimeChooser implements ActionListener
 		B2.setMargin(new Insets(2,4,2,4));
 		Dimension d = new Dimension();
 		d.height = B1.getPreferredSize().height;
-		d.width = (new JLabel("XXXXX")).getPreferredSize().width;
+		d.width = new JLabel("XXXXX").getPreferredSize().width;
 		l.setPreferredSize(d);
 		l.setAlignmentX((float) 1);
 		timeUnitEdit.setPreferredSize(new Dimension(50, d.height));

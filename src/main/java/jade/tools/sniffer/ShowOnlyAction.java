@@ -52,9 +52,9 @@ public class ShowOnlyAction extends AgentAction {
 
 	@Serial
 	private static final long serialVersionUID = 5107905084397521486L;
-	private MainPanel mainPanel;
-	private Sniffer mySniffer;
-	private List<Agent> noSniffedAgents = new ArrayList<>();
+	private final MainPanel mainPanel;
+	private final Sniffer mySniffer;
+	private final List<Agent> noSniffedAgents = new ArrayList<>();
 	private Agent agent;
 
 	public ShowOnlyAction(ActionProcessor actPro, MainPanel mainPanel, Sniffer mySniffer) {
@@ -68,8 +68,9 @@ public class ShowOnlyAction extends AgentAction {
 		realName = checkString(node.getName());
 		agent = new Agent(realName);
 		noSniffedAgents.add(agent);
-		if (!mainPanel.panelcan.canvAgent.isPresent(realName))
+		if (!mainPanel.panelcan.canvAgent.isPresent(realName)) {
 			mainPanel.panelcan.canvAgent.addAgent(agent); // add Agent in the Canvas
+		}
 		mainPanel.panelcan.canvAgent.repaintNoSniffedAgent(agent);
 		mySniffer.sniffMsg(noSniffedAgents, Sniffer.SNIFF_OFF); // Sniff the Agents
 		noSniffedAgents.clear();
@@ -78,8 +79,9 @@ public class ShowOnlyAction extends AgentAction {
 	private String checkString(String nameAgent) {
 		int index;
 		index = nameAgent.indexOf("@");
-		if (index != -1)
+		if (index != -1) {
 			return nameAgent.substring(0, index);
+		}
 		else {
 			Logger.getMyLogger(this.getClass().getName()).log(Logger.WARNING, "The agent's name is not correct");
 			return null;

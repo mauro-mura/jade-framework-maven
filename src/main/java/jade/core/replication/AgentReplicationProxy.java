@@ -48,7 +48,7 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 
 		Node n = getNode();
 		Object result = n.accept(cmd);
-		if ((result != null) && (result instanceof Throwable)) {
+		if ((result != null) && (result instanceof Throwable throwable)) {
 			if (result instanceof NotFoundException exception2) {
 				throw exception2;
 			} else if (result instanceof ServiceException exception1) {
@@ -56,7 +56,7 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 			} else if (result instanceof IMTPException exception) {
 				throw exception;
 			} else {
-				throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+				throw new IMTPException("An undeclared exception was thrown", throwable);
 			}
 		}
 	}
@@ -68,13 +68,13 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 		try {
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof NotFoundException exception1) {
 					throw exception1;
 				} else if (result instanceof IMTPException exception) {
 					throw exception;
 				} else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 			return (ContainerID) result;
@@ -91,11 +91,11 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 		try {
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof IMTPException exception) {
 					throw exception;
 				} else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		} catch (ServiceException se) {
@@ -113,11 +113,11 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 		try {
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof IMTPException exception) {
 					throw exception;
 				} else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		} catch (ServiceException se) {
@@ -132,11 +132,11 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 		try {
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof IMTPException exception) {
 					throw exception;
 				} else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		} catch (ServiceException se) {
@@ -153,11 +153,11 @@ public class AgentReplicationProxy extends SliceProxy implements AgentReplicatio
 		try {
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if ((result != null) && (result instanceof Throwable)) {
+			if ((result != null) && (result instanceof Throwable throwable)) {
 				if (result instanceof IMTPException exception) {
 					throw exception;
 				} else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable) result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		} catch (ServiceException se) {

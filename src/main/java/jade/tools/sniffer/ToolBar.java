@@ -42,9 +42,9 @@ import jade.gui.JadeLogoButton;
  * @see javax.swing.JToolBar
  */
 
-final public class ToolBar extends JToolBar {
+public final class ToolBar extends JToolBar {
 
-	private ActionProcessor actPro;
+	private final ActionProcessor actPro;
 	private SnifferAction obj;
 	
 	public ToolBar(ActionProcessor actPro) {

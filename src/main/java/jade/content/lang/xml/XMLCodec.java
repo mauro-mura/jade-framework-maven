@@ -72,7 +72,7 @@ public class XMLCodec extends StringCodec {
 	static final String BYTE_SEQUENCE = "BYTE_SEQUENCE";
 	static final String FLOAT = "FLOAT";
 	
-	private static Map<String, String> primitiveTypeNames = new HashMap<String, String>();
+	private static Map<String, String> primitiveTypeNames = new HashMap<>();
 	static {
 		primitiveTypeNames.put(BasicOntology.STRING, STRING);
 		primitiveTypeNames.put(BasicOntology.INTEGER, INTEGER);

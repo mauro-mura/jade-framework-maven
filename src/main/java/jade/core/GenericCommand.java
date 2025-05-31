@@ -139,7 +139,7 @@ public class GenericCommand implements HorizontalCommand, VerticalCommand  {
 	
 	
 	
-	private jade.security.JADEPrincipal principal = null;
+	private jade.security.JADEPrincipal principal;
 	private jade.security.Credentials creds;
 	
 	private final String myName;

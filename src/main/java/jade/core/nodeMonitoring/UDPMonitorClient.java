@@ -52,9 +52,9 @@ import java.nio.channels.DatagramChannel;
  */
 class UDPMonitorClient {
 
-	private boolean running = false;
-	private boolean terminating = false;
-	private boolean sendTerminationFlag = false;
+	private boolean running;
+	private boolean terminating;
+	private boolean sendTerminationFlag;
 
 	//#DOTNET_EXCLUDE_BEGIN
 	private DatagramChannel channel;
@@ -62,19 +62,19 @@ class UDPMonitorClient {
 	//#DOTNET_EXCLUDE_END
 
 	/*#DOTNET_INCLUDE_BEGIN
-	 private UdpClient channel;
-	 private IPEndPoint receivePoint;
-	 #DOTNET_INCLUDE_END*/
+		ivate UdpClient channel;
+		ivate IPEndPoint receivePoint;
+		OTNET_INCLUDE_END*/
 
-	private String serverHost;
-	private int serverPort;
+	private final String serverHost;
+	private final int serverPort;
 	private ByteBuffer ping;
 	private int pingDelay;
-	private Node node;
-	private long key;
+	private final Node node;
+	private final long key;
 	private Thread sender;
 
-	private Logger logger;
+	private final Logger logger;
 
 	/**
 	 * Private class which sends ping messages in regular time intervals
@@ -122,13 +122,14 @@ class UDPMonitorClient {
 			} catch (IOException e) {
 				//#DOTNET_EXCLUDE_END
 				/*#DOTNET_INCLUDE_BEGIN
-				 channel.Close();
-				 } 
-				 catch (Exception e) 
-				 {
-				 #DOTNET_INCLUDE_END*/
-				if (logger.isLoggable(Logger.FINER))
+					annel.Close();
+					
+					tch (Exception e) 
+					
+					OTNET_INCLUDE_END*/
+				if (logger.isLoggable(Logger.FINER)) {
 					logger.log(Logger.FINER, "Error closing UDP channel");
+				}
 			}
 		}
 
@@ -196,8 +197,9 @@ class UDPMonitorClient {
 		sender = new Thread(new Sender());
 		sender.start();
 
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "UDP monitoring client started.");
+		}
 	}
 
 	/**
@@ -208,8 +210,9 @@ class UDPMonitorClient {
 		this.sendTerminationFlag = sendTerminationFlag;
 		sender.interrupt();
 
-		if (logger.isLoggable(Logger.CONFIG))
+		if (logger.isLoggable(Logger.CONFIG)) {
 			logger.log(Logger.CONFIG, "UDP monitoring client stopped.");
+		}
 
 	}
 	

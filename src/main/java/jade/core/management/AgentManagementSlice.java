@@ -165,7 +165,7 @@ public interface AgentManagementSlice extends Service.Slice {
 	static final String H_RESUMEDAGENT = "7";
 	static final String H_EXITCONTAINER = "8";
 
-	void createAgent(AID agentID, String className, Object arguments[], JADEPrincipal owner, Credentials initialCredentials, boolean startIt, Command sourceCmd) throws IMTPException, NotFoundException, NameClashException, JADESecurityException;
+	void createAgent(AID agentID, String className, Object[] arguments, JADEPrincipal owner, Credentials initialCredentials, boolean startIt, Command sourceCmd) throws IMTPException, NotFoundException, NameClashException, JADESecurityException;
 	void killAgent(AID agentID, Command sourceCmd) throws IMTPException, NotFoundException;
 	void changeAgentState(AID agentID, int newState) throws IMTPException, NotFoundException;
 

@@ -45,8 +45,8 @@ public class CommandProcessor {
 
 	private final Hashtable<String, Sink> downSinks;
 	private final Hashtable<String, Sink> upSinks;
-	private SinksFilter lastDownFilter;
-	private SinksFilter lastUpFilter;
+	private final SinksFilter lastDownFilter;
+	private final SinksFilter lastUpFilter;
 
 	public CommandProcessor() {
 		downSinks = new Hashtable<>(4);
@@ -223,7 +223,7 @@ public class CommandProcessor {
 	 * direction look like a single filter that always stands at the end of the
 	 * filter chain.
 	 */
-	private class SinksFilter extends Filter {
+	private final class SinksFilter extends Filter {
 		private Hashtable<String, Sink> mySinks;
 
 		private SinksFilter(Hashtable<String, Sink> ht) {

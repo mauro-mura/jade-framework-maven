@@ -36,7 +36,7 @@ import jade.security.JADESecurityException;
  */
 public class BackEndSkel extends MicroSkeleton {
 
-	private BackEnd myBackEnd;
+	private final BackEnd myBackEnd;
 
 	public BackEndSkel(BackEnd be) {
 		myBackEnd = be;

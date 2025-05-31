@@ -82,7 +82,7 @@ import jade.util.leap.Properties;
  * @author Moreno LAGO
  */
 class DeliverableDataInputStream extends DataInputStream {
-	private StubHelper myStubHelper;
+	private final StubHelper myStubHelper;
 
 	/**
 	 * Constructs a data input stream that is deserializing Deliverables from the
@@ -469,7 +469,7 @@ class DeliverableDataInputStream extends DataInputStream {
 	private MultipleGenericMessage deserializeMultipleGenericMessage() throws IOException, LEAPSerializationException {
 		int nMessages = readInt();
 		int length = 0;
-		java.util.List<GenericMessage> messages = new java.util.ArrayList<GenericMessage>(nMessages);
+		java.util.List<GenericMessage> messages = new java.util.ArrayList<>(nMessages);
 		for (int i = 0; i < nMessages; ++i) {
 			AID sender = deserializeAID();
 			GenericMessage g = deserializeGenericMessage();
@@ -827,9 +827,8 @@ class DeliverableDataInputStream extends DataInputStream {
 		String className = readString();
 		String message = readString();
 		try {
-			Throwable result = (Throwable) Class.forName(className).getDeclaredConstructor().newInstance();
 			// FIXME: How do we set the message?
-			return result;
+			return (Throwable) Class.forName(className).getDeclaredConstructor().newInstance();
 		} catch (Throwable t) {
 
 			// Actual class not found: simply create a java.lang.Exception

@@ -42,12 +42,12 @@ public class OutcomeManager implements Serializable {
 	public static final int OK = 1;
 	public static final int KO = 0;
 
-	private Behaviour bh;
+	private final Behaviour bh;
 
 	private int exitCode = OK;
 	private String errorMsg;
 
-	private Logger myLogger = Logger.getJADELogger(getClass().getName());
+	private final Logger myLogger = Logger.getJADELogger(getClass().getName());
 
 	public OutcomeManager(Behaviour bh) {
 		this.bh = bh;

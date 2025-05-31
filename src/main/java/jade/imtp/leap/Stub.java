@@ -67,7 +67,7 @@ class Stub implements java.io.Serializable {
 	protected String platformName;
 
 	// The local singleton CommandDispatcher
-	protected transient StubHelper theDispatcher = null;
+	protected transient StubHelper theDispatcher;
 
 	protected transient Logger myLogger = Logger.getMyLogger(getClass().getName());
 

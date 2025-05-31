@@ -55,10 +55,12 @@ class ToFromCellRenderer extends DefaultListCellRenderer
 		setFont(courier);
 		setText(((MsgIndication)value).getIndication());
 		setBackground(isSelected ? Color.black : Color.white);
-		if (((MsgIndication) value).direction == MsgIndication.OUTGOING) 
+		if (((MsgIndication) value).direction == MsgIndication.OUTGOING) {
 			setForeground(isSelected ? Color.white : Color.blue);
-		else                                        
+		}
+		else {
 			setForeground(isSelected ? Color.white : Color.red);
+		}
 		return this;
 	}
 }

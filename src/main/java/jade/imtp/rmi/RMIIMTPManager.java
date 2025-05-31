@@ -98,7 +98,7 @@ public class RMIIMTPManager implements IMTPManager {
 	private NodeAdapter localNode;
 	private ServiceManagerRMIImpl myRMIServiceManager;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public RMIIMTPManager() {
 	}
@@ -512,7 +512,7 @@ public class RMIIMTPManager implements IMTPManager {
 		} 
 
 		return new RMIAddress(host, port, file, anchor);
-	} 
+	}
 
 
 	/**
@@ -520,7 +520,7 @@ public class RMIIMTPManager implements IMTPManager {
 	 An adapter, implementing the PlatformManager interface, to 
 	 a ServiceManagerRMI stub
 	 */
-	private class PlatformManagerAdapter implements PlatformManager {
+	private final class PlatformManagerAdapter implements PlatformManager {
 		private String localAddress;
 		private ServiceManagerRMI adaptee;
 

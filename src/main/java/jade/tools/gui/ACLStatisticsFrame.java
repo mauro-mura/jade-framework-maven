@@ -106,7 +106,7 @@ public class ACLStatisticsFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void closeButton_actionPerformed(ActionEvent e) {
+  void closeButtonActionPerformed(ActionEvent e) {
     this.setVisible(false);
   }
 
@@ -116,7 +116,7 @@ public class ACLStatisticsFrame extends JFrame {
    *
    * @param  e  Description of Parameter
    */
-  void itemComboBox_itemStateChanged(ItemEvent e) {
+  void itemComboBoxItemStateChanged(ItemEvent e) {
     Object o = this.itemComboBox.getSelectedItem();
     if (o == null) {
       return;
@@ -247,23 +247,23 @@ public class ACLStatisticsFrame extends JFrame {
       while (i < aclRoot.getChildCount()) {
         ACLMessageNode mn = (ACLMessageNode)aclRoot.getChildAt(i);
         String toCount = "<unknown>";
-        if (theItem.equals("performative")) {
+        if ("performative".equals(theItem)) {
           toCount = mn.getDirection() + ":" + mn.getPerformative();
         }
 
-        if (theItem.equals("send-to")) {
+        if ("send-to".equals(theItem)) {
           toCount = mn.getDirection() + ":" + mn.getSendTo();
         }
 
-        if (theItem.equals("received-from")) {
+        if ("received-from".equals(theItem)) {
           toCount = mn.getDirection() + ":" + mn.receivedFrom();
         }
 
-        if (theItem.equals("ontology")) {
+        if ("ontology".equals(theItem)) {
           toCount = mn.getDirection() + ":" + mn.getOntology();
         }
 
-        if (theItem.equals("traffic")) {
+        if ("traffic".equals(theItem)) {
           toCount = mn.getDirection();
         }
 
@@ -321,7 +321,7 @@ public class ACLStatisticsFrame extends JFrame {
      * @param  e  Description of Parameter
      */
     public void actionPerformed(ActionEvent e) {
-      adaptee.closeButton_actionPerformed(e);
+      adaptee.closeButtonActionPerformed(e);
     }
 
 
@@ -396,7 +396,7 @@ class ACLStatisticsFrame_itemComboBox_itemAdapter implements java.awt.event.Item
    * @param  e  Description of Parameter
    */
   public void itemStateChanged(ItemEvent e) {
-    adaptee.itemComboBox_itemStateChanged(e);
+    adaptee.itemComboBoxItemStateChanged(e);
   }
 
 

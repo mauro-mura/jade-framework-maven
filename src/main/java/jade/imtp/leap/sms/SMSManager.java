@@ -39,9 +39,9 @@ public abstract class SMSManager {
 	public static final int UNDEFINED = -1;
 	
 	public static final String IMPLEMENTATION = "jade_imtp_leap_sms_SMSManager_implementation";
-	
+
 	// The logger
-	private static Logger myLogger = Logger.getMyLogger(SMSManager.class.getName());
+	private static final Logger myLogger = Logger.getMyLogger(SMSManager.class.getName());
 	
 	// The singleton instance of the SMSManager
 	private static SMSManager theInstance; 
@@ -81,7 +81,7 @@ public abstract class SMSManager {
 	}
 	
 	public synchronized void sendTextMessage(String msisdn, int port, String text) {
-		byte[] data = (text != null ? text.getBytes() : null);
+		byte[] data = text != null ? text.getBytes() : null;
 		send(msisdn, port, TEXT, data);
 	}
 	

@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class AgentIDHelper {
+public final class AgentIDHelper {
 	// It is useless to have instances of this class
 	private AgentIDHelper() {
 	}
@@ -75,7 +75,7 @@ public class AgentIDHelper {
 	private static org.omg.CORBA.TypeCode _tc;
 
 	@SuppressWarnings("unused")
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		int _memberCount = 4;
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {

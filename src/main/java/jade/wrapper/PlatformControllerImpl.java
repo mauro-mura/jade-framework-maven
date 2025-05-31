@@ -33,9 +33,9 @@ import java.util.Hashtable;
  @author Giovanni Caire - TILAB
  */
 class PlatformControllerImpl implements PlatformController {
-	private ContainerController myContainer;
-	private AgentManager myMain;
-	private Hashtable listeners = new Hashtable();
+	private final ContainerController myContainer;
+	private final AgentManager myMain;
+	private final Hashtable listeners = new Hashtable();
 	private State platformState = PlatformState.PLATFORM_STATE_VOID;
 	
 	PlatformControllerImpl(ContainerController c, AgentManager m) {

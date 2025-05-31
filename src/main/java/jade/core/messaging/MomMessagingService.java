@@ -31,11 +31,11 @@ public abstract class MomMessagingService extends MessagingService {
 	
 	protected String myLocation;
 	// We need synchronized access --> Hashtable
-	private Map<AID, String> locationsCache = new Hashtable<AID, String>();
-	private long deliveryCnt = 0;
+	private final Map<AID, String> locationsCache = new Hashtable<>();
+	private long deliveryCnt;
 	protected boolean active;
-	
-	private Map<String, DeliveryContext> ongoingDeliveries = new HashMap<String, DeliveryContext>();
+
+	private final Map<String, DeliveryContext> ongoingDeliveries = new HashMap<>();
 	
 	private long deliveryCompletionTimeout = 60000;  // 1 min
 	
@@ -81,7 +81,7 @@ public abstract class MomMessagingService extends MessagingService {
 					@Override
 					public void consume(VerticalCommand cmd) {
 						String name = cmd.getName();
-						if(name.equals(MessagingSlice.SEND_MESSAGE)) {
+						if(MessagingSlice.SEND_MESSAGE.equals(name)) {
 							Object[] params = cmd.getParams();
 							AID sender = (AID)params[0];
 							GenericMessage msg = (GenericMessage)params[1];
@@ -120,7 +120,7 @@ public abstract class MomMessagingService extends MessagingService {
 	}
 		
 	protected synchronized String generateDeliveryID(AID senderID, GenericMessage msg, AID receiverID) {
-		return myLocation+SEPARATOR+String.valueOf(deliveryCnt++);
+		return myLocation+SEPARATOR+deliveryCnt++;
 	}
 	
 	protected String extractSource(String deliveryID) {
@@ -266,9 +266,9 @@ public abstract class MomMessagingService extends MessagingService {
 		protected GenericMessage msg;
 		protected AID senderID;
 		protected AID receiverID;
-		protected String receiverLocation = null;
-		protected int attemptsCnt = 0;
-		protected Timer watchDog = null;
+		protected String receiverLocation;
+		protected int attemptsCnt;
+		protected Timer watchDog;
 		
 		DeliveryContext(String deliveryID, AID senderID, GenericMessage msg, AID receiverID) {
 			this.deliveryID = deliveryID;
@@ -295,7 +295,7 @@ public abstract class MomMessagingService extends MessagingService {
 		}
 		
 		protected void failure(Throwable t) {
-			String id = (msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg));
+			String id = msg.getTraceID() != null ? msg.getTraceID() : MessageManager.stringify(msg);
 			if (t instanceof NotFoundException) {
 				if (receiverLocation == null) {
 					// Receiver not found in the GADT --> Abort

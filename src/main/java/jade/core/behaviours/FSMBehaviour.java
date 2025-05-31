@@ -79,17 +79,17 @@ public class FSMBehaviour extends SerialBehaviour {
 	@Serial
 	private static final long serialVersionUID = 7089890201377074459L;
 	private Map<String, Behaviour> states = new HashMap<>();
-	private Behaviour current = null;
+	private Behaviour current;
 	// Protected for debugging purposes only
 	protected List<String> lastStates = new ArrayList<>();
-	protected String currentName = null;
-	private String previousName = null;
-	private String firstName = null;
+	protected String currentName;
+	private String previousName;
+	private String firstName;
 	private int lastExitValue;
 
 	// These variables are used to force a transition on a given state at runtime
-	private boolean transitionForced = false;
-	private String forcedTransitionDest = null;
+	private boolean transitionForced;
+	private String forcedTransitionDest;
 
 	private TransitionTable theTransitionTable = new TransitionTable();
 
@@ -276,7 +276,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 *         state. <code>false</code> otherwise.
 	 */
 	public boolean hasDefaultTransition(String source) {
-		return (theTransitionTable.getTransition(source) != null);
+		return theTransitionTable.getTransition(source) != null;
 	}
 
 	/**
@@ -530,7 +530,7 @@ public class FSMBehaviour extends SerialBehaviour {
 				Transition t = (Transition) tfs.remove(Integer.valueOf(event));
 				if (t != null) {
 
-					if ((tfs.isEmpty() && (tfs.getDefaultTransition() == null))) {
+					if (tfs.isEmpty() && (tfs.getDefaultTransition() == null)) {
 						transitions.remove(s1);
 					}
 				}
@@ -551,8 +551,7 @@ public class FSMBehaviour extends SerialBehaviour {
 		Transition getTransition(String s, int event) {
 			TransitionsFromState tfs = (TransitionsFromState) transitions.get(s);
 			if (tfs != null) {
-				Transition t = (Transition) tfs.get(Integer.valueOf(event));
-				return t;
+				return (Transition) tfs.get(Integer.valueOf(event));
 			} else {
 				return null;
 			}
@@ -669,7 +668,7 @@ public class FSMBehaviour extends SerialBehaviour {
 	 * Inner class TransitionsFromState
 	 */
 	class TransitionsFromState extends Hashtable {
-		private Transition defaultTransition = null;
+		private Transition defaultTransition;
 		@Serial
 		private static final long serialVersionUID = 3487495895819005L;
 
@@ -695,7 +694,7 @@ public class FSMBehaviour extends SerialBehaviour {
 			sb.append("Transitions: ");
 			sb.append(super.toString());
 			if (defaultTransition != null) {
-				sb.append(" defaultTransition: " + defaultTransition);
+				sb.append(" defaultTransition: ").append(defaultTransition);
 			}
 			return sb.toString();
 		}

@@ -21,7 +21,7 @@ import javax.net.ssl.SSLContext;
  * Helper class to deal with SSL related setup
  * @author eduard
  */
-public class SSLHelper {
+public final class SSLHelper {
 
 	/**
 	 * use this to indicate which cipher suites we support
@@ -32,8 +32,8 @@ public class SSLHelper {
 	public static String[] getSupportedKeys() {
 		return (String[]) supportedKeys.toArray(new String[0]);
 	}
-	
-	private static Logger logger = Logger.getJADELogger(SSLHelper.class.getName());
+
+	private static final Logger logger = Logger.getJADELogger(SSLHelper.class.getName());
 
 	private SSLHelper() {
 	}

@@ -59,8 +59,8 @@ public class APDescriptionPanel extends JPanel {
 
 	@Serial
 	private static final long serialVersionUID = 8296225622463841726L;
-	private JTextField platformName_Field;
-	private VisualAPServiceList MTPs_List;
+	private final JTextField platformName_Field;
+	private final VisualAPServiceList MTPs_List;
 
 	/**
 	 * creates a panel ho show an APDescription. All the fields are not editable.
@@ -107,7 +107,7 @@ public class APDescriptionPanel extends JPanel {
 		profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
 		profilePanel.setBorder(BorderFactory.createTitledBorder("AP Services"));
 
-		MTPs_List = new VisualAPServiceList((new ArrayList<>()).iterator(), owner);
+		MTPs_List = new VisualAPServiceList(new ArrayList<>().iterator(), owner);
 		c.gridx = 0;
 		c.gridy = 4;
 		c.gridwidth = 2;
@@ -168,11 +168,13 @@ public class APDescriptionPanel extends JPanel {
 		tempDlg.setResizable(false);
 		if (parent != null) {
 			int locx = parent.getX() + (parent.getWidth() - tempDlg.getWidth()) / 2;
-			if (locx < 0)
+			if (locx < 0) {
 				locx = 0;
+			}
 			int locy = parent.getY() + (parent.getHeight() - tempDlg.getHeight()) / 2;
-			if (locy < 0)
+			if (locy < 0) {
 				locy = 0;
+			}
 			tempDlg.setLocation(locx, locy);
 		}
 		tempDlg.setVisible(true);

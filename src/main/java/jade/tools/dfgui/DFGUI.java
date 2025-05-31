@@ -102,7 +102,7 @@ import jade.gui.JadeLogoButton;
 public class DFGUI extends JFrame implements DFGUIInterface
 {
 	// class variables used to discriminate between the view of the dfgui.
-	public static int AGENT_VIEW = 0;
+	public static int AGENT_VIEW;
 	public static int LASTSEARCH_VIEW = 1;
 	public static int PARENT_VIEW = 2;
 	public static int CHILDREN_VIEW = 3;
@@ -114,11 +114,17 @@ public class DFGUI extends JFrame implements DFGUIInterface
 	/**
 	@serial
 	*/
-	AgentNameTableModel         registeredModel, foundModel,parentModel,childrenModel;
-  /**
+	AgentNameTableModel registeredModel;
+	AgentNameTableModel foundModel;
+	AgentNameTableModel parentModel;
+	AgentNameTableModel childrenModel;
+	/**
   @serial
   */
-	JTable                      registeredTable, foundTable,parentTable,childrenTable;
+	JTable registeredTable;
+	JTable foundTable;
+	JTable parentTable;
+	JTable childrenTable;
 	/**
 	@serial
 	*/
@@ -130,7 +136,13 @@ public class DFGUI extends JFrame implements DFGUIInterface
 	/**
 	@serial
 	*/
-	JButton                     modifyB,deregB,regNewB,fedDFB,viewB,searchB,searchWithB;
+	JButton modifyB;
+	JButton deregB;
+	JButton regNewB;
+	JButton fedDFB;
+	JButton viewB;
+	JButton searchB;
+	JButton searchWithB;
 	/**
 	@serial
 	*/
@@ -170,7 +182,7 @@ public class DFGUI extends JFrame implements DFGUIInterface
 
    
   HashMap lastSearchResults; // this HashMap mantains the result of the last search made on a df.
-  AID lastDF = null;                // this AID is the AID of the DF on which the last search was made. 
+  AID lastDF;                // this AID is the AID of the DF on which the last search was made. 
   
 	// CONSTRUCTORS
 /**
@@ -464,8 +476,9 @@ to set the agent with which the gui interacts.
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				if (e.getClickCount() >= 1)
+				if (e.getClickCount() >= 1) {
 					childrenTable.clearSelection();
+				}
 				if (e.getClickCount() == 2)
 				{
 					DFGUIViewAction ac = new DFGUIViewAction(DFGUI.this);
@@ -505,8 +518,9 @@ to set the agent with which the gui interacts.
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				if (e.getClickCount() >= 1)
+				if (e.getClickCount() >= 1) {
 					parentTable.clearSelection();
+				}
 				if (e.getClickCount() ==2)
 					{
 						DFGUIViewAction ac = new DFGUIViewAction(DFGUI.this);
@@ -574,8 +588,9 @@ public DFGUI(DFGUIAdapter a)
   	public void stateChanged(ChangeEvent event)
   	{
   		Object object = event.getSource();
-  		if (object == tabbedPane)
-  			tabStateChanged(event);
+			if (object == tabbedPane) {
+				tabStateChanged(event);
+			}
   	
   	}
   	
@@ -683,16 +698,18 @@ public DFGUI(DFGUIAdapter a)
 	*/
 	public void setTab (String tab, AID df) 
 	{
-		if (tab.equalsIgnoreCase("Search"))
+		if ("Search".equalsIgnoreCase(tab))
 			{
 				tabbedPane.setSelectedIndex(1);
 				tabbedPane.setTitleAt(1,"Last Search on "+ df.getName());
 			}
 			else
-			if (tab.equalsIgnoreCase("Federate"))
-				tabbedPane.setSelectedIndex(2);
-				else
-				 tabbedPane.setSelectedIndex(0);
+				if ("Federate".equalsIgnoreCase(tab)) {
+					tabbedPane.setSelectedIndex(2);
+				}
+				else {
+					tabbedPane.setSelectedIndex(0);
+				}
 			
 	}
 	/**
@@ -708,39 +725,48 @@ public DFGUI(DFGUIAdapter a)
 		{
 			//row = registeredTable.getSelectedRow();
 			row = registeredTable.getSelectionModel().getMinSelectionIndex();
-		
-			if ( row != -1)
+
+			if (row != -1) {
 				out = registeredModel.getElementAt(row);
-				else out = null;
+			}
+			else {
+				out = null;
+			}
 		}
 		else
 		if ( tab == 1)
 		{
 			//row = foundTable.getSelectedRow();
 			row = foundTable.getSelectionModel().getMinSelectionIndex();
-		
-			if (row != -1)
+
+			if (row != -1) {
 				out = foundModel.getElementAt(row);
-				else
+			}
+			else {
 				out = null;
+			}
 		}
 		else 
 		if (tab == 2)
 		{
 		   //row = parentTable.getSelectedRow();
-		   row = parentTable.getSelectionModel().getMinSelectionIndex(); 
-		
-		   if (row != -1)
-		   	out = parentModel.getElementAt(row);
-		   	else
-		   	{
-		   		//row = childrenTable.getSelectedRow();
-		   		row = childrenTable.getSelectionModel().getMinSelectionIndex();
-		   
-		   	  if (row != -1)
-		   	  	out = childrenModel.getElementAt(row);
-		   	  	else out = null;
-		   	}
+		   row = parentTable.getSelectionModel().getMinSelectionIndex();
+
+			if (row != -1) {
+				out = parentModel.getElementAt(row);
+			}
+			else
+			{
+				//row = childrenTable.getSelectedRow();
+				row = childrenTable.getSelectionModel().getMinSelectionIndex();
+
+				if (row != -1) {
+					out = childrenModel.getElementAt(row);
+				}
+				else {
+					out = null;
+				}
+			}
 		   		
 		}
 	
@@ -757,25 +783,29 @@ public DFGUI(DFGUIAdapter a)
 		int out = -1;
 		int tab = tabbedPane.getSelectedIndex();
 
-		if (tab == 0)
+		if (tab == 0) {
 			out = AGENT_VIEW; //operation from descriptor table
-			else if(tab == 1)
-				out = LASTSEARCH_VIEW; // operation from lastsearch view 
-				else if (tab == 2)
-				{
-					//int rowSelected = parentTable.getSelectedRow();
-					int rowSelected = parentTable.getSelectionModel().getMinSelectionIndex(); 
+		}
+		else if (tab == 1) {
+			out = LASTSEARCH_VIEW; // operation from lastsearch view 
+		}
+		else if (tab == 2)
+		{
+			//int rowSelected = parentTable.getSelectedRow();
+			int rowSelected = parentTable.getSelectionModel().getMinSelectionIndex();
 
-					if (rowSelected != -1)
-						out = PARENT_VIEW; //OPERATION  from  parent table
-						else
-						{
-							//rowSelected = childrenTable.getSelectedRow();
-						  rowSelected = childrenTable.getSelectionModel().getMinSelectionIndex();
-							if (rowSelected != -1) 
-							  out = CHILDREN_VIEW; //OPERATION from children table
-						}
+			if (rowSelected != -1) {
+				out = PARENT_VIEW; //OPERATION  from  parent table
+			}
+			else
+			{
+				//rowSelected = childrenTable.getSelectedRow();
+				rowSelected = childrenTable.getSelectionModel().getMinSelectionIndex();
+				if (rowSelected != -1) {
+					out = CHILDREN_VIEW; //OPERATION from children table
 				}
+			}
+		}
 		return out;
 						
 				}
@@ -786,18 +816,21 @@ public DFGUI(DFGUIAdapter a)
 	public void refresh(Iterator AIDOfAllAgentRegistered,Iterator parents,Iterator children) 
 	{
 		registeredModel.clear();
-		for (; AIDOfAllAgentRegistered.hasNext(); )
-		    registeredModel.add((AID)AIDOfAllAgentRegistered.next());
+		while (AIDOfAllAgentRegistered.hasNext()) {
+			registeredModel.add((AID) AIDOfAllAgentRegistered.next());
+		}
 		registeredModel.fireTableDataChanged();
 		
 		parentModel.clear();
-		for (; parents.hasNext(); )
-			parentModel.add((AID)parents.next());
+		while (parents.hasNext()) {
+			parentModel.add((AID) parents.next());
+		}
 		parentModel.fireTableDataChanged();
 		
 		childrenModel.clear();
-		for (; children.hasNext(); )
-			childrenModel.add((AID)children.next());
+		while (children.hasNext()) {
+			childrenModel.add((AID) children.next());
+		}
 		childrenModel.fireTableDataChanged();
 		
 	  registeredTable.getSelectionModel().clearSelection();
@@ -890,8 +923,9 @@ Refresh the search result.
 		//update the foundModel
 		try
 		{
-		  	if(df.equals(lastDF))
+			if (df.equals(lastDF)) {
 				removeSearchResult(name);
+			}
 		 }catch(Exception e){}
 		
 	}

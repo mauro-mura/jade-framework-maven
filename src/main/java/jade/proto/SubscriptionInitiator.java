@@ -119,7 +119,7 @@ public class SubscriptionInitiator extends Initiator {
 	private static final int TERMINATED = 2;
 	
 	// If set to true all expected responses have been received
-	private boolean allResponsesReceived = false;
+	private boolean allResponsesReceived;
 	
 	/**
 	 * Construct a <code>SubscriptionInitiator</code> with an empty DataStore
@@ -327,7 +327,7 @@ public class SubscriptionInitiator extends Initiator {
 		return ret;
 	}
 	
-	private String[] toBeReset = null;
+	private String[] toBeReset;
 	
 	/**
 	 */
@@ -651,7 +651,7 @@ public class SubscriptionInitiator extends Initiator {
 		static final int NOTIFICATION_RECEIVED = 3;
 		
 		private int state = INIT;
-		private boolean cancelled = false;
+		private boolean cancelled;
 		
 		public String getId() {
 			return null;
@@ -699,7 +699,7 @@ public class SubscriptionInitiator extends Initiator {
 		}
 		
 		public boolean isCompleted() {
-			return (state == NEGATIVE_RESPONSE_RECEIVED);
+			return state == NEGATIVE_RESPONSE_RECEIVED;
 		}
 		
 		void cancel() {

@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 public class MessageList implements Serializable {
 
-  private List messages;
+	private final List messages;
 
   public MessageList() {
     messages = new ArrayList<>(50);

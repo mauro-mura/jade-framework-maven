@@ -62,19 +62,19 @@ public class ContainerLogWindow extends JInternalFrame implements InternalFrameL
 	private static final int LEVEL_COLUMN = 1;		
 	private static final int HANDLERS_COLUMN = 2;		
 	private static final int FILE_COLUMN = 3;
-	
-	private Agent myAgent;
-	
-	private String containerName;
-	private AID controller;
-	private LogManagerGUI mainGui;
+
+	private final Agent myAgent;
+
+	private final String containerName;
+	private final AID controller;
+	private final LogManagerGUI mainGui;
 	
 	private LogManager myLogManager;
-	private LogTable myTable;
-	private JComboBox levelCombo;
-	private JTextField loggingSystemTF;
-	
-	private AbstractAction setLoggingSystemAction = new SetLoggingSystemAction(this);
+	private final LogTable myTable;
+	private final JComboBox levelCombo;
+	private final JTextField loggingSystemTF;
+
+	private final AbstractAction setLoggingSystemAction = new SetLoggingSystemAction(this);
 	
 	public ContainerLogWindow(Agent a, String containerName, AID controller, LogManager logManager, LogManagerGUI gui) throws FIPAException {
 		super(containerName);

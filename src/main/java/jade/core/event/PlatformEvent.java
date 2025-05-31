@@ -53,13 +53,13 @@ public class PlatformEvent extends JADEEvent implements jade.wrapper.PlatformEve
 	public static final int THAWED_AGENT = 11;
 
 	// set with constructors which specify two container IDs
-	private ContainerID newContainer = null;
+	private ContainerID newContainer;
 	// the name of the platform that generated this event
-	private String myPlatformName = null; 
-	private AID agent = null;
-	private String oldOwnership = null;
-	private String newOwnership = null;
-	private boolean containerRemoved = false;
+	private String myPlatformName; 
+	private AID agent;
+	private String oldOwnership;
+	private String newOwnership;
+	private boolean containerRemoved;
 
 	/**
 	 * This constructor is used to create a PlatformEvent when a container is added,

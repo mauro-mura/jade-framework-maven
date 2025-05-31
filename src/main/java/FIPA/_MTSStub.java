@@ -15,7 +15,7 @@ public class _MTSStub
           _set_delegate(d);
     }
 
-    private static final String _type_ids[] = {
+    private static final String[] _type_ids = {
         "IDL:FIPA/MTS:1.0"
     };
 

@@ -169,13 +169,13 @@ public class UDPNodeMonitoringService extends NodeMonitoringService {
 	
 	
 	private UDPMonitorServer myServer;
-	private Hashtable myClients = new Hashtable(2);
+	private final Hashtable myClients = new Hashtable(2);
 	
 	private ServiceManager myServiceManager;
 	private MainContainer mainContainer;
-	
-	private ServiceComponent localSlice = new ServiceComponent();
-	private Filter incFilter = new UDPMonitorIncomingFilter();
+
+	private final ServiceComponent localSlice = new ServiceComponent();
+	private final Filter incFilter = new UDPMonitorIncomingFilter();
 
 	public String getName() {
 		return NAME;
@@ -420,7 +420,7 @@ public class UDPNodeMonitoringService extends NodeMonitoringService {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
 
-				if (cmdName.equals(UDPNodeMonitoringSlice.H_ACTIVATEUDP)) {
+				if (UDPNodeMonitoringSlice.H_ACTIVATEUDP.equals(cmdName)) {
 					String label = (String) params[0];
 					String host = (String) params[1];
 					int port = ((Integer) params[2]).intValue();
@@ -428,7 +428,7 @@ public class UDPNodeMonitoringService extends NodeMonitoringService {
 					long key = ((Long) params[4]).longValue();
 					startUDPClient(label, host, port, pingDelay, key);
 				} 
-				else if (cmdName.equals(UDPNodeMonitoringSlice.H_DEACTIVATEUDP)) {
+				else if (UDPNodeMonitoringSlice.H_DEACTIVATEUDP.equals(cmdName)) {
 					String label = (String) params[0];
 					long key = ((Long) params[1]).longValue();
 					stopUDPClient(label, key, true);
@@ -453,11 +453,11 @@ public class UDPNodeMonitoringService extends NodeMonitoringService {
 		public boolean accept(VerticalCommand cmd) {
 			String name = cmd.getName();
 			Object[] params = cmd.getParams();
-			if (name.equals(Service.DEAD_PLATFORM_MANAGER)) {
+			if (Service.DEAD_PLATFORM_MANAGER.equals(name)) {
 				String address = (String) params[0];
 				stopUDPClient(address, -1, true);
 			}
-			else if (name.equals(Service.DEAD_REPLICA)) {
+			else if (Service.DEAD_REPLICA.equals(name)) {
 				String address = (String) params[0];
 				stopUDPClient(address, -1, true);
 			}

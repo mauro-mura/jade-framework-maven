@@ -51,25 +51,25 @@ public class PopMouserAgent extends MouseAdapter {
  }
 
  public void mouseReleased(MouseEvent e) {
-    if (e.isPopupTrigger())
-         if (checkCoordinate(e)) {
-          popup.setAgent(agent);
-          popup.show(e.getComponent(), e.getX(), e.getY());
-         }
+	 if (e.isPopupTrigger()) {
+			if (checkCoordinate(e)) {
+			 popup.setAgent(agent);
+			 popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+	 }
   }
 
  public void mousePressed(MouseEvent e) {
-     if (e.isPopupTrigger())
-        if(checkCoordinate(e)) {
-         popup.setAgent(agent);
-         popup.show(e.getComponent(), e.getX(), e.getY());
-        }
+		if (e.isPopupTrigger()) {
+			if (checkCoordinate(e)) {
+			 popup.setAgent(agent);
+			 popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+	 }
  }
 
  private boolean checkCoordinate(MouseEvent evt) {
-   if ((agent= canvAgent.selAgent(evt)) != null) return true;
-
-   else return false;
+		return (agent = canvAgent.selAgent(evt)) != null;
 
  }
 

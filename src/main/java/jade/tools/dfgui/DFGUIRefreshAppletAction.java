@@ -37,7 +37,7 @@ import jade.domain.DFGUIAdapter;
 
 class DFGUIRefreshAppletAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIRefreshAppletAction(DFGUI gui)
 	{

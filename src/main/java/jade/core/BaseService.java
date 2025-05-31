@@ -310,13 +310,13 @@ public abstract class BaseService implements Service {
 	 * @return A string representation of the service internal data
 	 */
 	public String dump(String key) {
-		if (key == null || key.equals(ALL_DUMP_KEY)) {
+		if (key == null || ALL_DUMP_KEY.equals(key)) {
 			StringBuilder sb = new StringBuilder("LOCAL: ").append(isLocal()).append('\n');
 			sb.append("CACHED SLICES:\n");
 			Iterator<String> it = slices.keySet().iterator();
 			while (it.hasNext()) {
 				String name = it.next();
-				sb.append("- ").append(name).append(" --> "+stringifySlice(slices.get(name))).append("\n");
+				sb.append("- ").append(name).append(" --> ").append(stringifySlice(slices.get(name))).append("\n");
 			}
 			
 			return sb.toString();
@@ -326,10 +326,10 @@ public abstract class BaseService implements Service {
 		}
 	}
 
-	public static final String stringifySlice(Slice s) {
+	public static String stringifySlice(Slice s) {
 		StringBuilder sb = new StringBuilder("SLICE ");
 		try {
-			sb.append(s.getClass().getName()).append(": node = "+s.getNode().getName());
+			sb.append(s.getClass().getName()).append(": node = ").append(s.getNode().getName());
 		}
 		catch (ServiceException se) {
 			// Should never happen as this is a local call
@@ -344,7 +344,7 @@ public abstract class BaseService implements Service {
 	
 	private IMTPManager myIMTPManager;
 	
-	private CommandProcessor myCommandProcessor = null;
+	private CommandProcessor myCommandProcessor;
 	
 	private Map<String, Slice> slices;
 	private Map<String, String> aliases;

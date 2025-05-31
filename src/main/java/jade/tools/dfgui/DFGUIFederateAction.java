@@ -43,7 +43,7 @@ import jade.gui.GuiEvent;
 
 class DFGUIFederateAction extends AbstractAction
 {
-	private DFGUI gui;
+	private final DFGUI gui;
 
 	public DFGUIFederateAction(DFGUI gui)
 	{

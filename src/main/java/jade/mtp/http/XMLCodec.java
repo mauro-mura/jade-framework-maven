@@ -120,22 +120,22 @@ public class XMLCodec extends DefaultHandler {
 	 */
 
 	// #DOTNET_EXCLUDE_BEGIN
-	private XMLReader parser = null;
+	private XMLReader parser;
 	// #DOTNET_EXCLUDE_END
 	/*
 	 * #DOTNET_INCLUDE_BEGIN private XmlTextReader parser = null;
 	 * #DOTNET_INCLUDE_END
 	 */
 
-	private Envelope env = null;
-	private ReceivedObject ro = null;
-	private AID aid = null;
-	private Property prop = null;
+	private Envelope env;
+	private ReceivedObject ro;
+	private AID aid;
+	private Property prop;
 	// Accumulate parsed text
 	private StringBuffer accumulator;
 	private String propType;
 	// logging
-	private static Logger logger = Logger.getMyLogger(XMLCodec.class.getName());
+	private static final Logger logger = Logger.getMyLogger(XMLCodec.class.getName());
 
 	// var for detected tag to then origin=0, or tag from then origin=1
 	// private int origin;
@@ -223,8 +223,9 @@ public class XMLCodec extends DefaultHandler {
 				oos.writeObject(o);
 				oos.close();
 				byte[] bytes = bos.toByteArray();
-				if (bytes != null)
+				if (bytes != null) {
 					v = new String(Base64.getEncoder().encode(bytes), "US-ASCII");
+				}
 			} catch (IOException ioe) {
 				return;
 			}
@@ -240,7 +241,7 @@ public class XMLCodec extends DefaultHandler {
 	}
 
 	private void decodeProp(StringBuffer acc, Property p) {
-		if (propType.equals(PROP_SER_TYPE)) {
+		if (PROP_SER_TYPE.equals(propType)) {
 			try {
 				byte[] serdata = acc.toString().getBytes("US-ASCII");
 				ObjectInputStream ois = new ObjectInputStream(
@@ -249,7 +250,7 @@ public class XMLCodec extends DefaultHandler {
 			} catch (Exception e) {
 				// nothing, we leave value of this property as null;
 			}
-		} else if (propType.equals(PROP_BYTE_TYPE)) {
+		} else if (PROP_BYTE_TYPE.equals(propType)) {
 			byte[] bytes = null;
 			try {
 				bytes = acc.toString().getBytes("US-ASCII");
@@ -348,19 +349,19 @@ public class XMLCodec extends DefaultHandler {
 				encodeOneLineTag(sb, RECEIVED_DATE, RECEIVED_ATTR, value);
 			}
 			// By
-			if (((value = ro.getBy()) != null) && (!value.equals(NULL))) {
+			if (((value = ro.getBy()) != null) && (!NULL.equals(value))) {
 				encodeOneLineTag(sb, RECEIVED_BY, RECEIVED_ATTR, value);
 			}
 			// From
-			if (((value = ro.getFrom()) != null) && (!value.equals(NULL))) {
+			if (((value = ro.getFrom()) != null) && (!NULL.equals(value))) {
 				encodeOneLineTag(sb, RECEIVED_FROM, RECEIVED_ATTR, value);
 			}
 			// Id
-			if (((value = ro.getId()) != null) && (!value.equals(NULL))) {
+			if (((value = ro.getId()) != null) && (!NULL.equals(value))) {
 				encodeOneLineTag(sb, RECEIVED_ID, RECEIVED_ATTR, value);
 			}
 			// Via
-			if (((value = ro.getVia()) != null) && (!value.equals(NULL))) {
+			if (((value = ro.getVia()) != null) && (!NULL.equals(value))) {
 				encodeOneLineTag(sb, RECEIVED_VIA, RECEIVED_ATTR, value);
 			}
 			sb.append(ET).append(RECEIVED_TAG).append(CT);
@@ -438,8 +439,9 @@ public class XMLCodec extends DefaultHandler {
 			env.setAclRepresentation(accumulator.toString());
 		} else if (LENGTH_TAG.equalsIgnoreCase(localName)) {
 			env.setPayloadLength(Long.valueOf(accumulator.toString()));
-			if (logger.isLoggable(Logger.WARNING))
+			if (logger.isLoggable(Logger.WARNING)) {
 				logger.log(Logger.FINE, "Length: " + env.getPayloadLength());
+			}
 		} else if (ENCODING_TAG.equalsIgnoreCase(localName)) {
 			env.setPayloadEncoding(accumulator.toString());
 		} else if (DATE_TAG.equalsIgnoreCase(localName)) {
@@ -468,9 +470,10 @@ public class XMLCodec extends DefaultHandler {
 		 * #DOTNET_INCLUDE_BEGIN public void warning(ParseException exception) {
 		 * #DOTNET_INCLUDE_END
 		 */
-		if (logger.isLoggable(Logger.WARNING))
+		if (logger.isLoggable(Logger.WARNING)) {
 			// #DOTNET_EXCLUDE_BEGIN
 			logger.log(Logger.WARNING, " line " + exception.getLineNumber() + ": " + exception.getMessage());
+		}
 		// #DOTNET_EXCLUDE_END
 		/*
 		 * #DOTNET_INCLUDE_BEGIN logger.log(Logger.WARNING," line " +
@@ -486,9 +489,10 @@ public class XMLCodec extends DefaultHandler {
 		 * #DOTNET_INCLUDE_BEGIN public void error(ParseException exception) {
 		 * #DOTNET_INCLUDE_END
 		 */
-		if (logger.isLoggable(Logger.WARNING))
+		if (logger.isLoggable(Logger.WARNING)) {
 			// #DOTNET_EXCLUDE_BEGIN
 			logger.log(Logger.WARNING, "ERROR: line " + exception.getLineNumber() + ": " + exception.getMessage());
+		}
 		// #DOTNET_EXCLUDE_END
 		/*
 		 * #DOTNET_INCLUDE_BEGIN logger.log(Logger.WARNING,"ERROR: line " +
@@ -505,9 +509,10 @@ public class XMLCodec extends DefaultHandler {
 		 * #DOTNET_INCLUDE_END
 		 */
 
-		if (logger.isLoggable(Logger.WARNING))
+		if (logger.isLoggable(Logger.WARNING)) {
 			// #DOTNET_EXCLUDE_BEGIN
 			logger.log(Logger.SEVERE, "FATAL: line " + exception.getLineNumber() + ": " + exception.getMessage());
+		}
 		throw exception;
 		// #DOTNET_EXCLUDE_END
 		/*

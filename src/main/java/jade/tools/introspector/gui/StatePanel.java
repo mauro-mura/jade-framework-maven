@@ -51,7 +51,7 @@ public class StatePanel extends JPanel {
 
   private int state;
 
-  private ButtonGroup leds;
+	private final ButtonGroup leds;
   private JRadioButton waitingLed;
   private JRadioButton activeLed;
   private JRadioButton suspendedLed;
@@ -63,15 +63,15 @@ public class StatePanel extends JPanel {
   private JButton wakeUpAction;
   private JButton killAction;
 
-  private Icon ledOff = new ImageIcon(getClass().getResource("images/rbs.gif"));
-  private Icon ledOn = new ImageIcon(getClass().getResource("images/rbrs.gif"));
-  private Icon button = new ImageIcon(getClass().getResource("images/rb.gif"));
-  private Icon pressedButton = new ImageIcon(getClass().getResource("images/rbp.gif"));
-  private Font myFont = new Font("Monospaced", Font.BOLD, 10);
+	private final Icon ledOff = new ImageIcon(getClass().getResource("images/rbs.gif"));
+	private final Icon ledOn = new ImageIcon(getClass().getResource("images/rbrs.gif"));
+	private final Icon button = new ImageIcon(getClass().getResource("images/rb.gif"));
+	private final Icon pressedButton = new ImageIcon(getClass().getResource("images/rbp.gif"));
+	private final Font myFont = new Font("Monospaced", Font.BOLD, 10);
 
-  private MainBarListener listener;
+	private final MainBarListener listener;
 
-  private Map ledMap = new HashMap<>();
+	private final Map ledMap = new HashMap<>();
 
   public StatePanel(MainBarListener list){
     super();
@@ -184,8 +184,9 @@ public class StatePanel extends JPanel {
 
   public void switchTo(AgentState as) {
     JRadioButton led = (JRadioButton)ledMap.get(as);
-    if(led != null)
-      led.setSelected(true);
+		if (led != null) {
+			led.setSelected(true);
+		}
   }
 
   private void configureLED(JRadioButton led) {

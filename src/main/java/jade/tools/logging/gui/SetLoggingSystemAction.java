@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class SetLoggingSystemAction extends AbstractAction {
-	private ContainerLogWindow gui;
+	private final ContainerLogWindow gui;
 	
 	public SetLoggingSystemAction(ContainerLogWindow gui) {
 		super ("Set logging system");

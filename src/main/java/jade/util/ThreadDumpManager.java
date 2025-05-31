@@ -22,7 +22,7 @@ public class ThreadDumpManager {
 			ThreadInfo[] threadInfoInDeadlock = threadMXBean.getThreadInfo(threadIds);
 			sb.append("\n\n\n**************** WARNING ****************: Threads ");
 			for (int i = 0; i < threadInfoInDeadlock.length; i++) {
-				sb.append(" \"" + threadInfoInDeadlock[i].getThreadName() + "\"");
+				sb.append(" \"").append(threadInfoInDeadlock[i].getThreadName()).append("\"");
 			}
 			sb.append(" are in deadlock!");
 		}
@@ -37,20 +37,20 @@ public class ThreadDumpManager {
 
 	public static String dumpThread(String prefix, Thread t, ThreadInfo threadInfo) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(prefix + "\"" + t.getName() + "\"");
+		sb.append(prefix + "\"").append(t.getName()).append("\"");
 		if (t.isDaemon()) {
 			sb.append(" daemon");
 		}
 		String threadId = threadInfo != null ? String.valueOf(threadInfo.getThreadId()) : String.valueOf(t.getId());
-		sb.append(" tid=" + threadId);
-		sb.append(" " + t.getState().toString().toLowerCase());
+		sb.append(" tid=").append(threadId);
+		sb.append(" ").append(t.getState().toString().toLowerCase());
 		if (threadInfo != null) {
 			String lockedOn = threadInfo.getLockName();
 			if (lockedOn != null) {
 				String lockedBy = threadInfo.getLockOwnerName();
-				sb.append(" on " + lockedOn);
+				sb.append(" on ").append(lockedOn);
 				if (lockedBy != null) {
-					sb.append(" held by " + lockedBy);
+					sb.append(" held by ").append(lockedBy);
 				}
 			}
 		}

@@ -65,17 +65,17 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 	private String myID;
 
 	private byte lastSid = 0x0f;
-	private int inpCnt = 0;
+	private int inpCnt;
 	private boolean active = true;
 
 	protected InpConnectionHolder inpHolder = new InpConnectionHolder();
 	protected OutConnectionHolder outHolder = new OutConnectionHolder();
 
-	private MicroSkeleton mySkel = null;
-	private FrontEndStub myStub = null;
-	private BackEndContainer myContainer = null;
+	private MicroSkeleton mySkel;
+	private FrontEndStub myStub;
+	private BackEndContainer myContainer;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	/**
 	 * Constructor declaration
@@ -160,7 +160,7 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 
 	}
 
-	private Object shutdownLock = new Object();
+	private final Object shutdownLock = new Object();
 
 	/**
 	 * Shutdown self initiated or forced by the JICPServer this BackEndContainer is
@@ -196,11 +196,11 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 		boolean inp = false;
 		byte[] data = pkt.getData();
 		if (data.length == 1) {
-			inp = (data[0] == 1);
+			inp = data[0] == 1;
 		} else {
 			// Backward compatibility
 			try {
-				inp = (new String(data)).equals("inp");
+				inp = "inp".equals(new String(data));
 			} catch (Exception e) {
 			}
 		}
@@ -222,8 +222,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 				// Missing keep-alive.
 				// The OUT connection is no longer valid
 				if (outHolder.isConnected()) {
-					if (myLogger.isLoggable(Logger.WARNING))
+					if (myLogger.isLoggable(Logger.WARNING)) {
 						myLogger.log(Logger.WARNING, myID + " - Missing keep-alive");
+					}
 					outHolder.resetConnection();
 				}
 				// Check the INP connection. Since this method must return
@@ -235,8 +236,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 								JICPPacket pkt = new JICPPacket(JICPProtocol.KEEP_ALIVE_TYPE, JICPProtocol.DEFAULT_INFO,
 										null);
 								dispatchPacket(pkt, false, -1);
-								if (myLogger.isLoggable(Logger.FINE))
+								if (myLogger.isLoggable(Logger.FINE)) {
 									myLogger.log(Logger.FINE, myID + " - IC valid");
+								}
 							} catch (Exception e) {
 								// Just do nothing
 							}
@@ -267,8 +269,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 	 * Make this BackEndDispatcher terminate.
 	 */
 	public void shutdown() {
-		if (myLogger.isLoggable(Logger.FINE))
+		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, myID + " - Initiate BIBEDispatcher shutdown");
+		}
 
 		// Deregister from the JICPServer
 		if (myID != null) {
@@ -323,8 +326,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 				inpHolder.stopWatchDog();
 				status = 2;
 
-				if (myLogger.isLoggable(Logger.FINER))
+				if (myLogger.isLoggable(Logger.FINER)) {
 					myLogger.log(Logger.FINER, myID + " - Response received from FE " + pkt.getSessionID());
+				}
 
 				if (pkt.getType() == JICPProtocol.ERROR_TYPE) {
 					// Communication OK, but there was a JICP error on the peer
@@ -337,8 +341,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 				return pkt;
 			} catch (IOException ioe) {
 				// Can't reach the FrontEnd.
-				if (myLogger.isLoggable(Logger.WARNING))
+				if (myLogger.isLoggable(Logger.WARNING)) {
 					myLogger.log(Logger.WARNING, myID + " - IOException IC[" + status + "]" + ioe);
+				}
 
 				inpHolder.resetConnection(false);
 				throw new ICPDispatchException("Dispatching error.", ioe, inpCnt);
@@ -359,8 +364,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 		lastResponse = null;
 		int status = 0;
 
-		if (myLogger.isLoggable(Logger.FINE))
+		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, myID + " - BIBEDispatcher thread started");
+		}
 
 		while (active) {
 			try {
@@ -383,15 +389,17 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 				}
 			} catch (IOException ioe) {
 				if (active) {
-					if (myLogger.isLoggable(Logger.WARNING))
+					if (myLogger.isLoggable(Logger.WARNING)) {
 						myLogger.log(Logger.WARNING, myID + " - IOException OC[" + status + "]" + ioe);
+					}
 
 					outHolder.resetConnection();
 				}
 			}
 		}
-		if (myLogger.isLoggable(Logger.FINE))
+		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, myID + " - BIBEDispatcher Thread terminated");
+		}
 
 	}
 
@@ -415,17 +423,20 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 			}
 			byte sid = pkt.getSessionID();
 			if (sid == lastSid && lastResponse != null) {
-				if (myLogger.isLoggable(Logger.WARNING))
+				if (myLogger.isLoggable(Logger.WARNING)) {
 					myLogger.log(Logger.WARNING, myID + " - Duplicated command from FE " + sid);
+				}
 
 				reply = lastResponse;
 			} else {
-				if (myLogger.isLoggable(Logger.FINER))
+				if (myLogger.isLoggable(Logger.FINER)) {
 					myLogger.log(Logger.FINER, myID + " - Command from FE received " + sid);
+				}
 
 				byte[] rspData = mySkel.handleCommand(pkt.getData());
-				if (myLogger.isLoggable(Logger.FINER))
+				if (myLogger.isLoggable(Logger.FINER)) {
 					myLogger.log(Logger.FINER, myID + " - Command from FE served " + sid);
+				}
 
 				reply = new JICPPacket(JICPProtocol.RESPONSE_TYPE, getReconnectInfo(), rspData);
 				reply.setSessionID(sid);
@@ -446,8 +457,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 	}
 
 	private void handlePeerExited(String msg) {
-		if (myLogger.isLoggable(Logger.INFO))
+		if (myLogger.isLoggable(Logger.INFO)) {
 			myLogger.log(Logger.INFO, myID + " - " + msg);
+		}
 
 		kill();
 	}
@@ -466,12 +478,13 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 	protected class InpConnectionHolder {
 		private Connection myConnection;
 		private boolean connectionRefreshed;
-		private boolean waitingForFlush = false;
-		private Thread watchDog = null;
+		private boolean waitingForFlush;
+		private Thread watchDog;
 
 		private synchronized void setConnection(Connection c) {
-			if (myLogger.isLoggable(Logger.FINE))
+			if (myLogger.isLoggable(Logger.FINE)) {
 				myLogger.log(Logger.FINE, myID + " - New input connection.");
+			}
 
 			// Close the old connection
 			if (myConnection != null) {
@@ -514,8 +527,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 					try {
 						Thread.sleep(timeout);
 						// WatchDog expired --> close the connection
-						if (myLogger.isLoggable(Logger.WARNING))
+						if (myLogger.isLoggable(Logger.WARNING)) {
 							myLogger.log(Logger.WARNING, myID + " - Response timeout expired");
+						}
 
 						resetConnection(false);
 					} catch (InterruptedException ie) {
@@ -543,8 +557,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 		private boolean connectionRefreshed;
 
 		private synchronized void setConnection(Connection c) {
-			if (myLogger.isLoggable(Logger.FINE))
+			if (myLogger.isLoggable(Logger.FINE)) {
 				myLogger.log(Logger.FINE, myID + " - New output connection.");
+			}
 
 			if (myConnection != null) {
 				close(myConnection);
@@ -562,8 +577,9 @@ public class BIBEDispatcher extends Thread implements BEConnectionManager, Dispa
 						return null;
 					}
 				} catch (Exception e) {
-					if (myLogger.isLoggable(Logger.WARNING))
+					if (myLogger.isLoggable(Logger.WARNING)) {
 						myLogger.log(Logger.WARNING, myID + " - Spurious wake up");
+					}
 				}
 			}
 			connectionRefreshed = false;

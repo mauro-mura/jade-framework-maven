@@ -39,7 +39,7 @@ import jade.util.Logger;
  */
 public class CallbackInvokator implements java.io.Serializable {
 
-	private Logger myLogger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(this.getClass().getName());
 	@Serial
 	private static final long serialVersionUID = -5610398426819185225L;
 

@@ -45,6 +45,7 @@
                     <configuration>
                         <activeRecipes>
                             <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
+                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>
                         </activeRecipes>
                     </configuration>
                     <dependencies>
@@ -52,6 +53,11 @@
                             <groupId>org.openrewrite.recipe</groupId>
                             <artifactId>rewrite-migrate-java</artifactId>
                             <version>3.11.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.openrewrite.recipe</groupId>
+                            <artifactId>rewrite-static-analysis</artifactId>
+                            <version>2.10.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>

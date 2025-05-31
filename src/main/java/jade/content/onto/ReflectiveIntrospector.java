@@ -114,8 +114,9 @@ public class ReflectiveIntrospector implements Introspector {
 		Method[] methods = c.getMethods();
 		for (int i = 0; i < methods.length; i++) {
 			String ithName = methods[i].getName();
-			if (CaseInsensitiveString.equalsIgnoreCase(ithName, name))
+			if (CaseInsensitiveString.equalsIgnoreCase(ithName, name)) {
 				return methods[i];
+			}
 		}
 		throw new OntologyException("Method " + name + " not found in class " + c.getName());
 	}

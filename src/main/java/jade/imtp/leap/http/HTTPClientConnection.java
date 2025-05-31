@@ -62,11 +62,11 @@ class HTTPClientConnection extends Connection {
 
 	
 	private HttpURLConnection hc;
-	
+
 	/*#MIDP_INCLUDE_BEGIN
     private HttpConnection hc;
     #MIDP_INCLUDE_END*/
-	private String url;
+	private final String url;
 	private InputStream is;
 	private OutputStream os;
 	private int state;
@@ -82,8 +82,8 @@ class HTTPClientConnection extends Connection {
 		// If the HTTP connection must go through an authenticated proxy
 		// set the proper authenticator
 		Authenticator.setDefault(new Authenticator() {
-			private String username = null;
-			private String password = null;
+			private String username;
+			private String password;
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 				if (username == null) {
@@ -122,7 +122,7 @@ class HTTPClientConnection extends Connection {
 
 	
 	protected HttpURLConnection open(String url) throws MalformedURLException, IOException {
-		return (HttpURLConnection) (new URL(url)).openConnection();
+		return (HttpURLConnection) new URL(url).openConnection();
 	}
 	
 

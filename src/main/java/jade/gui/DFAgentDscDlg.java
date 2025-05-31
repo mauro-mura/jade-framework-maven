@@ -81,7 +81,7 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 	/**
 	 * @serial
 	 */
-	AID newAID = null;
+	AID newAID;
 	/**
 	 * @serial
 	 */
@@ -175,8 +175,10 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 		if (dfd != null) {
 			dfdAgent = dfd;
 			newAID = dfd.getName();
-		} else
+		}
+		else {
 			dfdAgent = new DFAgentDescription();
+		}
 
 		JPanel p = new JPanel();
 		JPanel main = new JPanel();
@@ -205,10 +207,12 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 		agentName.setMaximumSize(new Dimension(250, 26));
 		agentName.setBackground(Color.white);
 		AID aidtemp = dfdAgent.getName();
-		if (aidtemp == null)
+		if (aidtemp == null) {
 			agentName.setText("");
-		else
+		}
+		else {
 			agentName.setText(aidtemp.getName());
+		}
 
 		AIDButton = new JButton(editable ? "Set" : "View");
 
@@ -217,9 +221,10 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 				String command = e.getActionCommand();
 				AIDGui guiSender = new AIDGui(dlgParent);
 
-				if (command.equals("View"))
+				if ("View".equals(command)) {
 					guiSender.ShowAIDGui(dfdAgent.getName(), false, false);
-				else if (command.equals("Set")) {
+				}
+				else if ("Set".equals(command)) {
 
 					newAID = guiSender.ShowAIDGui(dfdAgent.getName(), true, checkSlots);
 
@@ -334,19 +339,20 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 		bOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String param = (String) e.getActionCommand();
-				if (param.equals("OK")) { // the user pressed the OK button
+				if ("OK".equals(param)) { // the user pressed the OK button
 					if (editable) { // if it is editable then I have to collect all data in the GUI and create a
-									// DFAgentDescription to return to the caller
+						// DFAgentDescription to return to the caller
 						out = new DFAgentDescription();
 
-						if (checkSlots)
+						if (checkSlots) {
 							// AID
 							if (newAID == null) // newAID was set when the "Set" button was pressed
-							{
-								JOptionPane.showMessageDialog(dlgParent, "AID must have a non-empty name.",
+								{
+									JOptionPane.showMessageDialog(dlgParent, "AID must have a non-empty name.",
 										"Error Message", JOptionPane.ERROR_MESSAGE);
-								return;
-							}
+									return;
+								}
+						}
 						// There is no need to check the slots of ServiceDescription because it is
 						// done already by ServiceDscDlg
 
@@ -354,29 +360,35 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 
 						// Ontologies
 						Enumeration onto = ontologiesListPanel.getContent();
-						while (onto.hasMoreElements())
+						while (onto.hasMoreElements()) {
 							out.addOntologies((String) onto.nextElement());
+						}
 
 						// Protocols
 						Enumeration proto = protocolsListPanel.getContent();
-						while (proto.hasMoreElements())
+						while (proto.hasMoreElements()) {
 							out.addProtocols((String) proto.nextElement());
+						}
 
 						// Languages
 						Enumeration lang = languagesListPanel.getContent();
-						while (lang.hasMoreElements())
+						while (lang.hasMoreElements()) {
 							out.addLanguages((String) lang.nextElement());
+						}
 
 						// Services
 						Enumeration serv = servicesListPanel.getContent();
-						while (serv.hasMoreElements())
+						while (serv.hasMoreElements()) {
 							out.addServices((ServiceDescription) serv.nextElement());
+						}
 						// lease-time
 						out.setLeaseTime(absDateLeaseTime);
 
-					} else
+					}
+					else {
 						out = dfdAgent; // if not editable returns the old dfd
 
+					}
 					dispose();
 				}
 			}
@@ -390,7 +402,7 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 
 				public void actionPerformed(ActionEvent e) {
 					String param = e.getActionCommand();
-					if (param.equals("Cancel")) {
+					if ("Cancel".equals(param)) {
 						out = null;
 						dispose();
 					}
@@ -407,12 +419,12 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 		setModal(true);
 		setResizable(false);
 
-		ShowCorrect();
+		showCorrect();
 		return out;
 
 	}
 
-	private void ShowCorrect() {
+	private void showCorrect() {
 		pack();
 
 		try {
@@ -459,13 +471,7 @@ public class DFAgentDscDlg extends JDialog implements ActionListener {
 				}
 
 			}
-			// when the button 'unlimited is pressed set the lease time to
-			// the default value and the update the text field that shows
-			// the value of the lease time
-
-			return;
 		}
-		return;
 	}
 	// #APIDOC_EXCLUDE_END
 

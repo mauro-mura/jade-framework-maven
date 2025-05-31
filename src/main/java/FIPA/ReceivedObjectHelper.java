@@ -7,7 +7,7 @@
 
 package FIPA;
 
-public class ReceivedObjectHelper {
+public final class ReceivedObjectHelper {
 	// It is useless to have instances of this class
 	private ReceivedObjectHelper() {
 	}
@@ -44,7 +44,7 @@ public class ReceivedObjectHelper {
 	private static org.omg.CORBA.TypeCode _tc;
 
 	@SuppressWarnings("unused")
-	synchronized public static org.omg.CORBA.TypeCode type() {
+	public static synchronized org.omg.CORBA.TypeCode type() {
 		int _memberCount = 5;
 		org.omg.CORBA.StructMember[] _members = null;
 		if (_tc == null) {

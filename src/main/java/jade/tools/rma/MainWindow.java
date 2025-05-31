@@ -63,19 +63,19 @@ class MainWindow extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -8739797132610216376L;
-	private MainPanel tree;
-	private ActionProcessor actPro;
-	private PopupMenuAgent popA;
-	private PopupMenuFrozenAgent popFA;
-	private PopupMenuContainer popC;
-	private PopupMenuPlatform popP;
-	private PopupMenuRemotePlatform popRP;
-	private InstallMTPDialog installDlg = new InstallMTPDialog(this, true);
-	private ManageMTPsDialog manageDlg;
-	private String logojade = "images/logosmall.jpg";
+	private final MainPanel tree;
+	private final ActionProcessor actPro;
+	private final PopupMenuAgent popA;
+	private final PopupMenuFrozenAgent popFA;
+	private final PopupMenuContainer popC;
+	private final PopupMenuPlatform popP;
+	private final PopupMenuRemotePlatform popRP;
+	private final InstallMTPDialog installDlg = new InstallMTPDialog(this, true);
+	private final ManageMTPsDialog manageDlg;
+	private final String logojade = "images/logosmall.jpg";
 
-	private List<String> containerNames = new LinkedList<>();
-	private Map addresses = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+	private final List<String> containerNames = new LinkedList<>();
+	private final Map addresses = new TreeMap(String.CASE_INSENSITIVE_ORDER);
 
 	public MainWindow(rma anRMA) {
 		super(anRMA.getName() + " - JADE Remote Agent Management GUI");
@@ -339,8 +339,9 @@ class MainWindow extends JFrame {
 				List<String> addrs = (List) addresses.get(where);
 				if (addrs != null) {
 					addrs.remove(address);
-					if (addrs.isEmpty())
+					if (addrs.isEmpty()) {
 						addresses.remove(where);
+					}
 					manageDlg.setData(containerNames, addresses);
 				}
 			}
@@ -361,28 +362,23 @@ class MainWindow extends JFrame {
 	}
 
 	public void showErrorDialog(String text, ACLMessage msg) {
-		String messages[] = new String[3];
+		String[] messages = new String[3];
 		messages[0] = text;
 		messages[1] = "";
 		messages[2] = "Do you want to view the ACL message ?";
 		int answer = JOptionPane.showConfirmDialog(this, messages, "RMA Error !!!", JOptionPane.YES_NO_OPTION,
 				JOptionPane.ERROR_MESSAGE);
-		switch (answer) {
-		case JOptionPane.YES_OPTION:
+		if (answer == JOptionPane.YES_OPTION) {
 			jade.gui.AclGui.showMsgInDialog(msg, this);
-			break;
-		default:
-			break;
+		}
+		else {
 		}
 	}
 
 	public boolean showExitDialog(String message) {
 		int n = JOptionPane.showConfirmDialog(this, "Are you really sure to exit ?", message,
 				JOptionPane.YES_NO_OPTION);
-		if (n == JOptionPane.YES_OPTION)
-			return true;
-		else
-			return false;
+		return n == JOptionPane.YES_OPTION;
 	}
 
 	public boolean showInstallMTPDialog(jade.domain.JADEAgentManagement.InstallMTP imtp) {
@@ -411,8 +407,10 @@ class MainWindow extends JFrame {
 		if (address != null) {
 			umtp.setAddress(address);
 			return true;
-		} else
+		}
+		else {
 			return false;
+		}
 	}
 
 	public void showManageMTPsDialog() {

@@ -37,7 +37,7 @@ public abstract class ByteArrayCodec extends Codec{
     /**
      * Construct a ByteArrayCodec object with the given name
      */
-    public ByteArrayCodec(String name) {
+    protected ByteArrayCodec(String name) {
     	super(name);
     }
 

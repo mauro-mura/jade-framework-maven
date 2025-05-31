@@ -38,7 +38,7 @@ package jade.tools.sniffer;
 
 abstract class FixedAction extends SnifferAction{
 
-  public FixedAction(String IconPath,String ActionName,ActionProcessor actPro) {
+  protected FixedAction(String IconPath,String ActionName,ActionProcessor actPro) {
    super(IconPath,ActionName,actPro);
   }
   

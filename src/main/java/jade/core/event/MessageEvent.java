@@ -48,11 +48,11 @@ public class MessageEvent extends JADEEvent {
 	public static final int RECEIVED_MESSAGE = 3;
 	public static final int ROUTED_MESSAGE = 4;
 
-	private ACLMessage message = null;
-	private AID sender = null;
-	private AID receiver = null;
-	private Channel from = null;
-	private Channel to = null;
+	private ACLMessage message;
+	private AID sender;
+	private AID receiver;
+	private Channel from;
+	private Channel to;
 
 	public MessageEvent(int id, ACLMessage msg, AID s, AID r, ContainerID cid) {
 		super(id, cid);

@@ -62,10 +62,10 @@ public class MainPanel
  protected AgentTree treeAgent;
  //#DOTNET_EXCLUDE_BEGIN
  protected PanelCanvas panelcan;
- private JSplitPane pane;
+	private final JSplitPane pane;
  private PopupMouser popM;
  public JTextArea textArea;
- private Font font = new Font("Helvetica",Font.ITALIC,12);
+	private final Font font = new Font("Helvetica", Font.ITALIC, 12);
  //#DOTNET_EXCLUDE_END
  /*#DOTNET_INCLUDE_BEGIN
  private System.Drawing.Font font = new System.Drawing.Font("Helvetica",12, FontStyle.Italic);

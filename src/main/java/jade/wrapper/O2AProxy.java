@@ -32,9 +32,9 @@ import java.lang.reflect.Method;
 
 public abstract class O2AProxy implements InvocationHandler {
 
-	private Object target;
+	private final Object target;
 	
-	public O2AProxy(Object target) {
+	protected O2AProxy(Object target) {
 		this.target = target; 
 	}
 	

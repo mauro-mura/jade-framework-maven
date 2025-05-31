@@ -155,7 +155,7 @@ public class PersistentDeliveryService extends BaseService {
 			try {
 				String name = cmd.getName();
 
-				if(name.equals(jade.core.messaging.MessagingSlice.NOTIFY_FAILURE)) {
+				if(jade.core.messaging.MessagingSlice.NOTIFY_FAILURE.equals(name)) {
 					return handleNotifyFailure(cmd);
 				}
 			}
@@ -176,8 +176,9 @@ public class PersistentDeliveryService extends BaseService {
 			AID receiver = (AID)params[1];
 			ACLMessage acl = msg.getACLMessage();
 
-			if(myLogger.isLoggable(Logger.FINE))
-				myLogger.log(Logger.FINE,"Persistent-Delivery - Processing failed message "+MessageManager.stringify(msg)+" for agent "+receiver.getName());
+			if (myLogger.isLoggable(Logger.FINE)) {
+				myLogger.log(Logger.FINE, "Persistent-Delivery - Processing failed message " + MessageManager.stringify(msg) + " for agent " + receiver.getName());
+			}
 
 
 			// FIXME: We should check if the failure is due to a "not found receiver"
@@ -189,7 +190,7 @@ public class PersistentDeliveryService extends BaseService {
 				String sliceName = null;
 				try {
 					sliceName = slice.getNode().getName();
-					boolean firstTime = (acl.getUserDefinedParameter(ACL_USERDEF_DUE_DATE) == null);
+					boolean firstTime = acl.getUserDefinedParameter(ACL_USERDEF_DUE_DATE) == null;
 					boolean accepted = false;
 					try {
 						accepted = slice.storeMessage(null, msg, receiver);
@@ -201,7 +202,7 @@ public class PersistentDeliveryService extends BaseService {
 					}
 
 					if(accepted) {
-						myLogger.log((firstTime ? Logger.INFO : Logger.FINE) ,"Persistent-Delivery - Message "+MessageManager.stringify(msg)+" for agent "+receiver.getName()+" stored on node "+sliceName);
+						myLogger.log(firstTime ? Logger.INFO : Logger.FINE,"Persistent-Delivery - Message "+MessageManager.stringify(msg)+" for agent "+receiver.getName()+" stored on node "+sliceName);
 						// The message was stored --> Veto the NOTIFY_FAILURE command
 						return false;
 					}
@@ -231,7 +232,7 @@ public class PersistentDeliveryService extends BaseService {
 			try {
 				String name = cmd.getName();
 
-				if(name.equals(jade.core.management.AgentManagementSlice.INFORM_CREATED)) {
+				if(jade.core.management.AgentManagementSlice.INFORM_CREATED.equals(name)) {
 					handleInformCreated(cmd);
 				}
 			}
@@ -277,7 +278,7 @@ public class PersistentDeliveryService extends BaseService {
 			try {
 				String cmdName = cmd.getName();
 				Object[] params = cmd.getParams();
-				if (cmdName.equals(PersistentDeliverySlice.H_STOREMESSAGE)) {
+				if (PersistentDeliverySlice.H_STOREMESSAGE.equals(cmdName)) {
 					String storeName = (String)params[0];
 					// NOTE that we can't send the GenericMessage directly as a parameter
 					// since we would loose the embedded ACLMessage
@@ -295,7 +296,7 @@ public class PersistentDeliveryService extends BaseService {
 					boolean stored = storeMessage(storeName, msg, receiver);
 					cmd.setReturnValue(Boolean.valueOf(stored));
 				}
-				else if(cmdName.equals(PersistentDeliverySlice.H_FLUSHMESSAGES)) {
+				else if(PersistentDeliverySlice.H_FLUSHMESSAGES.equals(cmdName)) {
 					AID receiver = (AID)params[0];
 
 					flushMessages(receiver);
@@ -328,7 +329,7 @@ public class PersistentDeliveryService extends BaseService {
 					// Due date not yet set (or unknown value)
 					long delay = messageFilter.delayBeforeExpiration(msg.getACLMessage());
 					if (delay != PersistentDeliveryFilter.NOW) {
-						dueDate = (delay == PersistentDeliveryFilter.NEVER ? delay : now+delay);
+						dueDate = delay == PersistentDeliveryFilter.NEVER ? delay : now+delay;
 						msg.getACLMessage().addUserDefinedParameter(ACL_USERDEF_DUE_DATE, String.valueOf(dueDate));
 						firstTime = true;
 					}
@@ -337,12 +338,14 @@ public class PersistentDeliveryService extends BaseService {
 				if (dueDate > now || dueDate == PersistentDeliveryFilter.NEVER) {
 					try {
 						if (firstTime) {
-							if(myLogger.isLoggable(Logger.INFO))
-								myLogger.log(Logger.INFO,"Persistent-Delivery - Storing message\n"+MessageManager.stringify(msg)+" for agent "+receiver.getName()+"\nDue date is "+dueDate);
+							if (myLogger.isLoggable(Logger.INFO)) {
+								myLogger.log(Logger.INFO, "Persistent-Delivery - Storing message\n" + MessageManager.stringify(msg) + " for agent " + receiver.getName() + "\nDue date is " + dueDate);
+							}
 						}
 						else {
-							if(myLogger.isLoggable(Logger.FINE))
-								myLogger.log(Logger.FINE,"Persistent-Delivery - Re-storing message\n"+MessageManager.stringify(msg)+" for agent "+receiver.getName()+"\nDue date is "+dueDate);
+							if (myLogger.isLoggable(Logger.FINE)) {
+								myLogger.log(Logger.FINE, "Persistent-Delivery - Re-storing message\n" + MessageManager.stringify(msg) + " for agent " + receiver.getName() + "\nDue date is " + dueDate);
+							}
 						}
 						myManager.storeMessage(storeName, msg, receiver);
 						return true;
@@ -388,8 +391,9 @@ public class PersistentDeliveryService extends BaseService {
 			}
 			
 			MessageManager.Channel ch = (MessageManager.Channel)myServiceFinder.findService(MessagingSlice.NAME);
-			if (ch == null)
+			if (ch == null) {
 				throw new ServiceException("Can't locate delivery channel");
+			}
 			myManager = PersistentDeliveryManager.instance(myProfile, ch);
 			myManager.start();
 		}

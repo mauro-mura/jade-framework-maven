@@ -55,11 +55,11 @@ import java.util.jar.JarFile;
  */
 public class ClassFinder {
 
-	private Class<?> searchClass = null;
+	private Class<?> searchClass;
 	private Map locations = new HashMap<>();
 	private Map results = new HashMap<>();
 	private List errors = new ArrayList<>();
-	private boolean working = false;
+	private boolean working;
 	private ClassFinderListener listener;
 	private ClassFinderFilter filter;
 	private boolean useClassPathLocations;
@@ -151,10 +151,12 @@ public class ClassFinder {
 	 * the last search, or if the result cache has been cleared.
 	 */
 	public final URL getLocationOf(Class<?> cls) {
-		if (results != null)
+		if (results != null) {
 			return (URL) results.get(cls);
-		else
+		}
+		else {
 			return null;
+		}
 	}
 
 	/**
@@ -185,19 +187,18 @@ public class ClassFinder {
 
 	private static final FileFilter DIRECTORIES_ONLY = new FileFilter() {
 		public boolean accept(File f) {
-			if (f.exists() && f.isDirectory())
-				return true;
-			else
-				return false;
+			return f.exists() && f.isDirectory();
 		}
 	};
 
 	private static final FileFilter CLASSES_ONLY = new FileFilter() {
 		public boolean accept(File f) {
-			if (f.exists() && f.isFile() && f.canRead())
+			if (f.exists() && f.isFile() && f.canRead()) {
 				return f.getName().endsWith(".class");
-			else
+			}
+			else {
 				return false;
+			}
 		}
 	};
 
@@ -214,18 +215,21 @@ public class ClassFinder {
 	};
 
 	private final void include(String name, File file, Map map) {
-		if (!file.exists())
+		if (!file.exists()) {
 			return;
+		}
 		if (!file.isDirectory()) {
 			// could be a JAR file
 			includeJar(file, map);
 			return;
 		}
 
-		if (name == null)
+		if (name == null) {
 			name = "";
-		else
+		}
+		else {
 			name += ".";
+		}
 
 		// add subpackages
 		File[] dirs = file.listFiles(DIRECTORIES_ONLY);
@@ -242,8 +246,9 @@ public class ClassFinder {
 	}
 
 	private void includeJar(File file, Map map) {
-		if (file.isDirectory())
+		if (file.isDirectory()) {
 			return;
+		}
 
 		URL jarURL = null;
 		JarFile jar = null;
@@ -262,8 +267,9 @@ public class ClassFinder {
 			return;
 		}
 
-		if (jar == null || jarURL == null)
+		if (jar == null || jarURL == null) {
 			return;
+		}
 
 		// include the jar's "default" package (i.e. jar's root)
 		map.put(jarURL, "");
@@ -273,8 +279,9 @@ public class ClassFinder {
 			JarEntry entry = e.nextElement();
 
 			if (entry.isDirectory()) {
-				if (entry.getName().toUpperCase().equals("META-INF/"))
+				if ("META-INF/".equals(entry.getName().toUpperCase())) {
 					continue;
+				}
 
 				try {
 					map.put(new URL(jarURL.toExternalForm() + entry.getName()), packageNameFor(entry));
@@ -287,17 +294,22 @@ public class ClassFinder {
 	}
 
 	private static String packageNameFor(JarEntry entry) {
-		if (entry == null)
+		if (entry == null) {
 			return "";
+		}
 		String s = entry.getName();
-		if (s == null)
+		if (s == null) {
 			return "";
-		if (s.length() == 0)
+		}
+		if (s.length() == 0) {
 			return s;
-		if (s.startsWith("/"))
+		}
+		if (s.startsWith("/")) {
 			s = s.substring(1, s.length());
-		if (s.endsWith("/"))
+		}
+		if (s.endsWith("/")) {
 			s = s.substring(0, s.length() - 1);
+		}
 		return s.replace('/', '.');
 	}
 
@@ -383,8 +395,9 @@ public class ClassFinder {
 
 							if (!entry.isDirectory() && entryname.endsWith(".class")) {
 								String classname = entryname.substring(0, entryname.length() - 6);
-								if (classname.startsWith("/"))
+								if (classname.startsWith("/")) {
 									classname = classname.substring(1);
+								}
 								classname = classname.replace('/', '.');
 
 								try {

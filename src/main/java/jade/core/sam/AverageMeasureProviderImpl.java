@@ -33,7 +33,7 @@ package jade.core.sam;
 public class AverageMeasureProviderImpl implements AverageMeasureProvider {
 
 	private double sum = 0.0;
-	private int nSamples = 0;
+	private int nSamples;
 	
 	public synchronized void addSample(Number value) {
 		if (value != null) {
@@ -62,7 +62,7 @@ public class AverageMeasureProviderImpl implements AverageMeasureProvider {
 	}
 	
 	public synchronized AverageMeasure getValue() {
-		double avg = (nSamples != 0 ? sum / nSamples : Double.NaN);
+		double avg = nSamples != 0 ? sum / nSamples : Double.NaN;
 		AverageMeasure result = new AverageMeasure(avg, nSamples);
 		nSamples = 0;
 		sum = 0.0;

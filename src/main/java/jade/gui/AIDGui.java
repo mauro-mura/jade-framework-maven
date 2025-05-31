@@ -59,7 +59,8 @@ public class AIDGui extends JDialog{
 
 	@Serial
 	private static final long serialVersionUID = 2974626094762646151L;
-	private boolean editable, checkSlots;
+	private boolean editable;
+	private boolean checkSlots;
 	private AID agentAID;
 	private JTextField nameText;
 	private JCheckBox isLocalName;
@@ -67,8 +68,8 @@ public class AIDGui extends JDialog{
 	private VisualAIDList resolverListPanel;
 	private VisualPropertiesList	propertiesListPanel;
 	private AID out;
-	
-	private Component parentGUI;
+
+	private final Component parentGUI;
 
 
 	/**
@@ -102,10 +103,12 @@ public class AIDGui extends JDialog{
 		this.editable = ed;
 		this.checkSlots = checkMandatorySlots;
 
-		if(agentIdentifier == null)
-			this.agentAID =  new AID();
-		else
+		if (agentIdentifier == null) {
+			this.agentAID = new AID();
+		}
+		else {
 			this.agentAID = agentIdentifier;
+		}
 
 		JLabel label;
 
@@ -204,34 +207,39 @@ public class AIDGui extends JDialog{
 			public void actionPerformed(ActionEvent e)
 			{
 				String param = (String)e.getActionCommand();
-				if(param.equals("OK"))
+				if("OK".equals(param))
 				{
 
 					if(editable)
 					{
 
-						String name = (nameText.getText()).trim();
-						if (checkSlots)
+						String name = nameText.getText().trim();
+						if (checkSlots) {
 							if (name.length() == 0) {
-								JOptionPane.showMessageDialog(AIDGui.this,"AID must have a non-empty name.","Error Message",JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(AIDGui.this, "AID must have a non-empty name.", "Error Message", JOptionPane.ERROR_MESSAGE);
 								return;
 							}
+						}
 						out = new AID();
 
-						if(isLocalName.isSelected())
+						if (isLocalName.isSelected()) {
 							out.setLocalName(name);
-						else
+						}
+						else {
 							out.setName(name);
+						}
 
 						//addresses
 						Enumeration<String> addresses = addressListPanel.getContent();
 
-						while(addresses.hasMoreElements())
+						while (addresses.hasMoreElements()) {
 							out.addAddresses(addresses.nextElement());
+						}
 						//resolvers
 						Enumeration<AID> resolvers = resolverListPanel.getContent();
-						while(resolvers.hasMoreElements())
+						while (resolvers.hasMoreElements()) {
 							out.addResolvers(resolvers.nextElement());
+						}
 						//Properties
 						Properties new_prop = propertiesListPanel.getContentProperties();
 						Enumeration key_en = new_prop.propertyNames();
@@ -243,8 +251,9 @@ public class AIDGui extends JDialog{
 
 
 					}
-					else
+					else {
 						out = agentAID;
+					}
 					dispose();
 				}
 			}
@@ -259,7 +268,7 @@ public class AIDGui extends JDialog{
 				public void actionPerformed(ActionEvent e)
 				{
 					String param = e.getActionCommand();
-					if(param.equals("Cancel"))
+					if("Cancel".equals(param))
 					{
 						out = null;
 						dispose();
@@ -278,12 +287,12 @@ public class AIDGui extends JDialog{
 		setModal(true);
 		//setVisible(true);
 
-		ShowCorrect();
+		showCorrect();
 
 		return out;
 	}
 
-	private void ShowCorrect()
+	private void showCorrect()
 	{
 		pack();
 		if (parentGUI != null) {

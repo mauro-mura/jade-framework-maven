@@ -48,10 +48,10 @@ public class HTTPAddress implements TransportAddress {
 
 	@Serial
 	private static final long serialVersionUID = -3763807130507228464L;
-	private String host;
-	private String port;
-	private String file;
-	private String anchor;
+	private final String host;
+	private final String port;
+	private final String file;
+	private final String anchor;
 
 	/**
 	 * Constructor declaration
@@ -63,7 +63,7 @@ public class HTTPAddress implements TransportAddress {
 	 */
 	public HTTPAddress(String host, String port, String file, String anchor) {
 		this.host = host;
-		this.port = (port != null ? port : String.valueOf(HTTPProtocol.DEFAULT_PORT));
+		this.port = port != null ? port : String.valueOf(HTTPProtocol.DEFAULT_PORT);
 		this.file = file;
 		this.anchor = anchor;
 	}

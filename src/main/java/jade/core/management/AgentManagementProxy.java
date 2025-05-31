@@ -50,7 +50,7 @@ import jade.security.JADESecurityException;
  */
 public class AgentManagementProxy extends SliceProxy implements AgentManagementSlice {
 
-	public void createAgent(AID agentID, String className, Object arguments[], JADEPrincipal owner, Credentials initialCredentials, boolean startIt, Command sourceCmd) throws IMTPException, NotFoundException, NameClashException, JADESecurityException {
+	public void createAgent(AID agentID, String className, Object[] arguments, JADEPrincipal owner, Credentials initialCredentials, boolean startIt, Command sourceCmd) throws IMTPException, NotFoundException, NameClashException, JADESecurityException {
 		try {
 			GenericCommand cmd = new GenericCommand(H_CREATEAGENT, AgentManagementSlice.NAME, null);
 			cmd.addParam(agentID);
@@ -64,7 +64,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception3) {
 					throw exception3;
 				}
@@ -78,7 +78,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -104,7 +104,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -121,7 +121,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -129,7 +129,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -148,7 +148,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception3) {
 					throw exception3;
 				}
@@ -162,7 +162,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -180,7 +180,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -188,7 +188,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -204,7 +204,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -212,7 +212,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -228,7 +228,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -236,7 +236,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}
@@ -251,7 +251,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 
 			Node n = getNode();
 			Object result = n.accept(cmd);
-			if((result != null) && (result instanceof Throwable)) {
+			if((result != null) && (result instanceof Throwable throwable)) {
 				if(result instanceof IMTPException exception1) {
 					throw exception1;
 				}
@@ -259,7 +259,7 @@ public class AgentManagementProxy extends SliceProxy implements AgentManagementS
 					throw exception;
 				}
 				else {
-					throw new IMTPException("An undeclared exception was thrown", (Throwable)result);
+					throw new IMTPException("An undeclared exception was thrown", throwable);
 				}
 			}
 		}

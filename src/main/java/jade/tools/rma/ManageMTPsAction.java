@@ -32,7 +32,7 @@ import jade.gui.AgentTree;
  */
 class ManageMTPsAction extends FixedAction {
 
-  private MainWindow myWnd;
+	private final MainWindow myWnd;
 
   public ManageMTPsAction(MainWindow mWnd, ActionProcessor actPro) {
     super("ManageMTPsIcon", "Manage Installed MTPs", actPro);

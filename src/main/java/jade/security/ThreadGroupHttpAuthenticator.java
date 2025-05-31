@@ -30,13 +30,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class ThreadGroupHttpAuthenticator extends Authenticator {
+public final class ThreadGroupHttpAuthenticator extends Authenticator {
 	
 	private static final String PROXY_KEY = "PROXY";
 	private static final String SERVER_DEFAULT_KEY = "SERVER_DEAFULT";
 	
 	private static ThreadGroupHttpAuthenticator theInstance;
-	private static Map<String, PasswordAuthentication> passwordAuthentications = new HashMap<String, PasswordAuthentication>();
+	private static final Map<String, PasswordAuthentication> passwordAuthentications = new HashMap<>();
 
 	private ThreadGroupHttpAuthenticator() {
 	}
@@ -45,7 +45,7 @@ public class ThreadGroupHttpAuthenticator extends Authenticator {
 	 * Get a JVM instance of ThreadGroupHttpAuthenticator  
 	 * @return ThreadGroupHttpAuthenticator
 	 */
-	public final static ThreadGroupHttpAuthenticator getInstance() {
+	public static ThreadGroupHttpAuthenticator getInstance() {
 		if (theInstance == null) {
 			theInstance = new ThreadGroupHttpAuthenticator(); 
 			

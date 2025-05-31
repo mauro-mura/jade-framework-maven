@@ -37,7 +37,7 @@ import jade.util.Logger;
  */
 class NodeStub extends Stub implements Node {
 	private String name;
-	private boolean hasPM = false;
+	private boolean hasPM;
 	
 	public NodeStub() {
 		super();
@@ -199,7 +199,7 @@ class NodeStub extends Stub implements Node {
 	}
 	
 	public String toString() {
-		String address = (remoteTAs != null && remoteTAs.size() > 0 ? remoteTAs.get(0) : "null").toString();
+		String address = (remoteTAs != null && !remoteTAs.isEmpty() ? remoteTAs.get(0) : "null").toString();
 		return "["+name+", "+remoteID+", "+address+"]";
 	}
 }

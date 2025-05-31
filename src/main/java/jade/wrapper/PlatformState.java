@@ -37,7 +37,7 @@ public class PlatformState extends StateBase {
      * can represent. This array MUST be initialized before the other static
      * constructors.
      */
-    static final String stateNames[] = {
+    static final String[] stateNames = {
         "Void",         //  0
         "Initializing", //  1
         "Initialized",  //  2

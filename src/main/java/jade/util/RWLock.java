@@ -37,17 +37,17 @@ package jade.util;
  */
 public class RWLock {
 	// The counter of threads currently reading the resource
-	private int readersCnt = 0;
+	private int readersCnt;
 	
 	// The Thread currently writing the resource (there can only be
 	// one such a therad at a given time)
-	private Thread currentWriter = null;
+	private Thread currentWriter;
 	
 	// writeLock()/unlock() can be nested. This indicates the current 
 	// depth
-	private int writeLockDepth = 0;
-	
-	private Logger logger = Logger.getMyLogger(this.getClass().getName());
+	private int writeLockDepth;
+
+	private final Logger logger = Logger.getMyLogger(this.getClass().getName());
 
     /**
        Default constructor.
@@ -73,8 +73,9 @@ public class RWLock {
 				wait();
 			}
 			catch (InterruptedException ie) {
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"Unexpected interruption. "+ie.getMessage());
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Unexpected interruption. " + ie.getMessage());
+				}
 			}
 		}
 		writeLockDepth++;
@@ -115,8 +116,9 @@ public class RWLock {
 				wait();
 			}
 			catch (InterruptedException ie) {
-				if(logger.isLoggable(Logger.WARNING))
-					logger.log(Logger.WARNING,"Unexpected interruption. "+ie.getMessage());
+				if (logger.isLoggable(Logger.WARNING)) {
+					logger.log(Logger.WARNING, "Unexpected interruption. " + ie.getMessage());
+				}
 			}
 		}
 		readersCnt++;

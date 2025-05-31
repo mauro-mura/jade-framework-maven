@@ -50,8 +50,8 @@ class FSPersistentStorage implements PersistentStorage {
 	
 	private String fileSeparator;
 	private File locationDir;
-	
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 	
 	public void init(Profile p) throws Exception {
 		fileSeparator = System.getProperty("file.separator");
@@ -81,7 +81,7 @@ class FSPersistentStorage implements PersistentStorage {
 				if (!clearPlatformInfo && name.equals(PLATFORM_FILE_NAME+EXTENSION)) {
 					return false;
 				}
-				return (name.endsWith(EXTENSION) || name.endsWith(CHILD_EXTENSION) || name.endsWith(UNREACHABLE_EXTENSION));
+				return name.endsWith(EXTENSION) || name.endsWith(CHILD_EXTENSION) || name.endsWith(UNREACHABLE_EXTENSION);
 			}
 		} );
 		//#DOTNET_EXCLUDE_END
@@ -143,7 +143,7 @@ class FSPersistentStorage implements PersistentStorage {
 	}
 	
 	public void storeNode(String name, boolean isChild, byte[] nn) throws Exception {
-		File f = getFSPSFile(name+NODE_POSTFIX, (isChild ? CHILD_EXTENSION : EXTENSION));
+		File f = getFSPSFile(name+NODE_POSTFIX, isChild ? CHILD_EXTENSION : EXTENSION);
 		writeContent(f, nn);
 		if (myLogger.isLoggable(Logger.FINE)) {
 			myLogger.log(Logger.FINE, "Node "+name+" saved in persistent storage");
@@ -202,7 +202,7 @@ class FSPersistentStorage implements PersistentStorage {
 		//#DOTNET_EXCLUDE_BEGIN
 		File[] ff = locationDir.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
-				return (name.endsWith(end));
+				return name.endsWith(end);
 			}
 		} );
 		//#DOTNET_EXCLUDE_END

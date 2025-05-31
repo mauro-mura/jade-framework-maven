@@ -164,10 +164,10 @@ public class BackEndStub extends MicroStub implements BackEnd {
 		Command r = executeRemotely(c, 0);
 		if (r != null && r.getCode() == Command.ERROR) {
 			// One of the expected exceptions occurred in the remote BackEnd --> throw it
-			if (((String) r.getParamAt(1)).equals("jade.core.NotFoundException")) {
+			if ("jade.core.NotFoundException".equals((String) r.getParamAt(1))) {
 				throw new NotFoundException((String) r.getParamAt(2));
 			}
-			if (((String) r.getParamAt(1)).equals("jade.core.ServiceException")) {
+			if ("jade.core.ServiceException".equals((String) r.getParamAt(1))) {
 				throw new ServiceException((String) r.getParamAt(2));
 			}
 		}
@@ -196,7 +196,7 @@ public class BackEndStub extends MicroStub implements BackEnd {
 		}
 	}
 	
-	public static final void parseCreateMediatorResponse(String responseMessage, Properties pp) {
+	public static void parseCreateMediatorResponse(String responseMessage, Properties pp) {
 		Vector v = Specifier.parseList(responseMessage, '#');
 		for (int i = 0; i < v.size(); ++i) {
 			String s = (String) v.elementAt(i);
@@ -224,7 +224,7 @@ public class BackEndStub extends MicroStub implements BackEnd {
 	 * @param pp 
 	 * @return a StringBuffer to allow the dispatcher to add dispatcher specific properties.
 	 */
-	public static final StringBuilder encodeCreateMediatorRequest(Properties pp){
+	public static StringBuilder encodeCreateMediatorRequest(Properties pp){
 		StringBuilder sb = new StringBuilder();
 		appendProp(sb, JICPProtocol.MEDIATOR_CLASS_KEY,pp.getProperty(JICPProtocol.MEDIATOR_CLASS_KEY));
 		appendProp(sb, JICPProtocol.MAX_DISCONNECTION_TIME_KEY, pp.getProperty(JICPProtocol.MAX_DISCONNECTION_TIME_KEY));

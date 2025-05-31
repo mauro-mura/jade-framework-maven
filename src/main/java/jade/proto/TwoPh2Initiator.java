@@ -128,8 +128,8 @@ public class TwoPh2Initiator extends Initiator {
             public void action() {
                 ACLMessage reply = (ACLMessage) getDataStore().get(REPLY_K);
                 String inReplyTo = reply.getInReplyTo();
-                String phase = inReplyTo.substring(inReplyTo.length() - 3);;
-                if (phase.equals(TwoPhConstants.PH0) || phase.equals(TwoPhConstants.PH1)) {
+                String phase = inReplyTo.substring(inReplyTo.length() - 3);
+                if (TwoPhConstants.PH0.equals(phase) || TwoPhConstants.PH1.equals(phase)) {
                 	// The reply belongs to a previous phase 
                 	oldResponse(reply);
                 	ret = OLD_RESPONSE;
@@ -299,7 +299,7 @@ public class TwoPh2Initiator extends Initiator {
     /* User CAN'T override these methods */
     //#APIDOC_EXCLUDE_BEGIN
 
-		private String[] toBeReset = null;
+		private String[] toBeReset;
 			
 	  /**
 	   */
@@ -474,7 +474,7 @@ public class TwoPh2Initiator extends Initiator {
         }
 
         public boolean isCompleted() {
-            return (state == REPLY_RECEIVED);
+            return state == REPLY_RECEIVED;
         }
     }
 }

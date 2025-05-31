@@ -63,86 +63,86 @@ public class ACLToken {
   /**
    *  Normal text token id. This should be used to mark normal text.
    */
-  public final static byte NULL = 0;
+  public static final byte NULL = 0;
 
   /**
    *  Comment 1 token id. This can be used to mark a comment.
    */
-  public final static byte COMMENT1 = 1;
+  public static final byte COMMENT1 = 1;
 
   /**
    *  Comment 2 token id. This can be used to mark a comment.
    */
-  public final static byte COMMENT2 = 2;
+  public static final byte COMMENT2 = 2;
 
   /**
    *  Literal 1 token id. This can be used to mark a string literal (eg, C
    *  mode uses this to mark "..." literals)
    */
-  public final static byte LITERAL1 = 3;
+  public static final byte LITERAL1 = 3;
 
   /**
    *  Literal 2 token id. This can be used to mark an object literal (eg, Java
    *  mode uses this to mark true, false, etc)
    */
-  public final static byte LITERAL2 = 4;
+  public static final byte LITERAL2 = 4;
 
   /**
    *  Label token id. This can be used to mark labels (eg, C mode uses this to
    *  mark ...: sequences)
    */
-  public final static byte LABEL = 5;
+  public static final byte LABEL = 5;
 
   /**
    *  Keyword 1 token id. This can be used to mark a keyword. This should be
    *  used for general language constructs.
    */
-  public final static byte KEYWORD1 = 6;
+  public static final byte KEYWORD1 = 6;
 
   /**
    *  Keyword 2 token id. This can be used to mark a keyword. This should be
    *  used for preprocessor commands, or variables.
    */
-  public final static byte KEYWORD2 = 7;
+  public static final byte KEYWORD2 = 7;
 
   /**
    *  Keyword 3 token id. This can be used to mark a keyword. This should be
    *  used for data types.
    */
-  public final static byte KEYWORD3 = 8;
+  public static final byte KEYWORD3 = 8;
 
   /**
    *  Operator token id. This can be used to mark an operator. (eg, SQL mode
    *  marks +, -, etc with this token type)
    */
-  public final static byte OPERATOR = 9;
+  public static final byte OPERATOR = 9;
 
   /**
    *  Invalid token id. This can be used to mark invalid or incomplete tokens,
    *  so the user can easily spot syntax errors.
    */
-  public final static byte INVALID = 10;
+  public static final byte INVALID = 10;
 
   /**
    *  The total number of defined token ids.
    */
-  public final static byte ID_COUNT = 11;
+  public static final byte ID_COUNT = 11;
 
   /**
    *  The first id that can be used for internal state in a token marker.
    */
-  public final static byte INTERNAL_FIRST = 100;
+  public static final byte INTERNAL_FIRST = 100;
 
   /**
    *  The last id that can be used for internal state in a token marker.
    */
-  public final static byte INTERNAL_LAST = 126;
+  public static final byte INTERNAL_LAST = 126;
 
   /**
    *  The token type, that along with a length of 0 marks the end of the token
    *  list.
    */
-  public final static byte END = 127;
+  public static final byte END = 127;
 
   /**
    *  The length of this token.

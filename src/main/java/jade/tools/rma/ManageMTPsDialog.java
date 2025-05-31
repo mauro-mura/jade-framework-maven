@@ -33,7 +33,7 @@ public class ManageMTPsDialog extends JDialog {
 
 	private static final Object[] EMPTY_LIST = new Object[0];
 
-	private AbstractAction addMTPAction = new AbstractAction("Add MTP...") {
+	private final AbstractAction addMTPAction = new AbstractAction("Add MTP...") {
 
 		@Serial
 		private static final long serialVersionUID = 1189203546696450347L;
@@ -44,15 +44,15 @@ public class ManageMTPsDialog extends JDialog {
 		}
 	};
 
-	private AbstractAction removeMTPAction = new AbstractAction("Remove MTP") {
+	private final AbstractAction removeMTPAction = new AbstractAction("Remove MTP") {
 
 		@Serial
 		private static final long serialVersionUID = 1602069995674767989L;
 
 		public void actionPerformed(ActionEvent ev) {
 			int option = JOptionPane.showConfirmDialog(ManageMTPsDialog.this,
-					"Are you sure you want to remove the selected MTP?", "Removing MTP", JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE);
+				"Are you sure you want to remove the selected MTP?", "Removing MTP", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
 			if (option == JOptionPane.YES_OPTION) {
 				String name = (String) containers.getSelectedValue();
 				String address = (String) addresses.getSelectedValue();
@@ -174,13 +174,14 @@ public class ManageMTPsDialog extends JDialog {
 					removeMTP.setEnabled(false);
 					if (sel == null) {
 						addresses.setListData(EMPTY_LIST);
-						return;
 					} else {
 						List addrs = (List) data.get(sel);
-						if (addrs != null)
+						if (addrs != null) {
 							addresses.setListData(addrs.toArray());
-						else
+						}
+						else {
 							addresses.setListData(EMPTY_LIST);
+						}
 					}
 				}
 			}
@@ -214,8 +215,8 @@ public class ManageMTPsDialog extends JDialog {
 		dispose();
 	}// GEN-LAST:event_closeDialog
 
-	private rma myRMA;
-	private Frame owner;
+	private final rma myRMA;
+	private final Frame owner;
 	private Map data;
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables

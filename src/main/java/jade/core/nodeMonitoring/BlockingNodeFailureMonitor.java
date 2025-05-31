@@ -42,10 +42,10 @@ import jade.util.Logger;
  */
 public class BlockingNodeFailureMonitor extends NodeFailureMonitor implements Runnable {
 
-	private boolean nodeExited = false;
-	private boolean stopped = false;
+	private boolean nodeExited;
+	private boolean stopped;
 
-	private Logger myLogger = Logger.getMyLogger(getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
 
 	public void start(Node n, NodeEventListener nel) {
 		super.start(n, nel);
@@ -76,8 +76,9 @@ public class BlockingNodeFailureMonitor extends NodeFailureMonitor implements Ru
 				try {
 					target.ping(false); // Try a non blocking ping to check
 
-					if (myLogger.isLoggable(Logger.INFO))
+					if (myLogger.isLoggable(Logger.INFO)) {
 						myLogger.log(Logger.INFO, "PING from node " + target.getName() + " returned OK");
+					}
 
 					if (!stopped) {
 						fireNodeReachable();
@@ -103,8 +104,9 @@ public class BlockingNodeFailureMonitor extends NodeFailureMonitor implements Ru
 			target.interrupt();
 
 		} catch (IMTPException imtpe) {
-			if (myLogger.isLoggable(Logger.INFO))
+			if (myLogger.isLoggable(Logger.INFO)) {
 				myLogger.log(Logger.INFO, "-- The node <" + target.getName() + "> is already dead --");
+			}
 			// Ignore it: the node must be dead already...
 		}
 	}

@@ -43,7 +43,7 @@ import jade.wrapper.StaleProxyException;
  * @author Fabio Bellifemine, Telecom Italia LAB
  * @version $Date: 2015-09-07 16:57:33 +0200 (Mon, 07 Sep 2015) $ $Revision: 6765 $
  **/
-public class JadeGateway {
+public final class JadeGateway {
 	
 	public static final String SPLIT_CONTAINER = "split-container";
 	
@@ -52,7 +52,7 @@ public class JadeGateway {
 	private static boolean splitContainer;
 	//#DOTNET_EXCLUDE_END
 
-	private final synchronized static DynamicJadeGateway getGateway() {
+	private static synchronized DynamicJadeGateway getGateway() {
 		if (jadeGateway == null) {
 			//#DOTNET_EXCLUDE_BEGIN
 			if (splitContainer) {
@@ -76,7 +76,7 @@ public class JadeGateway {
 	 * @return the value with the specified key value
 	 * @see java.util.Properties#getProperty(String, String)
 	 **/
-	public final static String getProfileProperty(String key, String defaultValue) {
+	public static String getProfileProperty(String key, String defaultValue) {
 		return getGateway().getProfileProperty(key, defaultValue);
 	}
 	
@@ -90,7 +90,7 @@ public class JadeGateway {
 	 * @throws StaleProxyException if the method was not able to execute the Command
 	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
-	public final static void execute(Object command) throws StaleProxyException,ControllerException,InterruptedException {
+	public static void execute(Object command) throws StaleProxyException,ControllerException,InterruptedException {
 		getGateway().execute(command);
 	}
 	
@@ -106,7 +106,7 @@ public class JadeGateway {
 	 * @throws StaleProxyException if the method was not able to execute the Command
 	 * @see jade.wrapper.AgentController#putO2AObject(Object, boolean)
 	 **/
-	public final static void execute(Object command, long timeout) throws StaleProxyException,ControllerException,InterruptedException {
+	public static void execute(Object command, long timeout) throws StaleProxyException,ControllerException,InterruptedException {
 		getGateway().execute(command, timeout);
 	}
 	
@@ -115,7 +115,7 @@ public class JadeGateway {
 	 * If not, then the method is responsible for renewing myContainer.
 	 * Normally programmers do not need to invoke this method explicitly.
 	 **/
-	public final static void checkJADE() throws StaleProxyException,ControllerException {
+	public static void checkJADE() throws StaleProxyException,ControllerException {
 		getGateway().checkJADE();
 	}
 	
@@ -124,7 +124,7 @@ public class JadeGateway {
 	 * then it puts to null the values of their controllers,
 	 * and finally calls checkJADE
 	 **/
-	private final static void restartJADE() throws StaleProxyException,ControllerException {
+	private static void restartJADE() throws StaleProxyException,ControllerException {
 		getGateway().restartJADE();
 	}
 	
@@ -137,7 +137,7 @@ public class JadeGateway {
 	 * Typically these properties will have to be read from a JADE configuration file.
 	 * If jadeProfile is null, then a JADE container attaching to a main on the local host is launched
 	 **/
-	public final synchronized static void init(String agentClassName, Object[] agentArgs, Properties jadeProfile) {
+	public static synchronized void init(String agentClassName, Object[] agentArgs, Properties jadeProfile) {
 		//#DOTNET_EXCLUDE_BEGIN
 		String splitContainerStr = jadeProfile.getProperty(SPLIT_CONTAINER, "false");
 		splitContainer = Boolean.parseBoolean(splitContainerStr.trim());
@@ -146,14 +146,14 @@ public class JadeGateway {
 		getGateway().init(agentClassName, agentArgs, jadeProfile);
 	}
 
-	public final static void init(String agentClassName, Properties jadeProfile) {
+	public static void init(String agentClassName, Properties jadeProfile) {
 		init(agentClassName, null, jadeProfile);
 	}
 	
 	/**
 	 * Kill the JADE Container in case it is running.
 	 */
-	public final static void shutdown() {
+	public static void shutdown() {
 		getGateway().shutdown();
 	}
 	
@@ -161,7 +161,7 @@ public class JadeGateway {
 	 * Return the state of JadeGateway
 	 * @return true if the container and the gateway agent are active, false otherwise
 	 */
-	public final static boolean isGatewayActive() {
+	public static boolean isGatewayActive() {
 		return getGateway().isGatewayActive();
 	}
 	
@@ -175,7 +175,7 @@ public class JadeGateway {
 	}
 	//#DOTNET_EXCLUDE_END
 	
-	public static final DynamicJadeGateway getDefaultGateway() {
+	public static DynamicJadeGateway getDefaultGateway() {
 		return getGateway();
 	}
 	

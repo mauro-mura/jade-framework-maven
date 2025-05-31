@@ -373,7 +373,7 @@ public class ACLTextArea extends JComponent {
    * @return    The CaretPosition value
    */
   public final int getCaretPosition() {
-    return (biasLeft ? selectionStart : selectionEnd);
+    return biasLeft ? selectionStart : selectionEnd;
   }
 
 
@@ -383,7 +383,7 @@ public class ACLTextArea extends JComponent {
    * @return    The CaretLine value
    */
   public final int getCaretLine() {
-    return (biasLeft ? selectionStartLine : selectionEndLine);
+    return biasLeft ? selectionStartLine : selectionEndLine;
   }
 
 
@@ -395,7 +395,7 @@ public class ACLTextArea extends JComponent {
    * @see       #getCaretPosition()
    */
   public final int getMarkPosition() {
-    return (biasLeft ? selectionEnd : selectionStart);
+    return biasLeft ? selectionEnd : selectionStart;
   }
 
 
@@ -405,7 +405,7 @@ public class ACLTextArea extends JComponent {
    * @return    The MarkLine value
    */
   public final int getMarkLine() {
-    return (biasLeft ? selectionEndLine : selectionStartLine);
+    return biasLeft ? selectionEndLine : selectionStartLine;
   }
 
 
@@ -930,7 +930,7 @@ public class ACLTextArea extends JComponent {
   public void register(Object arg, String fieldName) {
     this.msg = (ACLMessage)arg;
     this.fieldName = fieldName;
-    contentLanguage = (msg.getLanguage() != null ? msg.getLanguage() : "<unknown>");
+    contentLanguage = msg.getLanguage() != null ? msg.getLanguage() : "<unknown>";
     String methodName = "get" + fieldName;
     String content = "";
 
@@ -941,7 +941,7 @@ public class ACLTextArea extends JComponent {
     catch (Exception ex) {
       ex.printStackTrace();
     }
-    if (contentLanguage.indexOf("SL") >= 0) {
+    if (contentLanguage.contains("SL")) {
       //Only format when SL
       try {
         content = (String)new SLFormatter().format(content);
@@ -1949,7 +1949,6 @@ public class ACLTextArea extends JComponent {
             evt.consume();
           }
           currentBindings = bindings;
-          return;
         }
         else if (o instanceof ActionListener listener) {
           listener.actionPerformed(
@@ -1958,18 +1957,15 @@ public class ACLTextArea extends JComponent {
             null, modifiers));
           currentBindings = bindings;
           evt.consume();
-          return;
         }
         else if (o instanceof Hashtable hashtable) {
           currentBindings = hashtable;
           evt.consume();
-          return;
         }
         else if (keyCode != KeyEvent.VK_ALT
            && keyCode != KeyEvent.VK_CONTROL
            && keyCode != KeyEvent.VK_SHIFT
            && keyCode != KeyEvent.VK_META) {
-          return;
         }
       }
     }
@@ -2096,7 +2092,7 @@ public class ACLTextArea extends JComponent {
         }
 
         else {
-          lastVisibleLine -= (textArea.getElectricScroll() + 1);
+          lastVisibleLine -= textArea.getElectricScroll() + 1;
         }
 
         int lastVisible = textArea.getLineEndOffset(lastVisibleLine) - 1;
@@ -2149,8 +2145,8 @@ public class ACLTextArea extends JComponent {
 
         int firstOfLine = textArea.getLineStartOffset(
           textArea.getCaretLine());
-        int firstVisibleLine = (firstLine == 0 ? 0 :
-          firstLine + textArea.getElectricScroll());
+        int firstVisibleLine = firstLine == 0 ? 0 :
+          firstLine + textArea.getElectricScroll();
         int firstVisible = textArea.getLineStartOffset(
           firstVisibleLine);
 
@@ -2354,8 +2350,8 @@ public class ACLTextArea extends JComponent {
 
           String noWordSep = (String)textArea.getDocument()
             .getProperty("noWordSep");
-          boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-             && noWordSep.indexOf(ch) == -1);
+          boolean selectNoLetter = !Character.isLetterOrDigit(ch)
+             && noWordSep.indexOf(ch) == -1;
 
           int wordEnd = lineText.length();
           for (int i = caret; i < lineText.length(); i++) {
@@ -2530,8 +2526,8 @@ public class ACLTextArea extends JComponent {
 
           String noWordSep = (String)textArea.getDocument()
             .getProperty("noWordSep");
-          boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-             && noWordSep.indexOf(ch) == -1);
+          boolean selectNoLetter = !Character.isLetterOrDigit(ch)
+             && noWordSep.indexOf(ch) == -1;
 
           int wordStart = 0;
           for (int i = caret - 1; i >= 0; i--) {
@@ -2561,33 +2557,33 @@ public class ACLTextArea extends JComponent {
     }
 
 
-    public final static ActionListener BACKSPACE = new backspace();
-    public final static ActionListener DELETE = new delete();
-    public final static ActionListener END = new end(false);
-    public final static ActionListener SELECT_END = new end(true);
-    public final static ActionListener INSERT_BREAK = new insert_break();
-    public final static ActionListener INSERT_TAB = new insert_tab();
-    public final static ActionListener HOME = new home(false);
-    public final static ActionListener SELECT_HOME = new home(true);
-    public final static ActionListener NEXT_CHAR = new next_char(false);
-    public final static ActionListener NEXT_LINE = new next_line(false);
-    public final static ActionListener NEXT_PAGE = new next_page(false);
-    public final static ActionListener NEXT_WORD = new next_word(false);
-    public final static ActionListener SELECT_NEXT_CHAR = new next_char(true);
-    public final static ActionListener SELECT_NEXT_LINE = new next_line(true);
-    public final static ActionListener SELECT_NEXT_PAGE = new next_page(true);
-    public final static ActionListener SELECT_NEXT_WORD = new next_word(true);
-    public final static ActionListener OVERWRITE = new overwrite();
-    public final static ActionListener PREV_CHAR = new prev_char(false);
-    public final static ActionListener PREV_LINE = new prev_line(false);
-    public final static ActionListener PREV_PAGE = new prev_page(false);
-    public final static ActionListener PREV_WORD = new prev_word(false);
-    public final static ActionListener SELECT_PREV_CHAR = new prev_char(true);
-    public final static ActionListener SELECT_PREV_LINE = new prev_line(true);
-    public final static ActionListener SELECT_PREV_PAGE = new prev_page(true);
-    public final static ActionListener SELECT_PREV_WORD = new prev_word(true);
+    public static final ActionListener BACKSPACE = new backspace();
+    public static final ActionListener DELETE = new delete();
+    public static final ActionListener END = new end(false);
+    public static final ActionListener SELECT_END = new end(true);
+    public static final ActionListener INSERT_BREAK = new insert_break();
+    public static final ActionListener INSERT_TAB = new insert_tab();
+    public static final ActionListener HOME = new home(false);
+    public static final ActionListener SELECT_HOME = new home(true);
+    public static final ActionListener NEXT_CHAR = new next_char(false);
+    public static final ActionListener NEXT_LINE = new next_line(false);
+    public static final ActionListener NEXT_PAGE = new next_page(false);
+    public static final ActionListener NEXT_WORD = new next_word(false);
+    public static final ActionListener SELECT_NEXT_CHAR = new next_char(true);
+    public static final ActionListener SELECT_NEXT_LINE = new next_line(true);
+    public static final ActionListener SELECT_NEXT_PAGE = new next_page(true);
+    public static final ActionListener SELECT_NEXT_WORD = new next_word(true);
+    public static final ActionListener OVERWRITE = new overwrite();
+    public static final ActionListener PREV_CHAR = new prev_char(false);
+    public static final ActionListener PREV_LINE = new prev_line(false);
+    public static final ActionListener PREV_PAGE = new prev_page(false);
+    public static final ActionListener PREV_WORD = new prev_word(false);
+    public static final ActionListener SELECT_PREV_CHAR = new prev_char(true);
+    public static final ActionListener SELECT_PREV_LINE = new prev_line(true);
+    public static final ActionListener SELECT_PREV_PAGE = new prev_page(true);
+    public static final ActionListener SELECT_PREV_WORD = new prev_word(true);
 
-    public final static ActionListener[] ACTIONS = {
+    public static final ActionListener[] ACTIONS = {
       BACKSPACE, DELETE, END, SELECT_END, INSERT_BREAK,
       INSERT_TAB, HOME, SELECT_HOME, NEXT_CHAR, NEXT_LINE,
       NEXT_PAGE, NEXT_WORD, SELECT_NEXT_CHAR, SELECT_NEXT_LINE,
@@ -2595,7 +2591,7 @@ public class ACLTextArea extends JComponent {
       PREV_LINE, PREV_PAGE, PREV_WORD, SELECT_PREV_CHAR,
       SELECT_PREV_LINE, SELECT_PREV_PAGE, SELECT_PREV_WORD};
 
-    public final static String[] ACTION_NAMES = {
+    public static final String[] ACTION_NAMES = {
       "backspace", "delete", "end", "select-end", "insert-break",
       "insert-tab", "home", "select-home", "next-char", "next-line",
       "next-page", "next-word", "select-next-char", "select-next-line",
@@ -2740,7 +2736,8 @@ public class ACLTextArea extends JComponent {
     public void mouseMoved(MouseEvent evt) { }
 
 
-    private int x, y;
+		private int x;
+		private int y;
   }
 
 
@@ -2985,8 +2982,8 @@ public class ACLTextArea extends JComponent {
 
       // If the user clicked on a non-letter char,
       // we select the surrounding non-letters
-      boolean selectNoLetter = (!Character.isLetterOrDigit(ch)
-         && noWordSep.indexOf(ch) == -1);
+      boolean selectNoLetter = !Character.isLetterOrDigit(ch)
+         && noWordSep.indexOf(ch) == -1;
 
       int wordStart = 0;
 

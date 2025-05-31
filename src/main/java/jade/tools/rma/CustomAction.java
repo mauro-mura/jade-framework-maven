@@ -35,8 +35,8 @@ import jade.gui.*;
  */
  class CustomAction extends AgentAction {
 
- private rma myRMA;
- private Frame mainWnd;
+	 private final rma myRMA;
+	 private final Frame mainWnd;
 
   public CustomAction(rma anRMA, Frame f,ActionProcessor actPro)
     {
@@ -61,8 +61,9 @@ import jade.gui.*;
     	
 	  msg2.addReceiver(rec);
     ACLMessage msg = jade.gui.AclGui.editMsgInDialog(msg2, mainWnd);
-    if (msg != null)
-	  	myRMA.send(msg);
+		if (msg != null) {
+			myRMA.send(msg);
+		}
 
   }
 

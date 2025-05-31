@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class StopManagingLogAction extends AbstractAction {
-	private LogManagerGUI gui;
+	private final LogManagerGUI gui;
 	
 	public StopManagingLogAction(LogManagerGUI gui) {
 		super ("Stop Managing Log");

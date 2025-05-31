@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class ExitAction extends AbstractAction {
-	private LogManagerGUI gui;
+	private final LogManagerGUI gui;
 	
 	public ExitAction(LogManagerGUI gui) {
 		super ("Exit");

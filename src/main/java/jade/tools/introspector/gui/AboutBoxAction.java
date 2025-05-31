@@ -52,9 +52,9 @@ import javax.swing.ImageIcon;
 
 public class AboutBoxAction extends AbstractAction{
 
-  private JFrame gui;
+	private final JFrame gui;
   private JLabel label;
-  private String imageFile = "images/jadelogo.jpg";
+	private final String imageFile = "images/jadelogo.jpg";
 
 
   Color dark_blue = new java.awt.Color(0,0,160);
@@ -110,14 +110,15 @@ public class AboutBoxAction extends AbstractAction{
 					int colonPos = CVSname.indexOf(":");
 	    		int dollarPos = CVSname.lastIndexOf('$');
 	    		String name = CVSname.substring(colonPos + 1, dollarPos);
-	    		
-	    		if(name.indexOf("JADE") == -1)
-							name = "JADE snapshot";
-	    		else {
-	        			name = name.replace('-', ' ');
-								name = name.replace('_', '.');
-								name = name.trim();
-	    		}
+
+		if (name.indexOf("JADE") == -1) {
+			name = "JADE snapshot";
+		}
+		else {
+			name = name.replace('-', ' ');
+			name = name.replace('_', '.');
+			name = name.trim();
+		}
 	
 	    		label = new JLabel(name);
 	        label.setForeground(dark_blue);

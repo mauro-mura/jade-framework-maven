@@ -59,7 +59,7 @@ public class CaseInsensitiveString implements Serializable {
 		// the contract of String is to return 0 as the hash of an empty string
 		// so I am assuming here than a null string is equal to an empty string
 		// this trick avoid generating a null pointer exception
-		hashCode = (s == null ? 0 : s.toLowerCase().hashCode());
+		hashCode = s == null ? 0 : s.toLowerCase().hashCode();
 	}
 
 	/**
@@ -112,11 +112,11 @@ public class CaseInsensitiveString implements Serializable {
 	 * @param s1, s2 The <code>String</code> objects to compare
 	 * @return <code>true</code> if the strings are equal, apart from case.
 	 */
-	public static final boolean equalsIgnoreCase(String s1, String s2) {
+	public static boolean equalsIgnoreCase(String s1, String s2) {
 		if (s1 == null || s2 == null) {
 			return false;
 		} else {
-			return ((s1.length() == s2.length()) && s1.regionMatches(true, 0, s2, 0, s1.length()));
+			return (s1.length() == s2.length()) && s1.regionMatches(true, 0, s2, 0, s1.length());
 		}
 	}
 

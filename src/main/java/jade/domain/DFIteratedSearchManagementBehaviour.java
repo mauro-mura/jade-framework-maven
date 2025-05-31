@@ -49,12 +49,12 @@ import jade.util.Logger;
  @author Giovanni Caire - TILAB
  */
 class DFIteratedSearchManagementBehaviour extends CyclicBehaviour {
-	
-	private df theDF;
-	private MessageTemplate template;
-	private ConversationList conversations;
-	
-	private Logger logger; 
+
+	private final df theDF;
+	private final MessageTemplate template;
+	private final ConversationList conversations;
+
+	private final Logger logger; 
 	
 	public DFIteratedSearchManagementBehaviour(df theDF, MessageTemplate mt) {
 		super(theDF);
@@ -71,9 +71,9 @@ class DFIteratedSearchManagementBehaviour extends CyclicBehaviour {
 				logger.log(Logger.FINE, "DF "+myAgent.getName()+": Iterated-search request received from "+msg.getSender().getName()+". Conv-ID = "+msg.getConversationId());
 			}
 			theDF.addBehaviour(new SSIteratedAchieveREResponder(theDF, msg) {
-				private KBIterator iterator = null;
-				private String myConversationId = null;
-				private int cnt = 0; // Only for debugging purposes
+				private KBIterator iterator;
+				private String myConversationId;
+				private int cnt; // Only for debugging purposes
 				
 				protected ACLMessage handleRequest(ACLMessage request) throws RefuseException, FailureException, NotUnderstoodException {
 					ACLMessage reply = null;

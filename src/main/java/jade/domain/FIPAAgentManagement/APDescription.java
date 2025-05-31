@@ -43,7 +43,7 @@ public class APDescription implements Concept {
 	@Serial
 	private static final long serialVersionUID = 9061740731651232875L;
 	private String name;
-    private List services = new ArrayList<>(1); 
+	private final List services = new ArrayList<>(1); 
 
 
     /**
@@ -112,8 +112,9 @@ public class APDescription implements Concept {
      **/
     public String toString() {
 	StringBuffer str = new StringBuffer("( ap-description ");
-	if ((name!=null)&&(name.length()>0))
-	    str.append(" :name " + name);
+			if ((name != null) && (name.length() > 0)) {
+				str.append(" :name " + name);
+			}
         APService s=null;
         str.append(" :ap-services (set");
         for (Iterator i=services.iterator(); i.hasNext(); ) {

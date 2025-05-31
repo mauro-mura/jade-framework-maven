@@ -59,12 +59,12 @@ public class MainMenuSniffer extends MainMenu
  //#DOTNET_EXCLUDE_BEGIN
  private JMenuItem tmp;
  private JMenu menu;
- //#DOTNET_EXCLUDE_END
- /*#DOTNET_INCLUDE_BEGIN
+	//#DOTNET_EXCLUDE_END
+	/*#DOTNET_INCLUDE_BEGIN
  private MenuItem menu;
  private MenuItem tmp;
  #DOTNET_INCLUDE_END*/
- private ActionProcessor actPro;
+	private final ActionProcessor actPro;
 
  void paintM(boolean enable,SnifferAction obj){
     //#DOTNET_EXCLUDE_BEGIN

@@ -51,9 +51,9 @@ import jade.content.onto.basic.*;
    @author Giovanni Caire - TILAB
  */
 class RemoteDFRequester extends SimpleAchieveREInitiator {
-	private AID remoteDF;
-	private Concept myAction;
-	private Object result = null;
+	private final AID remoteDF;
+	private final Concept myAction;
+	private Object result;
 	
 	RemoteDFRequester(AID remoteDF, Concept myAction) {
 		super(null, null);
