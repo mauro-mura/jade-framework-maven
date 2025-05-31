@@ -44,6 +44,7 @@ package jade.mtp.http;
 import java.net.*;
 import java.io.*;
 import java.util.Hashtable;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.Enumeration;
 
 import jade.mtp.InChannel;
@@ -312,7 +313,7 @@ public class MessageTransportProtocol implements MTP {
 			// Calculate the value of boundary
 			StringBuffer boundary = new StringBuffer();
 			for (int i = 0; i < 31; i++) {
-				boundary.append(Integer.toString((int) Math.round(Math.random() * 15), 16));
+				boundary.append(Integer.toString((int) Math.round(ThreadLocalRandom.current().nextDouble() * 15), 16));
 			}
 
 			// Request body
