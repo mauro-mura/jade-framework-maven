@@ -56,7 +56,7 @@ public class Boot {
 	public static void main(String[] args) {
 		try {
 			// Create the Profile
-			ProfileImpl p = null;
+			ProfileImpl p;
 			if (args.length > 0) {
 				if (args[0].startsWith("-")) {
 					// Settings specified as command line arguments
