@@ -40,6 +40,7 @@ import jade.util.Logger;
  * @author Nicolas Lhuillier - Motorola
  * @author Jerome Picault - Motorola
  * @author Moreno LAGO
+ * @author Mauro Mura
  * @version $Date: 2010-04-19 16:16:41 +0200 (lun, 19 apr 2010) $ $Revision: 6320 $
  *
  */
@@ -86,24 +87,17 @@ public class Boot {
 			}
 						
 		} catch (ProfileException pe) {
-			System.err.println("Error creating the Profile [" + pe.getMessage() + "]");
-			pe.printStackTrace();
+			logger.log(Logger.SEVERE, "Error creating the Profile [" + pe.getMessage() + "]");
 			printUsage();
-			// System.err.println("Usage: java jade.Boot <filename>");
+			
 			System.exit(-1);
 		} catch (IllegalArgumentException iae) {
-			System.err.println("Command line arguments format error. " + iae.getMessage());
-			iae.printStackTrace();
+			logger.log(Logger.SEVERE, "Command line arguments format error. " + iae.getMessage());
 			printUsage();
-			// System.err.println("Usage: java jade.Boot <filename>");
+			
 			System.exit(-1);
 		}
 	}
-
-	/**
-	 * Default constructor.
-	 */
-	public Boot() {}
 
 	public static Properties parseCmdLineArgs(String[] args) throws IllegalArgumentException {
 		Properties props = new ExtendedProperties();
@@ -114,16 +108,16 @@ public class Boot {
 				// Parse next option
 
 				// Switch options require special handling
-				if ("-version".equalsIgnoreCase(args[i])) {
+				if (args[i].equalsIgnoreCase("-version")) {
 					logger.log(Logger.INFO, "----------------------------------\n" + Runtime.getCopyrightNotice()
 							+ "----------------------------------------");
 					return null;
 				}
-				if ("-help".equalsIgnoreCase(args[i])) {
+				if (args[i].equalsIgnoreCase("-help")) {
 					printUsage();
 					return null;
 				}
-				if ("-container".equalsIgnoreCase(args[i])) {
+				if (args[i].equalsIgnoreCase("-container")) {
 					props.setProperty(Profile.MAIN, "false");
 				} else if (args[i].equalsIgnoreCase("-" + Profile.LOCAL_SERVICE_MANAGER)) {
 					props.setProperty(Profile.LOCAL_SERVICE_MANAGER, "true");
@@ -133,13 +127,13 @@ public class Boot {
 					props.setProperty(Profile.NO_MTP, "true");
 				}
 				// Options that can be specified in different ways require special handling
-				else if ("-name".equalsIgnoreCase(args[i])) {
+				else if (args[i].equalsIgnoreCase("-name")) {
 					if (++i < args.length) {
 						props.setProperty(Profile.PLATFORM_ID, args[i]);
 					} else {
 						throw new IllegalArgumentException("No platform name specified after \"-name\" option");
 					}
-				} else if ("-mtp".equalsIgnoreCase(args[i])) {
+				} else if (args[i].equalsIgnoreCase("-mtp")) {
 					if (++i < args.length) {
 						props.setProperty(Profile.MTPS, args[i]);
 					} else {
@@ -147,16 +141,15 @@ public class Boot {
 					}
 				}
 				// The -conf option requires special handling
-				else if ("-conf".equalsIgnoreCase(args[i])) {
+				else if (args[i].equalsIgnoreCase("-conf")) {
 					if (++i < args.length) {
 						// Some parameters are specified in a properties file
 						try {
 							props.load(args[i]);
 						} catch (Exception e) {
-							if (logger.isLoggable(Logger.SEVERE)) {
+							if (logger.isLoggable(Logger.SEVERE))
 								logger.log(Logger.SEVERE,
-									"WARNING: error loading properties from file " + args[i] + ". " + e);
-							}
+										"WARNING: error loading properties from file " + args[i] + ". " + e);
 						}
 					} else {
 						throw new IllegalArgumentException(
@@ -176,29 +169,22 @@ public class Boot {
 			} else {
 				// Get agents at the end of command line
 				if (props.getProperty(Profile.AGENTS) != null) {
-					if (logger.isLoggable(Logger.WARNING)) {
-						logger.log(Logger.WARNING,
+					logger.log(Logger.WARNING,
 							"WARNING: overriding agents specification set with the \"-agents\" option");
-					}
 				}
 				String agents = args[i];
 				props.setProperty(Profile.AGENTS, args[i]);
 				if (++i < args.length) {
-					if (logger.isLoggable(Logger.WARNING)) {
+					if (logger.isLoggable(Logger.WARNING))
 						logger.log(Logger.WARNING, "WARNING: ignoring command line argument " + args[i]
-							+ " occurring after agents specification");
-					}
-					if (agents != null && agents.indexOf('(') != -1 && !agents.endsWith(")")) {
-						if (logger.isLoggable(Logger.WARNING)) {
-							logger.log(Logger.WARNING,
+								+ " occurring after agents specification");
+					if (agents != null && agents.indexOf('(') != -1 && !agents.endsWith(")")) {						
+						logger.log(Logger.WARNING,
 								"Note that agent arguments specifications must not contain spaces");
-						}
 					}
-					if (args[i].indexOf(':') != -1) {
-						if (logger.isLoggable(Logger.WARNING)) {
-							logger.log(Logger.WARNING,
+					if (args[i].indexOf(':') != -1) {						
+						logger.log(Logger.WARNING,
 								"Note that agent specifications must be separated by a semicolon character \";\" without spaces");
-						}
 					}
 				}
 				break;
@@ -207,10 +193,9 @@ public class Boot {
 
 		// Consistency check
 		if ("true".equals(props.getProperty(Profile.NO_MTP)) && props.getProperty(Profile.MTPS) != null) {
-			if (logger.isLoggable(Logger.WARNING)) {
+			if (logger.isLoggable(Logger.WARNING))
 				logger.log(Logger.WARNING,
-					"WARNING: both \"-mtps\" and \"-nomtp\" options specified. The latter will be ignored");
-			}
+						"WARNING: both \"-mtps\" and \"-nomtp\" options specified. The latter will be ignored");
 			props.remove(Profile.NO_MTP);
 		}
 
