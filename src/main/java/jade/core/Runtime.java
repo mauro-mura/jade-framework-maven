@@ -55,7 +55,7 @@ import jade.util.Logger;
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
  */
-public final class Runtime {
+public class Runtime {
 	// JADE runtime execution modes:
 	// MULTIPLE --> Several containers can be activated in a JVM
 	private static final int MULTIPLE_MODE = 0;
@@ -64,7 +64,7 @@ public final class Runtime {
 	// UNKNOWN --> Mode not yet set
 	private static final int UNKNOWN_MODE = 2;
 
-	private static final Runtime theInstance;
+	private static Runtime theInstance;
 
 	static {
 		theInstance = new Runtime();
@@ -77,9 +77,9 @@ public final class Runtime {
 	private String revision = "UNKNOWN";
 	private String date = "UNKNOWN";
 
-	private int activeContainers;
-	private final LinkedList<Runnable> terminators = new LinkedList<>();
-	private AgentContainerImpl theContainer;
+	private int activeContainers = 0;
+	private LinkedList<Runnable> terminators = new LinkedList<>();
+	private AgentContainerImpl theContainer = null;
 	private int mode = UNKNOWN_MODE;
 
 	private final Logger myLogger = Logger.getMyLogger(getClass().getName());
@@ -264,10 +264,9 @@ public final class Runtime {
 			// the other
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					for (int i = 0; i < terminators.size(); ++i) {
-						Runnable r = (Runnable) terminators.get(i);
-						r.run();
-					}
+                    for (Runnable terminator : terminators) {
+                        terminator.run();
+                    }
 					// Clear the terminators list at the end
 					terminators.clear();
 				}
@@ -305,8 +304,8 @@ public final class Runtime {
 	 * JADE
 	 */
 	public static String getCopyrightNotice() {
-		return "    This is " + getVersionInfo()
-				+ "\n    downloaded in Open Source, under LGPL restrictions,\n    at http://jade.tilab.com/\n";
+		return ("    This is " + getVersionInfo()
+				+ "\n    downloaded in Open Source, under LGPL restrictions,\n    at http://jade.tilab.com/\n");
 	}
 	// #APIDOC_EXCLUDE_END
 
