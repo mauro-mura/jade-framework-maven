@@ -68,6 +68,7 @@ import jade.security.Credentials;
  * @author Jerome Picault - Motorola Labs
  * @author Giovanni Caire - TILAB
  * @author Moreno LAGO
+ * @author Mauro Mura
  * 
  * @version $Date: 2019-02-11 09:39:11 +0100 (lun, 11 feb 2019) $ $Revision: 6843 $
  * 
@@ -83,7 +84,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 	public static final String MONITOR_AGENT_NAME = "monitor-%C";
 	public static final String MONITOR_AGENT_CLASS = "jade.core.ContainerMonitorAgent";
 
-	private Logger myLogger = Logger.getMyLogger(this.getClass().getName());
+	private final Logger myLogger = Logger.getMyLogger(this.getClass().getName());
 
 	// Local agents, indexed by agent name
 	protected LADT localAgents;
@@ -134,7 +135,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 	private boolean joined;
 	private boolean verboseShutdown;
-	private boolean securityOn; // Only used for performance optimization when security is not active
+	private boolean securityOn = false; // Only used for performance optimization when security is not active
 
 	// Default constructor
 	public AgentContainerImpl() {}
@@ -210,8 +211,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			public void suspendAgent(AID id) throws Throwable {
 				// Do as if it was a remote call from the main to allow
 				// security checks to take place if needed
-				jade.core.management.AgentManagementSlice target = (jade.core.management.AgentManagementSlice) getProxyToLocalSlice(
-						jade.core.management.AgentManagementSlice.NAME);
+				AgentManagementSlice target = (AgentManagementSlice) getProxyToLocalSlice(
+						AgentManagementSlice.NAME);
 				// FIXME: set Principal and Credentials
 				target.changeAgentState(id, Agent.AP_SUSPENDED);
 			}
@@ -219,8 +220,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			public void activateAgent(AID id) throws Throwable {
 				// Do as if it was a remote call from the main to allow
 				// security checks to take place if needed
-				jade.core.management.AgentManagementSlice target = (jade.core.management.AgentManagementSlice) getProxyToLocalSlice(
-						jade.core.management.AgentManagementSlice.NAME);
+				AgentManagementSlice target = (AgentManagementSlice) getProxyToLocalSlice(
+						AgentManagementSlice.NAME);
 				// FIXME: set Principal and Credentials
 				target.changeAgentState(id, Agent.AP_ACTIVE);
 			}
@@ -228,8 +229,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			public void killAgent(AID id) throws Throwable {
 				// Do as if it was a remote call from the main to allow
 				// security checks to take place if needed
-				jade.core.management.AgentManagementSlice target = (jade.core.management.AgentManagementSlice) getProxyToLocalSlice(
-						jade.core.management.AgentManagementSlice.NAME);
+				AgentManagementSlice target = (AgentManagementSlice) getProxyToLocalSlice(
+						AgentManagementSlice.NAME);
 				target.killAgent(id, dummyCmd);
 			}
 
@@ -284,8 +285,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		instance.setAID(agentID);
 		instance.setToolkit(this);
 
-		GenericCommand cmd = new GenericCommand(jade.core.management.AgentManagementSlice.INFORM_CREATED,
-				jade.core.management.AgentManagementSlice.NAME, null);
+		GenericCommand cmd = new GenericCommand(AgentManagementSlice.INFORM_CREATED,
+				AgentManagementSlice.NAME, null);
 		cmd.addParam(agentID);
 		cmd.addParam(instance);
 		cmd.addParam(ownerPrincipal);
@@ -293,17 +294,17 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof NameClashException exception3) {
-				throw exception3;
-			} else if (ret instanceof IMTPException exception2) {
-				throw exception2;
-			} else if (ret instanceof NotFoundException exception1) {
-				throw exception1;
-			} else if (ret instanceof JADESecurityException exception) {
-				throw exception;
-			} else if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
-				throw new IMTPException("Unexpected error initializing agent " + agentID.getName(), throwable);
+			if (ret instanceof NameClashException) {
+				throw ((NameClashException) ret);
+			} else if (ret instanceof IMTPException) {
+				throw ((IMTPException) ret);
+			} else if (ret instanceof NotFoundException) {
+				throw ((NotFoundException) ret);
+			} else if (ret instanceof JADESecurityException) {
+				throw ((JADESecurityException) ret);
+			} else if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Error initializing agent [" + ((Throwable) ret).getMessage() + "]");
+				throw new IMTPException("Unexpected error initializing agent " + agentID.getName(), (Throwable) ret);
 			}
 		}
 	}
@@ -401,7 +402,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		initAdditionalServices(l.iterator(), services);
 
 		// Register with the platform (pass only global services to the Main)
-		List<ServiceDescriptor> descriptors = new ArrayList<>(services.size());
+		List<ServiceDescriptor> descriptors = new ArrayList<ServiceDescriptor>(services.size());
 		descriptors.addAll(services);
 		// This call performs the real connection to the platform and can modify the
 		// name of this container
@@ -469,24 +470,22 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 	}
 
 	public void bootAllServices(List<ServiceDescriptor> services) throws ServiceException {
-		Iterator<ServiceDescriptor> it = services.iterator();
-		while (it.hasNext()) {
-			ServiceDescriptor dsc = it.next();
-			try {
-				dsc.getService().boot(myProfile);
-				if ("jade.core.security.Security".equals(dsc.getName())) {
-					// Security active. This is just for performance optimization when security is
-					// not active
-					securityOn = true;
-				}
-			} catch (Throwable t) {
-				if (dsc.isMandatory()) {
-					throw new ServiceException("Error while booting mandatory service " + dsc.getName(), t);
-				} else {
-					myLogger.log(Logger.WARNING, "Exception booting service " + dsc.getName(), t);
-				}
-			}
-		}
+        for (ServiceDescriptor dsc : services) {
+            try {
+                dsc.getService().boot(myProfile);
+                if (dsc.getName().equals("jade.core.security.Security")) {
+                    // Security active. This is just for performance optimization when security is
+                    // not active
+                    securityOn = true;
+                }
+            } catch (Throwable t) {
+                if (dsc.isMandatory()) {
+                    throw new ServiceException("Error while booting mandatory service " + dsc.getName(), t);
+                } else {
+                    myLogger.log(Logger.WARNING, "Exception booting service " + dsc.getName(), t);
+                }
+            }
+        }
 	}
 
 	public boolean joinPlatform() {
@@ -506,19 +505,16 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			startNode();
 		} catch (IMTPException imtpe) {
 			myLogger.log(Logger.SEVERE, "Communication failure while joining agent platform: " + imtpe.getMessage());
-			imtpe.printStackTrace();
 			endContainer();
 			cleanIMTPManager();
 			return false;
 		} catch (JADESecurityException ae) {
 			myLogger.log(Logger.SEVERE, "Authentication or authorization failure while joining agent platform.");
-			ae.printStackTrace();
 			endContainer();
 			cleanIMTPManager();
 			return false;
 		} catch (Exception e) {
 			myLogger.log(Logger.SEVERE, "Some problem occurred while joining agent platform.");
-			e.printStackTrace();
 			endContainer();
 			cleanIMTPManager();
 			return false;
@@ -547,7 +543,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 	private void checkLocalHostAddress() {
 		String address = Profile.getDefaultNetworkName();
-		if (Profile.LOCALHOST_CONSTANT.equals(address) || Profile.LOOPBACK_ADDRESS_CONSTANT.equals(address)) {
+		if (address.equals(Profile.LOCALHOST_CONSTANT) || address.equals(Profile.LOOPBACK_ADDRESS_CONSTANT)) {
 			myLogger.log(Logger.WARNING,
 					"\n***************************************************************\nJAVA is not able to detect the local host address.\nIf this container is part of a distributed platform, use the\n-local-host option to explicitly specify it\n***************************************************************\n");
 		}
@@ -584,18 +580,16 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 			// Now activate all agents (this call starts their embedded threads)
 			AID[] allLocalNames = localAgents.keys();
-			for (int i = 0; i < allLocalNames.length; i++) {
-				AID id = allLocalNames[i];
-
-				if (!id.equals(theAMS) && !id.equals(theDefaultDF)) {
-					try {
-						powerUpLocalAgent(id);
-					} catch (NotFoundException nfe) {
-						// Should never happen
-						nfe.printStackTrace();
-					}
-				}
-			}
+            for (AID id : allLocalNames) {
+                if (!id.equals(theAMS) && !id.equals(theDefaultDF)) {
+                    try {
+                        powerUpLocalAgent(id);
+                    } catch (NotFoundException nfe) {
+                        // Should never happen
+                        myLogger.log(Logger.WARNING, nfe.getMessage());
+                    }
+                }
+            }
 
 			// If the Misc add-on is in the classpath and the
 			// -jade_core_AgentContainerImpl_enablemonitor option is not explicitly set to
@@ -614,7 +608,6 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			
 		} catch (ProfileException pe) {
 			myLogger.log(Logger.WARNING, "Error reading initial agents. " + pe);
-			pe.printStackTrace();
 		}
 	}
 
@@ -627,33 +620,30 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		// Remove all non-system agents
 		Agent[] allLocalAgents = localAgents.values();
 
-		for (int i = 0; i < allLocalAgents.length; i++) {
-			// Kill agent and wait for its termination
-			Agent a = allLocalAgents[i];
+        for (Agent a : allLocalAgents) {
+            // Kill agent and wait for its termination
+            // Skip the Default DF and the AMS
+            AID id = a.getAID();
+            if (id.equals(getAMS()) || id.equals(getDefaultDF()))
+                continue;
 
-			// Skip the Default DF and the AMS
-			AID id = a.getAID();
-			if (id.equals(getAMS()) || id.equals(getDefaultDF())) {
-				continue;
-			}
-
-			if (verboseShutdown) {
-				myLogger.log(Logger.INFO, "*** --- Killing agent " + a.getLocalName());
-			}
-			a.doDelete();
-			if (verboseShutdown) {
-				myLogger.log(Logger.INFO, "*** --- Waiting for agent " + a.getLocalName() + " termination ...");
-			}
-			boolean terminated = a.join();
-			if (verboseShutdown) {
-				if (terminated) {
-					myLogger.log(Logger.INFO, "*** --- Agent " + a.getLocalName() + " terminated");
-				} else {
-					myLogger.log(Logger.WARNING, "*** --- Agent " + a.getLocalName() + " still running. Skip it");
-				}
-			}
-			a.resetToolkit();
-		}
+            if (verboseShutdown) {
+                myLogger.log(Logger.INFO, "*** --- Killing agent " + a.getLocalName());
+            }
+            a.doDelete();
+            if (verboseShutdown) {
+                myLogger.log(Logger.INFO, "*** --- Waiting for agent " + a.getLocalName() + " termination ...");
+            }
+            boolean terminated = a.join();
+            if (verboseShutdown) {
+                if (terminated) {
+                    myLogger.log(Logger.INFO, "*** --- Agent " + a.getLocalName() + " terminated");
+                } else {
+                    myLogger.log(Logger.WARNING, "*** --- Agent " + a.getLocalName() + " still running. Skip it");
+                }
+            }
+            a.resetToolkit();
+        }
 		if (verboseShutdown) {
 			myLogger.log(Logger.INFO, "*** All agents terminated");
 		}
@@ -666,13 +656,11 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			}
 			
 			myIMTPManager.shutDown();
-		} catch (IMTPException imtpe) {
-			imtpe.printStackTrace();
-		} catch (ServiceException se) {
-			se.printStackTrace();
+		} catch (IMTPException | ServiceException imtpe) {
+			myLogger.log(Logger.WARNING, imtpe.getMessage());
 		}
 
-		// Release Thread resources
+        // Release Thread resources
 		myResourceManager.releaseResources();
 
 		// Notify the JADE Runtime that the container has terminated execution
@@ -689,7 +677,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		if ((time - creationTime) < 3000) {
 			try {
 				Thread.sleep(3000 - (time - creationTime));
-			} catch (Exception e) {
+			} catch (Exception ignored) {
 			}
 		}
 	}
@@ -701,7 +689,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		try {
 			Runtime.instance().endContainer();
 		} catch (Exception e) {
-			e.printStackTrace();
+			myLogger.log(Logger.SEVERE, "End container error.", e);
 		}
 	}
 
@@ -750,7 +738,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			if (ret != null) {
 				if (ret instanceof Throwable) {
 					// The SEND_MESSAGE VerticalCommand was blocked by some Filter
-					// before reaching the Messaging Souce Sink --> Issue
+					// before reaching the Messaging Source Sink --> Issue
 					// a NOTIFY_FAILURE VerticalCommand to notify the sender
 					cmd = new GenericCommand(jade.core.messaging.MessagingSlice.NOTIFY_FAILURE,
 							jade.core.messaging.MessagingSlice.NAME, null);
@@ -759,8 +747,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 					cmd.addParam(new InternalError("Message blocked: " + ret));
 					ret = myCommandProcessor.processOutgoing(cmd);
 					if (ret != null) {
-						if (ret instanceof Throwable throwable) {
-							throwable.printStackTrace();
+						if (ret instanceof Throwable) {
+							myLogger.log(Logger.SEVERE, "Notify failure error.", ret);
 						}
 					}
 				}
@@ -778,8 +766,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Notify posted error.", ret);
 			}
 		}
 	}
@@ -797,8 +785,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Notify received error.", ret);
 			}
 		}
 
@@ -814,8 +802,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Notify behaviour added error.", ret);
 			}
 		}
 	}
@@ -832,8 +820,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Notify behaviour removed error.", ret);
 			}
 		}
 	}
@@ -852,36 +840,18 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Notify changed behaviour state error.", ret);
 			}
 		}
 	}
-	
-
-	
-	// FIXME: to be removed
-	public void handleChangedAgentPrincipal(AID agentID, JADEPrincipal oldPrincipal, Credentials creds) {
-
-		/***
-		 * 
-		 * myNotificationManager.fireEvent(NotificationManager.CHANGED_AGENT_PRINCIPAL,
-		 * new Object[]{agentID, oldPrincipal,
-		 * (AgentPrincipal)certs.getIdentityCertificate().getSubject()}); try {
-		 * myPlatform.changedAgentPrincipal(agentID, certs); } catch (IMTPException re)
-		 * { re.printStackTrace(); } catch (NotFoundException nfe) {
-		 * nfe.printStackTrace(); }
-		 * 
-		 ***/
-	}
-	
 
 	public void handleChangedAgentState(AID agentID, int oldState, int newState) {
 		AgentState from = AgentState.getInstance(oldState);
 		AgentState to = AgentState.getInstance(newState);
 
-		GenericCommand cmd = new GenericCommand(jade.core.management.AgentManagementSlice.INFORM_STATE_CHANGED,
-				jade.core.management.AgentManagementSlice.NAME, null);
+		GenericCommand cmd = new GenericCommand(AgentManagementSlice.INFORM_STATE_CHANGED,
+				AgentManagementSlice.NAME, null);
 		cmd.addParam(agentID);
 		cmd.addParam(from);
 		cmd.addParam(to);
@@ -890,23 +860,23 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Inform state changed error.", ret);
 			}
 		}
 	}
 
 	public void handleEnd(AID agentID) {
-		GenericCommand cmd = new GenericCommand(jade.core.management.AgentManagementSlice.INFORM_KILLED,
-				jade.core.management.AgentManagementSlice.NAME, null);
+		GenericCommand cmd = new GenericCommand(AgentManagementSlice.INFORM_KILLED,
+				AgentManagementSlice.NAME, null);
 		cmd.addParam(agentID);
 		// Set the credentials of the terminating agent
 		initCredentials(cmd, agentID);
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Inform killed error.", ret);
 			}
 		}
 	}
@@ -920,8 +890,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		Object ret = myCommandProcessor.processOutgoing(cmd);
 		if (ret != null) {
-			if (ret instanceof Throwable throwable) {
-				throwable.printStackTrace();
+			if (ret instanceof Throwable) {
+				myLogger.log(Logger.SEVERE, "Set platform addresses error.", ret);
 			}
 		}
 	}
@@ -988,8 +958,8 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		if (instance == null) {
 			throw new NotFoundException("powerUpLocalAgent() failed to find agent " + agentID.getName());
 		}
-		int type = agentID.equals(theAMS) || agentID.equals(theDefaultDF) ? ResourceManager.SYSTEM_AGENTS
-				: ResourceManager.USER_AGENTS;
+		int type = (agentID.equals(theAMS) || agentID.equals(theDefaultDF) ? ResourceManager.SYSTEM_AGENTS
+				: ResourceManager.USER_AGENTS);
 		Thread t = myResourceManager.getThread(type, agentID.getLocalName(), instance);
 		instance.powerUp(agentID, t);
 		localAgents.release(agentID);
@@ -1029,11 +999,9 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		// (Mutual exclusion with Scheduler.add(), remove()...)
 		synchronized (s) {
-			Iterator<Behaviour> it = s.readyBehaviours.iterator();
-			while (it.hasNext()) {
-				Behaviour b = it.next();
-				behaviours.add(new BehaviourID(b));
-			}
+            for (Behaviour b : s.readyBehaviours) {
+                behaviours.add(new BehaviourID(b));
+            }
 
 		}
 	}
@@ -1044,11 +1012,9 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 
 		// (Mutual exclusion with Scheduler.add(), remove()...)
 		synchronized (s) {
-			Iterator<Behaviour> it = s.blockedBehaviours.iterator();
-			while (it.hasNext()) {
-				Behaviour b = it.next();
-				behaviours.add(new BehaviourID(b));
-			}
+            for (Behaviour b : s.blockedBehaviours) {
+                behaviours.add(new BehaviourID(b));
+            }
 		}
 	}
 	
@@ -1065,9 +1031,9 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		Agent[] allLocalAgents = localAgents.values();
 
 		// Add the address to the AIDs of all local agents
-		for (int j = 0; j < allLocalAgents.length; j++) {
-			allLocalAgents[j].addPlatformAddress(address);
-		}
+        for (Agent allLocalAgent : allLocalAgents) {
+            allLocalAgent.addPlatformAddress(address);
+        }
 
 		// Add the new addresses to the AMS and Default DF AIDs
 		theAMS.addAddresses(address);
@@ -1078,9 +1044,9 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 		Agent[] allLocalAgents = localAgents.values();
 
 		// Remove the address from the AIDs of all local agents
-		for (int j = 0; j < allLocalAgents.length; j++) {
-			allLocalAgents[j].removePlatformAddress(address);
-		}
+        for (Agent allLocalAgent : allLocalAgents) {
+            allLocalAgent.removePlatformAddress(address);
+        }
 
 		// Remove the address from the AIDs of the AMS and the Default DF
 		theAMS.removeAddresses(address);
@@ -1166,7 +1132,7 @@ class AgentContainerImpl implements AgentContainer, AgentToolkit {
 			myMainContainer.restartReplicatedAgents(this);
 			myProfile.setParameter(Profile.LOCAL_SERVICE_MANAGER, "false");
 		} catch (Exception e) {
-			e.printStackTrace();
+			myLogger.log(Logger.SEVERE, "Become leader error.", e);
 		}
 	}
 
