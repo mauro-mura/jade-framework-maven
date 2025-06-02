@@ -23,7 +23,6 @@
 
 package jade.tools;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -77,19 +76,19 @@ import jade.util.Logger;
  * @author Giovanni Rimassa -  Universita' di Parma
  * @author Giovanni Caire -  TILAB
  * @author Moreno LAGO
+ * @author Mauro Mura
  */
 public class ToolNotifier extends ToolAgent implements MessageListener, AgentListener {
 
-	@Serial
 	private static final long serialVersionUID = 4657818345219944422L;
 	private static final int IDLE_STATE = 0;
 	private static final int ACTIVE_STATE = 1;
 	private static final int TERMINATING_STATE = 2;
 
-	private final AID observerAgent;
-	private final Set observedAgents = new HashSet();
-	private final HashMap pendingEvents = new HashMap<>();
-	private final SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
+	private AID observerAgent;
+	private Set<AID> observedAgents = new HashSet<>();
+	private HashMap<AID, List<JADEEvent>> pendingEvents = new HashMap<>();
+	private SequentialBehaviour AMSSubscribe = new SequentialBehaviour();
 
 	private volatile int state = IDLE_STATE;
 
@@ -185,7 +184,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 			helper.deregisterAgentListener(this);
 		} catch (Exception e) {
 			// Should never happen
-			e.printStackTrace();
+			myLogger.log(Logger.SEVERE, "ToolNotifier " + getName() + ": " + e.getMessage());
 		}
 		doDelete();
 	}
@@ -334,7 +333,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 				cs.setFrom(ev.getBehaviourFrom());
 				cs.setTo(ev.getBehaviourTo());
 
-				if (Behaviour.STATE_RUNNING.equals(ev.getBehaviourTo()) && ev.getBehaviour().isSimple()) {
+				if (ev.getBehaviourTo().equals(Behaviour.STATE_RUNNING) && ev.getBehaviour().isSimple()) {
 					// This event requires synchronous handling. As it may have already
 					// been processed by other listeners reset its processed status
 					ev.reset();
@@ -346,6 +345,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 						// This is the thread of the observed agent. If it has been interrupted
 						// the agent is exiting or moving --> just do nothing
 					}
+					return;
 				} else {
 					sendEvent(cs, null);
 				}
@@ -381,7 +381,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 				msg.setConversationId(observerAgent.getName() + "-control");
 				send(msg);
 			} catch (Exception fe) {
-				fe.printStackTrace();
+				myLogger.log(Logger.WARNING, "ToolNotifier " + getName() + ": " + fe.getMessage());
 			}
 		} else {
 			// If we are not active yet we can't use the ContentManager --> Do the operation
@@ -411,7 +411,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 				}
 				send(msg);
 			} catch (Exception fe) {
-				fe.printStackTrace();
+				myLogger.log(Logger.WARNING, "ToolNotifier " + getName() + ": " + fe.getMessage());
 			}
 		}
 	}
@@ -425,11 +425,10 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	 */
 	private class SynchEventInformer extends SimpleBehaviour {
 
-		@Serial
 		private static final long serialVersionUID = 3180731801665726348L;
 		private Event ev;
 		private JADEEvent jev;
-		private boolean finished;
+		private boolean finished = false;
 		private MessageTemplate template;
 
 		SynchEventInformer(Agent a, Event ev, JADEEvent jev) {
@@ -464,7 +463,7 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	// Utility methods dealing with pending events
 	private void addPendingEvent(JADEEvent ev, AID id) {
 		synchronized (pendingEvents) {
-			List l = (List) pendingEvents.get(id);
+			List<JADEEvent> l = pendingEvents.get(id);
 			if (l == null) {
 				l = new ArrayList<>();
 				pendingEvents.put(id, l);
@@ -476,12 +475,12 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 	private void removePendingEvent(JADEEvent ev) {
 		synchronized (pendingEvents) {
 			AID id = null;
-			if (ev instanceof AgentEvent event1) {
-				id = event1.getAgent();
-			} else if (ev instanceof MessageEvent event) {
-				id = event.getAgent();
+			if (ev instanceof AgentEvent) {
+				id = ((AgentEvent) ev).getAgent();
+			} else if (ev instanceof MessageEvent) {
+				id = ((MessageEvent) ev).getAgent();
 			}
-			List l = (List) pendingEvents.get(id);
+			List<JADEEvent> l = pendingEvents.get(id);
 			if (l != null) {
 				l.remove(ev);
 				if (l.isEmpty()) {
@@ -493,28 +492,22 @@ public class ToolNotifier extends ToolAgent implements MessageListener, AgentLis
 
 	private void notifyPendingEvents(AID id) {
 		synchronized (pendingEvents) {
-			List l = (List) pendingEvents.remove(id);
+			List<JADEEvent> l = pendingEvents.remove(id);
 			if (l != null) {
-				Iterator it = l.iterator();
-				while (it.hasNext()) {
-					JADEEvent ev = (JADEEvent) it.next();
-					ev.notifyProcessed(null);
-				}
+                for (JADEEvent ev : l) {
+                    ev.notifyProcessed(null);
+                }
 			}
 		}
 	}
 
 	private void notifyAllPendingEvents() {
 		synchronized (pendingEvents) {
-			Iterator it1 = pendingEvents.values().iterator();
-			while (it1.hasNext()) {
-				List l = (List) it1.next();
-				Iterator it2 = l.iterator();
-				while (it2.hasNext()) {
-					JADEEvent ev = (JADEEvent) it2.next();
-					ev.notifyProcessed(null);
-				}
-			}
+            for (List<JADEEvent> l : pendingEvents.values()) {
+                for (JADEEvent ev : l) {
+                    ev.notifyProcessed(null);
+                }
+            }
 		}
 	}
 }
